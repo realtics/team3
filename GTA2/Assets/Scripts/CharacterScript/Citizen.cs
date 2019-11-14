@@ -20,7 +20,7 @@ public class Citizen : NPC
     private float patternChangeTimer;
     private float patternChangeInterval;
     private float runawayTime = 10.0f;
-    private float respawnTime = 5.0f;
+    
     //HumanCtr
     private Vector3 destination;
     private RaycastHit hit;

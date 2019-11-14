@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private float spawnRange = 30.0f;
+    private float spawnRange = 10.0f;
 
-    public List<Citizen> citizenList = new List<Citizen>();
-    public List<Police> policeList = new List<Police>();
-    public List<Doctor> doctorList = new List<Doctor>();
+    public List<Citizen> activeCitizenList = new List<Citizen>();
+    public List<Citizen> deactiveCitizenList = new List<Citizen>();
+
+    public List<Police> activePoliceList = new List<Police>();
+    public List<Police> deactivePoliceList = new List<Police>();
+
+    public List<Doctor> activeDoctorList = new List<Doctor>();
+    public List<Doctor> deactiveDoctorList = new List<Doctor>();
+
+    public List<GameObject> activeCarList = new List<GameObject>();
+    public List<GameObject> deactiveCarList = new List<GameObject>();
+
     public GameObject citizenPrefab;
     public GameObject policePrefab;
     public GameObject doctorPrefab;
@@ -16,72 +25,88 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     GameObject player;
 
-    float Timer = 0.0f;//테스트 용
     // Start is called before the first frame update
     void Start()
     {
+        Init();
         player = GameObject.FindWithTag("Player");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //3초마다 1명 생성 (테스트)
-        /*
-        Timer += Time.deltaTime;
-
-        if(Timer > 3.0f)
-        {
-            Timer = 0.0f;
-            SpawnCitizen(1);
-        }*/
-        foreach (var citizen in citizenList)
-        {
-            if(IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
-            {
-                citizen.gameObject.SetActive(true);
-            }
-            else if(!IsSpawnRange(citizen.transform.position) && citizen.gameObject.activeSelf)
-            {
-                citizen.gameObject.SetActive(false);
-            }
-        }
+        StartCoroutine(ActiveObjects());
+        StartCoroutine(DeactiveObjects());
     }
     void Init()
     {
-        //처음 사람 생성
+        //오브젝트 최초 생성
         //SpawnCitizen(Random.Range(1, 10));
     }
-    //플레이어의 일정 반경내에 생성
-    void SpawnCitizen(int spawnNum)
+    IEnumerator ActiveObjects()
     {
-        /*GameObject citizen = Instantiate(citizenPrefab);
+        while (true)
+        {
+            CheckDeactiveCitizen();
+            //CheckDeactiveCar();
 
-        print(player.transform.position);
-        citizen.transform.position = new Vector3(player.transform.position.x + Random.Range(-10, 10), 
-                                       player.transform.position.y, 
-                                       player.transform.position.z + Random.Range(-10, 10));
-        citizenList.Add(citizen);*/
+            yield return new WaitForSeconds(1.0f);
+        }
     }
-    void SpawnPolice(int spawnNum)
+    IEnumerator DeactiveObjects()
     {
+        while (true)
+        {
+            CheckActiveCitizen();
+            //CheckActiveCar();
 
+            yield return new WaitForSeconds(1.0f);
+        }
+         
     }
-    void SpawnDoctor(int spawnNum)
+    void CheckDeactiveCitizen()
     {
+        List<Citizen> tempRemoveCitizenList = new List<Citizen>();
 
+        foreach (var citizen in deactiveCitizenList)
+        {
+            if (IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
+            {
+                citizen.gameObject.SetActive(true);
+                activeCitizenList.Add(citizen);
+                tempRemoveCitizenList.Add(citizen);
+                
+            }
+        }
+        foreach(var removeCitizen in tempRemoveCitizenList)
+        {
+            deactiveCitizenList.Remove(removeCitizen);
+        }
     }
+    void CheckActiveCitizen()
+    {
+        List<Citizen> tempRemoveCitizenList = new List<Citizen>();
+        foreach (var citizen in activeCitizenList)
+        {
+            if (IsSpawnRange(citizen.transform.position) && citizen.gameObject.activeSelf)
+            {
+                citizen.gameObject.SetActive(false);
+                deactiveCitizenList.Add(citizen);
+                tempRemoveCitizenList.Add(citizen);
+            }
+        }
+        foreach (var removeCitizen in tempRemoveCitizenList)
+        {
+            deactiveCitizenList.Remove(removeCitizen);
+        }
+    }
+    //void CheckDeactiveCar()
+    //void CheckActiveCar()
+
     public bool IsSpawnRange(Vector3 position)
     {
-        if (spawnRange > Vector3.Distance(position, player.transform.position))
+        if (spawnRange < Vector3.Distance(position, player.transform.position))
         {
             return true;
         }
         else
         {
             return false;
-            //gameObject.SetActive(true);
         }
     }
-
 }

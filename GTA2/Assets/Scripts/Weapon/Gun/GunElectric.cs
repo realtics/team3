@@ -21,15 +21,15 @@ public class GunElectric : Gun
         noneTargetObjectList = new List<GameObject>();
 
 
-        foreach (var citizen in spawnManager.citizenList)
+        foreach (var citizen in spawnManager.activeCitizenList)
         {
             objectList.Add(citizen.gameObject);
         }
-        foreach (var doctor in spawnManager.doctorList)
+        foreach (var doctor in spawnManager.activeDoctorList)
         {
             objectList.Add(doctor.gameObject);
         }
-        foreach (var police in spawnManager.policeList)
+        foreach (var police in spawnManager.activePoliceList)
         {
             objectList.Add(police.gameObject);
         }

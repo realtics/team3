@@ -14,11 +14,11 @@ public class Bullet : MonoBehaviour
     public Vector3 bulletDir;
     public GUNSTATE bulletType;
 
-    protected SphereCollider  myCollider;
+    protected BoxCollider  myCollider;
     protected float bulletLifeDelta = .0f;
     protected virtual void Start()
     {
-        myCollider = GetComponent<SphereCollider>();
+        myCollider = GetComponent<BoxCollider>();
         myCollider.isTrigger = true;
     }
 
