@@ -13,7 +13,7 @@ public class GunGranade : Gun
 
     void Start()
     {
-        gunType = GUNSTATE.GRANADE;
+        gunType = GunState.Granade;
         bulletPoolCount = 50;
 
         InitGun();
@@ -39,7 +39,7 @@ public class GunGranade : Gun
                 intervalDelta = shootInterval;
             }
 
-            if (userPlayer.playerStateUnder == Player.PLAYERSTATE_UNDER.WALK)
+            if (userPlayer.playerStateUnder == Player.PlayerStateUnder.WALK)
             {
                 intervalDelta += moveThrowPower;
             }

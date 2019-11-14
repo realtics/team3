@@ -12,17 +12,17 @@ public class Bullet : MonoBehaviour
 
 
     public Vector3 bulletDir;
-    public GUNSTATE bulletType;
+    public GunState bulletType;
 
-    protected BoxCollider  myCollider;
+    protected SphereCollider myCollider;
     protected float bulletLifeDelta = .0f;
     protected virtual void Start()
     {
-        myCollider = GetComponent<BoxCollider>();
+        myCollider = GetComponent<SphereCollider>();
         myCollider.isTrigger = true;
     }
 
-    public virtual void SetBullet(GUNSTATE type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
+    public virtual void SetBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
     {
         bulletType = type;
         bulletDir = dir;

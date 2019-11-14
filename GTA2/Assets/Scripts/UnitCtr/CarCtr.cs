@@ -5,8 +5,14 @@ using UnityEditor;
 
 public class CarCtr : MonoBehaviour
 {
+    Rigidbody rbody;
+    public TrailRenderer trailLeft;
+    public TrailRenderer trailRight;
+    public GameObject shadow;
+
+    public bool isControlledByPlayer;
+
     Vector3 destination;
-    public bool isDestReached = true;
 
     public float maxSpeed;
     float curSpeed;
@@ -16,28 +22,60 @@ public class CarCtr : MonoBehaviour
     public LayerMask collisionLayer;
     RaycastHit hit;
     float distToObstacle = Mathf.Infinity;
+    Vector3 reboundForce = Vector3.zero;
 
     TrafficLight trafficLight = null;
 
-    Rigidbody rbody;
+    float inputH;
+    float inputV;
 
-    void Awake()
+    private void Awake()
     {
         rbody = GetComponent<Rigidbody>();
     }
 
-    void Start()
+    private void Update()
     {
-        //destination = transform.position;
-    }
-    
-    void FixedUpdate()
-    {
-        Raycast();
-        MoveCar();
+        DrawSkidMark();
+
+        shadow.transform.position = transform.position + new Vector3(0.05f, 0, -0.05f);
     }
 
-    void Raycast()
+    private void FixedUpdate()
+    {
+        if (isControlledByPlayer)
+        {
+            PlayerInput();
+            MoveCar();
+        }
+        else
+        {
+            Raycast();
+            CarMoveAI();
+        }
+    }
+
+    private void PlayerInput()
+    {
+        inputV = Input.GetAxisRaw("Vertical");
+        inputH = Input.GetAxisRaw("Horizontal");
+    }
+
+    void DrawSkidMark()
+    {
+        if (inputH != 0 && curSpeed > 150)
+        {
+            trailLeft.emitting = true;
+            trailRight.emitting = true;
+        }
+        else
+        {
+            trailLeft.emitting = false;
+            trailRight.emitting = false;
+        }
+    }
+
+    private void Raycast()
     {
         if (Physics.Raycast(transform.position, transform.forward, out hit, 1f, collisionLayer))
         {
@@ -71,7 +109,7 @@ public class CarCtr : MonoBehaviour
         DrawRaycastDebugLine();
     }
 
-    void DrawRaycastDebugLine()
+    private void DrawRaycastDebugLine()
     {
         if (distToObstacle < Mathf.Infinity)
         {
@@ -83,51 +121,52 @@ public class CarCtr : MonoBehaviour
         }
     }
 
-    void MoveCar()
+    private void CarMoveAI()
     {
-        if (isDestReached)
-        {
-            return;
-        }
-
         Vector3 dir = destination - transform.position;
 
-        // 속도조절
         targetSpeed = Mathf.Clamp(distToObstacle-1, 0, 1) * maxSpeed;
 
         if (targetSpeed < curSpeed)
         {
-            curSpeed -= 4 * Time.deltaTime;
+            curSpeed -= 200 * Time.deltaTime;
         }
         else
         {
-            curSpeed += 2 * Time.deltaTime;
+            curSpeed += 100 * Time.deltaTime;
         }
-        curSpeed = Mathf.Clamp(curSpeed, 0, maxSpeed);
-
-        // 실제 회전 및 이동
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.2f);
-        //transform.Translate(transform.forward * curSpeed * Time.deltaTime, Space.World);
+        curSpeed = Mathf.Clamp(curSpeed, 0, maxSpeed/2);
 
         dir.y = 0;
         rbody.MoveRotation ( Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.2f));
         
         float angle = Vector3.Angle(transform.forward, dir.normalized) / 10;
         angle = Mathf.Clamp(angle, 1, 10);
-        rbody.velocity = transform.forward * curSpeed * 50 * Time.deltaTime * (1/angle);
+        rbody.velocity = transform.forward * curSpeed * Time.deltaTime * (1/angle);
+    }
+
+    private void MoveCar()
+    {
+        reboundForce *= 0.85f;
+
+        curSpeed += 100 * inputV * Time.deltaTime;
+
+        if (inputV == 0)
+        {
+            curSpeed *= 0.97f;
+            if (curSpeed < 1)
+                curSpeed = 0;
+        }
+
+        curSpeed = Mathf.Clamp(curSpeed, (maxSpeed / 2) * -1, maxSpeed);
+
+        transform.Rotate(0, inputH * rotSpeed * Time.deltaTime * (Mathf.Abs(curSpeed) / 400), 0);
+        rbody.velocity = transform.forward * curSpeed * Time.deltaTime + reboundForce;
     }
 
     public void SetDestination(Vector3 pos)
     {
         destination = pos;
-        isDestReached = false;
-    }
-
-    public void StopCar()
-    {
-        curSpeed = 0;
-        destination = transform.position;
-        isDestReached = true;
     }
 
     private void OnDrawGizmosSelected()
@@ -136,7 +175,24 @@ public class CarCtr : MonoBehaviour
         Gizmos.DrawWireSphere(destination, 0.25f);
         Handles.Label(destination, "destination");
 
-        //Gizmos.DrawWireSphere(transform.position, 0.25f);
-        //Handles.Label(transform.position, "mypos");
+        Handles.Label(transform.position + Vector3.right, "spd: " + curSpeed);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.tag == "Wall")
+        {
+            curSpeed *= 0.25f;
+            Vector3 inDirection = transform.forward;
+            reboundForce = Vector3.Reflect(inDirection, col.contacts[0].normal) * curSpeed * 0.15f;
+            //Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
+            //Debug.DrawLine(transform.position, transform.position + reboundForce, Color.red, 1f);
+        }
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        if (col.transform.tag == "Wall")
+            curSpeed *= 0.9f;
     }
 }

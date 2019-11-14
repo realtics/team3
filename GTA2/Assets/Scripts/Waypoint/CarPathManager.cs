@@ -35,11 +35,6 @@ public class CarPathManager : MonoBehaviour
         Move();
     }
 
-    public void Stop()
-    {
-        carCtr.StopCar();
-    }
-
     void SetRandomDestWaypoint()
     {
         curWaypoint = FindClosestWaypoint(transform.position);

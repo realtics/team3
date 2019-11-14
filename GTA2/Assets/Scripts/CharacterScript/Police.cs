@@ -20,7 +20,6 @@ public class Police : NPC
     private float punchRange = 2.0f;
     private float curAttackCoolTime = 0.0f;
     
-    //public
     public POLICESTATE policeState;
     public Animator anim;
 

@@ -129,6 +129,6 @@ MonoBehaviour:
   bulletSpeed: 1
   bulletDir: {x: 0, y: 0, z: 0}
   bulletType: 0
-  MyRigidBody: {fileID: 4224439575330150014}
-  YLaunchPos: 1.1
-  YLaunchPower: 3
+  myRigidBody: {fileID: 4224439575330150014}
+  yLaunchPos: 1.1
+  yLaunchPower: 3

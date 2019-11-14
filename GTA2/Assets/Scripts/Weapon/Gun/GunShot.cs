@@ -6,7 +6,7 @@ public class GunShot : Gun
 {
     void Start()
     {
-        gunType = GUNSTATE.SHOTGUN;
+        gunType = GunState.ShotGun;
         bulletPoolCount = 10;
 
         base.InitGun();

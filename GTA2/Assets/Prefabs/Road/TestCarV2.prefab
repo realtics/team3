@@ -218,7 +218,6 @@ GameObject:
   m_Component:
   - component: {fileID: 973434635749978644}
   - component: {fileID: 973434635749978647}
-  - component: {fileID: 973434635749978858}
   - component: {fileID: 973434635749978645}
   - component: {fileID: 7681113560798980754}
   - component: {fileID: 2687530357018460635}
@@ -260,24 +259,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.2, z: 0.45}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &973434635749978858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973434635749978646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7de706b2d03a944aa0a73bfb08e2f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isControlledByPlayer: 0
-  trailLeft: {fileID: 973434634749520471}
-  trailRight: {fileID: 973434636136289166}
-  shadow: {fileID: 973434634543659709}
-  maxSpeed: 400
-  rotSpeed: 360
 --- !u!54 &973434635749978645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -306,9 +287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a93f11fd051c94c9409e4597d3b31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDestReached: 1
-  maxSpeed: 2
-  rotSpeed: 10
+  trailLeft: {fileID: 973434634749520471}
+  trailRight: {fileID: 973434636136289166}
+  shadow: {fileID: 973434634543659709}
+  isControlledByPlayer: 0
+  maxSpeed: 400
+  rotSpeed: 360
   collisionLayer:
     serializedVersion: 2
     m_Bits: 3328

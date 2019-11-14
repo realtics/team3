@@ -8,7 +8,7 @@ public class GunFire : Gun
 
     void Start()
     {
-        gunType = GUNSTATE.FIREGUN;
+        gunType = GunState.FireGun;
         bulletPoolCount = 50;
 
 

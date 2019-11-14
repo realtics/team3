@@ -16,9 +16,10 @@ public abstract class People : MonoBehaviour
     protected int hp = 100;
     protected int hDir = 0;
     protected int vDir = 0;
-    
-    protected bool isDie = false;
 
+    //TODO : isDie없이 작동할 수 있도록 수정
+    protected bool isDie = false;
+    protected abstract void Die();
     protected virtual void Move()
     {
         Vector3 Pos = transform.position;
@@ -40,7 +41,7 @@ public abstract class People : MonoBehaviour
             Die();
         }
     }
-    protected abstract void Die();
+    
     
     //Fixed Update에서 반드시 호출
     protected void UpdateTargetRotation()

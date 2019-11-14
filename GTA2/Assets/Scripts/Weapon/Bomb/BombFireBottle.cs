@@ -5,9 +5,9 @@ using UnityEngine;
 public class BombFireBottle : Bullet
 {
     // Start is called before the first frame update
-    public Rigidbody MyRigidBody;
-    public float YLaunchPos;
-    public float YLaunchPower;
+    public Rigidbody myRigidBody;
+    public float yLaunchPos;
+    public float yLaunchPower;
 
     protected override void Start()
     {
@@ -15,19 +15,19 @@ public class BombFireBottle : Bullet
     }
 
     // Update is called once per frame
-    public override void SetBullet(GUNSTATE type, Vector3 pos, Vector3 dir, float bullettoSize)
+    public override void SetBullet(GunState type, Vector3 pos, Vector3 dir, float bullettoSize)
     {
         base.SetBullet(type, pos, dir, bullettoSize);
-        transform.position += Vector3.up * YLaunchPos;
+        transform.position += Vector3.up * yLaunchPos;
     }
 
     public void SetForce(float forceValue)
     {
-        Vector3 NewVec3 = bulletDir * bulletSpeed * forceValue;
-        NewVec3.y = YLaunchPower;
+        Vector3 newVec3 = bulletDir * bulletSpeed * forceValue;
+        newVec3.y = yLaunchPower;
 
-        MyRigidBody.velocity = Vector3.zero;
-        MyRigidBody.AddForce(NewVec3, ForceMode.Impulse);
+        myRigidBody.velocity = Vector3.zero;
+        myRigidBody.AddForce(newVec3, ForceMode.Impulse);
     }
 
 

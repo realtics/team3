@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : People
+public class Player : People //TODO : 상체하체 나누지 않고 한 스프라이트로, 애니메이터 육망성 만들지 않고..
 {
-    public enum PLAYERSTATE_UNDER
+    public enum PlayerStateUnder
     {
         IDLE,
         WALK,
@@ -12,7 +12,7 @@ public class Player : People
         DIE,
         LAND
     }
-    private enum PLAYERSTATE_UPPER
+    private enum PlayerStateUpper
     {
         IDLE,
         PUNCH,
@@ -20,34 +20,25 @@ public class Player : People
     }
 
     private float playerMoveSpeed = 2.0f;
-    //private float shotDelay = 0.0f;
 
-    // Start is called before the first frame update
-    [SerializeField]
-    public PLAYERSTATE_UNDER playerStateUnder = PLAYERSTATE_UNDER.IDLE;
-    [SerializeField]
-    private PLAYERSTATE_UPPER playerStateUpper = PLAYERSTATE_UPPER.IDLE;
-    public bool isAttack = false;
+    public PlayerStateUnder playerStateUnder = PlayerStateUnder.IDLE;
+    private PlayerStateUpper playerStateUpper = PlayerStateUpper.IDLE;
+        
+    public bool isAttack { get; set; }
+    public int money { get; set; }
+
     private bool isPunch = false;
     private bool isJump = false;
     private float jumpTime = 1.5f;
     private float jumpTimer = 0.0f;
-    private int money = 0;
+    
     Rigidbody myRigidBody;
+
     private void Awake()
     {
         myRigidBody = GetComponent<Rigidbody>();
     }
 
-
-
-    public int Money
-    {
-        get 
-        {
-            return money;
-        }
-    }
     public bool IsAttack
     {
         get
@@ -62,20 +53,23 @@ public class Player : People
             return isPunch;
         }
     }
+
+    private RaycastHit hit;
+    private GunState curGunIndex = GunState.None;
+
     public LayerMask collisionLayer;
-    RaycastHit hit;
 
     public Animator under;
     public Animator upper;
     public List<Gun> gunList;
-    GUNSTATE curGunIndex = GUNSTATE.NONE;
+    
 
     void Start()
     {
         moveSpeed = playerMoveSpeed;
 
-     
-        gunList[0].gameObject.SetActive(true);
+        gunList[(int)GunState.None].bulletCount = 1;
+        gunList[(int)GunState.None].gameObject.SetActive(true);
     }
 
     private void Update()
@@ -93,7 +87,7 @@ public class Player : People
 
     void UpdateInput()
     {
-        if (playerStateUnder == PLAYERSTATE_UNDER.DIE)
+        if (playerStateUnder == PlayerStateUnder.DIE)
             return;
         //방향키 조작
         MoveControl();
@@ -103,11 +97,11 @@ public class Player : People
         //아무 행동도 하지 않을때 (하체)
         if (isAnyActive())
         {
-            playerStateUnder = PLAYERSTATE_UNDER.IDLE;
+            playerStateUnder = PlayerStateUnder.IDLE;
         }
 
         Move();
-        //오브젝트 조작(근처의 탈 것 등등)
+        //TODO : 오브젝트 조작(근처의 탈 것 등등)
     }
     void TimerCheck()
     {
@@ -122,7 +116,7 @@ public class Player : People
 
         if (jumpTimer > jumpTime)
         {
-            // 밑에 차가없음
+            // 밑에 차가없으면 Land
             if (!(Physics.Raycast(transform.position, transform.up * -1, out hit, 1f, collisionLayer)
                 && hit.transform.CompareTag("Car")))
             {
@@ -133,7 +127,7 @@ public class Player : People
     }
     protected override void Die()
     {
-        playerStateUnder = PLAYERSTATE_UNDER.DIE;
+        playerStateUnder = PlayerStateUnder.DIE;
     }
 
     #region lowlevelCode
@@ -153,23 +147,23 @@ public class Player : People
         if (Input.GetKey(KeyCode.UpArrow))
         {
             vDir = 1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            playerStateUnder = PlayerStateUnder.WALK;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             vDir = -1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            playerStateUnder = PlayerStateUnder.WALK;
 
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
             hDir = 1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            playerStateUnder = PlayerStateUnder.WALK;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             hDir = -1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            playerStateUnder = PlayerStateUnder.WALK;
         }
         if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
         {
@@ -195,25 +189,25 @@ public class Player : People
         {
             switch (curGunIndex)
             {
-                case GUNSTATE.NONE:
-                    playerStateUpper = PLAYERSTATE_UPPER.PUNCH;
+                case GunState.None:
+                    playerStateUpper = PlayerStateUpper.PUNCH;
                     isPunch = true;
                     break;
-                case GUNSTATE.FIREBOTTLE:
-                case GUNSTATE.GRANADE:
+                case GunState.FireBottle:
+                case GunState.Granade:
                     isAttack = true;
-                    playerStateUpper = PLAYERSTATE_UPPER.PUNCH;
+                    playerStateUpper = PlayerStateUpper.PUNCH;
                     break;
-                case GUNSTATE.PISTOL:
-                case GUNSTATE.DOUBLEPISTOL:
-                case GUNSTATE.MACHINGUN:
-                case GUNSTATE.SLEEPMACHINGUN:
-                case GUNSTATE.ROCKETLAUNCHER:
-                case GUNSTATE.ELECTRICGUN:
-                case GUNSTATE.SHOTGUN:
-                case GUNSTATE.FIREGUN:
+                case GunState.Pistol:
+                case GunState.DoublePistol:
+                case GunState.Machinegun:
+                case GunState.SleepMachinegun:
+                case GunState.RocketLauncher:
+                case GunState.Electric:
+                case GunState.ShotGun:
+                case GunState.FireGun:
                     isAttack = true;
-                    playerStateUpper = PLAYERSTATE_UPPER.SHOT;
+                    playerStateUpper = PlayerStateUpper.SHOT;
                     break;
                 default:
                     break;
@@ -221,7 +215,7 @@ public class Player : People
         }
         if (!Input.GetKey(KeyCode.A))
         {
-            playerStateUpper = PLAYERSTATE_UPPER.IDLE;
+            playerStateUpper = PlayerStateUpper.IDLE;
             isAttack = false;
             isPunch = false;
         }
@@ -238,14 +232,14 @@ public class Player : People
         GetComponent<Rigidbody>().useGravity = false;
         transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
 
-        playerStateUnder = PLAYERSTATE_UNDER.JUMP;
+        playerStateUnder = PlayerStateUnder.JUMP;
     }
     void Land()
     {
         isJump = false;
         transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         GetComponent<Rigidbody>().useGravity = true;
-        playerStateUnder = PLAYERSTATE_UNDER.LAND;
+        playerStateUnder = PlayerStateUnder.LAND;
         //playerStateUnder = PLAYERSTATE_UNDER.IDLE;
     }
     void WeaponSwap()
@@ -255,7 +249,7 @@ public class Player : People
             if ((int)curGunIndex >= gunList.Count - 1)
             {
                 gunList[(int)curGunIndex].gameObject.SetActive(false);
-                curGunIndex = GUNSTATE.NONE;
+                curGunIndex = GunState.None;
             }
             else
             {
@@ -263,41 +257,41 @@ public class Player : People
                 curGunIndex++;
             }
 
-            while (gunList[(int)curGunIndex].BulletCount == 0)
+            while (gunList[(int)curGunIndex].bulletCount == 0)
             {
-                Debug.Log(curGunIndex);
-
                 curGunIndex++;
                 if ((int)curGunIndex == gunList.Count)
                 {
-                    curGunIndex = GUNSTATE.NONE;
+                    curGunIndex = GunState.None;
                 }
             }
             gunList[(int)curGunIndex].gameObject.SetActive(true);
+            Debug.Log(curGunIndex);
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if ((int)curGunIndex <= 0)
             {
                 gunList[(int)curGunIndex].gameObject.SetActive(false);
-                curGunIndex = GUNSTATE.GRANADE;
+                curGunIndex = GunState.Granade;
             }
             else
             {
                 gunList[(int)curGunIndex].gameObject.SetActive(false);
                 curGunIndex--;
             }
-            while (gunList[(int)curGunIndex].BulletCount == 0)
+            while (gunList[(int)curGunIndex].bulletCount == 0)
             {
-                Debug.Log(curGunIndex);
+                
 
                 curGunIndex--;
                 if ((int)curGunIndex == gunList.Count)
                 {
-                    curGunIndex = GUNSTATE.NONE;
+                    curGunIndex = GunState.None;
                 }
             }
             gunList[(int)curGunIndex].gameObject.SetActive(true);
+            Debug.Log(curGunIndex);
         }
     }
     #endregion

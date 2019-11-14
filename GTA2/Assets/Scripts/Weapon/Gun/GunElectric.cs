@@ -14,7 +14,7 @@ public class GunElectric : Gun
 
     void Start()
     {
-        gunType = GUNSTATE.ELECTRICGUN;
+        gunType = GunState.Electric;
         bulletPoolCount = 50;
 
         objectList = new List<GameObject>();
@@ -73,6 +73,11 @@ public class GunElectric : Gun
         noneTargetObjectList.Clear();
         foreach (var item in objectList)
         {
+            if (item.gameObject.activeInHierarchy == false)
+            {
+                continue;
+            }
+
             noneTargetObjectList.Add(item);
         }
 

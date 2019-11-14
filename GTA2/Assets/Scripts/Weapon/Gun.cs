@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public enum GUNSTATE
+public enum GunState
 {
-    NONE,
-    PISTOL,
-    DOUBLEPISTOL,
-    MACHINGUN,
-    SLEEPMACHINGUN,
-    ROCKETLAUNCHER,
-    ELECTRICGUN,
-    SHOTGUN,
-    FIREGUN,
-    FIREBOTTLE,
-    GRANADE,
+    None,
+    Pistol,
+    DoublePistol,
+    Machinegun,
+    SleepMachinegun,
+    RocketLauncher,
+    Electric,
+    ShotGun,
+    FireGun,
+    FireBottle,
+    Granade,
 }
 
 public abstract class Gun : MonoBehaviour
@@ -29,7 +28,7 @@ public abstract class Gun : MonoBehaviour
     protected int bulletPoolIndex;
 
     protected GameObject userObject;
-    protected GUNSTATE gunType;
+    protected GunState gunType;
 
     protected Vector3 gunPos;
     protected Vector3 gunDir;
@@ -40,7 +39,7 @@ public abstract class Gun : MonoBehaviour
     protected GameObject bulletPool;
 
 
-    public int BulletCount;
+    public int bulletCount;
 
     // Start is called before the first frame update
     protected void InitGun()

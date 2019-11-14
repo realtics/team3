@@ -6,7 +6,7 @@ public class GunSleepMachine : Gun
 {
     void Start()
     {
-        gunType = GUNSTATE.SLEEPMACHINGUN;
+        gunType = GunState.SleepMachinegun;
         bulletPoolCount = 50;
 
         base.InitGun();

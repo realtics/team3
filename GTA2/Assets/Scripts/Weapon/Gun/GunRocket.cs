@@ -5,14 +5,14 @@ using UnityEngine;
 public class GunRocket : Gun
 {
     // Start is called before the first frame update
-    public GameObject SmokePref;
-    public List<RocketSmoke> SmokeList;
-    public int SmokePoolCnt;
+    public GameObject smokePref;
+    public List<RocketSmoke> smokeList;
+    public int smokePoolCnt;
 
     private int SmokeIdx = 0;
     void Start()
     {
-        gunType = GUNSTATE.ROCKETLAUNCHER;
+        gunType = GunState.RocketLauncher;
         bulletPoolCount = 10;
 
         base.InitGun();
@@ -28,11 +28,11 @@ public class GunRocket : Gun
         GameObject EffectPool = new GameObject();
         EffectPool.name = "SmokePool";
 
-        SmokeList =
+        smokeList =
             GetPool<RocketSmoke>.GetListComponent(
-            SetPool.PoolMemory(SmokePref, EffectPool, SmokePoolCnt, "Smoke"));
+            SetPool.PoolMemory(smokePref, EffectPool, smokePoolCnt, "Smoke"));
 
-        foreach (var item in SmokeList)
+        foreach (var item in smokeList)
         {
             item.gameObject.SetActive(false);
         }
@@ -45,10 +45,10 @@ public class GunRocket : Gun
         {
             if (shootInterval < shootDelta)
             {
-                SmokeList[SmokeIdx].SetTargetbullet(bulletList[bulletPoolIndex].gameObject);
+                smokeList[SmokeIdx].SetTargetbullet(bulletList[bulletPoolIndex].gameObject);
                 ShootSingleBullet(userObject.transform.position);
                 shootDelta = .0f;
-                SmokeIdx = GetPool<RocketSmoke>.PlusListIdx(SmokeList, SmokeIdx);
+                SmokeIdx = GetPool<RocketSmoke>.PlusListIdx(smokeList, SmokeIdx);
             }
         }
     }

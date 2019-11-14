@@ -22,6 +22,10 @@ public class SpawnManager : MonoBehaviour
     public GameObject policePrefab;
     public GameObject doctorPrefab;
 
+    //TODO : 충돌되지 않는 곳에 (웨이 포인트) 삽입
+    public Vector3[] npcSpawnPoint;
+    public Vector3[] carSpawnPoint;
+
     [SerializeField]
     GameObject player;
 
@@ -65,12 +69,11 @@ public class SpawnManager : MonoBehaviour
 
         foreach (var citizen in deactiveCitizenList)
         {
-            if (IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
+            if (!IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
             {
                 citizen.gameObject.SetActive(true);
                 activeCitizenList.Add(citizen);
                 tempRemoveCitizenList.Add(citizen);
-                
             }
         }
         foreach(var removeCitizen in tempRemoveCitizenList)
@@ -92,7 +95,7 @@ public class SpawnManager : MonoBehaviour
         }
         foreach (var removeCitizen in tempRemoveCitizenList)
         {
-            deactiveCitizenList.Remove(removeCitizen);
+            activeCitizenList.Remove(removeCitizen);
         }
     }
     //void CheckDeactiveCar()
@@ -101,12 +104,8 @@ public class SpawnManager : MonoBehaviour
     public bool IsSpawnRange(Vector3 position)
     {
         if (spawnRange < Vector3.Distance(position, player.transform.position))
-        {
             return true;
-        }
         else
-        {
             return false;
-        }
     }
 }
