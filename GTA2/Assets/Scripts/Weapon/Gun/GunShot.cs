@@ -29,7 +29,6 @@ public class GunShot : Gun
     }
     protected override void UpdateKeyInput()
     {
-        shootDelta += Time.deltaTime;
         if (true == Input.GetKey(KeyCode.A) || isShot)
         {
             if (shootInterval < shootDelta)

@@ -40,8 +40,7 @@ public class GunRocket : Gun
 
     protected override void UpdateKeyInput()
     {
-        shootDelta += Time.deltaTime;
-        if (true == Input.GetKey(KeyCode.A))
+        if (true == Input.GetKey(KeyCode.A) || isShot)
         {
             if (shootInterval < shootDelta)
             {

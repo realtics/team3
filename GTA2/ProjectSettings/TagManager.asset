@@ -17,6 +17,7 @@ TagManager:
   - Citizen
   - PlayerPunch
   - PlayerFireBullet
+  - Item
   layers:
   - Default
   - TransparentFX

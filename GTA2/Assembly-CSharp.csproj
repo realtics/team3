@@ -161,6 +161,7 @@
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponImage.cs" />
     <Compile Include="Assets\Scripts\UnitCtr\CarController.cs" />
+    <Compile Include="Assets\Scripts\UnitCtr\CarCtr.cs" />
     <Compile Include="Assets\Scripts\UnitCtr\HumanController.cs" />
     <Compile Include="Assets\Scripts\Waypoint\CarPathManager.cs" />
     <Compile Include="Assets\Scripts\Waypoint\HumanPathManager.cs" />

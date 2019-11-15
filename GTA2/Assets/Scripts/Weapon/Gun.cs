@@ -25,6 +25,9 @@ public abstract class Gun : MonoBehaviour
     public float bulletToPeopleSize;
 
     public int bulletPoolCount;
+    public int bulletCount;
+
+
     protected int bulletPoolIndex;
 
     protected GameObject userObject;
@@ -37,10 +40,11 @@ public abstract class Gun : MonoBehaviour
     protected float shootDelta;
 
     protected GameObject bulletPool;
+    protected AudioSource gunSoundEffect;
     protected bool isShot;
+    protected bool isPrevShot;
 
 
-    public int bulletCount;
 
     // Start is called before the first frame update
     protected void InitGun()
@@ -116,7 +120,7 @@ public abstract class Gun : MonoBehaviour
 
     private void UpdateDelta()
     {
-        shootDelta += Time.deltaTime;
+        shootDelta += Time.deltaTime;        
     }
     protected virtual void UpdateDirection()
     {
@@ -142,11 +146,13 @@ public abstract class Gun : MonoBehaviour
 
     public void UpdateBottonDown()
     {
+        isPrevShot = false;
         isShot = true;
     }
 
     public void UpdateBottonUp()
     {
+        isPrevShot = true;
         isShot = false;
     }
 
