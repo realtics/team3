@@ -145,6 +145,8 @@
     <Compile Include="Assets\Scripts\Debug\DrawArrow.cs" />
     <Compile Include="Assets\Scripts\Debug\TempCamCtr.cs" />
     <Compile Include="Assets\Scripts\Debug\TestCarSpawner.cs" />
+    <Compile Include="Assets\Scripts\Item\Item.cs" />
+    <Compile Include="Assets\Scripts\Item\ItemSpawner.cs" />
     <Compile Include="Assets\Scripts\Legacy\CarDrive.cs" />
     <Compile Include="Assets\Scripts\Legacy\PathManager.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletRocketLauncher.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletShotgun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Bullet\CameraShaker.cs" />
     <Compile Include="Assets\Scripts\Weapon\BulletEffect.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\FireBottleSmoke.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\RocketSmoke.cs" />

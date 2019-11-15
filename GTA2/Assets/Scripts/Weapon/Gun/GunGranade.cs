@@ -27,13 +27,15 @@ public class GunGranade : Gun
 
     protected override void UpdateKeyInput()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || isShot)
         {
             intervalDelta += Time.deltaTime;
         }
 
-        else if (Input.GetKeyUp(KeyCode.A))
+        else if (Input.GetKeyUp(KeyCode.A) || (!isShot && isPrevShot))
         {
+            isPrevShot = false;
+
             if (shootInterval < intervalDelta)
             {
                 intervalDelta = shootInterval;

@@ -51,8 +51,10 @@ public class GunFireBottle : Gun
             intervalDelta += Time.deltaTime;
         }
 
-        else if (Input.GetKeyUp(KeyCode.A))
+        else if (Input.GetKeyUp(KeyCode.A) || (!isShot && isPrevShot))
         {
+            isPrevShot = false;
+
             if (shootInterval < intervalDelta)
             {
                 intervalDelta = shootInterval;
