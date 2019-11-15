@@ -2,86 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : People
+public class Player : People //TODO : 상체하체 나누지 않고 한 스프라이트로, 애니메이터 육망성 만들지 않고..
 {
-    public enum PLAYERSTATE_UNDER
-    {
-        IDLE,
-        WALK,
-        JUMP,
-        DIE,
-        LAND
-    }
-    private enum PLAYERSTATE_UPPER
-    {
-        IDLE,
-        PUNCH,
-        SHOT
-    }
+    //Animator
+    public bool isWalk { get; set; }
+    public bool isShot { get; set; }
+    public bool isPunch { get; set; }
+    public bool isJump { get; set; }
 
-    private float playerMoveSpeed = 2.0f;
-    //private float shotDelay = 0.0f;
+    float playerMoveSpeed = 2.0f;
+    
+    public GunState curGunIndex { get; set; }
+    
 
-    // Start is called before the first frame update
-    [SerializeField]
-    public PLAYERSTATE_UNDER playerStateUnder = PLAYERSTATE_UNDER.IDLE;
-    [SerializeField]
-    private PLAYERSTATE_UPPER playerStateUpper = PLAYERSTATE_UPPER.IDLE;
-    public bool isAttack = false;
-    private bool isPunch = false;
-    private bool isJump = false;
-    private float jumpTime = 1.5f;
-    private float jumpTimer = 0.0f;
-    private int money = 0;
+    public bool isAttack { get; set; }
+    public int money { get; set; }
+    
+    float jumpTime = 1.5f;
+    float jumpTimer = 0.0f;
+    
     Rigidbody myRigidBody;
+    RaycastHit hit;
+
+    public LayerMask collisionLayer;
+    public Animator animator;
+    
+    public List<Gun> gunList;
+
+    // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
+    [SerializeField]
+    private UIManager uiManager;
     private void Awake()
     {
         myRigidBody = GetComponent<Rigidbody>();
     }
-
-
-
-    public int Money
-    {
-        get 
-        {
-            return money;
-        }
-    }
-    public bool IsAttack
-    {
-        get
-        {
-            return isAttack;
-        }
-    }
-    public bool IsPunch
-    {
-        get
-        {
-            return isPunch;
-        }
-    }
-    public LayerMask collisionLayer;
-    RaycastHit hit;
-
-    public Animator under;
-    public Animator upper;
-    public List<Gun> gunList;
-    GUNSTATE curGunIndex = GUNSTATE.NONE;
-
     void Start()
     {
         moveSpeed = playerMoveSpeed;
-
-     
-        gunList[0].gameObject.SetActive(true);
+        gunList[(int)GunState.None].bulletCount = 1;
+        gunList[(int)GunState.None].gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        under.SetInteger("PlayerState", (int)playerStateUnder);
-        upper.SetInteger("PlayerState", (int)playerStateUpper);
+        animator.SetBool("isWalk", isWalk);
+        animator.SetBool("isShot", isShot);
+        animator.SetBool("isPunch", isPunch);
+        animator.SetBool("isJump", isJump);
+        animator.SetBool("isDie", isDie);
     }
     private void FixedUpdate()
     {
@@ -93,21 +61,26 @@ public class Player : People
 
     void UpdateInput()
     {
-        if (playerStateUnder == PLAYERSTATE_UNDER.DIE)
+        if (isDie)
             return;
+        
         //방향키 조작
-        MoveControl();
+        MoveControlKeyboard();
+        MoveControlJoystick();
+        print(hDir + " " + vDir);
         ActiveControl();
         WeaponSwap();
 
-        //아무 행동도 하지 않을때 (하체)
-        if (isAnyActive())
-        {
-            playerStateUnder = PLAYERSTATE_UNDER.IDLE;
-        }
-
         Move();
-        //오브젝트 조작(근처의 탈 것 등등)
+        //TODO : 오브젝트 조작(근처의 탈 것 등등)
+    }
+    public void MoveControlJoystick()
+    {
+        if (Mathf.Abs(uiManager.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(uiManager.playerJoystick.Vertical) < 0.01f)
+            return;
+        
+        hDir = uiManager.playerJoystick.Horizontal / 5.0f;
+        vDir = uiManager.playerJoystick.Vertical / 5.0f;
     }
     void TimerCheck()
     {
@@ -122,7 +95,7 @@ public class Player : People
 
         if (jumpTimer > jumpTime)
         {
-            // 밑에 차가없음
+            // 밑에 차가없으면 Land
             if (!(Physics.Raycast(transform.position, transform.up * -1, out hit, 1f, collisionLayer)
                 && hit.transform.CompareTag("Car")))
             {
@@ -133,51 +106,49 @@ public class Player : People
     }
     protected override void Die()
     {
-        playerStateUnder = PLAYERSTATE_UNDER.DIE;
+        isDie = true;
     }
 
     #region lowlevelCode
     protected override void Move()
     {
-        //Vector3 Pos = transform.position;
-
-        //Pos.x += hDir * Time.deltaTime * moveSpeed;
-        //Pos.z += vDir * Time.deltaTime * moveSpeed;
-
-        //transform.position = Pos;
-
         myRigidBody.MovePosition(transform.position + (new Vector3(hDir, 0, vDir) * Time.deltaTime * moveSpeed));
     }
-    void MoveControl()
+    public int GetHp()
+    {
+        return hp;
+    }
+    void MoveControlKeyboard()
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
             vDir = 1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            isWalk = true;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             vDir = -1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
-
+            isWalk = true;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
             hDir = 1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            isWalk = true;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             hDir = -1;
-            playerStateUnder = PLAYERSTATE_UNDER.WALK;
+            isWalk = true;
         }
         if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
         {
             vDir = 0;
+            isWalk = true;
         }
         if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
             hDir = 0;
+            isWalk = false;
         }
     }
     bool isAnyActive()
@@ -189,45 +160,23 @@ public class Player : People
         else
             return false;
     }
+
+    /// <summary>
+    ///  UI 상호작용을 위한 수정 - 유아이 끄면 컴터로도 됨
+    /// </summary>
     void ActiveControl()
     {
         if (Input.GetKeyDown(KeyCode.A) && !isJump)
         {
-            switch (curGunIndex)
-            {
-                case GUNSTATE.NONE:
-                    playerStateUpper = PLAYERSTATE_UPPER.PUNCH;
-                    isPunch = true;
-                    break;
-                case GUNSTATE.FIREBOTTLE:
-                case GUNSTATE.GRANADE:
-                    isAttack = true;
-                    playerStateUpper = PLAYERSTATE_UPPER.PUNCH;
-                    break;
-                case GUNSTATE.PISTOL:
-                case GUNSTATE.DOUBLEPISTOL:
-                case GUNSTATE.MACHINGUN:
-                case GUNSTATE.SLEEPMACHINGUN:
-                case GUNSTATE.ROCKETLAUNCHER:
-                case GUNSTATE.ELECTRICGUN:
-                case GUNSTATE.SHOTGUN:
-                case GUNSTATE.FIREGUN:
-                    isAttack = true;
-                    playerStateUpper = PLAYERSTATE_UPPER.SHOT;
-                    break;
-                default:
-                    break;
-            }
+            ShotButtonDown();
         }
         if (!Input.GetKey(KeyCode.A))
         {
-            playerStateUpper = PLAYERSTATE_UPPER.IDLE;
-            isAttack = false;
-            isPunch = false;
+            ShotButtonUp();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Jump();
+            JumpButtonDown();
         }
     }
     void Jump()
@@ -237,68 +186,117 @@ public class Player : People
         isJump = true;
         GetComponent<Rigidbody>().useGravity = false;
         transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-
-        playerStateUnder = PLAYERSTATE_UNDER.JUMP;
     }
     void Land()
     {
         isJump = false;
         transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         GetComponent<Rigidbody>().useGravity = true;
-        playerStateUnder = PLAYERSTATE_UNDER.LAND;
-        //playerStateUnder = PLAYERSTATE_UNDER.IDLE;
     }
     void WeaponSwap()
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if ((int)curGunIndex >= gunList.Count - 1)
-            {
-                gunList[(int)curGunIndex].gameObject.SetActive(false);
-                curGunIndex = GUNSTATE.NONE;
-            }
-            else
-            {
-                gunList[(int)curGunIndex].gameObject.SetActive(false);
-                curGunIndex++;
-            }
-
-            while (gunList[(int)curGunIndex].BulletCount == 0)
-            {
-                Debug.Log(curGunIndex);
-
-                curGunIndex++;
-                if ((int)curGunIndex == gunList.Count)
-                {
-                    curGunIndex = GUNSTATE.NONE;
-                }
-            }
-            gunList[(int)curGunIndex].gameObject.SetActive(true);
+            SwapNext();
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if ((int)curGunIndex <= 0)
-            {
-                gunList[(int)curGunIndex].gameObject.SetActive(false);
-                curGunIndex = GUNSTATE.GRANADE;
-            }
-            else
-            {
-                gunList[(int)curGunIndex].gameObject.SetActive(false);
-                curGunIndex--;
-            }
-            while (gunList[(int)curGunIndex].BulletCount == 0)
-            {
-                Debug.Log(curGunIndex);
-
-                curGunIndex--;
-                if ((int)curGunIndex == gunList.Count)
-                {
-                    curGunIndex = GUNSTATE.NONE;
-                }
-            }
-            gunList[(int)curGunIndex].gameObject.SetActive(true);
+            SwapPrev();
         }
+    }
+    public void SwapNext()
+    {
+        if ((int)curGunIndex <= 0)
+        {
+            gunList[(int)curGunIndex].gameObject.SetActive(false);
+            curGunIndex = GunState.Granade;
+        }
+        else
+        {
+            gunList[(int)curGunIndex].gameObject.SetActive(false);
+            curGunIndex--;
+        }
+        while (gunList[(int)curGunIndex].bulletCount == 0)
+        {
+            curGunIndex--;
+            if ((int)curGunIndex == gunList.Count)
+            {
+                curGunIndex = GunState.None;
+            }
+        }
+        gunList[(int)curGunIndex].gameObject.SetActive(true);
+        Debug.Log(curGunIndex);
+    }
+    public void SwapPrev()
+    {
+        if ((int)curGunIndex >= gunList.Count - 1)
+        {
+            gunList[(int)curGunIndex].gameObject.SetActive(false);
+            curGunIndex = GunState.None;
+        }
+        else
+        {
+            gunList[(int)curGunIndex].gameObject.SetActive(false);
+            curGunIndex++;
+        }
+
+        while (gunList[(int)curGunIndex].bulletCount == 0)
+        {
+            curGunIndex++;
+            if ((int)curGunIndex == gunList.Count)
+            {
+                curGunIndex = GunState.None;
+            }
+        }
+        gunList[(int)curGunIndex].gameObject.SetActive(true);
+        Debug.Log(curGunIndex);
+    }
+    //TODO : UIManager에 있는것이 좋을 것 같음.
+    public void JumpButtonDown()
+    {
+        Jump();
+    }
+
+    public void ShotButtonDown()
+    {
+        if (isJump)
+        {
+            return;
+        }
+
+        gunList[(int)curGunIndex].UpdateBottonDown();
+        switch (curGunIndex)
+        {
+            case GunState.None:
+                isPunch = true;
+                break;
+            case GunState.FireBottle:
+            case GunState.Granade:
+                isPunch = true;
+                isAttack = true;
+                break;
+            case GunState.Pistol:
+            case GunState.DoublePistol:
+            case GunState.Machinegun:
+            case GunState.SleepMachinegun:
+            case GunState.RocketLauncher:
+            case GunState.Electric:
+            case GunState.ShotGun:
+            case GunState.FireGun:
+                isShot = true;
+                isAttack = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ShotButtonUp()
+    {
+        gunList[(int)curGunIndex].UpdateBottonUp();
+        isShot = false;
+        isAttack = false;
+        isPunch = false;
     }
     #endregion
 }

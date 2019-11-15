@@ -14,7 +14,7 @@ public class GunElectric : Gun
 
     void Start()
     {
-        gunType = GUNSTATE.ELECTRICGUN;
+        gunType = GunState.Electric;
         bulletPoolCount = 50;
 
         objectList = new List<GameObject>();
@@ -25,15 +25,6 @@ public class GunElectric : Gun
         {
             objectList.Add(citizen.gameObject);
         }
-        foreach (var doctor in spawnManager.activeDoctorList)
-        {
-            objectList.Add(doctor.gameObject);
-        }
-        foreach (var police in spawnManager.activePoliceList)
-        {
-            objectList.Add(police.gameObject);
-        }
-
 
         InitGun();
         base.InitBullet("Electric");
@@ -43,11 +34,11 @@ public class GunElectric : Gun
     protected override void Update()
     {
         base.UpdateDirection();
-        UpdateInput();
+        UpdateKeyInput();
     }
-    protected override void UpdateInput()
+    protected override void UpdateKeyInput()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || isShot)
         {
             shootDelta += Time.deltaTime;
             if (shootInterval < shootDelta)
@@ -73,6 +64,11 @@ public class GunElectric : Gun
         noneTargetObjectList.Clear();
         foreach (var item in objectList)
         {
+            if (item.gameObject.activeInHierarchy == false)
+            {
+                continue;
+            }
+
             noneTargetObjectList.Add(item);
         }
 

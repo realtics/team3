@@ -4,19 +4,19 @@ using UnityEditor;
 public abstract class NPC : People
 {
     protected float findRange = 10.0f;
-    protected bool isDown = false; //펀치 피격 후 누워있는것
-    protected float DownTimer = 0.0f;
-    protected float DownTime = 3.0f;
+    
+    //TODO : isDown없이 작동하게 수정
+    protected bool isDown = false; 
+    protected float downTimer = 0.0f;
+    protected float downTime = 3.0f;
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
-    //맞고 누울때 호출
-    /*나중에 abstract로 변경 예정*/
+    
+    //TODO : abstract로 변경 예정
     public delegate void DownEventHandler();
     public event DownEventHandler Down;
 
-    //맞고 누운다음 일어날때 사용할 델리게이트
-    //자식 클래스에서 Rising에 붙을 메소드 연결
     public delegate void RiseEventHandler();
     public event RiseEventHandler Rising;
 
@@ -32,11 +32,11 @@ public abstract class NPC : People
     {
         if(isDown)
         {
-            DownTimer += Time.deltaTime;
+            downTimer += Time.deltaTime;
 
-            if(DownTimer > DownTime)
+            if(downTimer > downTime)
             {
-                DownTimer = 0;
+                downTimer = 0;
                 isDown = false;
 
                 if(Rising != null)
@@ -59,7 +59,7 @@ public abstract class NPC : People
     }
     protected bool DectectedPlayerAttack()
     {
-        if (player.GetComponent<Player>().IsAttack &&
+        if (player.GetComponent<Player>().isAttack &&
             findRange > Vector3.Distance(transform.position, player.transform.position))
             return true;
         else

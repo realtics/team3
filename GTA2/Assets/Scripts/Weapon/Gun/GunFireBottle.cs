@@ -8,17 +8,15 @@ public class GunFireBottle : Gun
     public GameObject smokePref;
     public List<FireBottleSmoke> smokeList;
     public int smokePoolCnt;
-
     public float moveThrowPower;
-
 
     private float intervalDelta;
     private Player userPlayer;
-    private int SmokeIdx = 0;
+    private int smokeIdx = 0;
 
     void Start()
     {
-        gunType = GUNSTATE.FIREBOTTLE;
+        gunType = GunState.FireBottle;
         bulletPoolCount = 50;
 
         InitGun();
@@ -46,9 +44,9 @@ public class GunFireBottle : Gun
         }
     }
 
-    protected override void UpdateInput()
+    protected override void UpdateKeyInput()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || isShot)
         {
             intervalDelta += Time.deltaTime;
         }
@@ -59,15 +57,13 @@ public class GunFireBottle : Gun
             {
                 intervalDelta = shootInterval;
             }
-
-            if (userPlayer.playerStateUnder == Player.PLAYERSTATE_UNDER.WALK)
+            if (userPlayer.isWalk)
             {
                 intervalDelta += moveThrowPower;
             }
 
-
-            smokeList[SmokeIdx].SetTargetbullet(bulletList[bulletPoolIndex].gameObject);
-            SmokeIdx = GetPool<FireBottleSmoke>.PlusListIdx(smokeList, SmokeIdx);
+            smokeList[smokeIdx].SetTargetbullet(bulletList[bulletPoolIndex].gameObject);
+            smokeIdx = GetPool<FireBottleSmoke>.PlusListIdx(smokeList, smokeIdx);
             
             BombFireBottle LaunchBullet = (BombFireBottle)ShootSingleBullet(userObject.transform.position);
             LaunchBullet.SetForce(intervalDelta);

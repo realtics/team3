@@ -20,7 +20,7 @@ public class BulletElectric : Bullet
         myLightning.Started();
     }
 
-    public override void SetBullet(GUNSTATE type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
+    public override void SetBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
     {
         base.SetBullet(type, triggerPos, dir, bullettoSize);
     }
@@ -60,7 +60,7 @@ public class BulletElectric : Bullet
     }
 
 
-    public void UpdateBullet(GUNSTATE type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
+    public void UpdateBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
     {
         base.SetBullet(type, triggerPos, dir, bullettoSize);
         SetTarget(null);

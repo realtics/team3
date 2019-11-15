@@ -48,8 +48,8 @@ MonoBehaviour:
   shootInterval: 1.5
   bulletToPeopleSize: 0.2
   bulletPoolCount: 10
-  BulletCount: 30
-  SmokePref: {fileID: 3313274292029683021, guid: b279f9732fa462549923ee582ff2a040,
+  bulletCount: 0
+  smokePref: {fileID: 3313274292029683021, guid: b279f9732fa462549923ee582ff2a040,
     type: 3}
-  SmokeList: []
-  SmokePoolCnt: 30
+  smokeList: []
+  smokePoolCnt: 0

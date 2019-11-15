@@ -16,7 +16,7 @@ public abstract class NPCGun : MonoBehaviour
 
 
 
-    protected GUNSTATE gunType;
+    protected GunState gunType;
     protected int bulletPoolCnt;
 
     protected Vector3 gunPos;

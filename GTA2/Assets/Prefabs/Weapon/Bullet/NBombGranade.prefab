@@ -42,7 +42,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4224439575330150017}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -129,6 +129,6 @@ MonoBehaviour:
   bulletSpeed: 2
   bulletDir: {x: 0, y: 0, z: 0}
   bulletType: 0
-  MyRigidBody: {fileID: 4224439575330150014, guid: b50ff494fd4de8844a10e6ec31801560,
-    type: 3}
-  YPower: 8
+  myRigidBody: {fileID: 0}
+  yLaunchPos: 0
+  yLaunchPower: 0

@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class CarPathManager : MonoBehaviour
 {
-    public CarCtr carCtr;
+    public CarController carCtr;
 
     WaypointForCar curWaypoint;
     WaypointForCar destWaypoint;
@@ -33,11 +33,6 @@ public class CarPathManager : MonoBehaviour
     void Update()
     {
         Move();
-    }
-
-    public void Stop()
-    {
-        carCtr.StopCar();
     }
 
     void SetRandomDestWaypoint()
@@ -73,7 +68,7 @@ public class CarPathManager : MonoBehaviour
         dir.y = 0;
         float dist = dir.magnitude;
 
-        if (dist < 0.3f)
+        if (dist < 0.5f)
         {
             //if (destType == DestType.DT_EndOfRoad)
             //{

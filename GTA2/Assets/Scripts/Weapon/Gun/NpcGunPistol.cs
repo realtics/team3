@@ -6,7 +6,7 @@ public class NpcGunPistol : NPCGun
 {
     void Start()
     {
-        gunType = GUNSTATE.PISTOL;
+        gunType = GunState.Pistol;
         bulletPoolCnt = 30;
 
         base.InitGun();

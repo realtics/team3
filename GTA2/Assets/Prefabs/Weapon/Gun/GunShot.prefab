@@ -47,5 +47,5 @@ MonoBehaviour:
     type: 3}
   shootInterval: 1.5
   bulletToPeopleSize: 0.2
-  bulletPoolCount: 10
-  BulletCount: 30
+  bulletPoolCount: 30
+  bulletCount: 0

@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public enum GUNSTATE
+public enum GunState
 {
-    NONE,
-    PISTOL,
-    DOUBLEPISTOL,
-    MACHINGUN,
-    SLEEPMACHINGUN,
-    ROCKETLAUNCHER,
-    ELECTRICGUN,
-    SHOTGUN,
-    FIREGUN,
-    FIREBOTTLE,
-    GRANADE,
+    None,
+    Pistol,
+    DoublePistol,
+    Machinegun,
+    SleepMachinegun,
+    RocketLauncher,
+    Electric,
+    ShotGun,
+    FireGun,
+    FireBottle,
+    Granade,
 }
 
 public abstract class Gun : MonoBehaviour
@@ -29,7 +28,7 @@ public abstract class Gun : MonoBehaviour
     protected int bulletPoolIndex;
 
     protected GameObject userObject;
-    protected GUNSTATE gunType;
+    protected GunState gunType;
 
     protected Vector3 gunPos;
     protected Vector3 gunDir;
@@ -38,9 +37,10 @@ public abstract class Gun : MonoBehaviour
     protected float shootDelta;
 
     protected GameObject bulletPool;
+    protected bool isShot;
 
 
-    public int BulletCount;
+    public int bulletCount;
 
     // Start is called before the first frame update
     protected void InitGun()
@@ -109,21 +109,27 @@ public abstract class Gun : MonoBehaviour
     protected virtual void Update()
     {
         UpdateDirection();
-        UpdateInput();
+        UpdateDelta();
+        UpdateKeyInput();
     }
 
 
+    private void UpdateDelta()
+    {
+        shootDelta += Time.deltaTime;
+    }
     protected virtual void UpdateDirection()
     {
         gunDir = userObject.transform.forward;
         gunDir.y = userObject.transform.eulerAngles.y;
     }
 
+
+
     // 요부분은 사람이 해도 되는 거지만 일단 여기서 구현 - 총알 발사
-    protected virtual void UpdateInput()
+    protected virtual void UpdateKeyInput()
     {
-        shootDelta += Time.deltaTime;
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || isShot)
         {
             if (shootInterval < shootDelta)
             {
@@ -131,7 +137,19 @@ public abstract class Gun : MonoBehaviour
                 shootDelta = .0f;
             }
         }
+        
     }
+
+    public void UpdateBottonDown()
+    {
+        isShot = true;
+    }
+
+    public void UpdateBottonUp()
+    {
+        isShot = false;
+    }
+
     void PlusBulletIdx()
     {
         bulletPoolIndex = GetPool<Bullet>.PlusListIdx(bulletList, bulletPoolIndex);

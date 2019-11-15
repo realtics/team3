@@ -6,7 +6,7 @@ public class GunShot : Gun
 {
     void Start()
     {
-        gunType = GUNSTATE.SHOTGUN;
+        gunType = GunState.ShotGun;
         bulletPoolCount = 10;
 
         base.InitGun();
@@ -27,10 +27,10 @@ public class GunShot : Gun
             item.gameObject.SetActive(false);
         }
     }
-    protected override void UpdateInput()
+    protected override void UpdateKeyInput()
     {
         shootDelta += Time.deltaTime;
-        if (true == Input.GetKey(KeyCode.A))
+        if (true == Input.GetKey(KeyCode.A) || isShot)
         {
             if (shootInterval < shootDelta)
             {

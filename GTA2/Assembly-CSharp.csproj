@@ -131,6 +131,10 @@
     <Compile Include="Assets\KAsset\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs" />
     <Compile Include="Assets\KAsset\JMO Assets\WarFX\Spawn System\CFX_SpawnSystem.cs" />
     <Compile Include="Assets\KAsset\LightningBolt\LightningBoltScript.cs" />
+    <Compile Include="Assets\KAsset\UJoystick\Content\Script\Core\bl_Joystick.cs" />
+    <Compile Include="Assets\KAsset\UJoystick\Content\Script\Internal\bl_JoystickUtils.cs" />
+    <Compile Include="Assets\KAsset\UJoystick\Example\Scrips\bl_ControllerExample.cs" />
+    <Compile Include="Assets\Scripts\Car\DeltasController.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Citizen.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Doctor.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\NPC.cs" />
@@ -141,16 +145,21 @@
     <Compile Include="Assets\Scripts\Debug\DrawArrow.cs" />
     <Compile Include="Assets\Scripts\Debug\TempCamCtr.cs" />
     <Compile Include="Assets\Scripts\Debug\TestCarSpawner.cs" />
+    <Compile Include="Assets\Scripts\Legacy\CarDrive.cs" />
     <Compile Include="Assets\Scripts\Legacy\PathManager.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Road\Branch.cs" />
     <Compile Include="Assets\Scripts\Road\CarRoad.cs" />
     <Compile Include="Assets\Scripts\Road\RoadMatResize.cs" />
     <Compile Include="Assets\Scripts\Road\TrafficLight.cs" />
-    <Compile Include="Assets\Scripts\Road\TrafficLightCtr.cs" />
-    <Compile Include="Assets\Scripts\UnitCtr\CarCtr.cs" />
-    <Compile Include="Assets\Scripts\UnitCtr\CarDrive.cs" />
-    <Compile Include="Assets\Scripts\UnitCtr\HumanCtr.cs" />
+    <Compile Include="Assets\Scripts\Road\TrafficLightController.cs" />
+    <Compile Include="Assets\Scripts\UI\HeartImageList.cs" />
+    <Compile Include="Assets\Scripts\UI\MoneyText.cs" />
+    <Compile Include="Assets\Scripts\UI\PoliceImageList.cs" />
+    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\UI\WeaponImage.cs" />
+    <Compile Include="Assets\Scripts\UnitCtr\CarController.cs" />
+    <Compile Include="Assets\Scripts\UnitCtr\HumanController.cs" />
     <Compile Include="Assets\Scripts\Waypoint\CarPathManager.cs" />
     <Compile Include="Assets\Scripts\Waypoint\HumanPathManager.cs" />
     <Compile Include="Assets\Scripts\Waypoint\Waypoint.cs" />
@@ -187,6 +196,7 @@
     <Compile Include="Assets\Scripts\Weapon\SetPool.cs" />
     <None Include="Assets\KAsset\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend Scroll.shader" />
     <None Include="Assets\KAsset\JMO Assets\WarFX\Shaders\WFX_S Particle AddSoft A8.shader" />
+    <None Include="Assets\KAsset\UJoystick\ReadMe.txt" />
     <None Include="Assets\KAsset\JMO Assets\WarFX\Shaders\WFX_S Alpha-Specular TintColor.shader" />
     <None Include="Assets\KAsset\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend NoSoftParticles.shader" />
     <None Include="Assets\KAsset\LightningBolt\Readme.txt" />
@@ -203,34 +213,34 @@
     <None Include="Assets\KAsset\JMO Assets\WarFX\Shaders\WFX_S Multiply Soft.shader" />
     <None Include="Assets\KAsset\JMO Assets\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>D:/NeopleAcademy/Team3/GTA2/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

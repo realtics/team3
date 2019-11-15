@@ -6,16 +6,16 @@ public class GunDoublePistol : Gun
 {
     void Start()
     {
-        gunType = GUNSTATE.DOUBLEPISTOL;
+        gunType = GunState.DoublePistol;
         bulletPoolCount = 30;
 
         InitGun();
         base.InitBullet("DoublePistol");
     }
-    protected override void UpdateInput()
+    protected override void UpdateKeyInput()
     {
         shootDelta += Time.deltaTime;
-        if (true == Input.GetKey(KeyCode.A))
+        if (true == Input.GetKey(KeyCode.A) || isShot)
         {
             if (shootInterval < shootDelta)
             {

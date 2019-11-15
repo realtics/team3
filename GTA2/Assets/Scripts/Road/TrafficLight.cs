@@ -10,19 +10,30 @@ public class TrafficLight : MonoBehaviour
     }
     public SignalColor signalColor = SignalColor.SC_Red;
 
-    public Light light;
+    public Light pointLight;
+    public BoxCollider boxColliderForCar;
+    public BoxCollider boxColliderForPed1;
+    public BoxCollider boxColliderForPed2;
 
     public void ToggleSignal()
     {
         if(signalColor == SignalColor.SC_Green)
         {
             signalColor = SignalColor.SC_Red;
-            light.color = Color.red;
+            pointLight.color = Color.red;
+
+            boxColliderForCar.enabled = true;
+            boxColliderForPed1.enabled = false;
+            boxColliderForPed2.enabled = false;
         }
         else
         {
             signalColor = SignalColor.SC_Green;
-            light.color = Color.green;
+            pointLight.color = Color.green;
+
+            boxColliderForCar.enabled = false;
+            boxColliderForPed1.enabled = true;
+            boxColliderForPed2.enabled = true;
         }
     }
 
