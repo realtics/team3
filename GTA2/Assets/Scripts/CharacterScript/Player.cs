@@ -31,8 +31,8 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
 
     // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
     [SerializeField]
-    private UIManager uiManager;
-    private void Awake()
+    UIManager uiManager;
+    void Awake()
     {
         myRigidBody = GetComponent<Rigidbody>();
     }
@@ -67,7 +67,6 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
         //방향키 조작
         MoveControlKeyboard();
         MoveControlJoystick();
-        print(hDir + " " + vDir);
         ActiveControl();
         WeaponSwap();
 
@@ -120,36 +119,19 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
     }
     void MoveControlKeyboard()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if(Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
-            vDir = 1;
-            isWalk = true;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            vDir = -1;
-            isWalk = true;
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            hDir = 1;
-            isWalk = true;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            hDir = -1;
-            isWalk = true;
-        }
-        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
-        {
-            vDir = 0;
-            isWalk = true;
-        }
-        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            hDir = 0;
             isWalk = false;
+            vDir = 0;
+            hDir = 0;
         }
+        else
+        {
+            vDir = Input.GetAxisRaw("Vertical"); //GetAxis
+            hDir = Input.GetAxisRaw("Horizontal");
+            isWalk = true;
+        }
+        print(vDir + " " + vDir);
     }
     bool isAnyActive()
     {
@@ -172,7 +154,7 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
         }
         if (!Input.GetKey(KeyCode.A))
         {
-            ShotButtonUp();
+            ShotStop();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -294,6 +276,11 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
     public void ShotButtonUp()
     {
         gunList[(int)curGunIndex].UpdateBottonUp();
+        ShotStop();
+    }
+
+    void ShotStop()
+    {
         isShot = false;
         isAttack = false;
         isPunch = false;

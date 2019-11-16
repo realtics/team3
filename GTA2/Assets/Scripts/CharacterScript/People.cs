@@ -6,7 +6,7 @@ public abstract class People : MonoBehaviour
 {
     protected float rotateSpeed = 0.1f;
     protected float moveSpeed = 1.0f;
-    protected float runSpeed = 2.0f;
+    protected float runSpeed = 1.5f;
 
     protected Vector3 movement;
     protected Vector3 direction;

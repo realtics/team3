@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class DeltasController : MonoBehaviour
 {
-    public enum DamageDirection
-    {
-        FrontLeft, FrontRight, RearLeft, RearRight
-    }
-
     public GameObject sirenL;
     public GameObject sirenR;
     public float sirenSpeed;
@@ -72,22 +67,22 @@ public class DeltasController : MonoBehaviour
     {
         switch (damageDirection)
         {
-            case DamageDirection.FrontLeft:
+            case DamageDirection.frontLeft:
                 {
                     deltaFL.SetActive(true);
                 }
                 break;
-            case DamageDirection.FrontRight:
+            case DamageDirection.frontRight:
                 {
                     deltaFR.SetActive(true);
                 }
                 break;
-            case DamageDirection.RearLeft:
+            case DamageDirection.rearLeft:
                 {
                     deltaRL.SetActive(true);
                 }
                 break;
-            case DamageDirection.RearRight:
+            case DamageDirection.rearRight:
                 {
                     deltaRR.SetActive(true);
                 }

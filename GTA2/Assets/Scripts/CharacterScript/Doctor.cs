@@ -76,4 +76,19 @@ public class Doctor : NPC
         doctorState = DOCTORSTATE.RUN;
         //patternChangeTimer = 0.0f;
     }
+
+    public override void Down()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Rising()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Respawn()
+    {
+        throw new System.NotImplementedException();
+    }
 }

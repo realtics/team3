@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private float carSpawnRange = 10.0f;
-    public int spawnAmount = 20;
-    public GameObject carPrefab;
+    float carSpawnRange = 10.0f;
 
-    //TODO : NPC로 수정예정
-    public List<Citizen> activeCitizenList = new List<Citizen>();
-    public List<Citizen> deactiveCitizenList = new List<Citizen>();
-
+    [Header("최초에는 ActiveList에 Pool의 오브젝트 삽입.")]
+    public List<NPC> activeNPCList = new List<NPC>();
+    public List<NPC> deactiveNPCList = new List<NPC>();
+    
     public List<GameObject> activeCarList = new List<GameObject>();
     public List<GameObject> deactiveCarList = new List<GameObject>();
 
+    [Header("WayPoints")]
+    public List<GameObject> carWayPoints = new List<GameObject>();
+    public List<GameObject> peopleWayPoints = new List<GameObject>();
+
     //TODO : 사람 웨이 포인트 삽입
     //자동차 풀 만들고 Instantiate 삭제
-    public Vector3[] npcSpawnPoint;
-    public Vector3[] carSpawnPoint;
 
     [SerializeField]
     GameObject player;
@@ -28,14 +28,51 @@ public class SpawnManager : MonoBehaviour
     {
         Init();
         player = GameObject.FindWithTag("Player");
-        StartCoroutine(ActiveObjects());
-        StartCoroutine(DeactiveObjects());
+        //StartCoroutine(ActiveObjects());
+        //StartCoroutine(DeactiveObjects());
     }
     void Init()
     {
         //오브젝트 최초 생성
-        //SpawnCitizen(Random.Range(1, 10));
+        SpawnNPC();
         SpawnCar();
+    }
+    //WayPoints
+    void SpawnNPC()
+    {
+        foreach(var npc in activeNPCList)
+        {
+            int randomIndex = Random.Range(0, peopleWayPoints.Count);
+            npc.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+        }
+    }
+    void SpawnCar() //중복 방지 생성
+    {
+        List<Vector3> position = new List<Vector3>();
+
+        for (int i = 0; i < carWayPoints.Count; i++)
+        {
+            position.Add(carWayPoints[i].transform.position);
+        }
+
+        foreach (var car in activeCarList)
+        {
+            int randomIndex = Random.Range(0, position.Count);
+            car.gameObject.transform.position = carWayPoints[randomIndex].transform.position;
+            position.RemoveAt(randomIndex);
+        }
+    }
+    
+    public void NPCRepositioning(NPC npc)
+    {
+        int randomIndex = Random.Range(0, peopleWayPoints.Count);
+        npc.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+    }
+    //TODO : 이후 필요한 클래스로 매개변수 변경
+    public void CarRepositioning(CarDamage car)
+    {
+        int randomIndex = Random.Range(0, carWayPoints.Count);
+        car.gameObject.transform.position = carWayPoints[randomIndex].transform.position;
     }
     IEnumerator ActiveObjects()
     {
@@ -60,37 +97,40 @@ public class SpawnManager : MonoBehaviour
     //TODO : 제네릭메소드로 변경
     void CheckDeactiveCitizen()
     {
-        List<Citizen> tempRemoveCitizenList = new List<Citizen>();
+        List<NPC> tempRemoveCitizenList = new List<NPC>();
 
-        foreach (var citizen in deactiveCitizenList)
+        foreach (var citizen in deactiveNPCList)
         {
             if (!IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
             {
                 citizen.gameObject.SetActive(true);
-                activeCitizenList.Add(citizen);
+                activeNPCList.Add(citizen);
                 tempRemoveCitizenList.Add(citizen);
             }
         }
-        foreach(var removeCitizen in tempRemoveCitizenList)
+        for(int i = 0; i < tempRemoveCitizenList.Count; i++)
         {
-            deactiveCitizenList.Remove(removeCitizen);
+            NPC removeCitizen = tempRemoveCitizenList[i];
+            deactiveNPCList.Remove(removeCitizen);
         }
+      
     }
     void CheckActiveCitizen()
     {
-        List<Citizen> tempRemoveCitizenList = new List<Citizen>();
-        foreach (var citizen in activeCitizenList)
+        List<NPC> tempRemoveCitizenList = new List<NPC>();
+        foreach (var citizen in activeNPCList)
         {
             if (IsSpawnRange(citizen.transform.position) && citizen.gameObject.activeSelf)
             {
                 citizen.gameObject.SetActive(false);
-                deactiveCitizenList.Add(citizen);
+                deactiveNPCList.Add(citizen);
                 tempRemoveCitizenList.Add(citizen);
             }
         }
-        foreach (var removeCitizen in tempRemoveCitizenList)
+        for (int i = 0; i < tempRemoveCitizenList.Count; i++)
         {
-            activeCitizenList.Remove(removeCitizen);
+            NPC removeCitizen = tempRemoveCitizenList[i];
+            activeNPCList.Remove(removeCitizen);
         }
     }
     void CheckDeactiveCar()
@@ -106,14 +146,15 @@ public class SpawnManager : MonoBehaviour
                 tempRemoveCarList.Add(car);
             }
         }
-        foreach (var removeCar in tempRemoveCarList)
+        for (int i = 0; i < tempRemoveCarList.Count; i++)
         {
-            tempRemoveCarList.Remove(removeCar);
+            GameObject removeCar = tempRemoveCarList[i];
+            deactiveCarList.Remove(removeCar);
         }
     }
     void CheckActiveCar()
     {
-        List<GameObject> tempRemoveCitizenList = new List<GameObject>();
+        List<GameObject> tempRemoveCarList = new List<GameObject>();
 
         foreach (var car in activeCarList)
         {
@@ -121,26 +162,16 @@ public class SpawnManager : MonoBehaviour
             {
                 car.gameObject.SetActive(false);
                 deactiveCarList.Add(car);
-                tempRemoveCitizenList.Add(car);
+                tempRemoveCarList.Add(car);
             }
         }
-        foreach (var removeCitizen in tempRemoveCitizenList)
+        for (int i = 0; i < tempRemoveCarList.Count; i++)
         {
-            activeCarList.Remove(removeCitizen);
+            GameObject removeCar = tempRemoveCarList[i];
+            activeCarList.Remove(removeCar);
         }
     }
-    void SpawnCar()
-    {
-        GameObject[] allWP = GameObject.FindGameObjectsWithTag("waypoint");
-
-        for (int i = 0; i < spawnAmount; i++)
-        {
-            GameObject go = Instantiate(carPrefab);
-            go.transform.position = allWP[Random.Range(0, allWP.Length)].transform.position;
-            go.transform.parent = transform;
-            activeCarList.Add(go);
-        }
-    }
+   
     public bool IsSpawnRange(Vector3 position)
     {
         if (carSpawnRange < Vector3.Distance(position, player.transform.position))

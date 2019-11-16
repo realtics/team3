@@ -128,4 +128,19 @@ public class Police : NPC
     {
         policeState = POLICESTATE.DIE;
     }
+
+    public override void Down()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Rising()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Respawn()
+    {
+        throw new System.NotImplementedException();
+    }
 }

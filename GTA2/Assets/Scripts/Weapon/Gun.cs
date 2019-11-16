@@ -26,11 +26,13 @@ public abstract class Gun : MonoBehaviour
 
     public int bulletPoolCount;
     public int bulletCount;
-
+    public int shotPerOneBullet;
 
     protected int bulletPoolIndex;
+    protected int shotPerCurBullet;
 
     protected GameObject userObject;
+    protected Player userPlayer;
     protected GunState gunType;
 
     protected Vector3 gunPos;
@@ -50,12 +52,14 @@ public abstract class Gun : MonoBehaviour
     protected void InitGun()
     {
         userObject = GameObject.FindWithTag("Player");
+        userPlayer = userObject.GetComponent<Player>();
 
         transform.eulerAngles = new Vector3(90.0f, 0.0f, 90.0f);
         transform.parent = userObject.transform;
 
         // 인터벌은 수정가능
         shootDelta = .0f;
+        shotPerCurBullet = 0;
     }
 
     protected virtual void InitBullet(string poolName)
@@ -83,6 +87,7 @@ public abstract class Gun : MonoBehaviour
         Bullet returnBullet = bulletList[bulletPoolIndex];
 
         PlusBulletIdx();
+        MinusPlayerBulletCount();
         return returnBullet;
     }
     protected void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
@@ -96,6 +101,7 @@ public abstract class Gun : MonoBehaviour
             bulletList[bulletPoolIndex].SetBullet(
                 gunType, userObject.transform.position, item, bulletToPeopleSize);
             PlusBulletIdx();
+            MinusPlayerBulletCount();
         }
     }
     protected void DisableAllBullet()
@@ -159,5 +165,23 @@ public abstract class Gun : MonoBehaviour
     void PlusBulletIdx()
     {
         bulletPoolIndex = GetPool<Bullet>.PlusListIdx(bulletList, bulletPoolIndex);
+    }
+
+    void MinusPlayerBulletCount()
+    {
+        if (shotPerCurBullet + 1 < shotPerOneBullet)
+        {
+            shotPerCurBullet++;
+        }
+        else if (shotPerCurBullet + 1 == shotPerOneBullet)
+        {
+            userPlayer.gunList[(int)gunType].bulletCount--;
+            if (userPlayer.gunList[(int)gunType].bulletCount <= 0)
+            {
+                userPlayer.SwapNext();
+            }
+
+            shotPerCurBullet = 0;
+        }
     }
 }

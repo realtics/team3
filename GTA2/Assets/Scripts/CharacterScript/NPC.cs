@@ -12,16 +12,12 @@ public abstract class NPC : People
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
-    
+
     //TODO : abstract로 변경 예정
-    public delegate void DownEventHandler();
-    public event DownEventHandler Down;
+    public abstract void Down();
+    public abstract void Rising();
 
-    public delegate void RiseEventHandler();
-    public event RiseEventHandler Rising;
-
-    public delegate void RespawnEventHandler();
-    public event RespawnEventHandler Respawn;
+    public abstract void Respawn();
 
     public GameObject player;
     protected void NPCInit()
@@ -39,8 +35,7 @@ public abstract class NPC : People
                 downTimer = 0;
                 isDown = false;
 
-                if(Rising != null)
-                    Rising();
+                Rising();
             }
         }
         else if(isDie)
@@ -52,8 +47,7 @@ public abstract class NPC : People
                 respawnTimer = 0;
                 isDie = false;
 
-                if (Respawn != null)
-                    Respawn();
+                Respawn();
             }
         }
     }
@@ -101,10 +95,7 @@ public abstract class NPC : People
         }
         else if(other.CompareTag("PlayerPunch"))
         {
-            if(Down != null)
-            {
-                Down();
-            }
+            Down();
             isDown = true;
             
             print("Punched");

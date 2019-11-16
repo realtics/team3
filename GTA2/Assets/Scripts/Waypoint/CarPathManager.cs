@@ -20,19 +20,25 @@ public class CarPathManager : MonoBehaviour
     }
     DestType destType = DestType.DT_EndOfRoad;
 
-    void Start()
+    void OnEnable()
     {
-        SetRandomDestWaypoint();
-
-        destType = DestType.DT_EndOfRoad;
-        curLane = Random.Range(0, curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count);
-
-        carCtr.SetDestination(curDestPos);
+        Init();
     }
 
     void Update()
     {
         Move();
+    }
+
+    public void Init()
+    {
+        SetRandomDestWaypoint();
+
+        destType = DestType.DT_EndOfRoad;
+        curLane = Random.Range(0, curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count);
+        transform.LookAt(new Vector3(curDestPos.x, transform.position.y, curDestPos.z));
+
+        carCtr.SetDestination(curDestPos);
     }
 
     void SetRandomDestWaypoint()

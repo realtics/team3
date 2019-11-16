@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        moneyTextUI.SetMoney(182/*userPlayer.money*/);
+        moneyTextUI.SetMoney(player.money);
         weaponUI.SetGunSprite(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
         heartListUI.SetHealthPoint(player.GetHp());
 

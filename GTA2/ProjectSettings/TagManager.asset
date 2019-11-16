@@ -18,6 +18,7 @@ TagManager:
   - PlayerPunch
   - PlayerFireBullet
   - Item
+  - SpawnManager
   layers:
   - Default
   - TransparentFX

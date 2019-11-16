@@ -21,7 +21,7 @@ public class GunElectric : Gun
         noneTargetObjectList = new List<GameObject>();
 
 
-        foreach (var citizen in spawnManager.activeCitizenList)
+        foreach (var citizen in spawnManager.activeNPCList)
         {
             objectList.Add(citizen.gameObject);
         }
@@ -48,7 +48,7 @@ public class GunElectric : Gun
             }
         }
         
-        else if (!Input.GetKey(KeyCode.A))
+        else if (!Input.GetKey(KeyCode.A) || !isShot)
         {
             StopGun();
         }

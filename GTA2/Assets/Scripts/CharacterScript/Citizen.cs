@@ -40,9 +40,6 @@ public class Citizen : NPC
     private void Start()
     {
         base.NPCInit();
-        base.Rising += new RiseEventHandler(SetRunAway);
-        base.Down += new DownEventHandler(SetDown);
-        base.Respawn += new RespawnEventHandler(SetRespawn);
 
         patternChangeInterval = Random.Range(3.0f, 500.0f);
         patternChangeTimer = patternChangeInterval;
@@ -158,6 +155,7 @@ public class Citizen : NPC
         GetComponent<Rigidbody>().isKinematic = false;
     }
 
+    //TODO : IDLE Timer, Walk Timer 따로만들기
     private void TimerCheck()
     {
         patternChangeTimer += Time.deltaTime;
@@ -168,7 +166,7 @@ public class Citizen : NPC
             case CitizenState.WALK:
                 if (DectectedPlayerAttack())
                 {
-                    SetRunAway();
+                    Down();
                 }
                 PatternChange(patternChangeInterval);
                 patternChangeInterval = Random.Range(3.0f, 500.0f);
@@ -176,7 +174,7 @@ public class Citizen : NPC
             case CitizenState.RUN:
                 if (DectectedPlayerAttack())
                 {
-                    SetRunAway();
+                    Down();
                 }
                 PatternChange(runawayTime);
                 break;
@@ -208,7 +206,13 @@ public class Citizen : NPC
             }
         }
     }
-    private void SetRunAway()
+    #region override method
+    public override void Down()
+    {
+        citizenState = CitizenState.DOWN;
+    }
+
+    public override void Rising()
     {
         if (citizenState == CitizenState.RUN)
             return;
@@ -217,19 +221,17 @@ public class Citizen : NPC
         citizenState = CitizenState.RUN;
         patternChangeTimer = 0.0f;
     }
-    private void SetDown()
-    {
-        citizenState = CitizenState.DOWN;
-        print("Down");
-    }
-    private void SetRespawn()
+
+    public override void Respawn()
     {
         patternChangeTimer = 0;
         isDie = false;
         hp = 100;
         citizenState = CitizenState.IDLE;
+        GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().NPCRepositioning(this);
         print("Citizen Respawn");
     }
+    #endregion
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Wall" && citizenState == CitizenState.RUN)
@@ -238,4 +240,6 @@ public class Citizen : NPC
             transform.Rotate(0, Random.Range(90, 270), 0);
         }
     }
+
+    
 }
