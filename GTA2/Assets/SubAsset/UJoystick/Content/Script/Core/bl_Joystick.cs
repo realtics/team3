@@ -124,7 +124,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             isFree = false;
             //Get Position of current touch
-            Vector3 position = bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);
+            Vector3 position = Input.mousePosition;/*bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);*/
 
             //Rotate into the area circumferential of joystick
             if (Vector2.Distance(DeathArea, position) < radio)

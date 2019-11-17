@@ -35,6 +35,7 @@ public class CarController : MonoBehaviour
 
     float inputH;
     float inputV;
+    float joystickInputH, joystickInputV;
 
     void Awake()
     {
@@ -120,8 +121,23 @@ public class CarController : MonoBehaviour
 
     void PlayerInput()
     {
-        inputV = Input.GetAxisRaw("Vertical");
-        inputH = Input.GetAxisRaw("Horizontal");
+        if(joystickInputH == 0)
+        {
+            inputH = Input.GetAxisRaw("Horizontal");
+        }
+        else
+        {
+            inputH = joystickInputH;
+        }
+
+        if(joystickInputV == 0)
+        {
+            inputV = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            inputV = joystickInputV;
+        }        
 
         if (Input.GetKeyDown(KeyCode.Return))
             GetOffTheCar();
@@ -351,7 +367,7 @@ public class CarController : MonoBehaviour
 
         if(curHp < 30)
         {
-            damageMaxSpdMultiplier = 0.4f;
+            damageMaxSpdMultiplier = 0.5f;
         }
         else if(curHp < 60)
         {
@@ -365,6 +381,8 @@ public class CarController : MonoBehaviour
         driver.gameObject.SetActive(false);
         driver.transform.SetParent(transform);
         Camera.main.GetComponent<TempCamCtr>().target = gameObject;
+
+        SetAiMaxSpeedMultiplier();
     }
     public void GetOffTheCar()
     {
@@ -373,6 +391,8 @@ public class CarController : MonoBehaviour
         driver.transform.SetParent(null);
         Camera.main.GetComponent<TempCamCtr>().target = driver;
         driver = null;
+
+        SetAiMaxSpeedMultiplier();
     }
 
     void OnDrawGizmos()
@@ -410,5 +430,27 @@ public class CarController : MonoBehaviour
     {
         if (col.transform.tag == "Wall")
             curSpeed *= 0.9f;
+    }
+
+
+    // UI---------------------
+    public GameObject GetDriver()
+    {
+        return driver;
+    }
+
+    public void InputVertical(float value)
+    {
+        joystickInputV = value;
+    }
+
+    public void InputHorizon(float value)
+    {
+        joystickInputH = value;
+    }
+
+    public void InputReturn()
+    {
+        GetOffTheCar();
     }
 }

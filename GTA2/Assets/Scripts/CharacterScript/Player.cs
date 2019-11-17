@@ -140,6 +140,7 @@ public class Player : People
             {
                 isStealing = false;
                 targetCar.GetComponent<CarController>().GetOnTheCar(gameObject);
+                uiManager.InCar(targetCar.GetComponent<CarController>());
             }
             transform.LookAt(targetCar.transform);
             myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
@@ -180,7 +181,11 @@ public class Player : People
     public void MoveControlJoystick()
     {
         if (Mathf.Abs(uiManager.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(uiManager.playerJoystick.Vertical) < 0.01f)
+        {
+            isWalk = false;
             return;
+        }
+        isWalk = true;
         isStealing = false;
         hDir = uiManager.playerJoystick.Horizontal / 5.0f;
         vDir = uiManager.playerJoystick.Vertical / 5.0f;
@@ -203,25 +208,7 @@ public class Player : People
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            isStealing = true;
-            isWalk = true;
-
-            //vDir = Input.GetAxisRaw("Vertical");
-            //hDir = Input.GetAxisRaw("Horizontal");
-
-            List<GameObject> activeCarList = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().activeCarList;
-            //제일 가까운 차 가져오기
-
-            float minDistance = 100.0f;
-
-            foreach (var car in activeCarList)
-            {
-                if (minDistance > Vector3.Distance(car.transform.position, transform.position))
-                {
-                    targetCar = car;
-                    minDistance = Vector3.Distance(car.transform.position, transform.position);
-                }
-            }
+            EnterTheCar();
         }
     }
     void ChaseTargetCar()
@@ -344,6 +331,29 @@ public class Player : People
     {
         gunList[(int)curGunIndex].UpdateBottonUp();
         ShotStop();
+    }
+
+    public void EnterTheCar()
+    {
+        isStealing = true;
+        isWalk = true;
+
+        //vDir = Input.GetAxisRaw("Vertical");
+        //hDir = Input.GetAxisRaw("Horizontal");
+
+        List<GameObject> activeCarList = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().activeCarList;
+        //제일 가까운 차 가져오기
+
+        float minDistance = 100.0f;
+
+        foreach (var car in activeCarList)
+        {
+            if (minDistance > Vector3.Distance(car.transform.position, transform.position))
+            {
+                targetCar = car;
+                minDistance = Vector3.Distance(car.transform.position, transform.position);
+            }
+        }
     }
 
     void ShotStop()

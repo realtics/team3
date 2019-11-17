@@ -23,11 +23,18 @@ public class UIManager : MonoBehaviour
     private GameObject humanJoystick;
     [SerializeField]
     private GameObject carJoystick;
+    [SerializeField]
+    private CarController targetCarControll;
 
     // Start is called before the first frame update
     private Player player;
 
     // TODO: 조이스틱 플레이어 휴먼 및 자동차 연결
+    bool isLeftDown;
+    bool isRightDown;
+    bool isExcelDown;
+    bool isBreakDown;
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
@@ -44,16 +51,52 @@ public class UIManager : MonoBehaviour
         weaponUI.SetGunSprite(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
         heartListUI.SetHealthPoint(player.GetHp());
 
-        InputChanger();
+        UpdateGetOffCar();
+        UpdateButton();
     }
 
     // 컴퓨터용 체인저
-    private void InputChanger()
+    private void UpdateGetOffCar()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (targetCarControll == null)
         {
-            humanJoystick.SetActive(!humanJoystick.activeInHierarchy);
-            carJoystick.SetActive(!carJoystick.activeInHierarchy);
+            return;
+        }
+
+        // 타겟 팅중인 차가 없으면
+        if (targetCarControll.GetDriver() == null)
+        {
+            OutCar();
+            targetCarControll = null;
+        }
+    }
+
+    void UpdateButton()
+    {
+        if (isExcelDown)
+        {
+            targetCarControll.InputVertical(1.0f);
+        }
+        if (isBreakDown)
+        {
+            targetCarControll.InputVertical(-1.0f);
+        }
+        if (isLeftDown)
+        {
+            targetCarControll.InputHorizon(-1.0f);
+        }
+        if (isRightDown)
+        {
+            targetCarControll.InputHorizon(1.0f);
+        }
+
+        if (!isLeftDown && !isRightDown && targetCarControll != null)
+        {
+            targetCarControll.InputHorizon(.0f);
+        }
+        if (!isExcelDown && !isBreakDown && targetCarControll != null)
+        {
+            targetCarControll.InputVertical(.0f);
         }
     }
 
@@ -64,5 +107,62 @@ public class UIManager : MonoBehaviour
     public bool isCarUI()
     {
         return carJoystick.activeInHierarchy;
+    }
+
+    public void InCar(CarController targetCar)
+    {
+        targetCarControll = targetCar;
+        humanJoystick.SetActive(false);
+        carJoystick.SetActive(true);
+    }
+    public void OutCar()
+    {
+        humanJoystick.SetActive(true);
+        carJoystick.SetActive(false);
+    }
+
+
+    public void InButtonDown()
+    {
+        player.EnterTheCar();
+    }
+    public void ExcelButtonDown()
+    {
+        isExcelDown = true;
+    }
+    public void BreakButtonDown()
+    {
+        isBreakDown = true;
+    }
+    public void RightButtonDown()
+    {
+        isRightDown = true;
+    }
+    public void LeftButtonDown()
+    {
+        isLeftDown = true;
+    }
+
+
+    public void ExcelButtonUp()
+    {
+        isExcelDown = false;
+    }
+    public void BreakButtonUp()
+    {
+        isBreakDown = false;
+    }
+    public void RightButtonUp()
+    {
+        isRightDown = false;
+    }
+    public void LeftButtonUp()
+    {
+        isLeftDown = false;
+    }
+
+    public void ReturnButtonDown()
+    {
+        targetCarControll.InputReturn();
     }
 }
