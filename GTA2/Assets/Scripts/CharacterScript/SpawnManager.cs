@@ -59,6 +59,7 @@ public class SpawnManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, position.Count);
             car.gameObject.transform.position = carWayPoints[randomIndex].transform.position;
+            car.gameObject.SetActive(true);
             position.RemoveAt(randomIndex);
         }
     }

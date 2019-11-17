@@ -7,7 +7,7 @@ public abstract class People : MonoBehaviour
     protected float rotateSpeed = 0.1f;
     protected float moveSpeed = 1.0f;
     protected float runSpeed = 1.5f;
-
+    
     protected Vector3 movement;
     protected Vector3 direction;
     protected Vector3 targetDirectionVector = Vector3.zero;
@@ -15,11 +15,9 @@ public abstract class People : MonoBehaviour
     [SerializeField]
     protected int hp = 100;
 
-    // ------------ 방향 수정
     protected float hDir = 0;
     protected float vDir = 0;
 
-    //TODO : isDie없이 작동할 수 있도록 수정
     protected bool isDie = false;
     protected abstract void Die();
     protected virtual void Move()
@@ -36,11 +34,10 @@ public abstract class People : MonoBehaviour
     {
         hp -= damage;
 
-        //사망시 true
         if (hp <= 0)
         {
-            isDie = true;
             Die();
+            isDie = true;
         }
     }
     

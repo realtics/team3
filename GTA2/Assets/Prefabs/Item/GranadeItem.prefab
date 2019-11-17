@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0958fe46546d74e91a3bcfaf252812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 14
+  itemType: 15
   itemCount: 5
   RespawnTime: 5
   spriteAnimation:

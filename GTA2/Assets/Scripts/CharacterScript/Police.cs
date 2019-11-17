@@ -25,7 +25,7 @@ public class Police : NPC
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        playert = GameObject.FindWithTag("Player");
         curAttackCoolTime = attackInterval;
     }
 
@@ -112,7 +112,7 @@ public class Police : NPC
     }
     bool IsAttackRange()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < punchRange)
+        if (Vector3.Distance(transform.position, playert.transform.position) < punchRange)
         {
             return true;
         }
@@ -122,7 +122,7 @@ public class Police : NPC
     void Attack()
     {
         //transform.LookAt(player.transform);
-        player.GetComponent<Player>().Hurt(10);
+        playert.GetComponent<Player>().Hurt(10);
     }
     protected override void Die()
     {

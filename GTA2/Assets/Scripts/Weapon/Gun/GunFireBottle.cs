@@ -44,14 +44,14 @@ public class GunFireBottle : Gun
         }
     }
 
-    protected override void UpdateKeyInput()
+    protected override void UpdateShot()
     {
-        if (Input.GetKey(KeyCode.A) || isShot)
+        if (isShot)
         {
             intervalDelta += Time.deltaTime;
         }
 
-        else if (Input.GetKeyUp(KeyCode.A) || (!isShot && isPrevShot))
+        else if ((!isShot && isPrevShot))
         {
             isPrevShot = false;
 

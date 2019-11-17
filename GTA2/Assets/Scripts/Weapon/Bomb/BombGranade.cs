@@ -9,10 +9,16 @@ public class BombGranade : Bullet
     public float yLaunchPos;
     public float yLaunchPower;
 
+
+    private float explosionPower = 5.0f;
+    private TempCamCtr camExplosion;
+
     protected override void Start()
     {
         base.Start();
         myCollider.isTrigger = false;
+
+        camExplosion = Camera.main.gameObject.GetComponent<TempCamCtr>();
     }
 
 
@@ -34,6 +40,7 @@ public class BombGranade : Bullet
 
     protected override void Explosion()
     {
-        gameObject.SetActive(false);
+        base.Explosion();
+        camExplosion.StartShake(Mathf.Abs(explosionPower - (transform.position - bulletStartPos).magnitude));
     }
 }

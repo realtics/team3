@@ -9,17 +9,27 @@ public class Bullet : MonoBehaviour
 
     public float bulletLifeTime;
     public float bulletSpeed;
+    public float explosionArea;
 
-
-    public Vector3 bulletDir;
-    public GunState bulletType;
+    protected Vector3 bulletStartPos;
+    protected Vector3 bulletDir;
+    protected GunState bulletType;
 
     protected SphereCollider myCollider;
     protected float bulletLifeDelta = .0f;
+    protected float bulletArea;
+
+    protected bool isLife = false;
+    protected float bulletActiveDelta = .0f;
+
+
+
     protected virtual void Start()
     {
         myCollider = GetComponent<SphereCollider>();
         myCollider.isTrigger = true;
+
+        bulletArea = myCollider.radius;
     }
 
     public virtual void SetBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
@@ -27,22 +37,27 @@ public class Bullet : MonoBehaviour
         bulletType = type;
         bulletDir = dir;
 
-
-        Vector3 PosTmp = triggerPos + bulletDir * bullettoSize;
-        PosTmp.y = triggerPos.y;
+        bulletStartPos = triggerPos + bulletDir * bullettoSize;
+        bulletStartPos.y = triggerPos.y;
         bulletLifeDelta = .0f;
 
-
-
         transform.eulerAngles = new Vector3(90.0f, dir.y + 90.0f, 90.0f);
-        transform.position = PosTmp;
+        transform.position = bulletStartPos;
         gameObject.SetActive(true);
+        isLife = true;
+        bulletActiveDelta = .0f;
+
+        if (myCollider != null)
+        {
+            myCollider.radius = bulletArea;
+        }
     }
 
 
     protected virtual void Update()
     {
         UpdateBullet();
+        UpdateActive();
     }
     protected virtual void UpdateBullet()
     {
@@ -57,11 +72,29 @@ public class Bullet : MonoBehaviour
         }
     }
 
-
     protected virtual void Explosion()
     {
-        transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
-        gameObject.SetActive(false);
+        if (myCollider != null)
+        {
+            myCollider.radius = explosionArea;
+        }
+
+        isLife = false;
+    }
+
+    void UpdateActive()
+    {
+        if (isLife)
+        {
+            return;
+        }
+
+        bulletActiveDelta += Time.deltaTime;
+        if (bulletActiveDelta > 1.0f)
+        {
+            transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
+            gameObject.SetActive(false);
+        }          
     }
 
     protected void OnTriggerEnter(Collider other)

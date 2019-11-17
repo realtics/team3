@@ -34,11 +34,11 @@ public class GunElectric : Gun
     protected override void Update()
     {
         base.UpdateDirection();
-        UpdateKeyInput();
+        UpdateShot();
     }
-    protected override void UpdateKeyInput()
+    protected override void UpdateShot()
     {
-        if (Input.GetKey(KeyCode.A) || isShot)
+        if (isShot)
         {
             shootDelta += Time.deltaTime;
             if (shootInterval < shootDelta)
@@ -48,7 +48,7 @@ public class GunElectric : Gun
             }
         }
         
-        else if (!Input.GetKey(KeyCode.A) || !isShot)
+        else if (!isShot)
         {
             StopGun();
         }

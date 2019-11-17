@@ -4,25 +4,23 @@ using UnityEditor;
 public abstract class NPC : People
 {
     protected float findRange = 10.0f;
-    
-    //TODO : isDown없이 작동하게 수정
-    protected bool isDown = false; 
+
+    protected bool isDown = false;
     protected float downTimer = 0.0f;
     protected float downTime = 3.0f;
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
 
-    //TODO : abstract로 변경 예정
     public abstract void Down();
     public abstract void Rising();
 
     public abstract void Respawn();
 
-    public GameObject player;
+    public GameObject playert;
     protected void NPCInit()
     {
-        player = GameObject.FindWithTag("Player");
+        playert = GameObject.FindWithTag("Player");
     }
     protected void NPCUpdate()
     {
@@ -53,8 +51,8 @@ public abstract class NPC : People
     }
     protected bool DectectedPlayerAttack()
     {
-        if (player.GetComponent<Player>().isAttack &&
-            findRange > Vector3.Distance(transform.position, player.transform.position))
+        if (playert.GetComponent<Player>().isAttack &&
+            findRange > Vector3.Distance(transform.position, playert.transform.position))
             return true;
         else
             return false;
@@ -88,7 +86,8 @@ public abstract class NPC : People
         if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
         {
             Bullet HitBullet = other.GetComponent<Bullet>();
-            
+
+
             //HitBullet.누가쐈는지
             Hurt(HitBullet.bulletDamage);
             other.gameObject.SetActive(false);

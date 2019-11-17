@@ -25,7 +25,7 @@ public class GunGranade : Gun
     }
 
 
-    protected override void UpdateKeyInput()
+    protected override void UpdateShot()
     {
         if (Input.GetKey(KeyCode.A) || isShot)
         {

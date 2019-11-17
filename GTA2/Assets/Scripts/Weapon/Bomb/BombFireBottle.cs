@@ -9,9 +9,14 @@ public class BombFireBottle : Bullet
     public float yLaunchPos;
     public float yLaunchPower;
 
+
+
+    private float explosionPower = 5.0f;
+    private TempCamCtr camExplosion;
     protected override void Start()
     {
         base.Start();
+        camExplosion = Camera.main.gameObject.GetComponent<TempCamCtr>();
     }
 
     // Update is called once per frame
@@ -34,6 +39,7 @@ public class BombFireBottle : Bullet
 
     protected void OnTriggerEnter(Collider other)
     {
-        gameObject.SetActive(false);
+        base.Explosion();
+        camExplosion.StartShake(explosionPower - (transform.position - bulletStartPos).magnitude);
     }
 }

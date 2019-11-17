@@ -121,10 +121,11 @@ public abstract class Gun : MonoBehaviour
         UpdateDirection();
         UpdateDelta();
         UpdateKeyInput();
+        UpdateShot();
     }
 
 
-    private void UpdateDelta()
+    void UpdateDelta()
     {
         shootDelta += Time.deltaTime;        
     }
@@ -135,11 +136,22 @@ public abstract class Gun : MonoBehaviour
     }
 
 
+    void UpdateKeyInput()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            UpdateBottonDown();
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            UpdateBottonUp();
+        }
+    }
 
     // 요부분은 사람이 해도 되는 거지만 일단 여기서 구현 - 총알 발사
-    protected virtual void UpdateKeyInput()
+    protected virtual void UpdateShot()
     {
-        if (Input.GetKey(KeyCode.A) || isShot)
+        if (isShot)
         {
             if (shootInterval < shootDelta)
             {

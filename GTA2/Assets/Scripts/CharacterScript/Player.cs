@@ -2,31 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : People //TODO : 상체하체 나누지 않고 한 스프라이트로, 애니메이터 육망성 만들지 않고..
+public class Player : People
 {
     //Animator
     public bool isWalk { get; set; }
     public bool isShot { get; set; }
     public bool isPunch { get; set; }
     public bool isJump { get; set; }
+    public bool isStealing { get; set; }
 
+    GameObject targetCar;
     float playerMoveSpeed = 2.0f;
-    
+
     public GunState curGunIndex { get; set; }
-    
 
     public bool isAttack { get; set; }
     public int money { get; set; }
-    
+
     float jumpTime = 1.5f;
     float jumpTimer = 0.0f;
-    
+
     Rigidbody myRigidBody;
     RaycastHit hit;
 
     public LayerMask collisionLayer;
     public Animator animator;
-    
     public List<Gun> gunList;
 
     // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
@@ -39,6 +39,20 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
     void Start()
     {
         moveSpeed = playerMoveSpeed;
+
+        // 이거 그냥 건 리스트 쓰니까 프리펩에 있는게 계속 수정됌 그래서 복사를 해
+        // 프리팹은 지키는 쪽으로 합시다ㅇㅇ
+        List<Gun> gunTempList = new List<Gun>();
+        foreach (var item in gunList)
+        {
+            GameObject NewGun = Instantiate(item.gameObject);
+            NewGun.transform.parent = transform;
+            NewGun.SetActive(false);
+            gunTempList.Add(NewGun.GetComponent<Gun>());
+        }
+        gunList.Clear();
+        gunList = gunTempList;
+
         gunList[(int)GunState.None].bulletCount = 1;
         gunList[(int)GunState.None].gameObject.SetActive(true);
     }
@@ -50,6 +64,7 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
         animator.SetBool("isPunch", isPunch);
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
+
     }
     private void FixedUpdate()
     {
@@ -63,29 +78,29 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
     {
         if (isDie)
             return;
-        
         //방향키 조작
         MoveControlKeyboard();
         MoveControlJoystick();
         ActiveControl();
         WeaponSwap();
 
+        if (isStealing)
+        {
+            ChaseTargetCar();
+        }
+
         Move();
         //TODO : 오브젝트 조작(근처의 탈 것 등등)
     }
-    public void MoveControlJoystick()
-    {
-        if (Mathf.Abs(uiManager.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(uiManager.playerJoystick.Vertical) < 0.01f)
-            return;
-        
-        hDir = uiManager.playerJoystick.Horizontal / 5.0f;
-        vDir = uiManager.playerJoystick.Vertical / 5.0f;
-    }
+
     void TimerCheck()
     {
         if (isJump)
             LandCheck();
     }
+
+
+    #region lowlevelCode
     void LandCheck()
     {
         Debug.DrawRay(transform.position, transform.up * -1, Color.red);
@@ -103,15 +118,34 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
             }
         }
     }
+
     protected override void Die()
     {
         isDie = true;
     }
-
-    #region lowlevelCode
     protected override void Move()
     {
-        myRigidBody.MovePosition(transform.position + (new Vector3(hDir, 0, vDir) * Time.deltaTime * moveSpeed));
+        if (isStealing)
+        {
+            print(Vector3.Distance(transform.position, targetCar.transform.position));
+
+            //일정거리이상 멀어져서 차 쫓기 포기
+            if (Vector3.Distance(transform.position, targetCar.transform.position) > 5)
+            {
+                isStealing = false;
+            }
+            //차 탑승
+            //TODO : 운전석으로 점프해서가서 탑승 모션 구현
+            else if (Vector3.Distance(transform.position, targetCar.transform.position) < 1)
+            {
+                isStealing = false;
+                targetCar.GetComponent<CarController>().GetOnTheCar(gameObject);
+            }
+            transform.LookAt(targetCar.transform);
+            myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
+        }
+        else
+            myRigidBody.MovePosition(transform.position + (new Vector3(hDir, 0, vDir) * Time.deltaTime * moveSpeed));
     }
     public int GetHp()
     {
@@ -119,9 +153,10 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
     }
     void MoveControlKeyboard()
     {
-        if(Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
+        if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
-            isWalk = false;
+            if (!isStealing)
+                isWalk = false;
             vDir = 0;
             hDir = 0;
         }
@@ -130,27 +165,32 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
             vDir = Input.GetAxisRaw("Vertical"); //GetAxis
             hDir = Input.GetAxisRaw("Horizontal");
             isWalk = true;
+            isStealing = false;
         }
-        print(vDir + " " + vDir);
     }
     bool isAnyActive()
     {
-        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) && 
+        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) &&
             !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) &&
             !isJump)
             return true;
         else
             return false;
     }
-
-    /// <summary>
-    ///  UI 상호작용을 위한 수정 - 유아이 끄면 컴터로도 됨
-    /// </summary>
+    public void MoveControlJoystick()
+    {
+        if (Mathf.Abs(uiManager.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(uiManager.playerJoystick.Vertical) < 0.01f)
+            return;
+        isStealing = false;
+        hDir = uiManager.playerJoystick.Horizontal / 5.0f;
+        vDir = uiManager.playerJoystick.Vertical / 5.0f;
+    }
     void ActiveControl()
     {
         if (Input.GetKeyDown(KeyCode.A) && !isJump)
         {
             ShotButtonDown();
+            isStealing = false;
         }
         if (!Input.GetKey(KeyCode.A))
         {
@@ -158,8 +198,35 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
+            isStealing = false;
             JumpButtonDown();
         }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            isStealing = true;
+            isWalk = true;
+
+            //vDir = Input.GetAxisRaw("Vertical");
+            //hDir = Input.GetAxisRaw("Horizontal");
+
+            List<GameObject> activeCarList = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().activeCarList;
+            //제일 가까운 차 가져오기
+
+            float minDistance = 100.0f;
+
+            foreach (var car in activeCarList)
+            {
+                if (minDistance > Vector3.Distance(car.transform.position, transform.position))
+                {
+                    targetCar = car;
+                    minDistance = Vector3.Distance(car.transform.position, transform.position);
+                }
+            }
+        }
+    }
+    void ChaseTargetCar()
+    {
+        //targetCar
     }
     void Jump()
     {
@@ -198,7 +265,7 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
             gunList[(int)curGunIndex].gameObject.SetActive(false);
             curGunIndex--;
         }
-        while (gunList[(int)curGunIndex].bulletCount == 0)
+        while (gunList[(int)curGunIndex].bulletCount <= 0)
         {
             curGunIndex--;
             if ((int)curGunIndex == gunList.Count)
@@ -222,7 +289,7 @@ public class Player : People //TODO : 상체하체 나누지 않고 한 스프�
             curGunIndex++;
         }
 
-        while (gunList[(int)curGunIndex].bulletCount == 0)
+        while (gunList[(int)curGunIndex].bulletCount <= 0)
         {
             curGunIndex++;
             if ((int)curGunIndex == gunList.Count)

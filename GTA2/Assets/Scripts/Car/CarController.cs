@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     }
     public CarState carState = CarState.aiNormal;
     public GameObject chaseTarget; // 나중엔 숨겨야함.
+    GameObject driver;
     Vector3 destination;
 
     public float maxSpeed;
@@ -121,6 +122,9 @@ public class CarController : MonoBehaviour
     {
         inputV = Input.GetAxisRaw("Vertical");
         inputH = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetKeyDown(KeyCode.Return))
+            GetOffTheCar();
     }
 
     void MoveCarByInput()
@@ -353,6 +357,22 @@ public class CarController : MonoBehaviour
         {
             damageMaxSpdMultiplier = 0.8f;
         }
+    }
+    public void GetOnTheCar(GameObject driver)
+    {
+        this.driver = driver;
+        carState = CarState.controlledByPlayer;
+        driver.gameObject.SetActive(false);
+        driver.transform.SetParent(transform);
+        Camera.main.GetComponent<TempCamCtr>().target = gameObject;
+    }
+    public void GetOffTheCar()
+    {
+        driver.SetActive(true);
+        carState = CarState.idle;
+        driver.transform.SetParent(null);
+        Camera.main.GetComponent<TempCamCtr>().target = driver;
+        driver = null;
     }
 
     void OnDrawGizmos()

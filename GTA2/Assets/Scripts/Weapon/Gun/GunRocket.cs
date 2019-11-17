@@ -38,9 +38,9 @@ public class GunRocket : Gun
         }
     }
 
-    protected override void UpdateKeyInput()
+    protected override void UpdateShot()
     {
-        if (true == Input.GetKey(KeyCode.A) || isShot)
+        if (isShot)
         {
             if (shootInterval < shootDelta)
             {

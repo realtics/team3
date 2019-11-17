@@ -150,6 +150,11 @@ public class Citizen : NPC
     #endregion
     protected override void Die() //리스폰 필요
     {
+        if (!isDie)
+        {
+            playert.GetComponent<Player>().money += 10;
+        }
+
         isDie = true;
         citizenState = CitizenState.DIE;
         GetComponent<Rigidbody>().isKinematic = false;
@@ -166,7 +171,7 @@ public class Citizen : NPC
             case CitizenState.WALK:
                 if (DectectedPlayerAttack())
                 {
-                    Down();
+                    citizenState = CitizenState.RUN;
                 }
                 PatternChange(patternChangeInterval);
                 patternChangeInterval = Random.Range(3.0f, 500.0f);
@@ -174,7 +179,7 @@ public class Citizen : NPC
             case CitizenState.RUN:
                 if (DectectedPlayerAttack())
                 {
-                    Down();
+                    citizenState = CitizenState.RUN;
                 }
                 PatternChange(runawayTime);
                 break;
@@ -216,7 +221,7 @@ public class Citizen : NPC
     {
         if (citizenState == CitizenState.RUN)
             return;
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+        transform.LookAt(new Vector3(playert.transform.position.x, transform.position.y, playert.transform.position.z));
         transform.Rotate(0, 180, 0);
         citizenState = CitizenState.RUN;
         patternChangeTimer = 0.0f;

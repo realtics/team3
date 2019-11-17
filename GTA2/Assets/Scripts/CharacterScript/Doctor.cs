@@ -71,7 +71,7 @@ public class Doctor : NPC
     {
         if (doctorState == DOCTORSTATE.RUN)
             return;
-        targetDirectionVector = player.transform.position;
+        targetDirectionVector = playert.transform.position;
         UpdateTargetDirection();
         doctorState = DOCTORSTATE.RUN;
         //patternChangeTimer = 0.0f;

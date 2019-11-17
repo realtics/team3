@@ -7,6 +7,7 @@ public enum ItemStatus
     // 아이템
     ActiveItemStartIndex,
     Heath,
+    Money,
     Armor,
     ActiveItemEndIndex,
 

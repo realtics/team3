@@ -12,10 +12,10 @@ public class GunDoublePistol : Gun
         InitGun();
         base.InitBullet("DoublePistol");
     }
-    protected override void UpdateKeyInput()
+    protected override void UpdateShot()
     {
         shootDelta += Time.deltaTime;
-        if (true == Input.GetKey(KeyCode.A) || isShot)
+        if (isShot)
         {
             if (shootInterval < shootDelta)
             {
