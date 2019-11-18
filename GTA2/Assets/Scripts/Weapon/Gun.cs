@@ -32,7 +32,7 @@ public abstract class Gun : MonoBehaviour
     protected int shotPerCurBullet;
 
     protected GameObject userObject;
-    protected Player userPlayer;
+    protected Player player;
     protected GunState gunType;
 
     protected Vector3 gunPos;
@@ -52,7 +52,7 @@ public abstract class Gun : MonoBehaviour
     protected void InitGun()
     {
         userObject = GameObject.FindWithTag("Player");
-        userPlayer = userObject.GetComponent<Player>();
+        player = userObject.GetComponent<Player>();
 
         transform.eulerAngles = new Vector3(90.0f, 0.0f, 90.0f);
         transform.parent = userObject.transform;
@@ -187,10 +187,10 @@ public abstract class Gun : MonoBehaviour
         }
         else if (shotPerCurBullet + 1 == shotPerOneBullet)
         {
-            userPlayer.gunList[(int)gunType].bulletCount--;
-            if (userPlayer.gunList[(int)gunType].bulletCount <= 0)
+            player.gunList[(int)gunType].bulletCount--;
+            if (player.gunList[(int)gunType].bulletCount <= 0)
             {
-                userPlayer.SwapNext();
+                player.SwapNext();
             }
 
             shotPerCurBullet = 0;

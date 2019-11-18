@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class HumanPathManager : MonoBehaviour
 {
@@ -49,7 +49,9 @@ public class HumanPathManager : MonoBehaviour
 
     void SetNewDestination()
     {
-        float dist = (curDestPos - transform.position).magnitude;
+        Vector3 dir = (curDestPos - transform.position);
+        dir.y = 0;
+        float dist = dir.magnitude;
 
         if (dist < 0.05f)
         {
@@ -88,11 +90,11 @@ public class HumanPathManager : MonoBehaviour
         {
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(destWaypoint.transform.position, 0.5f);
-            Handles.Label(destWaypoint.transform.position, "destWP");
+            //Handles.Label(destWaypoint.transform.position, "destWP");
         }
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(curDestPos, 0.25f);
-        Handles.Label(curDestPos, "curDest");
+        //Handles.Label(curDestPos, "curDest");
     }
 }

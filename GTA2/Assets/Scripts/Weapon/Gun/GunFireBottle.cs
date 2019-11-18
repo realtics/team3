@@ -11,7 +11,6 @@ public class GunFireBottle : Gun
     public float moveThrowPower;
 
     private float intervalDelta;
-    private Player userPlayer;
     private int smokeIdx = 0;
 
     void Start()
@@ -23,7 +22,7 @@ public class GunFireBottle : Gun
         base.InitBullet("FireBottle");
         SetSmoke();
 
-        userPlayer = userObject.GetComponent<Player>();
+        player = userObject.GetComponent<Player>();
         intervalDelta = .0f;
     }
 
@@ -59,7 +58,7 @@ public class GunFireBottle : Gun
             {
                 intervalDelta = shootInterval;
             }
-            if (userPlayer.isWalk)
+            if (player.isWalk)
             {
                 intervalDelta += moveThrowPower;
             }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8243620033033796168}
   - component: {fileID: 8243620033033796167}
   - component: {fileID: 8243620033033796170}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: SleepMachingunItem
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8243620033033796172}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -3.3000002, y: 0.3, z: -1.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

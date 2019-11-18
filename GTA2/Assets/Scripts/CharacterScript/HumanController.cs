@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class HumanController : MonoBehaviour
 {
@@ -91,6 +91,6 @@ public class HumanController : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(destination, 0.25f);
-        Handles.Label(destination, "destination");
+        //Handles.Label(destination, "destination");
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class CarDrive : MonoBehaviour
 {
@@ -84,8 +84,8 @@ public class CarDrive : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if(rbody != null)
-            Handles.Label(transform.position + Vector3.right, "spd: " + curSpeed);
+        //if(rbody != null)
+            //Handles.Label(transform.position + Vector3.right, "spd: " + curSpeed);
     }
 
     void OnCollisionEnter(Collision col)

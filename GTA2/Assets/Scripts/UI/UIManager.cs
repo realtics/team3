@@ -109,6 +109,42 @@ public class UIManager : MonoBehaviour
         return carJoystick.activeInHierarchy;
     }
 
+
+
+
+
+
+    #region HumanUI
+    public void LSwapButtonDown()
+    {
+        player.SwapPrev();
+    }
+    public void RSwapButtonDown()
+    {
+        player.SwapNext();
+    }
+    public void JumpButtonDown()
+    {
+        player.JumpButtonDown();
+    }
+    public void EnterButtonDown()
+    {
+        player.SetChaseTargetCar();
+    }
+    public void ShotButtonDown()
+    {
+        player.ShotButtonDown();
+    }
+    public void ShotButtonUp()
+    {
+        player.ShotButtonUp();
+    }
+
+
+
+    #endregion
+
+    #region Car UI
     public void InCar(CarController targetCar)
     {
         targetCarControll = targetCar;
@@ -122,10 +158,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void InButtonDown()
-    {
-        player.EnterTheCar();
-    }
     public void ExcelButtonDown()
     {
         isExcelDown = true;
@@ -165,4 +197,5 @@ public class UIManager : MonoBehaviour
     {
         targetCarControll.InputReturn();
     }
+    #endregion
 }

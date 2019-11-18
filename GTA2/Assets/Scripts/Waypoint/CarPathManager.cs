@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class CarPathManager : MonoBehaviour
 {
@@ -19,6 +19,11 @@ public class CarPathManager : MonoBehaviour
         DT_EndOfRoad, DT_StartOfRoad
     }
     DestType destType = DestType.DT_EndOfRoad;
+
+    void Start()
+    {
+        Init();
+    }
 
     void OnEnable()
     {
@@ -124,11 +129,11 @@ public class CarPathManager : MonoBehaviour
         {
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(destWaypoint.transform.position, 0.5f);
-            Handles.Label(destWaypoint.transform.position, "destWP");
+            //Handles.Label(destWaypoint.transform.position, "destWP");
         }
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(curDestPos, 0.25f);
-        Handles.Label(curDestPos, "curDest");
+        //Handles.Label(curDestPos, "curDest");
     }
 }

@@ -33,6 +33,13 @@ public class DeltasController : MonoBehaviour
         }
     }
 
+    public void TurnOffSiren()
+    {
+        StopCoroutine(SirenCor());
+        sirenL.SetActive(false);
+        sirenR.SetActive(false);
+    }
+
     public void TurnOnFrontLight()
     {
         if (deltaFL.activeSelf || deltaFR.activeSelf)

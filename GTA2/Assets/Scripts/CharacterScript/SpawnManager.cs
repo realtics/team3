@@ -40,10 +40,23 @@ public class SpawnManager : MonoBehaviour
     //WayPoints
     void SpawnNPC()
     {
-        foreach(var npc in activeNPCList)
+        //foreach(var npc in activeNPCList)
+        //{
+        //    int randomIndex = Random.Range(0, peopleWayPoints.Count);
+        //    npc.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+        //}
+        List<Vector3> position = new List<Vector3>();
+
+        for (int i = 0; i < peopleWayPoints.Count; i++)
         {
-            int randomIndex = Random.Range(0, peopleWayPoints.Count);
-            npc.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+            position.Add(peopleWayPoints[i].transform.position);
+        }
+        foreach (var people in activeNPCList)
+        {
+            int randomIndex = Random.Range(0, position.Count);
+            people.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+            people.gameObject.SetActive(true);
+            position.RemoveAt(randomIndex);
         }
     }
     void SpawnCar() //중복 방지 생성

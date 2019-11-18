@@ -7,10 +7,12 @@ public class GunElectric : Gun
     public int electricWaveMaxIndex;
     public float electricWaveArea;
     public float electricWaveAngle;
-    public SpawnManager spawnManager;
 
+    private SpawnManager spawnManager;
     private List<GameObject> objectList;
     private List<GameObject> noneTargetObjectList;
+
+    private List<BulletElectric> activeElectricList;
 
     void Start()
     {
@@ -19,7 +21,9 @@ public class GunElectric : Gun
 
         objectList = new List<GameObject>();
         noneTargetObjectList = new List<GameObject>();
+        activeElectricList = new List<BulletElectric>();
 
+        spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
 
         foreach (var citizen in spawnManager.activeNPCList)
         {
@@ -44,6 +48,7 @@ public class GunElectric : Gun
             if (shootInterval < shootDelta)
             {
                 FireGun();
+                UpdateElectric();
                 shootDelta = .0f;
             }
         }
@@ -77,14 +82,22 @@ public class GunElectric : Gun
             BulletElectric fireBullet = (BulletElectric)ShootSingleBullet(userObject.transform.position);
             fireBullet.SetTarget(target);
             activeBulletList.Add(fireBullet);
+            activeElectricList.Add(fireBullet);
 
             noneTargetObjectList.Remove(target);
         }
 
-
         ElectricWave(noneTargetObjectList, activeBulletList, electricWaveMaxIndex);
     }
 
+
+    void UpdateElectric()
+    {
+        foreach (var item in activeElectricList)
+        {
+            item.UpdateBullet(gunType, userObject.transform.position, gunDir, bulletToPeopleSize);
+        }
+    }
 
     void ElectricWave(List<GameObject> objectList, List<BulletElectric> activeBulletList,  int count)
     {
@@ -109,6 +122,7 @@ public class GunElectric : Gun
                 BulletElectric fireBullet = (BulletElectric)ShootSingleBullet(triggerPos);
                 fireBullet.SetTarget(target);
                 nextWaveList.Add(fireBullet);
+                activeElectricList.Add(fireBullet);
                 noneTargetObjectList.Remove(target);
             }
 
@@ -121,6 +135,7 @@ public class GunElectric : Gun
     void StopGun()
     {
         DisableAllBullet();
+        activeElectricList.Clear();
     }
 
     List<GameObject> GetObjectsInAttackRange(Vector3 centerPos, List<GameObject> targetList)

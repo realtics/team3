@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class Citizen : NPC
 {
@@ -20,13 +20,13 @@ public class Citizen : NPC
     private float patternChangeTimer;
     private float patternChangeInterval;
     private float runawayTime = 10.0f;
-    
+
     //HumanCtr스크립트 참조 코드
     private Vector3 destination;
     private RaycastHit hit;
     private float distToObstacle = Mathf.Infinity;
     private TrafficLight trafficLight = null;
-    
+
     public bool isDestReached = true;
     public LayerMask collisionLayer;
 
@@ -75,17 +75,20 @@ public class Citizen : NPC
     protected override void Move()
     {
         if (isDestReached)
+        {
             return;
+        }
 
-        Vector3 dir = destination - transform.position;
+        Vector3 dir = new Vector3(destination.x, transform.position.y, destination.z) - transform.position;
 
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.4f);
+        transform.rotation = Quaternion.LookRotation(dir);//Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.4f);
 
         if (distToObstacle != Mathf.Infinity)
             return;
-
+        
         transform.Translate(transform.forward * moveSpeed * Time.deltaTime, Space.World);
     }
+    
     void Raycast()
     {
         if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f, collisionLayer))
@@ -143,16 +146,17 @@ public class Citizen : NPC
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(destination, 0.25f);
-        Handles.Label(destination, "destination");
+        Gizmos.DrawWireSphere(destination, 1);
+        //Handles.Label(destination, "destination");
     }
     #endregion
     protected override void Die() //리스폰 필요
     {
         if (!isDie)
         {
-            playert.GetComponent<Player>().money += 10;
+            player.GetComponent<Player>().money += 10;
         }
 
         isDie = true;
@@ -167,13 +171,15 @@ public class Citizen : NPC
 
         switch (citizenState)
         {
-            case CitizenState.IDLE:
+            case CitizenState.IDLE://FIX ME : 디버그 용, 이후 IDLE의 내용 break까지 다 지우기
+                citizenState = CitizenState.WALK;
+                break;
             case CitizenState.WALK:
                 if (DectectedPlayerAttack())
                 {
                     citizenState = CitizenState.RUN;
                 }
-                PatternChange(patternChangeInterval);
+                //PatternChange(patternChangeInterval);
                 patternChangeInterval = Random.Range(3.0f, 500.0f);
                 break;
             case CitizenState.RUN:
@@ -219,9 +225,10 @@ public class Citizen : NPC
 
     public override void Rising()
     {
+        
         if (citizenState == CitizenState.RUN)
             return;
-        transform.LookAt(new Vector3(playert.transform.position.x, transform.position.y, playert.transform.position.z));
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         transform.Rotate(0, 180, 0);
         citizenState = CitizenState.RUN;
         patternChangeTimer = 0.0f;
@@ -239,12 +246,10 @@ public class Citizen : NPC
     #endregion
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Wall" && citizenState == CitizenState.RUN)
+        if (collision.gameObject.tag == "Wall" && citizenState == CitizenState.RUN)
         {
             print("collision");
             transform.Rotate(0, Random.Range(90, 270), 0);
         }
     }
-
-    
 }

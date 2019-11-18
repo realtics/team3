@@ -78,19 +78,12 @@ public class Player : People
     {
         if (isDie)
             return;
-        //방향키 조작
-        MoveControlKeyboard();
-        MoveControlJoystick();
+        if(!MoveControlKeyboard())
+            MoveControlJoystick();
+
         ActiveControl();
         WeaponSwap();
-
-        if (isStealing)
-        {
-            ChaseTargetCar();
-        }
-
         Move();
-        //TODO : 오브젝트 조작(근처의 탈 것 등등)
     }
 
     void TimerCheck()
@@ -127,23 +120,23 @@ public class Player : People
     {
         if (isStealing)
         {
-            print(Vector3.Distance(transform.position, targetCar.transform.position));
-
+            transform.LookAt(targetCar.transform);
+            myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
+            
             //일정거리이상 멀어져서 차 쫓기 포기
             if (Vector3.Distance(transform.position, targetCar.transform.position) > 5)
             {
                 isStealing = false;
+                return;
             }
             //차 탑승
             //TODO : 운전석으로 점프해서가서 탑승 모션 구현
             else if (Vector3.Distance(transform.position, targetCar.transform.position) < 1)
             {
                 isStealing = false;
-                targetCar.GetComponent<CarController>().GetOnTheCar(gameObject);
+                targetCar.GetComponent<CarController>().GetOnTheCar(this as People);
                 uiManager.InCar(targetCar.GetComponent<CarController>());
             }
-            transform.LookAt(targetCar.transform);
-            myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
         }
         else
             myRigidBody.MovePosition(transform.position + (new Vector3(hDir, 0, vDir) * Time.deltaTime * moveSpeed));
@@ -152,7 +145,7 @@ public class Player : People
     {
         return hp;
     }
-    void MoveControlKeyboard()
+    bool MoveControlKeyboard()
     {
         if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
@@ -160,6 +153,7 @@ public class Player : People
                 isWalk = false;
             vDir = 0;
             hDir = 0;
+            return false;
         }
         else
         {
@@ -167,6 +161,7 @@ public class Player : People
             hDir = Input.GetAxisRaw("Horizontal");
             isWalk = true;
             isStealing = false;
+            return true;
         }
     }
     bool isAnyActive()
@@ -180,9 +175,11 @@ public class Player : People
     }
     public void MoveControlJoystick()
     {
+        //키보드랑 독립적으로 작동하게 변경
         if (Mathf.Abs(uiManager.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(uiManager.playerJoystick.Vertical) < 0.01f)
         {
-            isWalk = false;
+            if(!isStealing)
+                isWalk = false;
             return;
         }
         isWalk = true;
@@ -208,13 +205,10 @@ public class Player : People
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            EnterTheCar();
+            SetChaseTargetCar();
         }
     }
-    void ChaseTargetCar()
-    {
-        //targetCar
-    }
+  
     void Jump()
     {
         if (isJump)
@@ -333,7 +327,7 @@ public class Player : People
         ShotStop();
     }
 
-    public void EnterTheCar()
+    public void SetChaseTargetCar()
     {
         isStealing = true;
         isWalk = true;

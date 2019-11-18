@@ -9,7 +9,6 @@ public class GunGranade : Gun
 
 
     private float intervalDelta;
-    private Player userPlayer;
 
     void Start()
     {
@@ -20,7 +19,7 @@ public class GunGranade : Gun
         base.InitBullet("Granade");
 
 
-        userPlayer = userObject.GetComponent<Player>();
+        player = userObject.GetComponent<Player>();
         intervalDelta = .0f;
     }
 
@@ -41,7 +40,7 @@ public class GunGranade : Gun
                 intervalDelta = shootInterval;
             }
 
-            if (userPlayer.isWalk)
+            if (player.isWalk)
             {
                 intervalDelta += moveThrowPower;
             }

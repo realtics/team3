@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class CarController : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class CarController : MonoBehaviour
     }
     public CarState carState = CarState.aiNormal;
     public GameObject chaseTarget; // 나중엔 숨겨야함.
-    GameObject driver;
+    People driver;
     Vector3 destination;
 
     public float maxSpeed;
@@ -67,6 +67,7 @@ public class CarController : MonoBehaviour
             switch (carState)
             {
                 case CarState.aiNormal:
+                case CarState.evade:
                     {
                         CarMoveAI();
                     }
@@ -89,7 +90,7 @@ public class CarController : MonoBehaviour
         switch (carState)
         {
             case CarState.idle:
-                aiMaxSpdMultiplier = 1.0f;
+                aiMaxSpdMultiplier = 0.0f;
                 break;
             case CarState.aiNormal:
                 aiMaxSpdMultiplier = 0.4f;
@@ -191,7 +192,8 @@ public class CarController : MonoBehaviour
         {
             if(hit.transform.tag == "TrafficLight")
             {
-                if(Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
+                if(carState != CarState.evade &&
+                    Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
                 {
                     distToObstacle = hit.distance;
                 }                
@@ -363,6 +365,7 @@ public class CarController : MonoBehaviour
         if(curHp <= 0 && carState != CarState.destroied)
         {
             carState = CarState.destroied;
+            driver.Hurt(100);
         }
 
         if(curHp < 30)
@@ -374,22 +377,22 @@ public class CarController : MonoBehaviour
             damageMaxSpdMultiplier = 0.8f;
         }
     }
-    public void GetOnTheCar(GameObject driver)
+    public void GetOnTheCar(People driver)
     {
         this.driver = driver;
         carState = CarState.controlledByPlayer;
         driver.gameObject.SetActive(false);
         driver.transform.SetParent(transform);
-        Camera.main.GetComponent<TempCamCtr>().target = gameObject;
+        Camera.main.GetComponent<TempCamCtr>().ChangeTarget(gameObject);
 
         SetAiMaxSpeedMultiplier();
     }
     public void GetOffTheCar()
     {
-        driver.SetActive(true);
+        driver.gameObject.SetActive(true);
         carState = CarState.idle;
         driver.transform.SetParent(null);
-        Camera.main.GetComponent<TempCamCtr>().target = driver;
+        Camera.main.GetComponent<TempCamCtr>().ChangeTarget(driver.gameObject);
         driver = null;
 
         SetAiMaxSpeedMultiplier();
@@ -406,8 +409,8 @@ public class CarController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(destination, 0.25f);
         Gizmos.DrawWireSphere(destination, 1);
-        Handles.Label(destination, "destination");
-        Handles.Label(transform.position + Vector3.right, "spd: " + curSpeed);
+        //Handles.Label(destination, "destination");
+        //Handles.Label(transform.position + Vector3.right, "spd: " + curSpeed);
     }
 
     void OnCollisionEnter(Collision col)
@@ -417,8 +420,8 @@ public class CarController : MonoBehaviour
             curSpeed *= 0.25f;
             Vector3 inDirection = transform.forward;
             reboundForce = Vector3.Reflect(inDirection, col.contacts[0].normal) * curSpeed * 0.15f;
-            //Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
-            //Debug.DrawLine(transform.position, transform.position + reboundForce, Color.red, 1f);
+            Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
+            Debug.DrawLine(transform.position, transform.position + reboundForce, Color.red, 1f);
         }
         else if (col.transform.tag == "Car")
         {
@@ -434,7 +437,7 @@ public class CarController : MonoBehaviour
 
 
     // UI---------------------
-    public GameObject GetDriver()
+    public People GetDriver()
     {
         return driver;
     }

@@ -17,10 +17,10 @@ public abstract class NPC : People
 
     public abstract void Respawn();
 
-    public GameObject playert;
+    public GameObject player;
     protected void NPCInit()
     {
-        playert = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
     }
     protected void NPCUpdate()
     {
@@ -51,8 +51,8 @@ public abstract class NPC : People
     }
     protected bool DectectedPlayerAttack()
     {
-        if (playert.GetComponent<Player>().isAttack &&
-            findRange > Vector3.Distance(transform.position, playert.transform.position))
+        if (player.GetComponent<Player>().isAttack &&
+            findRange > Vector3.Distance(transform.position, player.transform.position))
             return true;
         else
             return false;

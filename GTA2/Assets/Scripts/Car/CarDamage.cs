@@ -34,6 +34,7 @@ public class CarDamage : MonoBehaviour
             float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
             EnableDeltaImage(angle);
             EnableParticle();
+            TurnOffSirenIfExist();
         }       
     }
 
@@ -75,5 +76,13 @@ public class CarDamage : MonoBehaviour
         {
             fireParticle.SetActive(true);
         }
+    }
+
+    void TurnOffSirenIfExist()
+    {
+        if (deltasController.sirenL == null)
+            return;
+
+        deltasController.TurnOffSiren();
     }
 }
