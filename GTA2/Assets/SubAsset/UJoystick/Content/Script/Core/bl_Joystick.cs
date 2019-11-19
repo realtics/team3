@@ -41,20 +41,20 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             return;
         }
 
-        if (transform.root.GetComponent<Canvas>() != null)
-        {
-            m_Canvas = transform.root.GetComponent<Canvas>();
-        }
-        else if (transform.root.GetComponentInChildren<Canvas>() != null)
-        {
-            m_Canvas = transform.root.GetComponentInChildren<Canvas>();
-        }
-        else
-        {
-            Debug.LogError("Required at lest one canvas for joystick work.!");
-            this.enabled = false;
-            return;
-        }
+        //if (transform.root.GetComponent<Canvas>() != null)
+        //{
+        //    m_Canvas = transform.root.GetComponent<Canvas>();
+        //}
+        //else if (transform.root.GetComponentInChildren<Canvas>() != null)
+        //{
+        //    m_Canvas = transform.root.GetComponentInChildren<Canvas>();
+        //}
+        //else
+        //{
+        //    Debug.LogError("Required at lest one canvas for joystick work.!");
+        //    this.enabled = false;
+        //    return;
+        //}
        
         //Get the default area of joystick
         DeathArea = CenterReference.position;
@@ -87,6 +87,11 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             isFree = false;
             StickRect.position = DeathArea;
         }
+    }
+
+    public void SetCanvas(Canvas canvas)
+    {
+        m_Canvas = canvas;
     }
 
     /// <summary>
@@ -124,7 +129,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             isFree = false;
             //Get Position of current touch
-            Vector3 position = Input.mousePosition;/*bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);*/
+            Vector3 position = bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);
 
             //Rotate into the area circumferential of joystick
             if (Vector2.Distance(DeathArea, position) < radio)

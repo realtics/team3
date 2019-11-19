@@ -27,6 +27,7 @@ public class CarController : MonoBehaviour
     float curSpeed;
     float targetSpeed;
     public float rotSpeed;
+    Vector3[] oldForwards = new Vector3[20];
 
     public LayerMask collisionLayer;
     RaycastHit hit;
@@ -57,6 +58,7 @@ public class CarController : MonoBehaviour
 
         if (carState == CarState.controlledByPlayer)
         {
+            UpdateOldForwards();
             PlayerInput();
             MoveCarByInput();
         }
@@ -83,6 +85,15 @@ public class CarController : MonoBehaviour
                     break;
             }
         }
+    }
+
+    void UpdateOldForwards()
+    {
+        for (int i = 0; i < oldForwards.Length-1; i++)
+        {
+            oldForwards[i] = oldForwards[i + 1];
+        }
+        oldForwards[oldForwards.Length - 1] = transform.forward;
     }
 
     void SetAiMaxSpeedMultiplier()
@@ -119,7 +130,6 @@ public class CarController : MonoBehaviour
                 break;
         }
     }
-
     void PlayerInput()
     {
         if(joystickInputH == 0)
@@ -141,7 +151,11 @@ public class CarController : MonoBehaviour
         }        
 
         if (Input.GetKeyDown(KeyCode.Return))
-            GetOffTheCar();
+        {
+            Invoke("GetOffTheCar", 0.01f);
+            //GetOffTheCar();
+        }
+            
     }
 
     void MoveCarByInput()
@@ -162,7 +176,22 @@ public class CarController : MonoBehaviour
         curSpeed = Mathf.Clamp(curSpeed, (maxSpeed * aiMaxSpdMultiplier * damageMaxSpdMultiplier / 2) * -1, maxSpeed * aiMaxSpdMultiplier * damageMaxSpdMultiplier);
 
         transform.Rotate(0, inputH * rotSpeed * Time.deltaTime * (Mathf.Abs(curSpeed) / 400), 0);
-        rbody.velocity = transform.forward * curSpeed * Time.deltaTime + reboundForce;
+
+        Vector3 dir = Vector3.zero;
+        if(carState == CarState.controlledByPlayer && inputH != 0)
+        {
+            for (int i = 0; i < oldForwards.Length; i++)
+            {
+                dir += oldForwards[i];
+            }
+            dir.Normalize();
+        }
+        else
+        {
+            dir = transform.forward;
+        }
+
+        rbody.velocity = dir * curSpeed * Time.deltaTime + reboundForce;
     }
 
     void DrawSkidMark()
@@ -365,7 +394,8 @@ public class CarController : MonoBehaviour
         if(curHp <= 0 && carState != CarState.destroied)
         {
             carState = CarState.destroied;
-            driver.Hurt(100);
+            if(driver != null)
+                driver.Hurt(100);
         }
 
         if(curHp < 30)
@@ -389,12 +419,12 @@ public class CarController : MonoBehaviour
     }
     public void GetOffTheCar()
     {
+        print("내림");
         driver.gameObject.SetActive(true);
         carState = CarState.idle;
         driver.transform.SetParent(null);
         Camera.main.GetComponent<TempCamCtr>().ChangeTarget(driver.gameObject);
         driver = null;
-
         SetAiMaxSpeedMultiplier();
     }
 
@@ -427,6 +457,12 @@ public class CarController : MonoBehaviour
         {
             curSpeed *= 0.25f;
         }
+
+        if(col.transform.tag == "Citizen")
+        {
+            if(curSpeed > 50)
+                col.gameObject.GetComponent<NPC>().Hurt(100);
+        }
     }
 
     void OnCollisionStay(Collision col)
@@ -434,7 +470,6 @@ public class CarController : MonoBehaviour
         if (col.transform.tag == "Wall")
             curSpeed *= 0.9f;
     }
-
 
     // UI---------------------
     public People GetDriver()

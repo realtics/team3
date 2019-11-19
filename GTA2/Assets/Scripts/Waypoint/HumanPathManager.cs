@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HumanPathManager : MonoBehaviour
 {
-    public Citizen humanCtr;
+    public NPC humanCtr;
 
     WaypointForHuman curWaypoint;
     WaypointForHuman destWaypoint;
@@ -15,7 +15,7 @@ public class HumanPathManager : MonoBehaviour
 
     private void Awake()
     {
-        humanCtr = GetComponent<Citizen>();
+        humanCtr = GetComponent<NPC>();
     }
     void Start()
     {
@@ -35,7 +35,9 @@ public class HumanPathManager : MonoBehaviour
 
     void SetRandomDestWaypoint()
     {
-        curWaypoint = FindClosestWaypoint(transform.position);
+        GameObject go = WaypointManager.instance.FindClosestWaypoint(WaypointManager.WaypointType.human, transform.position);
+        curWaypoint = go.GetComponent<WaypointForHuman>();
+
         while (true)
         {
             destWaypoint = curWaypoint.neighbor[Random.Range(0, curWaypoint.neighbor.Count)] as WaypointForHuman;
@@ -59,29 +61,6 @@ public class HumanPathManager : MonoBehaviour
 
             humanCtr.SetDestination(curDestPos);
         }
-    }
-
-    WaypointForHuman FindClosestWaypoint(Vector3 target)
-    {
-        GameObject closest = null;
-        float closestDist = Mathf.Infinity;
-
-        foreach (var waypoint in GameObject.FindGameObjectsWithTag("waypointForHuman"))
-        {
-            var dist = (waypoint.transform.position - target).magnitude;
-            if (dist < closestDist)
-            {
-                closest = waypoint;
-                closestDist = dist;
-            }
-        }
-        if (closest != null)
-        {
-            return closest.GetComponent<WaypointForHuman>();
-        }
-
-        Debug.LogWarning("웨이포인트를 찾지못함!");
-        return null;
     }
 
     void OnDrawGizmosSelected()

@@ -30,8 +30,6 @@ public class Player : People
     public List<Gun> gunList;
 
     // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
-    [SerializeField]
-    UIManager uiManager;
     void Awake()
     {
         myRigidBody = GetComponent<Rigidbody>();
@@ -57,8 +55,11 @@ public class Player : People
         gunList[(int)GunState.None].gameObject.SetActive(true);
     }
 
-    private void Update()
+    void Update()
     {
+        if (isDie)
+            return;
+        UpdateInput();
         animator.SetBool("isWalk", isWalk);
         animator.SetBool("isShot", isShot);
         animator.SetBool("isPunch", isPunch);
@@ -66,12 +67,12 @@ public class Player : People
         animator.SetBool("isDie", isDie);
 
     }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        UpdateInput();
         UpdateTargetRotation();
         UpdateSlerpedRotation();
         TimerCheck();
+        Move();
     }
 
     void UpdateInput()
@@ -83,7 +84,7 @@ public class Player : People
 
         ActiveControl();
         WeaponSwap();
-        Move();
+        
     }
 
     void TimerCheck()
@@ -122,7 +123,6 @@ public class Player : People
         {
             transform.LookAt(targetCar.transform);
             myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
-            
             //일정거리이상 멀어져서 차 쫓기 포기
             if (Vector3.Distance(transform.position, targetCar.transform.position) > 5)
             {
@@ -135,11 +135,12 @@ public class Player : People
             {
                 isStealing = false;
                 targetCar.GetComponent<CarController>().GetOnTheCar(this as People);
-                uiManager.InCar(targetCar.GetComponent<CarController>());
+                UIManager.Instance.InCar(targetCar.GetComponent<CarController>());
+                print("탐");
             }
         }
         else
-            myRigidBody.MovePosition(transform.position + (new Vector3(hDir, 0, vDir) * Time.deltaTime * moveSpeed));
+            myRigidBody.MovePosition(transform.position + (new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed));
     }
     public int GetHp()
     {
@@ -176,7 +177,7 @@ public class Player : People
     public void MoveControlJoystick()
     {
         //키보드랑 독립적으로 작동하게 변경
-        if (Mathf.Abs(uiManager.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(uiManager.playerJoystick.Vertical) < 0.01f)
+        if (Mathf.Abs(UIManager.Instance.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerJoystick.Vertical) < 0.01f)
         {
             if(!isStealing)
                 isWalk = false;
@@ -184,8 +185,8 @@ public class Player : People
         }
         isWalk = true;
         isStealing = false;
-        hDir = uiManager.playerJoystick.Horizontal / 5.0f;
-        vDir = uiManager.playerJoystick.Vertical / 5.0f;
+        hDir = UIManager.Instance.playerJoystick.Horizontal / 5.0f;
+        vDir = UIManager.Instance.playerJoystick.Vertical / 5.0f;
     }
     void ActiveControl()
     {
@@ -194,7 +195,7 @@ public class Player : People
             ShotButtonDown();
             isStealing = false;
         }
-        if (!Input.GetKey(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A))
         {
             ShotStop();
         }
@@ -205,7 +206,7 @@ public class Player : People
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SetChaseTargetCar();
+            SetChaseTargetCar();//내리면서 바로 타지 않기
         }
     }
   

@@ -18,7 +18,7 @@ public class WaypointManagerWindow : EditorWindow
 
     GameObject wpConnectPosA = null;
 
-    private void OnGUI()
+    void OnGUI()
     {
         SerializedObject obj = new SerializedObject(this);
         EditorGUILayout.PropertyField(obj.FindProperty("waypointCarRoot"));

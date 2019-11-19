@@ -125,9 +125,9 @@ public abstract class Gun : MonoBehaviour
     }
 
 
-    void UpdateDelta()
+    protected void UpdateDelta()
     {
-        shootDelta += Time.deltaTime;        
+        shootDelta += Time.deltaTime;
     }
     protected virtual void UpdateDirection()
     {
@@ -136,7 +136,7 @@ public abstract class Gun : MonoBehaviour
     }
 
 
-    void UpdateKeyInput()
+    protected void UpdateKeyInput()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {

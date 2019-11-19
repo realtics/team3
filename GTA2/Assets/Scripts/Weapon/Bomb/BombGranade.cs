@@ -25,6 +25,7 @@ public class BombGranade : Bullet
     // Update is called once per frame
     public override void SetBullet(GunState type, Vector3 pos, Vector3 dir, float bullettoSize)
     {
+        myCollider.isTrigger = false;
         base.SetBullet(type, pos, dir, bullettoSize);
         transform.position += Vector3.up * yLaunchPos;
     }
@@ -40,6 +41,7 @@ public class BombGranade : Bullet
 
     protected override void Explosion()
     {
+        myCollider.isTrigger = true;
         base.Explosion();
         camExplosion.StartShake(Mathf.Abs(explosionPower - (transform.position - bulletStartPos).magnitude));
     }

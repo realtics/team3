@@ -38,13 +38,14 @@ public class GunElectric : Gun
     protected override void Update()
     {
         base.UpdateDirection();
+        UpdateDelta();
+        UpdateKeyInput();
         UpdateShot();
     }
     protected override void UpdateShot()
     {
         if (isShot)
         {
-            shootDelta += Time.deltaTime;
             if (shootInterval < shootDelta)
             {
                 FireGun();

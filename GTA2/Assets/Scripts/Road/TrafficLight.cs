@@ -10,17 +10,17 @@ public class TrafficLight : MonoBehaviour
     }
     public SignalColor signalColor = SignalColor.SC_Red;
 
-    public Light pointLight;
+    public SpriteRenderer fakeLight;
     public BoxCollider boxColliderForCar;
     public BoxCollider boxColliderForPed1;
     public BoxCollider boxColliderForPed2;
 
     public void ToggleSignal()
     {
-        if(signalColor == SignalColor.SC_Green)
+        if (signalColor == SignalColor.SC_Green)
         {
             signalColor = SignalColor.SC_Red;
-            pointLight.color = Color.red;
+            fakeLight.color = new Color(1, 0, 0, 0.2f);
 
             boxColliderForCar.enabled = true;
             boxColliderForPed1.enabled = false;
@@ -29,7 +29,7 @@ public class TrafficLight : MonoBehaviour
         else
         {
             signalColor = SignalColor.SC_Green;
-            pointLight.color = Color.green;
+            fakeLight.color = new Color(0, 1, 0, 0.2f);
 
             boxColliderForCar.enabled = false;
             boxColliderForPed1.enabled = true;

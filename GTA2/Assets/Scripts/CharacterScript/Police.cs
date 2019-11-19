@@ -14,47 +14,40 @@ public class Police : NPC
     float patternChangeTimer = 3.0f;
     float patternChangeInterval = 3.0f;
     float attackInterval = 1.0f;
-    float punchRange = 2.0f;
     float curAttackCoolTime = 0.0f;
+    float jumpTime = 1.5f;
+    float jumpTimer = 0.0f;
 
-    //HumanCtr스크립트 참조 코드
-    private Vector3 destination;
-    private RaycastHit hit;
-    private float distToObstacle = Mathf.Infinity;
-    private TrafficLight trafficLight = null;
-    public bool isDestReached = true;
-
-    GameObject targetCar;
-    float playerMoveSpeed = 2.0f;
+    GameObject targetCar; //TODO : 경찰차 다시 타기에 사용
 
     public GunState curGunIndex { get; set; }
 
     public bool isAttack { get; set; }
     public int money { get; set; }
 
-    float jumpTime = 1.5f;
-    float jumpTimer = 0.0f;
+    Rigidbody myRigidbody;
 
-    Rigidbody myRigidBody;
-
-    public LayerMask collisionLayer;
     public Animator animator;
-    public Gun gunList;
+    public List<Gun> gunList;
 
-    private void Awake()
+    float minIdleTime = 2.0f;
+    float maxIdleTime = 5.0f;
+    float minWalkTime = 2.0f;
+    float maxWalkTime = 5.0f;
+
+    void Awake()
     {
-        myRigidBody = GetComponent<Rigidbody>();
+        myRigidbody = GetComponent<Rigidbody>();
     }
     void Start()
     {
         base.NPCInit();
-
-        patternChangeInterval = Random.Range(3.0f, 500.0f);
+        runSpeed = 0.8f;
+        patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
     }
 
-    // Start is called before the first frame update
-    private void Update()
+    void Update()
     {
         animator.SetBool("isWalk", isWalk);
         animator.SetBool("isShot", isShot);
@@ -63,140 +56,110 @@ public class Police : NPC
         animator.SetBool("isDie", isDie);
 
         base.NPCUpdate();
-
+        if (isDie)
+            return;
         TimerCheck();
-        //ActivityByState();
+        ActivityByState();
     }
-    private void ActivityByState()
+    void ActivityByState()
     {
         if(isChasePlayer)
         {
-            //ChasePlayer();
-        }
-        else
-        {
-            Raycast();
-            Move();
-        }
-    }
-
-    #region RefHumanCtr
-    protected override void Move()
-    {
-        if (isDestReached)
-        {
-            return;
-        }
-
-        Vector3 dir = new Vector3(destination.x, transform.position.y, destination.z) - transform.position;
-
-        transform.rotation = Quaternion.LookRotation(dir);//Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.4f);
-
-        if (distToObstacle != Mathf.Infinity)
-            return;
-
-        transform.Translate(transform.forward * moveSpeed * Time.deltaTime, Space.World);
-    }
-
-    void Raycast()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f, collisionLayer))
-        {
-            if (hit.transform.tag == "TrafficLight")
+            if (PlayerOutofRange())
             {
-                if (trafficLight == null)
-                    trafficLight = hit.transform.GetComponent<TrafficLight>();
+                isChasePlayer = false;
+                return;
+            }
+            if (InPunchRange())
+            {
+                isWalk = false;
+                //TODO : 총쏘기
+                //InShotRange();
+                //if (InPunchRange())
+                //{
+                //    isPunch = true;
+                //    isShot = true;
+                //}
 
-                if (trafficLight.signalColor == TrafficLight.SignalColor.SC_Green)
-                {
-                    distToObstacle = hit.distance;
-                }
-                else
-                {
-                    distToObstacle = Mathf.Infinity;
-                }
+                //TODO : NPC punch 완성되는 대로 샷
+                //GunPunch Shot
+
+                isShot = false;
+                isPunch = true;
             }
             else
             {
-                distToObstacle = hit.distance;
-                trafficLight = null;
+                isWalk = true;
+                base.ChasePlayer();
+                print("!?");
             }
+                
         }
-        else
+        else if(isWalk)
         {
-            distToObstacle = Mathf.Infinity;
-        }
-
-        DrawRaycastDebugLine();
-    }
-
-    void DrawRaycastDebugLine()
-    {
-        if (distToObstacle < Mathf.Infinity)
-        {
-            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
-        }
-        else
-        {
-            Debug.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
+            base.Raycast();
+            base.Move();
         }
     }
-    public void SetDestination(Vector3 pos)
-    {
-        destination = pos;
-        isDestReached = false;
-    }
 
-    public void Stop()
-    {
-        destination = transform.position;
-        isDestReached = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(destination, 0.25f);
-        Gizmos.DrawWireSphere(destination, 1);
-        //Handles.Label(destination, "destination");
-    }
-    #endregion
     protected override void Die() //리스폰 필요
     {
         if (!isDie)
         {
             player.GetComponent<Player>().money += 10;
         }
-
         isDie = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<BoxCollider>().enabled = false;
+    }
+    public override void Respawn()
+    {
+        patternChangeTimer = 0;
+        isDie = false;
+        isWalk = false;
+        hp = 100;
+        GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().NPCRepositioning(this);
         GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<BoxCollider>().enabled = true;
+        print("Police Respawn");
     }
 
-    //TODO : IDLE Timer, Walk Timer 따로만들기
-    private void TimerCheck()
+    void TimerCheck()
     {
-        if (isDie)
-            return;
         patternChangeTimer += Time.deltaTime;
 
-        if (isChasePlayer)
+        if(!isChasePlayer)
         {
-            //TODO : player와 일정 거리 이상 멀어지면 그만 쫓기
-        }
-        else
-        {
-            patternChangeInterval = Random.Range(3.0f, 500.0f);
-            if (isWalk)
+            if(DectectedPlayerAttack())
             {
+                SetChasePlayer();
+            }
+            else
+                PatternChange(patternChangeInterval);
+        }
+    }
+    void SetChasePlayer()
+    {
+        isChasePlayer = true;
+    }
+    void PatternChange(float patternChangeInterval)
+    {
+        if (patternChangeTimer > patternChangeInterval)
+        {
+            patternChangeTimer = 0.0f;
+
+            if(isWalk)
+            {
+                patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
                 isWalk = false;
             }
             else
             {
+                patternChangeInterval = Random.Range(minWalkTime, maxWalkTime);
                 isWalk = true;
             }
         }
     }
-   
     #region override method
     public override void Down()
     {
@@ -205,19 +168,10 @@ public class Police : NPC
 
     public override void Rising()
     {
-        //경찰은 맞아도 그대로 할 거함.
+        //경찰은 맞아도 일어 나기만 함
         isDown = false;
     }
 
-    public override void Respawn()
-    {
-        patternChangeTimer = 0;
-        isDie = false;
-        isWalk = false;
-        hp = 100;
-        GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().NPCRepositioning(this);
-        print("Citizen Respawn");
-    }
+  
     #endregion
-    
 }

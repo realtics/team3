@@ -14,12 +14,6 @@ public class CarPathManager : MonoBehaviour
     Vector3 curDestPos;
     public int curLane = 0;
 
-    enum DestType
-    {
-        DT_EndOfRoad, DT_StartOfRoad
-    }
-    DestType destType = DestType.DT_EndOfRoad;
-
     void Start()
     {
         Init();
@@ -39,7 +33,6 @@ public class CarPathManager : MonoBehaviour
     {
         SetRandomDestWaypoint();
 
-        destType = DestType.DT_EndOfRoad;
         curLane = Random.Range(0, curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count);
         transform.LookAt(new Vector3(curDestPos.x, transform.position.y, curDestPos.z));
 
@@ -48,7 +41,9 @@ public class CarPathManager : MonoBehaviour
 
     void SetRandomDestWaypoint()
     {
-        curWaypoint = FindClosestWaypoint(transform.position);
+        GameObject go = WaypointManager.instance.FindClosestWaypoint(WaypointManager.WaypointType.car, transform.position);
+        curWaypoint = go.GetComponent<WaypointForCar>();
+
         while (true)
         {
             destWaypoint = curWaypoint.next[Random.Range(0, curWaypoint.next.Count)] as WaypointForCar;
@@ -81,46 +76,9 @@ public class CarPathManager : MonoBehaviour
 
         if (dist < 0.5f)
         {
-            //if (destType == DestType.DT_EndOfRoad)
-            //{
-            //    SetRandomDestWaypoint();
-
-            //    destType = DestType.DT_StartOfRoad;
-            //}
-            //else if (destType == DestType.DT_StartOfRoad)
-            //{
-            //    curDestPos = curWaypoint.carRoadDict[destWaypoint].laneEndPosition[curLane];
-
-            //    destType = DestType.DT_EndOfRoad;
-            //}
-
-
             SetRandomDestWaypoint();
             carCtr.SetDestination(curDestPos);
         }
-    }
-
-    WaypointForCar FindClosestWaypoint(Vector3 target)
-    {
-        GameObject closest = null;
-        float closestDist = Mathf.Infinity;
-
-        foreach (var waypoint in GameObject.FindGameObjectsWithTag("waypoint"))
-        {
-            var dist = (waypoint.transform.position - target).magnitude;
-            if (dist < closestDist)
-            {
-                closest = waypoint;
-                closestDist = dist;
-            }
-        }
-        if (closest != null)
-        {
-            return closest.GetComponent<WaypointForCar>();
-        }
-
-        Debug.LogWarning("웨이포인트를 찾지못함!");
-        return null;
     }
 
     void OnDrawGizmosSelected()

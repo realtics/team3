@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcGunPistol : NPCGun
+public class NpcGunPistol : Gun
 {
     void Start()
     {
         gunType = GunState.Pistol;
-        bulletPoolCnt = 30;
+        bulletPoolCount = 30;
 
         base.InitGun();
         base.InitBullet("Pistol");

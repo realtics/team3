@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class People : MonoBehaviour
 {
     protected float rotateSpeed = 0.1f;
-    protected float moveSpeed = 1.0f;
-    protected float runSpeed = 1.5f;
+    protected float moveSpeed = 0.5f;
+    protected float runSpeed = 1.2f;
     
     protected Vector3 movement;
     protected Vector3 direction;
@@ -18,7 +18,7 @@ public abstract class People : MonoBehaviour
     protected float hDir = 0;
     protected float vDir = 0;
 
-    protected bool isDie = false;
+    public bool isDie { get; set; }
     protected abstract void Die();
     protected virtual void Move()
     {
@@ -29,7 +29,6 @@ public abstract class People : MonoBehaviour
 
         transform.position = Pos;
     }
-    
     public void Hurt(int damage)
     {
         hp -= damage;

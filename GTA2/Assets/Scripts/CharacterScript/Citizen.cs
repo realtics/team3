@@ -13,174 +13,84 @@ public class Citizen : NPC
         DIE,
         DOWN
     }
-    // Start is called before the first frame update
     public CitizenState citizenState = CitizenState.IDLE;
-    public Animator anim;
+    public Animator animator;
 
-    private float patternChangeTimer;
-    private float patternChangeInterval;
-    private float runawayTime = 10.0f;
+    float patternChangeTimer;
+    float patternChangeInterval;
+    float runawayTime = 10.0f;
 
-    //HumanCtr스크립트 참조 코드
-    private Vector3 destination;
-    private RaycastHit hit;
-    private float distToObstacle = Mathf.Infinity;
-    private TrafficLight trafficLight = null;
+    Rigidbody myRigidbody;
+    float minIdleTime = 2.0f;
+    float maxIdleTime = 5.0f;
+    float minWalkTime = 2.0f;
+    float maxWalkTime = 5.0f;
 
-    public bool isDestReached = true;
-    public LayerMask collisionLayer;
+    Vector3 RunawayVector;
 
-    Rigidbody rbody;
-
-    private void Awake()
+    void Awake()
     {
-        rbody = GetComponent<Rigidbody>();
+        myRigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    void Start()
     {
         base.NPCInit();
 
-        patternChangeInterval = Random.Range(3.0f, 500.0f);
+        patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
     }
-    // Start is called before the first frame update
-    private void Update()
+    void Update()
     {
-        anim.SetInteger("CitizenState", (int)citizenState);
+        animator.SetInteger("CitizenState", (int)citizenState);
         base.NPCUpdate();
 
         TimerCheck();
         ActivityByState();
     }
-    private void ActivityByState()
+    void ActivityByState()
     {
         switch (citizenState)
         {
             case CitizenState.IDLE:
                 break;
             case CitizenState.WALK:
-                Raycast();
-                Move();
+                base.Raycast();
+                base.Move();
                 break;
             case CitizenState.RUN:
-                RunAway();
+                base.RunAway();
                 break;
             case CitizenState.DIE:
                 break;
         }
     }
-
-    #region RefHumanCtr
-    protected override void Move()
-    {
-        if (isDestReached)
-        {
-            return;
-        }
-
-        Vector3 dir = new Vector3(destination.x, transform.position.y, destination.z) - transform.position;
-
-        transform.rotation = Quaternion.LookRotation(dir);//Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.4f);
-
-        if (distToObstacle != Mathf.Infinity)
-            return;
-        
-        transform.Translate(transform.forward * moveSpeed * Time.deltaTime, Space.World);
-    }
-    
-    void Raycast()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f, collisionLayer))
-        {
-            if (hit.transform.tag == "TrafficLight")
-            {
-                if (trafficLight == null)
-                    trafficLight = hit.transform.GetComponent<TrafficLight>();
-
-                if (trafficLight.signalColor == TrafficLight.SignalColor.SC_Green)
-                {
-                    distToObstacle = hit.distance;
-                }
-                else
-                {
-                    distToObstacle = Mathf.Infinity;
-                }
-            }
-            else
-            {
-                distToObstacle = hit.distance;
-                trafficLight = null;
-            }
-        }
-        else
-        {
-            distToObstacle = Mathf.Infinity;
-        }
-
-        DrawRaycastDebugLine();
-    }
-
-    void DrawRaycastDebugLine()
-    {
-        if (distToObstacle < Mathf.Infinity)
-        {
-            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
-        }
-        else
-        {
-            Debug.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
-        }
-    }
-    public void SetDestination(Vector3 pos)
-    {
-        destination = pos;
-        isDestReached = false;
-    }
-
-    public void Stop()
-    {
-        destination = transform.position;
-        isDestReached = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(destination, 0.25f);
-        Gizmos.DrawWireSphere(destination, 1);
-        //Handles.Label(destination, "destination");
-    }
-    #endregion
-    protected override void Die() //리스폰 필요
-    {
-        if (!isDie)
-        {
-            player.GetComponent<Player>().money += 10;
-        }
-
-        isDie = true;
-        citizenState = CitizenState.DIE;
-        GetComponent<Rigidbody>().isKinematic = false;
-    }
-
-    //TODO : IDLE Timer, Walk Timer 따로만들기
-    private void TimerCheck()
+    void TimerCheck()
     {
         patternChangeTimer += Time.deltaTime;
 
         switch (citizenState)
         {
-            case CitizenState.IDLE://FIX ME : 디버그 용, 이후 IDLE의 내용 break까지 다 지우기
-                citizenState = CitizenState.WALK;
-                break;
-            case CitizenState.WALK:
+            case CitizenState.IDLE:
                 if (DectectedPlayerAttack())
                 {
+                    RunawayVector = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+                    transform.LookAt(RunawayVector);
+                    transform.Rotate(0, 180, 0);
                     citizenState = CitizenState.RUN;
                 }
-                //PatternChange(patternChangeInterval);
-                patternChangeInterval = Random.Range(3.0f, 500.0f);
+                PatternChange(patternChangeInterval);
+                break;
+            case CitizenState.WALK:
+               
+                if (DectectedPlayerAttack())
+                {
+                    RunawayVector = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+                    transform.LookAt(RunawayVector);
+                    transform.Rotate(0, 180, 0);
+                    citizenState = CitizenState.RUN;
+                }
+                PatternChange(patternChangeInterval);
                 break;
             case CitizenState.RUN:
                 if (DectectedPlayerAttack())
@@ -197,7 +107,7 @@ public class Citizen : NPC
                 break;
         }
     }
-    private void PatternChange(float patternChangeInterval)
+    void PatternChange(float patternChangeInterval)
     {
         if (patternChangeTimer > patternChangeInterval)
         {
@@ -206,12 +116,14 @@ public class Citizen : NPC
             switch (citizenState)
             {
                 case CitizenState.IDLE:
-                    UpdateTargetDirection();
+                    patternChangeInterval = Random.Range(minWalkTime, maxWalkTime);
                     citizenState = CitizenState.WALK;
                     break;
                 case CitizenState.WALK:
+                    patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
+                    citizenState = CitizenState.IDLE;
+                    break;
                 case CitizenState.RUN:
-                    //가까운 목적지 찾기 해야함
                     citizenState = CitizenState.IDLE;
                     break;
             }
@@ -225,7 +137,6 @@ public class Citizen : NPC
 
     public override void Rising()
     {
-        
         if (citizenState == CitizenState.RUN)
             return;
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
@@ -233,7 +144,17 @@ public class Citizen : NPC
         citizenState = CitizenState.RUN;
         patternChangeTimer = 0.0f;
     }
-
+    protected override void Die() //리스폰 필요
+    {
+        if (!isDie)
+        {
+            player.GetComponent<Player>().money += 10;
+        }
+        isDie = true;
+        citizenState = CitizenState.DIE;
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<BoxCollider>().enabled = false;
+    }
     public override void Respawn()
     {
         patternChangeTimer = 0;
@@ -241,14 +162,15 @@ public class Citizen : NPC
         hp = 100;
         citizenState = CitizenState.IDLE;
         GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().NPCRepositioning(this);
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<BoxCollider>().enabled = true;
         print("Citizen Respawn");
     }
     #endregion
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall" && citizenState == CitizenState.RUN)
         {
-            print("collision");
             transform.Rotate(0, Random.Range(90, 270), 0);
         }
     }

@@ -64,13 +64,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  player: {fileID: 0}
-  citizenState: 0
-  anim: {fileID: 1020086614340368900}
-  isDestReached: 1
   collisionLayer:
     serializedVersion: 2
     m_Bits: 0
+  isDestReached: 1
+  player: {fileID: 0}
+  citizenState: 0
+  animator: {fileID: 1020086614340368900}
 --- !u!65 &-3621325394877705112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -83,7 +83,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.2316873, y: 0.38843024, z: 0.22954834}
-  m_Center: {x: 0, y: -0.0966298, z: 0}
+  m_Center: {x: 0, y: 0.06, z: 0}
 --- !u!114 &4949722845638621977
 MonoBehaviour:
   m_ObjectHideFlags: 0

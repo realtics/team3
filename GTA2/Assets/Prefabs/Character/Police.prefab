@@ -92,7 +92,7 @@ Animator:
   m_GameObject: {fileID: 1167477734086649169}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 90404c6375f29644e8a4fca6560727cd, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -164,9 +164,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isDestReached: 1
   player: {fileID: 0}
-  policeState: 0
-  anim: {fileID: 1167477734086649170}
+  animator: {fileID: 0}
+  gunList:
+  - {fileID: 7829914115591520670, guid: 1875a2e7d4badf14294bed56181d7943, type: 3}
+  - {fileID: 7829914115591520670, guid: 1875a2e7d4badf14294bed56181d7943, type: 3}
 --- !u!65 &1358635159880621219
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -178,5 +184,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7792256, y: 1, z: 0.5098779}
-  m_Center: {x: 0.043139577, y: 0, z: -0.009160638}
+  m_Size: {x: 0.7792256, y: 0.8132359, z: 0.5098779}
+  m_Center: {x: 0.043139577, y: 0.33679324, z: -0.009160638}

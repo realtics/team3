@@ -17,13 +17,9 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> carWayPoints = new List<GameObject>();
     public List<GameObject> peopleWayPoints = new List<GameObject>();
 
-    //TODO : 사람 웨이 포인트 삽입
-    //자동차 풀 만들고 Instantiate 삭제
-
     [SerializeField]
     GameObject player;
 
-    // Start is called before the first frame update
     void Start()
     {
         Init();
@@ -40,11 +36,6 @@ public class SpawnManager : MonoBehaviour
     //WayPoints
     void SpawnNPC()
     {
-        //foreach(var npc in activeNPCList)
-        //{
-        //    int randomIndex = Random.Range(0, peopleWayPoints.Count);
-        //    npc.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
-        //}
         List<Vector3> position = new List<Vector3>();
 
         for (int i = 0; i < peopleWayPoints.Count; i++)

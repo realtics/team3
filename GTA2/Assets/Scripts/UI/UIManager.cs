@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField]
     private HeartImageList heartListUI;
@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
 
         // TODO: 조이스틱 차냐 사람이냐에 따라 방식 설정
         humanJoystick.SetActive(true);
+        humanJoystick.GetComponentInChildren<bl_Joystick>().SetCanvas(GetComponent<Canvas>());
         carJoystick.SetActive(false);
     }
 

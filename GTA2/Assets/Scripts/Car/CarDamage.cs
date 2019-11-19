@@ -21,6 +21,19 @@ public class CarDamage : MonoBehaviour
         hp = maxHp;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
+        {
+            Bullet HitBullet = other.GetComponent<Bullet>();
+            other.gameObject.SetActive(false);
+
+            DeductHp(HitBullet.bulletDamage);
+            EnableParticle();
+            TurnOffSirenIfExist();
+        }
+    }
+
     void OnCollisionEnter(Collision col)
     {
         if (col.transform.tag != "Wall" && col.transform.tag != "Car")

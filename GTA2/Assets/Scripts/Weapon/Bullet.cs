@@ -90,7 +90,7 @@ public class Bullet : MonoBehaviour
         }
 
         bulletActiveDelta += Time.deltaTime;
-        if (bulletActiveDelta > 1.0f)
+        if (bulletActiveDelta > bulletLifeTime)
         {
             transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
             gameObject.SetActive(false);
