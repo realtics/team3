@@ -9,8 +9,8 @@ public class BulletElectric : Bullet
     public DigitalRuby.LightningBolt.LightningBoltScript myLightning;
     
 
-    private GameObject myTarget;
-
+    GameObject myTarget;
+    float electricWaveArea;
 
 
 
@@ -25,6 +25,10 @@ public class BulletElectric : Bullet
         base.SetBullet(type, triggerPos, dir, bullettoSize);
     }
 
+    public void SetArea(float area)
+    {
+        electricWaveArea = area;
+    }
 
     // Null이 들어올 경우 타겟의 최신화가 이루어지지 않는다.
     // 이미 타겟이 잡힌 경우란 것이다.
@@ -36,19 +40,21 @@ public class BulletElectric : Bullet
             myTarget = obj;
         }
 
-        if (Vector3.Distance(myTarget.gameObject.transform.position, gameObject.transform.position) > 5.0f)
-        {
-            myTarget = null;
-        }
+        //if (Vector3.Distance(
+        //    myTarget.gameObject.transform.position, gameObject.transform.position) > electricWaveArea)
+        //{
+        //    myTarget = null;
+        //    return;
+        //}
 
 
 
         NPC checkNPC = myTarget.GetComponent<NPC>();
         if (checkNPC != null)
         {
-            if(!(checkNPC as People).isDie)
+            if((checkNPC as People).isDie)
             {
-
+                gameObject.SetActive(false);
             }
         }
         
@@ -56,6 +62,11 @@ public class BulletElectric : Bullet
         targetToVector =
             myTarget.gameObject.transform.position -
             gameObject.transform.position;
+
+        if (targetToVector.magnitude > electricWaveArea)
+        {
+            gameObject.SetActive(false);
+        }
 
 
         SetScale(targetToVector);

@@ -97,6 +97,7 @@ public class GunElectric : Gun
         foreach (var item in activeElectricList)
         {
             item.UpdateBullet(gunType, userObject.transform.position, gunDir, bulletToPeopleSize);
+            item.SetArea(electricWaveArea);
         }
     }
 
