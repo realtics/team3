@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 1358635159880621219}
   m_Layer: 0
   m_Name: Police
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,13 +166,13 @@ MonoBehaviour:
   hp: 100
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   isDestReached: 1
   player: {fileID: 0}
   animator: {fileID: 0}
   gunList:
-  - {fileID: 7829914115591520670, guid: 1875a2e7d4badf14294bed56181d7943, type: 3}
-  - {fileID: 7829914115591520670, guid: 1875a2e7d4badf14294bed56181d7943, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &1358635159880621219
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184,5 +184,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7792256, y: 0.8132359, z: 0.5098779}
-  m_Center: {x: 0.043139577, y: 0.33679324, z: -0.009160638}
+  m_Size: {x: 0.16986847, y: 0.32845825, z: 0.116737366}
+  m_Center: {x: -0.010332108, y: 0.09440443, z: -0.0014324188}

@@ -10,6 +10,8 @@ public class HeartImageList : MonoBehaviour
     private Image[] heartImgList;
 
 
+    private int maxPlayerHp;
+
 
     private void Start()
     {
@@ -17,18 +19,41 @@ public class HeartImageList : MonoBehaviour
         heartImgList[0].color = new Color(1.0f, .0f, .0f, 1.0f);
     }
 
+    public void SetMaxPlayerHp(int maxHp)
+    {
+        maxPlayerHp = maxHp;
+    }
+
+
     // Update is called once per frame
     public void SetHealthPoint(int hp)
     {
         InitImage();
-        // 20인 이유는 100을 하트 5개로 나누기 때문이다. - 하트 개당 20의 체력
-        int oneHeartHp = 20;
+
+        // 체력 고갈 처리
+        if (hp <= 0)
+        {
+            for (int i = 0; i < heartImgList.Length; i++)
+            {
+                heartImgList[i].enabled = false;
+            }
+
+            return;
+        }
+
+
+        int oneHeartHp = maxPlayerHp / 5;
         int heartCount = hp / oneHeartHp;
 
+
+        // 체력이 가득하다.
         if (heartCount == heartImgList.Length)
         {
             return;
         }
+
+
+
 
         for (int i = heartImgList.Length; i > heartCount + 1; i--)
         {

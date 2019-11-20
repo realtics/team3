@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4949722845638621977}
   m_Layer: 10
   m_Name: Citizen
-  m_TagString: Citizen
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   hp: 100
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   isDestReached: 1
   player: {fileID: 0}
   citizenState: 0

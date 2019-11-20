@@ -118,6 +118,11 @@ public abstract class Gun : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (player.isDie == true)
+        {
+            return;
+        }
+
         UpdateDirection();
         UpdateDelta();
         UpdateKeyInput();

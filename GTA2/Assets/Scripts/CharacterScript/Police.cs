@@ -28,7 +28,7 @@ public class Police : NPC
     Rigidbody myRigidbody;
 
     public Animator animator;
-    public List<Gun> gunList;
+    public List<NPCGun> gunList;
 
     float minIdleTime = 2.0f;
     float maxIdleTime = 5.0f;
@@ -86,12 +86,13 @@ public class Police : NPC
 
                 isShot = false;
                 isPunch = true;
+                gunList[0].GetComponent<NpcGunPunch>().StartShot();
             }
             else
             {
+                gunList[0].GetComponent<NpcGunPunch>().StopShot();
                 isWalk = true;
                 base.ChasePlayer();
-                print("!?");
             }
                 
         }
@@ -104,10 +105,6 @@ public class Police : NPC
 
     protected override void Die() //리스폰 필요
     {
-        if (!isDie)
-        {
-            player.GetComponent<Player>().money += 10;
-        }
         isDie = true;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<BoxCollider>().enabled = false;

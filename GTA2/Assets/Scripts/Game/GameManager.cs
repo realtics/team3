@@ -23,7 +23,6 @@ public class GameManager : MonoSingleton<GameManager>
     {
         userPlayer = GameObject.FindWithTag("Player").GetComponent<Player>();
 
-
         Image image = missionArrow.GetComponent<Image>();
         Material existingGlobalMat = image.materialForRendering;
         Material updatedMaterial = new Material(existingGlobalMat);

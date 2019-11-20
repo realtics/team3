@@ -5,8 +5,7 @@ using UnityEngine;
 public class QuestManager : MonoSingleton<QuestManager>
 {
     // Start is called before the first frame update
-    // 
-
+    List<Quest> activeQuestList;
 
     void Start()
     {

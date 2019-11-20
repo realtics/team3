@@ -146,10 +146,6 @@ public class Citizen : NPC
     }
     protected override void Die() //리스폰 필요
     {
-        if (!isDie)
-        {
-            player.GetComponent<Player>().money += 10;
-        }
         isDie = true;
         citizenState = CitizenState.DIE;
         GetComponent<Rigidbody>().isKinematic = true;

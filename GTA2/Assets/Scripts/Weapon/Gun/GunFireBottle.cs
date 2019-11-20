@@ -16,7 +16,6 @@ public class GunFireBottle : Gun
     void Start()
     {
         gunType = GunState.FireBottle;
-        bulletPoolCount = 50;
 
         InitGun();
         base.InitBullet("FireBottle");

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcGunPistol : Gun
+public class NpcGunPistol : NPCGun
 {
     void Start()
     {

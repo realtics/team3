@@ -15,6 +15,10 @@ public class GunPunch : Gun
 
     protected override void Update()
     {
+        if (player.isDie == true)
+        {
+            return;
+        }
         base.UpdateDirection();
         UpdateDelta();
         UpdateKeyInput();

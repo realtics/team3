@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4506803799218540964}
-  - component: {fileID: 7051117049651222268}
+  - component: {fileID: 4512659732630406059}
   - component: {fileID: 2101150561687515110}
   m_Layer: 0
   m_Name: NBulletPunch
-  m_TagString: NPCBullet
+  m_TagString: NPCPunch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7051117049651222268
+--- !u!114 &4512659732630406059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3145138659859705785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881388531e0c226459303ea2234477ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 22c39351ea7d8d346b22a0537b6408d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 5
+  bulletDamage: 50
   bulletLifeTime: 0.3
   bulletSpeed: 0
   explosionArea: 0

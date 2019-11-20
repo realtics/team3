@@ -5,13 +5,17 @@ using UnityEngine;
 public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField]
-    private HeartImageList heartListUI;
+    HeartImageList heartListUI;
     [SerializeField]
-    private MoneyText moneyTextUI;
+    MoneyText moneyTextUI;
     [SerializeField]
-    private PoliceImageList policeListUI;
+    PoliceImageList policeListUI;
     [SerializeField]
-    private WeaponImage weaponUI;
+    WeaponImage weaponUI;
+    [SerializeField]
+    GameEndUI gameEndUI;
+    [SerializeField]
+    LifeCount lifeCountUI;
 
     /// <summary>
     /// 플레이어에서 직접 참조하기 위해 public으로 품.
@@ -19,12 +23,13 @@ public class UIManager : MonoSingleton<UIManager>
     /// //[SerializeField]
     //private bl_Joystick playerJoystick;
     public bl_Joystick playerJoystick;
+    
     [SerializeField]
-    private GameObject humanJoystick;
+    GameObject humanJoystick;
     [SerializeField]
-    private GameObject carJoystick;
+    GameObject carJoystick;
     [SerializeField]
-    private CarController targetCarControll;
+    CarController targetCarControll;
 
     // Start is called before the first frame update
     private Player player;
@@ -35,31 +40,37 @@ public class UIManager : MonoSingleton<UIManager>
     bool isExcelDown;
     bool isBreakDown;
 
-    private void Start()
+    void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         // TODO: 조이스틱 차냐 사람이냐에 따라 방식 설정
-        humanJoystick.SetActive(true);
         humanJoystick.GetComponentInChildren<bl_Joystick>().SetCanvas(GetComponent<Canvas>());
-        carJoystick.SetActive(false);
+        heartListUI.SetMaxPlayerHp(player.GetHp());
     }
 
     // Update is called once per frame
-    private void Update()
+    void Update()
     {
         moneyTextUI.SetMoney(player.money);
         weaponUI.SetGunSprite(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
         heartListUI.SetHealthPoint(player.GetHp());
+        // lifeCountUI.UpdateLifeCount(player.);
 
+        UpdateDieUI();
         UpdateGetOffCar();
         UpdateButton();
     }
 
     // 컴퓨터용 체인저
-    private void UpdateGetOffCar()
+    void UpdateGetOffCar()
     {
         if (targetCarControll == null)
+        {
+            return;
+        }
+
+        if (player.isDie)
         {
             return;
         }
@@ -67,7 +78,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 타겟 팅중인 차가 없으면
         if (targetCarControll.GetDriver() == null)
         {
-            OutCar();
+            HumanUIMode();
             targetCarControll = null;
         }
     }
@@ -100,20 +111,53 @@ public class UIManager : MonoSingleton<UIManager>
             targetCarControll.InputVertical(.0f);
         }
     }
+    void UpdateDieUI()
+    {
+        if (player.isDie)
+        {
+            humanJoystick.SetActive(false);
+            carJoystick.SetActive(false);
+        }
+    }
 
-    public bool isHumanUI()
+
+
+    public bool IsHumanUI()
     {
         return humanJoystick.activeInHierarchy;
     }
-    public bool isCarUI()
+    public bool IsCarUI()
     {
         return carJoystick.activeInHierarchy;
     }
 
 
 
+    public void TurnOnWastedSprite()
+    {
+        gameEndUI.TurnOnWastedSprite();
+    }
+    public void TurnOnBustedSprite()
+    {
+        gameEndUI.TurnOnBustedSprite();
+    }
+    public void TurnOffEndUI()
+    {
+        gameEndUI.TurnOffEndUI();
+    }
 
 
+    public void CarUIMode(CarController targetCar)
+    {
+        targetCarControll = targetCar;
+        humanJoystick.SetActive(false);
+        carJoystick.SetActive(true);
+    }
+    public void HumanUIMode()
+    {
+        humanJoystick.SetActive(true);
+        carJoystick.SetActive(false);
+    }
 
     #region HumanUI
     public void LSwapButtonDown()
@@ -146,17 +190,6 @@ public class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Car UI
-    public void InCar(CarController targetCar)
-    {
-        targetCarControll = targetCar;
-        humanJoystick.SetActive(false);
-        carJoystick.SetActive(true);
-    }
-    public void OutCar()
-    {
-        humanJoystick.SetActive(true);
-        carJoystick.SetActive(false);
-    }
 
 
     public void ExcelButtonDown()

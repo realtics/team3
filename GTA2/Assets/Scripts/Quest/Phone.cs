@@ -11,6 +11,12 @@ public class Phone : MonoBehaviour
     bool isRing;
     bool prevRing;
     Animator phoneAnimator;
+
+    public void OnDrawGizmos()
+    {
+        DrawArrow.ForGizmo(gameObject.transform.position, Vector3.right * 10.0f, Color.red, 0.5f);
+        Gizmos.DrawLine(transform.position, Vector3.zero);
+    }
     void Start()
     {
         phoneAnimator = GetComponentInChildren<Animator>();
@@ -25,7 +31,7 @@ public class Phone : MonoBehaviour
             phoneAnimator.SetBool("IsRinging", true);
             prevRing = isRing;
         }
-        else if(!isRing && prevRing != isRing)
+        else if (!isRing && prevRing != isRing)
         {
             phoneAnimator.SetBool("IsRinging", false);
             prevRing = isRing;

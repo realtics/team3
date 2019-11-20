@@ -109,6 +109,21 @@ public class Item : MonoBehaviour
             return;
         }
 
+        // 해당아이템이 수치 아이템
+        if (itemType > ItemStatus.ActiveItemStartIndex && itemType < ItemStatus.ActiveItemEndIndex)
+        {
+            switch (itemType)
+            {
+                case ItemStatus.Heath:
+                    break;
+                case ItemStatus.Money:
+                    break;
+                case ItemStatus.Armor:
+                    break;
+                default:
+                    break;
+            }
+        }
 
         // 해당아이템이 총 아이템일 경우
         if (itemType > ItemStatus.GunStartIndex && itemType < ItemStatus.GunEndIndex)

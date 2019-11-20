@@ -40,14 +40,6 @@ public class BulletElectric : Bullet
             myTarget = obj;
         }
 
-        //if (Vector3.Distance(
-        //    myTarget.gameObject.transform.position, gameObject.transform.position) > electricWaveArea)
-        //{
-        //    myTarget = null;
-        //    return;
-        //}
-
-
 
         NPC checkNPC = myTarget.GetComponent<NPC>();
         if (checkNPC != null)

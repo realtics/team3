@@ -23,14 +23,15 @@ public class CarDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
+        if (other.CompareTag("PlayerBullet") || 
+            other.CompareTag("PlayerFireBullet") ||
+            other.CompareTag("NPCBullet"))
         {
             Bullet HitBullet = other.GetComponent<Bullet>();
             other.gameObject.SetActive(false);
 
             DeductHp(HitBullet.bulletDamage);
             EnableParticle();
-            TurnOffSirenIfExist();
         }
     }
 
@@ -47,7 +48,6 @@ public class CarDamage : MonoBehaviour
             float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
             EnableDeltaImage(angle);
             EnableParticle();
-            TurnOffSirenIfExist();
         }       
     }
 
@@ -76,6 +76,11 @@ public class CarDamage : MonoBehaviour
         hp -= amount;
         hp = Mathf.Clamp(hp, 0, maxHp);
         carController.OnCarHpChanged(hp);
+
+        if(hp <= 0)
+        {
+            deltasController.FullyDestroy();
+        }
     }
 
     void EnableParticle()
@@ -89,13 +94,5 @@ public class CarDamage : MonoBehaviour
         {
             fireParticle.SetActive(true);
         }
-    }
-
-    void TurnOffSirenIfExist()
-    {
-        if (deltasController.sirenL == null)
-            return;
-
-        deltasController.TurnOffSiren();
     }
 }

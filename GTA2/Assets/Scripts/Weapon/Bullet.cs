@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
 
     protected bool isLife = false;
     protected float bulletActiveDelta = .0f;
+    protected float bulletDeActiveTime = .1f;
 
 
 
@@ -90,7 +91,7 @@ public class Bullet : MonoBehaviour
         }
 
         bulletActiveDelta += Time.deltaTime;
-        if (bulletActiveDelta > bulletLifeTime)
+        if (bulletActiveDelta > bulletDeActiveTime)
         {
             transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
             gameObject.SetActive(false);

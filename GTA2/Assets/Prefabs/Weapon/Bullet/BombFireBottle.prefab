@@ -78,6 +78,7 @@ MonoBehaviour:
   bulletLifeTime: 100
   bulletSpeed: 1
   explosionArea: 5
+  bulletDeActiveTime: 0.1
   myRigidBody: {fileID: 7073515812447598049}
   yLaunchPos: 1.1
   yLaunchPower: 3

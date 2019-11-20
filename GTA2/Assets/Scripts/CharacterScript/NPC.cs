@@ -22,6 +22,7 @@ public abstract class NPC : People
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
+    int money = 10; //사망시 플레이어에게 주는 돈
 
     public abstract void Down();
     public abstract void Rising();
@@ -95,7 +96,6 @@ public abstract class NPC : People
         if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
         {
             Bullet HitBullet = other.GetComponent<Bullet>();
-
 
             //HitBullet.누가쐈는지
             Hurt(HitBullet.bulletDamage);
@@ -174,8 +174,7 @@ public abstract class NPC : People
         else
             return false;
     }
-
-
+   
     void DrawRaycastDebugLine()
     {
         if (distToObstacle < Mathf.Infinity)
@@ -199,12 +198,14 @@ public abstract class NPC : People
         destination = pos;
         isDestReached = false;
     }
-
     public void Stop()
     {
         destination = transform.position;
         isDestReached = true;
     }
+    public void IncreaseMoney()
+    {
+        player.GetComponent<Player>().money += money;
+    }
     #endregion
 }
-

@@ -30,6 +30,11 @@ public class GunElectric : Gun
             objectList.Add(citizen.gameObject);
         }
 
+        foreach (var car in spawnManager.activeCarList)
+        {
+            objectList.Add(car.gameObject);
+        }
+
         InitGun();
         base.InitBullet("Electric");
     }
@@ -37,6 +42,10 @@ public class GunElectric : Gun
 
     protected override void Update()
     {
+        if (player.isDie == true)
+        {
+            return;
+        }
         base.UpdateDirection();
         UpdateDelta();
         UpdateKeyInput();

@@ -86,6 +86,9 @@
     <Compile Include="Assets\Scripts\Legacy\PathManager.cs" />
     <Compile Include="Assets\Scripts\Quest\JsonManager.cs" />
     <Compile Include="Assets\Scripts\Quest\Phone.cs" />
+    <Compile Include="Assets\Scripts\Quest\Quest.cs" />
+    <Compile Include="Assets\Scripts\Quest\QuestCondition.cs" />
+    <Compile Include="Assets\Scripts\Quest\QuestInfo.cs" />
     <Compile Include="Assets\Scripts\Quest\QuestManager.cs" />
     <Compile Include="Assets\Scripts\Road\Branch.cs" />
     <Compile Include="Assets\Scripts\Road\CarRoad.cs" />
@@ -94,7 +97,9 @@
     <Compile Include="Assets\Scripts\Road\TrafficLightController.cs" />
     <Compile Include="Assets\Scripts\Singleton\MonoSingleton.cs" />
     <Compile Include="Assets\Scripts\Singleton\Singleton.cs" />
+    <Compile Include="Assets\Scripts\UI\GameEndUI.cs" />
     <Compile Include="Assets\Scripts\UI\HeartImageList.cs" />
+    <Compile Include="Assets\Scripts\UI\LifeCount.cs" />
     <Compile Include="Assets\Scripts\UI\MoneyText.cs" />
     <Compile Include="Assets\Scripts\UI\PoliceImageList.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
@@ -117,6 +122,7 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletRocketLauncher.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletShotgun.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\CameraShaker.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Bullet\NBulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\BulletEffect.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\FireBottleSmoke.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\RocketSmoke.cs" />
@@ -134,6 +140,7 @@
     <Compile Include="Assets\Scripts\Weapon\Gun\GunShot.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\GunSleepMachine.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\NpcGunPistol.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Gun\NpcGunPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\NPCGun.cs" />
     <Compile Include="Assets\Scripts\Weapon\SetPool.cs" />
     <Compile Include="Assets\SubAsset\JMO Assets\WarFX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />

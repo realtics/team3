@@ -34,10 +34,13 @@ public class CarController : MonoBehaviour
     float distToObstacle = Mathf.Infinity;
     Vector3 reboundForce = Vector3.zero;
 
+    public AudioSource audioSourceEngine;
+    public AudioSource audioSourceSkid;
+
     float inputH;
     float inputV;
     float joystickInputH, joystickInputV;
-
+    
     void Awake()
     {
         rbody = GetComponent<Rigidbody>();
@@ -48,7 +51,9 @@ public class CarController : MonoBehaviour
     void Update()
     {
         DrawSkidMark();
-        UpdateShadowPosition();        
+        UpdateShadowPosition();
+
+        AdjustEngineSound();
     }
 
     void FixedUpdate()
@@ -68,6 +73,13 @@ public class CarController : MonoBehaviour
 
             switch (carState)
             {
+                case CarState.idle:
+                    {
+                        inputH = 0;
+                        inputV = 0;
+                        //MoveCarByInput();
+                    }
+                    break;
                 case CarState.aiNormal:
                 case CarState.evade:
                     {
@@ -152,7 +164,8 @@ public class CarController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Invoke("GetOffTheCar", 0.01f);
+            //FIXME : 타는중 내리는중 구현해서 그 때는 아무런 입력을 받지 않도록 변경
+            Invoke("GetOffTheCar", 0.1f);
             //GetOffTheCar();
         }
             
@@ -167,7 +180,7 @@ public class CarController : MonoBehaviour
         if (inputV == 0)
         {
             curSpeed *= 0.97f;
-            if (curSpeed < 1)
+            if (Mathf.Abs(curSpeed) < 1)
                 curSpeed = 0;
         }
 
@@ -200,11 +213,14 @@ public class CarController : MonoBehaviour
         {
             trailLeft.emitting = true;
             trailRight.emitting = true;
+            if(!audioSourceSkid.isPlaying)
+                audioSourceSkid.Play();
         }
         else
         {
             trailLeft.emitting = false;
             trailRight.emitting = false;
+            audioSourceSkid.Stop();
         }
     }
 
@@ -389,13 +405,32 @@ public class CarController : MonoBehaviour
         destination = pos;
     }
 
+    void AdjustEngineSound()
+    {
+        float temp = 0.5f;
+        temp += Mathf.Clamp(Mathf.Abs(curSpeed) / 300, 0.0f, 2.0f);
+        if (curSpeed > 0)
+            temp -= (int)(curSpeed / 150) * 0.3f;
+
+        audioSourceEngine.pitch = temp;
+
+        if(carState != CarState.controlledByPlayer)
+        {
+            audioSourceEngine.volume = Mathf.Clamp(curSpeed/100, 0, 0.8f);
+        }
+        else
+        {
+            audioSourceEngine.volume = 1;
+        }
+    }
+
     public void OnCarHpChanged(int curHp)
     {
         if(curHp <= 0 && carState != CarState.destroied)
         {
             carState = CarState.destroied;
             if(driver != null)
-                driver.Hurt(100);
+                driver.Hurt(99999);
         }
 
         if(curHp < 30)
@@ -407,6 +442,7 @@ public class CarController : MonoBehaviour
             damageMaxSpdMultiplier = 0.8f;
         }
     }
+
     public void GetOnTheCar(People driver)
     {
         this.driver = driver;
@@ -426,6 +462,8 @@ public class CarController : MonoBehaviour
         Camera.main.GetComponent<TempCamCtr>().ChangeTarget(driver.gameObject);
         driver = null;
         SetAiMaxSpeedMultiplier();
+
+        curSpeed = 0;
     }
 
     void OnDrawGizmos()
@@ -458,10 +496,9 @@ public class CarController : MonoBehaviour
             curSpeed *= 0.25f;
         }
 
-        if(col.transform.tag == "Citizen")
+        if(col.transform.tag == "NPC" || col.transform.tag == "Player")
         {
-            if(curSpeed > 50)
-                col.gameObject.GetComponent<NPC>().Hurt(100);
+            col.gameObject.GetComponent<People>().Hurt((int)Mathf.Abs(curSpeed)/2);
         }
     }
 

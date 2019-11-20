@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Player : People
 {
-    //Animator
     public bool isWalk { get; set; }
     public bool isShot { get; set; }
     public bool isPunch { get; set; }
     public bool isJump { get; set; }
     public bool isStealing { get; set; }
-
+    public bool isBusted { get; set; }
+    int remains = 3;
     GameObject targetCar;
     float playerMoveSpeed = 2.0f;
 
@@ -19,8 +19,11 @@ public class Player : People
     public bool isAttack { get; set; }
     public int money { get; set; }
 
+    int defaultHp = 500;
     float jumpTime = 1.5f;
     float jumpTimer = 0.0f;
+    float respawnTime = 3.0f;
+    float respawnTimer = 0.0f;
 
     Rigidbody myRigidBody;
     RaycastHit hit;
@@ -28,7 +31,7 @@ public class Player : People
     public LayerMask collisionLayer;
     public Animator animator;
     public List<Gun> gunList;
-
+    public List<Transform> respawnPoint;
     // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
     void Awake()
     {
@@ -37,7 +40,7 @@ public class Player : People
     void Start()
     {
         moveSpeed = playerMoveSpeed;
-
+        hp = defaultHp;
         // 이거 그냥 건 리스트 쓰니까 프리펩에 있는게 계속 수정됌 그래서 복사를 해
         // 프리팹은 지키는 쪽으로 합시다ㅇㅇ
         List<Gun> gunTempList = new List<Gun>();
@@ -53,19 +56,20 @@ public class Player : People
 
         gunList[(int)GunState.None].bulletCount = 1;
         gunList[(int)GunState.None].gameObject.SetActive(true);
+
+        UIManager.Instance.HumanUIMode();
     }
 
     void Update()
     {
-        if (isDie)
-            return;
-        UpdateInput();
         animator.SetBool("isWalk", isWalk);
         animator.SetBool("isShot", isShot);
         animator.SetBool("isPunch", isPunch);
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
-
+        if (isDie)
+            return;
+        UpdateInput();
     }
     void FixedUpdate()
     {
@@ -84,16 +88,70 @@ public class Player : People
 
         ActiveControl();
         WeaponSwap();
-        
     }
 
     void TimerCheck()
     {
         if (isJump)
             LandCheck();
+        else if(isDie)
+        {
+            RespawnTimerCheck();
+        }
+
+    }
+    void RespawnTimerCheck()
+    {
+        respawnTimer += Time.deltaTime;
+
+        if(respawnTime < respawnTimer)
+        {
+            respawnTimer = 0.0f;
+            Respawn();
+        }
+    }
+    protected override void Die()
+    {
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<BoxCollider>().enabled = false;
+        hDir = 0;
+        vDir = 0;
+        isDie = true;
+        remains--;
+
+        if(remains == 0)
+        {
+            remains = 3;
+            //GameOver
+        }
+        else if (isBusted)
+        {
+            UIManager.Instance.TurnOnBustedSprite();
+        }
+        else //isWasted
+        {
+            UIManager.Instance.TurnOnWastedSprite();
+        }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("NPCPunch"))
+        {
+            other.gameObject.SetActive(false);
+            int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
+            print(bulletDamage);
+            isBusted = true;
+            Hurt(bulletDamage, true);
+        }
+        else if (other.gameObject.CompareTag("NPCBullet"))
+        {
+            int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
+            isBusted = false;
 
+            Hurt(bulletDamage);
+        }
+    }
     #region lowlevelCode
     void LandCheck()
     {
@@ -112,11 +170,7 @@ public class Player : People
             }
         }
     }
-
-    protected override void Die()
-    {
-        isDie = true;
-    }
+    
     protected override void Move()
     {
         if (isStealing)
@@ -135,7 +189,7 @@ public class Player : People
             {
                 isStealing = false;
                 targetCar.GetComponent<CarController>().GetOnTheCar(this as People);
-                UIManager.Instance.InCar(targetCar.GetComponent<CarController>());
+                UIManager.Instance.CarUIMode(targetCar.GetComponent<CarController>());
                 print("탐");
             }
         }
@@ -282,6 +336,28 @@ public class Player : People
         gunList[(int)curGunIndex].gameObject.SetActive(true);
         Debug.Log(curGunIndex);
     }
+    public void Respawn()
+    {
+        UIManager.Instance.HumanUIMode();
+        isDie = false;
+        SetHpDefault();
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<BoxCollider>().enabled = true;
+        print("Player Respawn");
+        transform.position = respawnPoint[Random.Range(0, respawnPoint.Count)].position;
+        //카메라 위치 조정,
+        //자동차 셋팅
+        //사람위치 재할당
+        if (isBusted)
+        {
+            UIManager.Instance.TurnOffEndUI();
+        }
+        else
+        {
+            UIManager.Instance.TurnOffEndUI();
+        }
+    }
+
     //TODO : UIManager에 있는것이 좋을 것 같음.
     public void JumpButtonDown()
     {
@@ -333,9 +409,6 @@ public class Player : People
         isStealing = true;
         isWalk = true;
 
-        //vDir = Input.GetAxisRaw("Vertical");
-        //hDir = Input.GetAxisRaw("Horizontal");
-
         List<GameObject> activeCarList = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().activeCarList;
         //제일 가까운 차 가져오기
 
@@ -350,7 +423,10 @@ public class Player : People
             }
         }
     }
-
+    public void SetHpDefault()
+    {
+        hp = defaultHp;
+    }
     void ShotStop()
     {
         isShot = false;

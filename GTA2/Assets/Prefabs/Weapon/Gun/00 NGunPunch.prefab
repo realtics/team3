@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7829914115591520671}
-  - component: {fileID: 7829914115591520670}
+  - component: {fileID: -6292103021144967684}
   m_Layer: 0
   m_Name: 00 NGunPunch
   m_TagString: PlayerPunch
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7829914115591520670
+--- !u!114 &-6292103021144967684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7829914115591520641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c139c34190e9ef64197e9a882c2b6384, type: 3}
+  m_Script: {fileID: 11500000, guid: 77ade91eba83ace4d9b064943b981fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPref: {fileID: 3145138659859705785, guid: f4f04a3356c788f4facd00f4a2df2e3a,

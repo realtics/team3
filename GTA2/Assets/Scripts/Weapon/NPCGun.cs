@@ -9,46 +9,32 @@ public abstract class NPCGun : MonoBehaviour
     // 사용하는 사람
     public GameObject userObject;
     public GameObject bulletPref;
-
     public float shootInterval;
     public float bulletToPeopleSize;
 
+    public int bulletPoolCount;
+    public int bulletCount;
+    public int shotPerOneBullet;
 
-
+    protected int bulletPoolIndex;
+    protected int shotPerCurBullet;
 
     protected GunState gunType;
-    protected int bulletPoolCnt;
 
     protected Vector3 gunPos;
     protected Vector3 gunDir;
 
     protected List<Bullet> bulletList;
     protected float shootDelta;
-    protected int bulletIdx;
 
     protected GameObject bulletPool;
+    protected AudioSource gunSoundEffect;
+    protected bool isShot;
+    protected bool isPrevShot;
 
-
-
-    protected virtual void InitBullet(string poolname)
-    {
-        bulletPool = new GameObject();
-        bulletPool.name = poolname + "Pool";
-
-        bulletList =
-            GetPool<Bullet>.GetListComponent(
-            SetPool.PoolMemory(
-                bulletPref, bulletPool, bulletPoolCnt, "Bullet"));
-
-        foreach (var item in bulletList)
-        {
-            item.gameObject.SetActive(false);
-        }
-    }
 
 
     // Start is called before the first frame update
-
     protected void InitGun()
     {
         transform.eulerAngles = new Vector3(90.0f, 0.0f, 90.0f);
@@ -56,46 +42,57 @@ public abstract class NPCGun : MonoBehaviour
 
         // 인터벌은 수정가능
         shootDelta = .0f;
+        shotPerCurBullet = 0;
     }
 
-
-
-    protected void ShootSingleBullet()
+    protected virtual void InitBullet(string poolName)
     {
-        bulletList[bulletIdx].gameObject.SetActive(true);
-        bulletList[bulletIdx].SetBullet(gunType, userObject.transform.position, gunDir, bulletToPeopleSize);
+        bulletPool = new GameObject();
+        bulletPool.name = poolName + "Pool";
 
-        PlusBulletidx();
-    }
-    protected void ShootAngleBullet(float startAngle, float endAngle, int BulletCnt)
-    {
-        if (startAngle > endAngle)
+        bulletList =
+            GetPool<Bullet>.GetListComponent(
+            SetPool.PoolMemory(
+                bulletPref, bulletPool, bulletPoolCount, "Bullet"));
+
+        foreach (var item in bulletList)
         {
-            float tmp = startAngle;
-            startAngle = endAngle;
-            endAngle = tmp;
-        }
-
-        float spacing = (endAngle - startAngle) / (BulletCnt - 1);
-
-
-        for (int i = 0; i < BulletCnt; i++)
-        {
-            float Value = (startAngle + spacing * i);
-            float GunRad = .0f;
-            GunRad = (gunDir.y + Value + 90.0f) * Mathf.Deg2Rad;
-
-            Vector3 BulletDir = new Vector3(Mathf.Cos(GunRad), .0f, Mathf.Sin(GunRad));
-            BulletDir.x *= -1.0f;
-            BulletDir.y = gunDir.y + Value;
-
-            bulletList[bulletIdx].gameObject.SetActive(true);
-            bulletList[bulletIdx].SetBullet(gunType, userObject.transform.position, BulletDir, bulletToPeopleSize);
-
-            PlusBulletidx();
+            item.gameObject.SetActive(true);
+            item.gameObject.transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
         }
     }
 
+
+
+    protected Bullet ShootSingleBullet(Vector3 triggerPos)
+    {
+        bulletList[bulletPoolIndex].SetBullet(gunType, triggerPos, gunDir, bulletToPeopleSize);
+        Bullet returnBullet = bulletList[bulletPoolIndex];
+
+        PlusBulletIdx();
+        return returnBullet;
+    }
+    protected void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
+    {
+        List<Vector3> actVectorList =
+            GameMath.DivideAngleFromCount(startAngle, endAngle, gunDir.y, bulletCnt);
+
+        foreach (var item in actVectorList)
+        {
+            bulletList[bulletPoolIndex].gameObject.SetActive(true);
+            bulletList[bulletPoolIndex].SetBullet(
+                gunType, userObject.transform.position, item, bulletToPeopleSize);
+            PlusBulletIdx();
+        }
+    }
+    protected void DisableAllBullet()
+    {
+        foreach (var item in bulletList)
+        {
+            item.gameObject.SetActive(false);
+            item.gameObject.transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
+        }
+    }
 
 
 
@@ -103,31 +100,49 @@ public abstract class NPCGun : MonoBehaviour
     protected virtual void Update()
     {
         UpdateDirection();
-        UpdateInput();
+        UpdateDelta();
+        UpdateShot();
     }
 
 
-    void UpdateDirection()
+    protected void UpdateDelta()
+    {
+        shootDelta += Time.deltaTime;
+    }
+    protected virtual void UpdateDirection()
     {
         gunDir = userObject.transform.forward;
         gunDir.y = userObject.transform.eulerAngles.y;
     }
 
     // 요부분은 사람이 해도 되는 거지만 일단 여기서 구현 - 총알 발사
-    protected virtual void UpdateInput()
+    protected virtual void UpdateShot()
     {
-        if (true == Input.GetKey(KeyCode.A))
+        if (isShot)
         {
-            shootDelta += Time.deltaTime;
             if (shootInterval < shootDelta)
             {
-                ShootSingleBullet();
+                ShootSingleBullet(userObject.transform.position);
                 shootDelta = .0f;
             }
         }
+
     }
-    void PlusBulletidx()
+
+    public void StartShot()
     {
-        bulletIdx = GetPool<Bullet>.PlusListIdx(bulletList, bulletIdx);
+        isPrevShot = false;
+        isShot = true;
+    }
+
+    public void StopShot()
+    {
+        isPrevShot = true;
+        isShot = false;
+    }
+
+    void PlusBulletIdx()
+    {
+        bulletPoolIndex = GetPool<Bullet>.PlusListIdx(bulletList, bulletPoolIndex);
     }
 }

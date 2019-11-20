@@ -19,6 +19,8 @@ TagManager:
   - PlayerFireBullet
   - Item
   - SpawnManager
+  - NPCPunch
+  - PlayerCar
   layers:
   - Default
   - TransparentFX
