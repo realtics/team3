@@ -7,10 +7,24 @@ public class NpcGunPunch : NPCGun
     void Start()
     {
         gunType = GunState.None;
-        bulletPoolCount = 2;
 
         base.InitGun();
-        base.InitBullet("Punch");
+        this.InitBullet("Punch");
+    }
+
+
+    protected override void InitBullet(string poolName)
+    {
+        bulletList =
+            GetPool<Bullet>.GetListComponent(
+            SetPool.PoolMemory(
+                bulletPref, this.gameObject, bulletPoolCount, "Bullet"));
+
+        foreach (var item in bulletList)
+        {
+            item.gameObject.SetActive(true);
+            item.gameObject.transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
+        }
     }
 
     protected override void Update()

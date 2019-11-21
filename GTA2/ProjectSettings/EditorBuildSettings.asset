@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/End.unity
     guid: 4c3ae356b4ceeee46a698a30e5c3bfdd
   - enabled: 1
+    path: Assets/Scenes/Rip.unity
+    guid: 3ffacbb3208d44541b19056fd35c3bf2
+  - enabled: 1
     path: Assets/Scenes/GunTest.unity
     guid: 556809a9980b5ac428b0a7807e57c80f
   - enabled: 0

@@ -42,6 +42,7 @@ public class Police : NPC
     void Start()
     {
         base.NPCInit();
+        money = 50;
         runSpeed = 0.8f;
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
@@ -106,6 +107,7 @@ public class Police : NPC
     protected override void Die() //리스폰 필요
     {
         isDie = true;
+        GameManager.Instance.IncreaseMoney(money);
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<BoxCollider>().enabled = false;
     }
@@ -115,7 +117,7 @@ public class Police : NPC
         isDie = false;
         isWalk = false;
         hp = 100;
-        GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().NPCRepositioning(this);
+        SpawnManager.Instance.NPCRepositioning(this);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
         print("Police Respawn");

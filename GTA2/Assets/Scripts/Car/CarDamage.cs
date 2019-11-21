@@ -16,9 +16,11 @@ public class CarDamage : MonoBehaviour
     public GameObject fireParticle;
     public GameObject explosionParticle;
 
-    private void Start()
+    private void OnEnable()
     {
         hp = maxHp;
+        fireParticle.SetActive(false);
+        explosionParticle.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,6 +81,7 @@ public class CarDamage : MonoBehaviour
 
         if(hp <= 0)
         {
+            carController.carState = CarController.CarState.destroied;
             deltasController.FullyDestroy();
         }
     }

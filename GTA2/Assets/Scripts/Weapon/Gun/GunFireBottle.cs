@@ -12,7 +12,7 @@ public class GunFireBottle : Gun
 
     private float intervalDelta;
     private int smokeIdx = 0;
-
+    private bool isPrevShot;
     void Start()
     {
         gunType = GunState.FireBottle;
@@ -23,6 +23,7 @@ public class GunFireBottle : Gun
 
         player = userObject.GetComponent<Player>();
         intervalDelta = .0f;
+        isPrevShot = true;
     }
 
 
@@ -38,20 +39,21 @@ public class GunFireBottle : Gun
 
         foreach (var item in smokeList)
         {
-            item.gameObject.SetActive(false);
+            item.gameObject.SetActive(true);
         }
     }
 
     protected override void UpdateShot()
     {
-        if (isShot)
+        if (isKeyShot || isButtonShot)
         {
             intervalDelta += Time.deltaTime;
+            isPrevShot = false;
         }
 
-        else if ((!isShot && isPrevShot))
+        else if ((!isKeyShot && !isPrevShot))
         {
-            isPrevShot = false;
+            isPrevShot = true;
 
             if (shootInterval < intervalDelta)
             {

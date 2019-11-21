@@ -49,7 +49,7 @@ public class WaypointManager : MonoBehaviour
 
         foreach (var wp in allWaypoints)
         {
-            if(excludeViewport)
+            if (excludeViewport)
             {
                 Vector3 pos = Camera.main.WorldToViewportPoint(wp.transform.position);
                 float offset = 0.5f;
@@ -57,7 +57,7 @@ public class WaypointManager : MonoBehaviour
                     continue;
             }
 
-            var dist = (wp.transform.position - origin).magnitude;
+            var dist = (wp.transform.position - origin).sqrMagnitude;
             if (dist < closestDist)
             {
                 closest = wp;

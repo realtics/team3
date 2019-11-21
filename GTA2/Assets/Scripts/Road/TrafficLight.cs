@@ -11,6 +11,8 @@ public class TrafficLight : MonoBehaviour
     public SignalColor signalColor = SignalColor.SC_Red;
 
     public SpriteRenderer fakeLight;
+    public GameObject lightObjGreen;
+    public GameObject lightObjRed;
     public BoxCollider boxColliderForCar;
     public BoxCollider boxColliderForPed1;
     public BoxCollider boxColliderForPed2;
@@ -21,6 +23,8 @@ public class TrafficLight : MonoBehaviour
         {
             signalColor = SignalColor.SC_Red;
             fakeLight.color = new Color(1, 0, 0, 0.2f);
+            lightObjGreen.SetActive(false);
+            lightObjRed.SetActive(true);
 
             boxColliderForCar.enabled = true;
             boxColliderForPed1.enabled = false;
@@ -30,6 +34,8 @@ public class TrafficLight : MonoBehaviour
         {
             signalColor = SignalColor.SC_Green;
             fakeLight.color = new Color(0, 1, 0, 0.2f);
+            lightObjGreen.SetActive(true);
+            lightObjRed.SetActive(false);
 
             boxColliderForCar.enabled = false;
             boxColliderForPed1.enabled = true;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoSingleton<SpawnManager>
 {
     float carSpawnRange = 10.0f;
 
@@ -13,9 +13,6 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> activeCarList = new List<GameObject>();
     public List<GameObject> deactiveCarList = new List<GameObject>();
 
-    [Header("WayPoints")]
-    public List<GameObject> carWayPoints = new List<GameObject>();
-    public List<GameObject> peopleWayPoints = new List<GameObject>();
 
     [SerializeField]
     GameObject player;
@@ -27,36 +24,37 @@ public class SpawnManager : MonoBehaviour
         //StartCoroutine(ActiveObjects());
         //StartCoroutine(DeactiveObjects());
     }
-    void Init()
+    public void Init()
     {
         //오브젝트 최초 생성
-        SpawnNPC();
-        SpawnCar();
+        NPCPositionInit();
+        CarPositionInit();
     }
     //WayPoints
-    void SpawnNPC()
+    void NPCPositionInit()
     {
         List<Vector3> position = new List<Vector3>();
 
-        for (int i = 0; i < peopleWayPoints.Count; i++)
+        for (int i = 0; i < WaypointManager.instance.allWaypointsForHuman.Length; i++)
         {
-            position.Add(peopleWayPoints[i].transform.position);
+            position.Add(WaypointManager.instance.allWaypointsForHuman[i].transform.position);
         }
         foreach (var people in activeNPCList)
         {
             int randomIndex = Random.Range(0, position.Count);
-            people.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+            people.gameObject.transform.position = WaypointManager.instance.allWaypointsForHuman[randomIndex].transform.position;
+            people.gameObject.SetActive(false);
             people.gameObject.SetActive(true);
             position.RemoveAt(randomIndex);
         }
     }
-    void SpawnCar() //중복 방지 생성
+    void CarPositionInit() //중복 방지 생성
     {
         List<Vector3> position = new List<Vector3>();
 
-        for (int i = 0; i < carWayPoints.Count; i++)
+        for (int i = 0; i < WaypointManager.instance.allWaypointsForCar.Length; i++)
         {
-            position.Add(carWayPoints[i].transform.position);
+            position.Add(WaypointManager.instance.allWaypointsForCar[i].transform.position);
         }
 
         foreach (var car in activeCarList)
@@ -64,6 +62,7 @@ public class SpawnManager : MonoBehaviour
             int randomIndex = Random.Range(0, position.Count);
             //print(randomIndex + " " + position.Count + " " + );
             car.gameObject.transform.position = position[randomIndex];
+            car.gameObject.SetActive(false);
             car.gameObject.SetActive(true);
             position.RemoveAt(randomIndex);
         }
@@ -71,14 +70,14 @@ public class SpawnManager : MonoBehaviour
     
     public void NPCRepositioning(NPC npc)
     {
-        int randomIndex = Random.Range(0, peopleWayPoints.Count);
-        npc.gameObject.transform.position = peopleWayPoints[randomIndex].transform.position;
+        int randomIndex = Random.Range(0, WaypointManager.instance.allWaypointsForHuman.Length);
+        npc.gameObject.transform.position = WaypointManager.instance.allWaypointsForHuman[randomIndex].transform.position;
     }
     //TODO : 이후 필요한 클래스로 매개변수 변경
     public void CarRepositioning(CarDamage car)
     {
-        int randomIndex = Random.Range(0, carWayPoints.Count);
-        car.gameObject.transform.position = carWayPoints[randomIndex].transform.position;
+        int randomIndex = Random.Range(0, WaypointManager.instance.allWaypointsForCar.Length);
+        car.gameObject.transform.position = WaypointManager.instance.allWaypointsForCar[randomIndex].transform.position;
     }
     IEnumerator ActiveObjects()
     {

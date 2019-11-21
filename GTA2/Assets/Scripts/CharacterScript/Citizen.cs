@@ -147,6 +147,7 @@ public class Citizen : NPC
     protected override void Die() //리스폰 필요
     {
         isDie = true;
+        GameManager.Instance.IncreaseMoney(money);
         citizenState = CitizenState.DIE;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<BoxCollider>().enabled = false;
@@ -157,7 +158,7 @@ public class Citizen : NPC
         isDie = false;
         hp = 100;
         citizenState = CitizenState.IDLE;
-        GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().NPCRepositioning(this);
+        SpawnManager.Instance.NPCRepositioning(this);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
         print("Citizen Respawn");

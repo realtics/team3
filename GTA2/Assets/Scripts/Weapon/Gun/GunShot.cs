@@ -29,7 +29,7 @@ public class GunShot : Gun
     }
     protected override void UpdateShot()
     {
-        if (isShot)
+        if (isKeyShot)
         {
             if (shootInterval < shootDelta)
             {

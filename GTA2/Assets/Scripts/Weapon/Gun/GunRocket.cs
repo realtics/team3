@@ -40,7 +40,7 @@ public class GunRocket : Gun
 
     protected override void UpdateShot()
     {
-        if (isShot)
+        if (isKeyShot)
         {
             if (shootInterval < shootDelta)
             {

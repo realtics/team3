@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  moveLerpSpeed: 0.15
+  moveLerpSpeed: 0.1
+  offsetLerpSpeed: 0.05
   zoomMin: 5
   zoomMax: 7
   zoomSensitivity: 750

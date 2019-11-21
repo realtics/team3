@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1899018030602635295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838680543951462258}
+  m_Layer: 8
+  m_Name: DoorPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1838680543951462258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899018030602635295}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.154, y: 0, z: 0.018}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8462026011795740545}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3607986131996525230
 GameObject:
   m_ObjectHideFlags: 0
@@ -39480,6 +39510,7 @@ Transform:
   - {fileID: 8462026009913870979}
   - {fileID: 8462026010280844196}
   - {fileID: 1437220029676471881}
+  - {fileID: 1838680543951462258}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -39527,6 +39558,7 @@ MonoBehaviour:
   trailLeft: {fileID: 8462026009941886462}
   trailRight: {fileID: 8462026011764872204}
   shadow: {fileID: 8462026011010079911}
+  mainDoorPosition: {fileID: 1899018030602635295}
   carState: 1
   chaseTarget: {fileID: 0}
   maxSpeed: 400

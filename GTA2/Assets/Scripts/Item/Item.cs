@@ -35,6 +35,8 @@ public class Item : MonoBehaviour
     public ItemStatus itemType;
     public int itemCount;
     public float RespawnTime;
+    public AudioSource itemSoundSource;
+
     float RespawnDelta;
 
     [SerializeField]
@@ -115,6 +117,8 @@ public class Item : MonoBehaviour
             switch (itemType)
             {
                 case ItemStatus.Heath:
+                    userPlayer.SetHpDefault();
+                    ActiveOff();
                     break;
                 case ItemStatus.Money:
                     break;
@@ -130,6 +134,11 @@ public class Item : MonoBehaviour
         {
             userPlayer.gunList[(int)itemType - (int)ItemStatus.GunStartIndex].bulletCount += itemCount;
             ActiveOff();
+        }
+
+        if (itemSoundSource != null)
+        {
+            itemSoundSource.Play();
         }
     }
 }

@@ -47,11 +47,12 @@ MonoBehaviour:
     type: 3}
   shootInterval: 5
   bulletToPeopleSize: 0.5
-  bulletPoolCount: 20
+  bulletPoolCount: 10
   bulletCount: 0
   shotPerOneBullet: 1
+  gunSoundSource: {fileID: 0}
   smokePref: {fileID: 5958144597228890584, guid: 483366f38358d604783f2ccf2721dbf3,
     type: 3}
   smokeList: []
-  smokePoolCnt: 20
+  smokePoolCnt: 10
   moveThrowPower: 3

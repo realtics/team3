@@ -52,10 +52,10 @@ public class UIManager : MonoSingleton<UIManager>
     // Update is called once per frame
     void Update()
     {
-        moneyTextUI.SetMoney(player.money);
+        moneyTextUI.SetMoney(GameManager.Instance.money);
         weaponUI.SetGunSprite(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
         heartListUI.SetHealthPoint(player.GetHp());
-        // lifeCountUI.UpdateLifeCount(player.);
+        lifeCountUI.UpdateLifeCount(GameManager.Instance.remains);
 
         UpdateDieUI();
         UpdateGetOffCar();
@@ -121,7 +121,6 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
 
-
     public bool IsHumanUI()
     {
         return humanJoystick.activeInHierarchy;
@@ -141,6 +140,10 @@ public class UIManager : MonoSingleton<UIManager>
     {
         gameEndUI.TurnOnBustedSprite();
     }
+    public void TurnOnGameOverSprite()
+    {
+        gameEndUI.TurnOnGameOverSprite();
+    }
     public void TurnOffEndUI()
     {
         gameEndUI.TurnOffEndUI();
@@ -155,6 +158,10 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void HumanUIMode()
     {
+        if (player != null)
+        {
+            player.ShotButtonUp();
+        }
         humanJoystick.SetActive(true);
         carJoystick.SetActive(false);
     }
@@ -184,7 +191,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         player.ShotButtonUp();
     }
-
 
 
     #endregion

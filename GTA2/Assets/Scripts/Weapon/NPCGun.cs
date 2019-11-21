@@ -16,6 +16,8 @@ public abstract class NPCGun : MonoBehaviour
     public int bulletCount;
     public int shotPerOneBullet;
 
+    public AudioSource gunSoundSource;
+
     protected int bulletPoolIndex;
     protected int shotPerCurBullet;
 
@@ -38,7 +40,11 @@ public abstract class NPCGun : MonoBehaviour
     protected void InitGun()
     {
         transform.eulerAngles = new Vector3(90.0f, 0.0f, 90.0f);
-        transform.parent = userObject.transform;
+
+        if (userObject != null)
+        {
+            transform.parent = userObject.transform;
+        }
 
         // 인터벌은 수정가능
         shootDelta = .0f;
@@ -62,14 +68,13 @@ public abstract class NPCGun : MonoBehaviour
         }
     }
 
-
-
     protected Bullet ShootSingleBullet(Vector3 triggerPos)
     {
         bulletList[bulletPoolIndex].SetBullet(gunType, triggerPos, gunDir, bulletToPeopleSize);
         Bullet returnBullet = bulletList[bulletPoolIndex];
 
         PlusBulletIdx();
+        SFXPlay();
         return returnBullet;
     }
     protected void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
@@ -84,6 +89,8 @@ public abstract class NPCGun : MonoBehaviour
                 gunType, userObject.transform.position, item, bulletToPeopleSize);
             PlusBulletIdx();
         }
+
+        SFXPlay();
     }
     protected void DisableAllBullet()
     {
@@ -111,6 +118,11 @@ public abstract class NPCGun : MonoBehaviour
     }
     protected virtual void UpdateDirection()
     {
+        if (userObject == null)
+        {
+            return;
+        }
+
         gunDir = userObject.transform.forward;
         gunDir.y = userObject.transform.eulerAngles.y;
     }
@@ -144,5 +156,14 @@ public abstract class NPCGun : MonoBehaviour
     void PlusBulletIdx()
     {
         bulletPoolIndex = GetPool<Bullet>.PlusListIdx(bulletList, bulletPoolIndex);
+    }
+
+
+    void SFXPlay()
+    {
+        if (gunSoundSource != null)
+        {
+            gunSoundSource.Play();
+        }
     }
 }

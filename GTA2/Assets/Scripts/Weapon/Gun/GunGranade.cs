@@ -9,6 +9,8 @@ public class GunGranade : Gun
 
 
     private float intervalDelta;
+    private bool isPrevShot;
+
 
     void Start()
     {
@@ -21,19 +23,21 @@ public class GunGranade : Gun
 
         player = userObject.GetComponent<Player>();
         intervalDelta = .0f;
+        isPrevShot = true;
     }
 
 
     protected override void UpdateShot()
     {
-        if (Input.GetKey(KeyCode.A) || isShot)
+        if (isKeyShot || isButtonShot)
         {
             intervalDelta += Time.deltaTime;
+            isPrevShot = false;
         }
 
-        else if (Input.GetKeyUp(KeyCode.A) || (!isShot && isPrevShot))
+        else if (!isKeyShot && !isPrevShot)
         {
-            isPrevShot = false;
+            isPrevShot = true;
 
             if (shootInterval < intervalDelta)
             {

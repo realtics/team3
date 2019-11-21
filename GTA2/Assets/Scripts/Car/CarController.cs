@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour
     public TrailRenderer trailLeft;
     public TrailRenderer trailRight;
     public GameObject shadow;
-
+    public GameObject mainDoorPosition;
     public enum CarState
     {
         idle, aiNormal, controlledByPlayer, 
@@ -40,10 +40,23 @@ public class CarController : MonoBehaviour
     float inputH;
     float inputV;
     float joystickInputH, joystickInputV;
-    
+
+    //차뺏기 추가사항
+    public bool isDoorOpen { get; set; }
+    float carDoorCloseTimer = 0.0f;
+    float carDoorCloseTime = 2.0f;
+
     void Awake()
     {
         rbody = GetComponent<Rigidbody>();
+
+        SetAiMaxSpeedMultiplier();
+    }
+
+    void OnEnable()
+    {
+        if (carState == CarState.destroied)
+            carState = CarState.aiNormal;
 
         SetAiMaxSpeedMultiplier();
     }
@@ -52,7 +65,7 @@ public class CarController : MonoBehaviour
     {
         DrawSkidMark();
         UpdateShadowPosition();
-
+        SelfDoorCheck();
         AdjustEngineSound();
     }
 
@@ -122,14 +135,14 @@ public class CarController : MonoBehaviour
                 aiMaxSpdMultiplier = 1.0f;
                 break;
             case CarState.aiChase:
-                aiMaxSpdMultiplier = 1.1f;
+                aiMaxSpdMultiplier = 1.2f;
                 break;
             case CarState.aiChaseRight:
             case CarState.aiChaseLeft:
-                aiMaxSpdMultiplier = 1.2f;
+                aiMaxSpdMultiplier = 1.4f;
                 break;
             case CarState.aiChaseFront:
-                aiMaxSpdMultiplier = 1.1f;
+                aiMaxSpdMultiplier = 1.4f;
                 break;
             case CarState.aiChaseBlock:
                 aiMaxSpdMultiplier = 1.0f;
@@ -233,7 +246,7 @@ public class CarController : MonoBehaviour
     {
         distToObstacle = Mathf.Infinity;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1f, collisionLayer))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, collisionLayer))
         {
             if(hit.transform.tag == "TrafficLight")
             {
@@ -241,7 +254,7 @@ public class CarController : MonoBehaviour
                     Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
                 {
                     distToObstacle = hit.distance;
-                }                
+                }
             }
             else
             {
@@ -260,7 +273,7 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.forward * 1f, Color.blue);
+            Debug.DrawRay(transform.position, transform.forward * 1.5f, Color.blue);
         }
     }
 
@@ -367,8 +380,8 @@ public class CarController : MonoBehaviour
 
         if(carState != CarState.aiChaseBlock)
         {
-            float angle = Vector3.SignedAngle(dir, transform.forward, Vector3.up) / 40;
-            angle = Mathf.Clamp(angle, -1, 1);
+            float angle = Vector3.SignedAngle(dir, transform.forward, Vector3.up) / 30;
+            angle = Mathf.Clamp(angle, -1.5f, 1.5f);
 
             inputH = -angle;
         }
@@ -382,7 +395,7 @@ public class CarController : MonoBehaviour
             targetSpeed = Mathf.Clamp(distToObstacle - 1, 0, 1) * maxSpeed * aiMaxSpdMultiplier * damageMaxSpdMultiplier;
         }
 
-        targetSpeed *= (1 - (Mathf.Abs(inputH) / 1.5f));
+        targetSpeed *= (1 - (Mathf.Abs(inputH) / 2f));
 
         if (targetSpeed < curSpeed)
         {
@@ -445,11 +458,16 @@ public class CarController : MonoBehaviour
 
     public void GetOnTheCar(People driver)
     {
+        if (carState == CarState.destroied)
+            return;
+
+        isDoorOpen = false;
         this.driver = driver;
         carState = CarState.controlledByPlayer;
         driver.gameObject.SetActive(false);
         driver.transform.SetParent(transform);
-        Camera.main.GetComponent<TempCamCtr>().ChangeTarget(gameObject);
+        CameraController.Instance.ChangeTarget(gameObject);
+        CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.car);
 
         SetAiMaxSpeedMultiplier();
     }
@@ -459,7 +477,8 @@ public class CarController : MonoBehaviour
         driver.gameObject.SetActive(true);
         carState = CarState.idle;
         driver.transform.SetParent(null);
-        Camera.main.GetComponent<TempCamCtr>().ChangeTarget(driver.gameObject);
+        CameraController.Instance.ChangeTarget(driver.gameObject);
+        CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
         driver = null;
         SetAiMaxSpeedMultiplier();
 
@@ -504,8 +523,10 @@ public class CarController : MonoBehaviour
 
     void OnCollisionStay(Collision col)
     {
-        if (col.transform.tag == "Wall")
-            curSpeed *= 0.9f;
+        if (col.transform.tag == "Wall" && Mathf.Abs(curSpeed) > 50)
+        {
+            curSpeed *= 0.9f;           
+        }
     }
 
     // UI---------------------
@@ -527,5 +548,22 @@ public class CarController : MonoBehaviour
     public void InputReturn()
     {
         GetOffTheCar();
+    }
+
+    //CarDoor 관련 추가
+    void SelfDoorCheck()
+    {
+        if(isDoorOpen)
+        {
+            if(carDoorCloseTimer > carDoorCloseTime)
+            {
+                carDoorCloseTimer = 0;
+                isDoorOpen = false;
+            }
+            else
+            {
+                carDoorCloseTimer += Time.deltaTime;
+            }
+        }
     }
 }

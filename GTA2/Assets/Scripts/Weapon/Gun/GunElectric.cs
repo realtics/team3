@@ -8,7 +8,6 @@ public class GunElectric : Gun
     public float electricWaveArea;
     public float electricWaveAngle;
 
-    private SpawnManager spawnManager;
     private List<GameObject> objectList;
     private List<GameObject> noneTargetObjectList;
 
@@ -23,14 +22,12 @@ public class GunElectric : Gun
         noneTargetObjectList = new List<GameObject>();
         activeElectricList = new List<BulletElectric>();
 
-        spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
-
-        foreach (var citizen in spawnManager.activeNPCList)
+        foreach (var citizen in SpawnManager.Instance.activeNPCList)
         {
             objectList.Add(citizen.gameObject);
         }
 
-        foreach (var car in spawnManager.activeCarList)
+        foreach (var car in SpawnManager.Instance.activeCarList)
         {
             objectList.Add(car.gameObject);
         }
@@ -53,7 +50,7 @@ public class GunElectric : Gun
     }
     protected override void UpdateShot()
     {
-        if (isShot)
+        if (isKeyShot)
         {
             if (shootInterval < shootDelta)
             {
@@ -63,7 +60,7 @@ public class GunElectric : Gun
             }
         }
         
-        else if (!isShot)
+        else if (!isKeyShot)
         {
             StopGun();
         }

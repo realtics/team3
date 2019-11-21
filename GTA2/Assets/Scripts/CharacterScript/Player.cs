@@ -8,16 +8,16 @@ public class Player : People
     public bool isShot { get; set; }
     public bool isPunch { get; set; }
     public bool isJump { get; set; }
-    public bool isStealing { get; set; }
+    public bool isChasingCar { get; set; }
+    public bool isStealingCar { get; set; }
     public bool isBusted { get; set; }
-    int remains = 3;
+    public bool isDown { get; set; }
     GameObject targetCar;
     float playerMoveSpeed = 2.0f;
 
     public GunState curGunIndex { get; set; }
 
     public bool isAttack { get; set; }
-    public int money { get; set; }
 
     int defaultHp = 500;
     float jumpTime = 1.5f;
@@ -31,7 +31,10 @@ public class Player : People
     public LayerMask collisionLayer;
     public Animator animator;
     public List<Gun> gunList;
-    public List<Transform> respawnPoint;
+
+    float carOpenTime = 0.5f;
+    float carOpenTimer = 0.0f;
+    Vector3 doorPosition;
     // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
     void Awake()
     {
@@ -67,18 +70,46 @@ public class Player : People
         animator.SetBool("isPunch", isPunch);
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
-        if (isDie)
+        animator.SetBool("isStealingCar", isStealingCar);
+        if (isDie || isDown || isStealingCar)
             return;
         UpdateInput();
+        
     }
     void FixedUpdate()
     {
         UpdateTargetRotation();
         UpdateSlerpedRotation();
         TimerCheck();
+        if (isStealingCar)
+            CarStealing();
+        
         Move();
     }
-
+    void CarStealing()
+    {
+        if (targetCar.GetComponent<CarController>().isDoorOpen == false)//문열기
+        {
+            carOpenTimer += Time.deltaTime;
+            transform.forward = targetCar.transform.forward;
+            transform.position = targetCar.GetComponent<CarController>().mainDoorPosition.transform.position;
+            if (carOpenTimer > carOpenTime)
+            {
+                carOpenTimer = 0.0f;
+                targetCar.GetComponent<CarController>().isDoorOpen = true;
+            }
+        }
+        else //탑승
+        {
+            transform.parent = targetCar.gameObject.transform;
+            targetCar.GetComponent<CarController>().GetOnTheCar(this);
+            isStealingCar = false;
+            carOpenTimer = 0.0f;
+            targetCar.GetComponent<CarController>().GetOnTheCar(this as People);
+            UIManager.Instance.CarUIMode(targetCar.GetComponent<CarController>());
+            print("탑승");
+        }
+    }
     void UpdateInput()
     {
         if (isDie)
@@ -98,7 +129,6 @@ public class Player : People
         {
             RespawnTimerCheck();
         }
-
     }
     void RespawnTimerCheck()
     {
@@ -117,12 +147,11 @@ public class Player : People
         hDir = 0;
         vDir = 0;
         isDie = true;
-        remains--;
 
-        if(remains == 0)
+        if (--GameManager.Instance.remains == 0)
         {
-            remains = 3;
-            //GameOver
+            //GameOver;
+            UIManager.Instance.TurnOnGameOverSprite();
         }
         else if (isBusted)
         {
@@ -140,7 +169,6 @@ public class Player : People
         {
             other.gameObject.SetActive(false);
             int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
-            print(bulletDamage);
             isBusted = true;
             Hurt(bulletDamage, true);
         }
@@ -162,8 +190,12 @@ public class Player : People
         if (jumpTimer > jumpTime)
         {
             // 밑에 차가없으면 Land
-            if (!(Physics.Raycast(transform.position, transform.up * -1, out hit, 1f, collisionLayer)
-                && hit.transform.CompareTag("Car")))
+            if (Physics.Raycast(transform.position, transform.up * -1, out hit, 1f, collisionLayer)
+                && hit.transform.CompareTag("Car"))
+            {
+                print("플레이어 아래 차있음 Land 불가");
+            }
+            else
             {
                 jumpTimer = 0.0f;
                 Land();
@@ -173,24 +205,25 @@ public class Player : People
     
     protected override void Move()
     {
-        if (isStealing)
+        if (isChasingCar)
         {
-            transform.LookAt(targetCar.transform);
-            myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
             //일정거리이상 멀어져서 차 쫓기 포기
             if (Vector3.Distance(transform.position, targetCar.transform.position) > 5)
             {
-                isStealing = false;
+                isChasingCar = false;
                 return;
             }
             //차 탑승
             //TODO : 운전석으로 점프해서가서 탑승 모션 구현
-            else if (Vector3.Distance(transform.position, targetCar.transform.position) < 1)
+            else if (Vector3.Distance(transform.position, doorPosition) < 0.1f)
             {
-                isStealing = false;
-                targetCar.GetComponent<CarController>().GetOnTheCar(this as People);
-                UIManager.Instance.CarUIMode(targetCar.GetComponent<CarController>());
-                print("탐");
+                isChasingCar = false;
+                isStealingCar = true;
+            }
+            else//차 쫓아가기
+            {
+                transform.LookAt(new Vector3(targetCar.transform.position.x, targetCar.transform.position.y, targetCar.transform.position.z));
+                myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
             }
         }
         else
@@ -204,7 +237,7 @@ public class Player : People
     {
         if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
-            if (!isStealing)
+            if (!isChasingCar)
                 isWalk = false;
             vDir = 0;
             hDir = 0;
@@ -215,7 +248,7 @@ public class Player : People
             vDir = Input.GetAxisRaw("Vertical"); //GetAxis
             hDir = Input.GetAxisRaw("Horizontal");
             isWalk = true;
-            isStealing = false;
+            isChasingCar = false;
             return true;
         }
     }
@@ -233,12 +266,12 @@ public class Player : People
         //키보드랑 독립적으로 작동하게 변경
         if (Mathf.Abs(UIManager.Instance.playerJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerJoystick.Vertical) < 0.01f)
         {
-            if(!isStealing)
+            if(!isChasingCar)
                 isWalk = false;
             return;
         }
         isWalk = true;
-        isStealing = false;
+        isChasingCar = false;
         hDir = UIManager.Instance.playerJoystick.Horizontal / 5.0f;
         vDir = UIManager.Instance.playerJoystick.Vertical / 5.0f;
     }
@@ -246,8 +279,8 @@ public class Player : People
     {
         if (Input.GetKeyDown(KeyCode.A) && !isJump)
         {
-            ShotButtonDown();
-            isStealing = false;
+            ShotButtonDownStatus();
+            isChasingCar = false;
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
@@ -255,7 +288,7 @@ public class Player : People
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            isStealing = false;
+            isChasingCar = false;
             JumpButtonDown();
         }
         if (Input.GetKeyDown(KeyCode.Return))
@@ -339,23 +372,15 @@ public class Player : People
     public void Respawn()
     {
         UIManager.Instance.HumanUIMode();
-        isDie = false;
+        GameManager.Instance.RespawnSetting();
         SetHpDefault();
+        isDie = false;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
+
+        UIManager.Instance.TurnOffEndUI();
+        UIManager.Instance.TurnOffEndUI();
         print("Player Respawn");
-        transform.position = respawnPoint[Random.Range(0, respawnPoint.Count)].position;
-        //카메라 위치 조정,
-        //자동차 셋팅
-        //사람위치 재할당
-        if (isBusted)
-        {
-            UIManager.Instance.TurnOffEndUI();
-        }
-        else
-        {
-            UIManager.Instance.TurnOffEndUI();
-        }
     }
 
     //TODO : UIManager에 있는것이 좋을 것 같음.
@@ -366,12 +391,23 @@ public class Player : People
 
     public void ShotButtonDown()
     {
+        ShotButtonDownGunSet();
+        ShotButtonDownStatus();
+    }
+
+    void ShotButtonDownGunSet()
+    {
         if (isJump)
         {
             return;
         }
 
         gunList[(int)curGunIndex].UpdateBottonDown();
+    }
+
+    void ShotButtonDownStatus()
+    {
+
         switch (curGunIndex)
         {
             case GunState.None:
@@ -406,10 +442,7 @@ public class Player : People
 
     public void SetChaseTargetCar()
     {
-        isStealing = true;
-        isWalk = true;
-
-        List<GameObject> activeCarList = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().activeCarList;
+        List<GameObject> activeCarList = SpawnManager.Instance.activeCarList;
         //제일 가까운 차 가져오기
 
         float minDistance = 100.0f;
@@ -418,9 +451,19 @@ public class Player : People
         {
             if (minDistance > Vector3.Distance(car.transform.position, transform.position))
             {
+                if(car.GetComponent<CarController>().carState == CarController.CarState.destroied)
+                {
+                    continue;
+                }
                 targetCar = car;
+                doorPosition = targetCar.GetComponent<CarController>().mainDoorPosition.transform.position;
                 minDistance = Vector3.Distance(car.transform.position, transform.position);
             }
+        }
+        if (Vector3.Distance(transform.position, targetCar.transform.position) < 5)
+        {
+            isChasingCar = true;
+            isWalk = true;
         }
     }
     public void SetHpDefault()

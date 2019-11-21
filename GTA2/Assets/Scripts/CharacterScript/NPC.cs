@@ -22,7 +22,7 @@ public abstract class NPC : People
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
-    int money = 10; //사망시 플레이어에게 주는 돈
+    protected int money = 10; //사망시 플레이어에게 주는 돈
 
     public abstract void Down();
     public abstract void Rising();
@@ -60,6 +60,7 @@ public abstract class NPC : People
             }
         }
     }
+    
     protected bool DectectedPlayerAttack()
     {
         if (player.GetComponent<Player>().isAttack &&
@@ -203,9 +204,6 @@ public abstract class NPC : People
         destination = transform.position;
         isDestReached = true;
     }
-    public void IncreaseMoney()
-    {
-        player.GetComponent<Player>().money += money;
-    }
+   
     #endregion
 }

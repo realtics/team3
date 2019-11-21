@@ -12,6 +12,9 @@ public class GameEndUI : MonoBehaviour
     [SerializeField]
     Sprite bustedSprite;
 
+    [SerializeField]
+    Sprite gameOverSprite;
+
     Image textImage;
 
     // Start is called before the first frame update
@@ -30,6 +33,11 @@ public class GameEndUI : MonoBehaviour
     public void TurnOnBustedSprite()
     {
         textImage.sprite = bustedSprite;
+        textImage.enabled = true;
+    }
+    public void TurnOnGameOverSprite()
+    {
+        textImage.sprite = gameOverSprite;
         textImage.enabled = true;
     }
 

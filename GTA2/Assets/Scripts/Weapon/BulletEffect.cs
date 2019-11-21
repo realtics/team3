@@ -13,6 +13,11 @@ public class BulletEffect : MonoBehaviour
     protected float stopTime = 1.0f;
     protected float releaseDelta = .0f;
 
+    protected virtual void Start()
+    {
+        myParticle = GetComponent<ParticleSystem>();
+        myParticle.Play();
+    }
 
 
     protected virtual void Update()

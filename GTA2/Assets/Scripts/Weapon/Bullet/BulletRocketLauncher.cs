@@ -5,12 +5,12 @@ using UnityEngine;
 public class BulletRocketLauncher : Bullet
 {
     // Start is called before the first frame update
-    TempCamCtr camExplosion;
-    float explosionPower = 5.0f;
+    CameraController camExplosion;
+    float explosionPower = 2.0f;
     protected override void Start()
     {
         base.Start();
-        camExplosion = Camera.main.gameObject.GetComponent<TempCamCtr>();
+        camExplosion = CameraController.Instance;
     }
 
     // Update is called once per frame
@@ -24,8 +24,7 @@ public class BulletRocketLauncher : Bullet
         {
             myCollider.radius = explosionArea;
         }
-
-        camExplosion.StartShake(Mathf.Abs(explosionPower - (transform.position - bulletStartPos).magnitude));
+        CameraController.Instance.StartShake(explosionPower, transform.position);
         isLife = false;
     }
 }

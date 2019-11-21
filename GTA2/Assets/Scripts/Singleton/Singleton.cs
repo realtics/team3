@@ -2,16 +2,16 @@
 // 그냥 C#싱글톤
 public abstract class Singleton<T> where T : class
 {
-    protected static T instance = null;
+    protected static T ptr = null;
     public static T Instance
     {
         get
         {
-            if (instance == null)
+            if (ptr == null)
             {
-                instance = System.Activator.CreateInstance(typeof(T)) as T;
+                ptr = System.Activator.CreateInstance(typeof(T)) as T;
             }
-            return instance;
+            return ptr;
         }
     }
 }

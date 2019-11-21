@@ -12,13 +12,9 @@ public class DeltasController : MonoBehaviour
     public GameObject deltaFL, deltaFR, deltaRL, deltaRR;
     public GameObject debris;
 
-    void Start()
+    void OnEnable()
     {
-        if(sirenL != null && sirenR != null)
-        {
-            sirenSpeed += Random.Range(-0.1f, 0.1f);
-            StartCoroutine(SirenCor());
-        }
+        Init();
     }
 
     IEnumerator SirenCor()
@@ -114,5 +110,26 @@ public class DeltasController : MonoBehaviour
         deltaRR.SetActive(false);
 
         debris.SetActive(true);
+    }
+
+    private void Init()
+    {
+        StopAllCoroutines();
+
+        if (sirenL != null && sirenR != null)
+        {
+            sirenSpeed += Random.Range(-0.1f, 0.1f);
+            StartCoroutine(SirenCor());
+        }
+
+        lightFL.SetActive(false);
+        lightFR.SetActive(false);
+        lightRL.SetActive(false);
+        lightRR.SetActive(false);
+        deltaFL.SetActive(false);
+        deltaFR.SetActive(false);
+        deltaRL.SetActive(false);
+        deltaRR.SetActive(false);
+        debris.SetActive(false);
     }
 }

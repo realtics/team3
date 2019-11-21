@@ -74,8 +74,8 @@
     <Compile Include="Assets\Scripts\CharacterScript\Player.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Police.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\SpawnManager.cs" />
+    <Compile Include="Assets\Scripts\Debug\CameraController.cs" />
     <Compile Include="Assets\Scripts\Debug\DrawArrow.cs" />
-    <Compile Include="Assets\Scripts\Debug\TempCamCtr.cs" />
     <Compile Include="Assets\Scripts\Debug\TestCarSpawner.cs" />
     <Compile Include="Assets\Scripts\Game\EndScene.cs" />
     <Compile Include="Assets\Scripts\Game\GameManager.cs" />
@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Road\TrafficLightController.cs" />
     <Compile Include="Assets\Scripts\Singleton\MonoSingleton.cs" />
     <Compile Include="Assets\Scripts\Singleton\Singleton.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonLongPress.cs" />
     <Compile Include="Assets\Scripts\UI\GameEndUI.cs" />
     <Compile Include="Assets\Scripts\UI\HeartImageList.cs" />
     <Compile Include="Assets\Scripts\UI\LifeCount.cs" />
@@ -121,7 +122,6 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletRocketLauncher.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletShotgun.cs" />
-    <Compile Include="Assets\Scripts\Weapon\Bullet\CameraShaker.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\NBulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\BulletEffect.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\FireBottleSmoke.cs" />

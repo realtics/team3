@@ -27,6 +27,9 @@ public abstract class Gun : MonoBehaviour
     public int bulletPoolCount;
     public int bulletCount;
     public int shotPerOneBullet;
+    public AudioSource gunSoundSource;
+
+    
 
     protected int bulletPoolIndex;
     protected int shotPerCurBullet;
@@ -42,9 +45,10 @@ public abstract class Gun : MonoBehaviour
     protected float shootDelta;
 
     protected GameObject bulletPool;
-    protected AudioSource gunSoundEffect;
-    protected bool isShot;
-    protected bool isPrevShot;
+    protected bool isKeyShot = false;
+    protected bool isButtonShot = false;
+
+
 
 
 
@@ -88,6 +92,7 @@ public abstract class Gun : MonoBehaviour
 
         PlusBulletIdx();
         MinusPlayerBulletCount();
+        SFXPlay();
         return returnBullet;
     }
     protected void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
@@ -103,6 +108,8 @@ public abstract class Gun : MonoBehaviour
             PlusBulletIdx();
             MinusPlayerBulletCount();
         }
+
+        SFXPlay();
     }
     protected void DisableAllBullet()
     {
@@ -143,20 +150,20 @@ public abstract class Gun : MonoBehaviour
 
     protected void UpdateKeyInput()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            UpdateBottonDown();
+            isKeyShot = true;
         }
-        else if (Input.GetKeyUp(KeyCode.A))
+        else
         {
-            UpdateBottonUp();
+            isKeyShot = false;
         }
     }
 
     // 요부분은 사람이 해도 되는 거지만 일단 여기서 구현 - 총알 발사
     protected virtual void UpdateShot()
     {
-        if (isShot)
+        if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)
             {
@@ -169,14 +176,12 @@ public abstract class Gun : MonoBehaviour
 
     public void UpdateBottonDown()
     {
-        isPrevShot = false;
-        isShot = true;
+        isButtonShot = true;
     }
 
     public void UpdateBottonUp()
     {
-        isPrevShot = true;
-        isShot = false;
+        isButtonShot = false;
     }
 
     void PlusBulletIdx()
@@ -199,6 +204,14 @@ public abstract class Gun : MonoBehaviour
             }
 
             shotPerCurBullet = 0;
+        }
+    }
+
+    void SFXPlay()
+    {
+        if (gunSoundSource != null)
+        {
+            gunSoundSource.PlayOneShot(gunSoundSource.clip);
         }
     }
 }

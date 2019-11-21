@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    // Start is called before the first frame update
     public int goalMoney;
     public GameObject goalObject;
     public GameObject missionArrow;
     public float arrowToPlayer;
     public float maxArrowToPlayer;
-
-
+    public int remains = 3;
     UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
-    Player userPlayer;
+    Player player;
     bool isMissionSuccess = false;
-    // Update is called once per frame
 
+    //GameManager ReFactoring field
+    public int money{ get; set; }
+    public List<Transform> playerRespawnPoint;
     void Start()
     {
-        userPlayer = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         Image image = missionArrow.GetComponent<Image>();
         Material existingGlobalMat = image.materialForRendering;
@@ -37,17 +37,15 @@ public class GameManager : MonoSingleton<GameManager>
 
     void UpdateGoal()
     {
-        if (userPlayer.money >= goalMoney)
+        if (money >= goalMoney)
         {
             isMissionSuccess = true;
         }
-
         else
         {
             isMissionSuccess = false;
         }
     }
-
     void UpdateArrow()
     {
         if (!isMissionSuccess)
@@ -60,32 +58,48 @@ public class GameManager : MonoSingleton<GameManager>
         goalObject.SetActive(true);
         missionArrow.SetActive(true);
 
-
-        Vector3 playerToGoal = goalObject.transform.position - userPlayer.gameObject.transform.position;
+        Vector3 playerToGoal = goalObject.transform.position - player.gameObject.transform.position;
         float playerToGoalDistance = playerToGoal.magnitude;
         playerToGoal.Normalize();
-
-
-
 
         if (playerToGoalDistance > maxArrowToPlayer)
         {
             missionArrow.transform.position = 
-                userPlayer.gameObject.transform.position + playerToGoal * arrowToPlayer;
+                player.gameObject.transform.position + playerToGoal * arrowToPlayer;
         }
         else
         {
             missionArrow.transform.position = Vector3.Lerp(
                 missionArrow.transform.position,
-                userPlayer.gameObject.transform.position + playerToGoal * playerToGoalDistance,
+                player.gameObject.transform.position + playerToGoal * playerToGoalDistance,
                 .3f);
         }
-
-
-
 
         missionArrow.transform.LookAt(goalObject.transform.transform, Vector3.up);
         Vector3 tempVector = missionArrow.transform.eulerAngles;
         missionArrow.transform.eulerAngles = new Vector3(90.0f, tempVector.y, .0f);
+    }
+
+    //GameManager ReFactoring Method
+    public void RespawnSetting()
+    {
+        if(remains == 0)//RIP
+        {
+            SceneManager.LoadScene("Rip");
+            return;
+        }
+        player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
+        
+        //카메라 위치 조정
+         CameraController.Instance.ChangeTarget(player.gameObject);
+        //자동차 셋팅
+        //사람위치 재할당
+        SpawnManager.Instance.Init();
+        //TODO : 고장난차 복구
+        //죽은사람도 부활
+    }
+    public void IncreaseMoney(int earnings)
+    {
+        money += earnings;
     }
 }

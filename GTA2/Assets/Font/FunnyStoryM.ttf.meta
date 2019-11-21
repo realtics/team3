@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 8cebb29c7657b934487942fced666e79
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: tvN Enjoystories
+  fontNames:
+  - tvN Enjoystories
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6be27440167b64f4d8774e0dfa12717d, type: 3}
+  - {fileID: 12800000, guid: 14f124e7a4429cf4fbe554209a2d2c74, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class RocketSmoke : BulletEffect
 {
 
+    
+
     public void SetTargetbullet(GameObject target)
     {
         myParticle = GetComponent<ParticleSystem>();
