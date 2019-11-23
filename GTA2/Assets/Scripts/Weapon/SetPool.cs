@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SetPool : MonoBehaviour
 {
+    public static GameObject poolMother = new GameObject("[SetPool]");
+
     static public List<GameObject> PoolMemory(
         GameObject target, GameObject motherObj, int count, string name)
     {
@@ -17,6 +19,7 @@ public class SetPool : MonoBehaviour
             returnList.Add(tmpObject);
         }
 
+        motherObj.transform.parent = poolMother.transform;
         return returnList;
     }
 }

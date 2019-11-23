@@ -73,6 +73,7 @@ public class GunElectric : Gun
         List<BulletElectric> activeBulletList = new List<BulletElectric>();
         List<GameObject> targetObjects = GetObjectsInAttackRange(userObject.transform.position, objectList);
 
+        activeElectricList.Clear();
         noneTargetObjectList.Clear();
         foreach (var item in objectList)
         {
@@ -102,21 +103,22 @@ public class GunElectric : Gun
     {
         foreach (var item in activeElectricList)
         {
-            item.UpdateBullet(gunType, userObject.transform.position, gunDir, bulletToPeopleSize);
+            Vector3 electricVector = item.transform.position;
+            electricVector.y = userObject.transform.position.y;
             item.SetArea(electricWaveArea);
         }
     }
 
-    void ElectricWave(List<GameObject> objectList, List<BulletElectric> activeBulletList,  int count)
+    void ElectricWave(List<GameObject> objectList, List<BulletElectric> nextBulletList,  int count)
     {
-        if (count <= 0 || activeBulletList.Count == 0 || objectList.Count == 0)
+        if (count <= 0 || nextBulletList.Count == 0 || objectList.Count == 0)
         {
             return;
         }
 
         List<BulletElectric> nextWaveList = new List<BulletElectric>();
 
-        foreach (var bulletObj in activeBulletList)
+        foreach (var bulletObj in nextBulletList)
         {
             Vector3 triggerPos = bulletObj.gameObject.transform.position;
             Vector3 rightVector = 
@@ -131,7 +133,7 @@ public class GunElectric : Gun
                 fireBullet.SetTarget(target);
                 nextWaveList.Add(fireBullet);
                 activeElectricList.Add(fireBullet);
-                noneTargetObjectList.Remove(target);
+                objectList.Remove(target);
             }
 
             ElectricWave(noneTargetObjectList, nextWaveList,--count);
@@ -164,7 +166,7 @@ public class GunElectric : Gun
     {
         // 거리 필터링
         Vector3 toTargetDir = targetObj.transform.position - waveCenterPos;
-        if (electricWaveArea < toTargetDir.magnitude)
+        if (electricWaveArea * electricWaveArea < toTargetDir.sqrMagnitude)
         {
             return false;
         }

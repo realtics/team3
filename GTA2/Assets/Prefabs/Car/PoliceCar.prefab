@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305159641618262050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.159, y: 0, z: 0}
+  m_LocalPosition: {x: -0.202, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8328780488297814985}
@@ -43754,7 +43754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8328780488297814985}
-  - component: {fileID: 8328780488297814998}
+  - component: {fileID: 998988843807412644}
   - component: {fileID: 8328780488297814999}
   - component: {fileID: 8328780488297814996}
   - component: {fileID: 8328780488297814997}
@@ -43787,11 +43787,12 @@ Transform:
   - {fileID: 8328780486827562507}
   - {fileID: 2404951533062857909}
   - {fileID: 8465022933444107434}
+  - {fileID: 7103417405124781474}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8328780488297814998
-BoxCollider:
+--- !u!136 &998988843807412644
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -43800,9 +43801,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.2, z: 0.45}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Radius: 0.11
+  m_Height: 0.44
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8328780488297814999
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -43837,6 +43839,7 @@ MonoBehaviour:
   mainDoorPosition: {fileID: 1305159641618262050}
   carState: 1
   chaseTarget: {fileID: 0}
+  driver: {fileID: 0}
   maxSpeed: 400
   rotSpeed: 250
   collisionLayer:
@@ -44517,3 +44520,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &4843233873097464597
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8328780488297814985}
+    m_Modifications:
+    - target: {fileID: 7584392231801727293, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_Name
+      value: policeCarDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.093
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.018
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000018626451
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0000018626451
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180.00002
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a282735f746078e45a46ff9d64a1a383, type: 3}
+--- !u!4 &7103417405124781474 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2423772170813914807, guid: a282735f746078e45a46ff9d64a1a383,
+    type: 3}
+  m_PrefabInstance: {fileID: 4843233873097464597}
+  m_PrefabAsset: {fileID: 0}

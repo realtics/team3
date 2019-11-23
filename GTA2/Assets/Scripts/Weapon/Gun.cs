@@ -106,8 +106,8 @@ public abstract class Gun : MonoBehaviour
             bulletList[bulletPoolIndex].SetBullet(
                 gunType, userObject.transform.position, item, bulletToPeopleSize);
             PlusBulletIdx();
-            MinusPlayerBulletCount();
         }
+        MinusPlayerBulletCount();
 
         SFXPlay();
     }

@@ -13,7 +13,7 @@ public class GameManager : MonoSingleton<GameManager>
     public float maxArrowToPlayer;
     public int remains = 3;
     UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
-    Player player;
+    public Player player;
     bool isMissionSuccess = false;
 
     //GameManager ReFactoring field

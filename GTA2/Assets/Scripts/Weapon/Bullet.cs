@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
     public float bulletSpeed;
     public float explosionArea;
 
+    public GameObject explosionPref;
+
     protected Vector3 bulletStartPos;
     protected Vector3 bulletDir;
     protected GunState bulletType;
@@ -23,7 +25,7 @@ public class Bullet : MonoBehaviour
     protected float bulletActiveDelta = .0f;
     protected float bulletDeActiveTime = .1f;
 
-
+    protected ExplosionEffect explosionEffect;
 
     protected virtual void Start()
     {
@@ -31,6 +33,12 @@ public class Bullet : MonoBehaviour
         myCollider.isTrigger = true;
 
         bulletArea = myCollider.radius;
+
+        if (explosionPref != null)
+        {
+            explosionEffect = GameObject.Instantiate(explosionPref).GetComponent<ExplosionEffect>();
+            explosionEffect.gameObject.transform.parent = SetPool.poolMother.transform;
+        }
     }
 
     public virtual void SetBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
@@ -73,7 +81,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    protected virtual void Explosion()
+    public virtual void Explosion()
     {
         if (myCollider != null)
         {
@@ -81,9 +89,14 @@ public class Bullet : MonoBehaviour
         }
 
         isLife = false;
+
+        if (explosionEffect != null)
+        {
+            explosionEffect.SetExplosion(transform.position);
+        }
     }
 
-    void UpdateActive()
+    protected void UpdateActive()
     {
         if (isLife)
         {
@@ -98,7 +111,7 @@ public class Bullet : MonoBehaviour
         }          
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Wall"))
         {
@@ -107,7 +120,7 @@ public class Bullet : MonoBehaviour
     }
 
 
-    protected void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {

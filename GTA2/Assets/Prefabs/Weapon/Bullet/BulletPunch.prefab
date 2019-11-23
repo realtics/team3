@@ -48,6 +48,7 @@ MonoBehaviour:
   bulletLifeTime: 0.3
   bulletSpeed: 0
   explosionArea: 0
+  explosionPref: {fileID: 0}
 --- !u!135 &-5914497354892182703
 SphereCollider:
   m_ObjectHideFlags: 0

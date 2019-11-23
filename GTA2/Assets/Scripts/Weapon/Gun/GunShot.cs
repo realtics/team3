@@ -7,7 +7,6 @@ public class GunShot : Gun
     void Start()
     {
         gunType = GunState.ShotGun;
-        bulletPoolCount = 10;
 
         base.InitGun();
         base.InitBullet("Shut");
@@ -33,7 +32,7 @@ public class GunShot : Gun
         {
             if (shootInterval < shootDelta)
             {
-                ShootAngleBullet(-45.0f, 45.0f, 7);
+                ShootAngleBullet(-45.0f, 45.0f, 20);
                 shootDelta = .0f;
             }
         }

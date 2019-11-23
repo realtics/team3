@@ -111,5 +111,5 @@ MonoBehaviour:
   bulletDamage: 100
   bulletLifeTime: 2
   bulletSpeed: 10
-  bulletDir: {x: 0, y: 0, z: 0}
-  bulletType: 0
+  explosionArea: 0
+  explosionPref: {fileID: 0}

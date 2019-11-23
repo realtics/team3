@@ -18,13 +18,9 @@ public class BulletRocketLauncher : Bullet
     {
         base.Update();
     }
-    protected override void Explosion()
+    public override void Explosion()
     {
-        if (myCollider != null)
-        {
-            myCollider.radius = explosionArea;
-        }
+        base.Explosion();
         CameraController.Instance.StartShake(explosionPower, transform.position);
-        isLife = false;
     }
 }

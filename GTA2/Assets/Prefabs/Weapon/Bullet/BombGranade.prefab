@@ -128,6 +128,8 @@ MonoBehaviour:
   bulletLifeTime: 5
   bulletSpeed: 1
   explosionArea: 5
+  explosionPref: {fileID: 9085315079043664107, guid: 328eceba7c9fce540b82a20ce6be221e,
+    type: 3}
   myRigidBody: {fileID: 4224439575330150014}
   yLaunchPos: 1.1
   yLaunchPower: 3

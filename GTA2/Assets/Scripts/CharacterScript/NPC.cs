@@ -24,15 +24,8 @@ public abstract class NPC : People
     float respawnTime = 5.0f;
     protected int money = 10; //사망시 플레이어에게 주는 돈
 
-    public abstract void Down();
-    public abstract void Rising();
     public abstract void Respawn();
 
-    public GameObject player;
-    protected void NPCInit()
-    {
-        player = GameObject.FindWithTag("Player");
-    }
     protected void NPCUpdate()
     {
         if(isDown)
@@ -43,7 +36,6 @@ public abstract class NPC : People
             {
                 downTimer = 0;
                 isDown = false;
-
                 Rising();
             }
         }
@@ -63,8 +55,8 @@ public abstract class NPC : People
     
     protected bool DectectedPlayerAttack()
     {
-        if (player.GetComponent<Player>().isAttack &&
-            findRange > Vector3.Distance(transform.position, player.transform.position))
+        if (GameManager.Instance.player.isAttack &&
+            findRange > Vector3.Distance(transform.position, GameManager.Instance.player.transform.position))
             return true;
         else
             return false;
@@ -80,7 +72,7 @@ public abstract class NPC : People
     }
     protected virtual void ChasePlayer()
     {
-        transform.LookAt(player.transform.position);
+        transform.LookAt(GameManager.Instance.player.transform.position);
 
         Vector3 Pos = transform.position;
         Pos.x += transform.forward.x * Time.deltaTime * runSpeed;
@@ -100,12 +92,11 @@ public abstract class NPC : People
 
             //HitBullet.누가쐈는지
             Hurt(HitBullet.bulletDamage);
-            other.gameObject.SetActive(false);
+            HitBullet.Explosion();
         }
         else if(other.CompareTag("PlayerPunch"))
         {
             Down();
-            isDown = true;
             
             print("Punched");
         }
@@ -156,21 +147,21 @@ public abstract class NPC : People
     }
     protected bool InPunchRange()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) < punchRange)
+        if (Vector3.Distance(GameManager.Instance.player.transform.position, transform.position) < punchRange)
             return true;
         else
             return false;
     }
     protected bool InShotRange()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) < shotRange)
+        if (Vector3.Distance(GameManager.Instance.player.transform.position, transform.position) < shotRange)
             return true;
         else
             return false;
     }
     protected bool PlayerOutofRange()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) > outofRange)
+        if (Vector3.Distance(GameManager.Instance.player.transform.position, transform.position) > outofRange)
             return true;
         else
             return false;

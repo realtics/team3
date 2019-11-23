@@ -249,8 +249,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 4
-  bulletLifeTime: 0.01
+  bulletLifeTime: 0.005
   bulletSpeed: 0
   explosionArea: 0
+  explosionPref: {fileID: 0}
   targetToVector: {x: 0, y: 0, z: 0}
   myLightning: {fileID: 1342552342972707105}

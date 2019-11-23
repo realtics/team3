@@ -19,7 +19,6 @@ public class Doctor : NPC
 
     void Start()
     {
-        base.NPCInit();
     }
 
     // Update is called once per frame
@@ -71,7 +70,7 @@ public class Doctor : NPC
     {
         if (doctorState == DOCTORSTATE.RUN)
             return;
-        targetDirectionVector = player.transform.position;
+        targetDirectionVector = GameManager.Instance.player.transform.position;
         UpdateTargetDirection();
         doctorState = DOCTORSTATE.RUN;
         //patternChangeTimer = 0.0f;

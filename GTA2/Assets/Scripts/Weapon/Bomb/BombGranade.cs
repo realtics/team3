@@ -36,10 +36,17 @@ public class BombGranade : Bullet
         myRigidBody.AddForce(NewVec3, ForceMode.Impulse);
     }
 
-    protected override void Explosion()
+    public override void Explosion()
     {
         myCollider.isTrigger = true;
         base.Explosion();
         CameraController.Instance.StartShake(explosionPower, transform.position);
+
+
+    }
+
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        return;
     }
 }

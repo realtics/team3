@@ -12,13 +12,13 @@ public class CarController : MonoBehaviour
     public GameObject mainDoorPosition;
     public enum CarState
     {
-        idle, aiNormal, controlledByPlayer, 
-        aiChase, aiChaseRight, aiChaseLeft, aiChaseFront, aiChaseBlock, 
+        idle, aiNormal, controlledByPlayer,
+        aiChase, aiChaseRight, aiChaseLeft, aiChaseFront, aiChaseBlock,
         evade, destroied
     }
     public CarState carState = CarState.aiNormal;
     public GameObject chaseTarget; // 나중엔 숨겨야함.
-    People driver;
+    public People driver;
     Vector3 destination;
 
     public float maxSpeed;
@@ -114,7 +114,7 @@ public class CarController : MonoBehaviour
 
     void UpdateOldForwards()
     {
-        for (int i = 0; i < oldForwards.Length-1; i++)
+        for (int i = 0; i < oldForwards.Length - 1; i++)
         {
             oldForwards[i] = oldForwards[i + 1];
         }
@@ -157,7 +157,7 @@ public class CarController : MonoBehaviour
     }
     void PlayerInput()
     {
-        if(joystickInputH == 0)
+        if (joystickInputH == 0)
         {
             inputH = Input.GetAxisRaw("Horizontal");
         }
@@ -166,14 +166,14 @@ public class CarController : MonoBehaviour
             inputH = joystickInputH;
         }
 
-        if(joystickInputV == 0)
+        if (joystickInputV == 0)
         {
             inputV = Input.GetAxisRaw("Vertical");
         }
         else
         {
             inputV = joystickInputV;
-        }        
+        }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -181,7 +181,7 @@ public class CarController : MonoBehaviour
             Invoke("GetOffTheCar", 0.1f);
             //GetOffTheCar();
         }
-            
+
     }
 
     void MoveCarByInput()
@@ -204,7 +204,7 @@ public class CarController : MonoBehaviour
         transform.Rotate(0, inputH * rotSpeed * Time.deltaTime * (Mathf.Abs(curSpeed) / 400), 0);
 
         Vector3 dir = Vector3.zero;
-        if(carState == CarState.controlledByPlayer && inputH != 0)
+        if (carState == CarState.controlledByPlayer && inputH != 0)
         {
             for (int i = 0; i < oldForwards.Length; i++)
             {
@@ -226,7 +226,7 @@ public class CarController : MonoBehaviour
         {
             trailLeft.emitting = true;
             trailRight.emitting = true;
-            if(!audioSourceSkid.isPlaying)
+            if (!audioSourceSkid.isPlaying)
                 audioSourceSkid.Play();
         }
         else
@@ -248,9 +248,9 @@ public class CarController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, collisionLayer))
         {
-            if(hit.transform.tag == "TrafficLight")
+            if (hit.transform.tag == "TrafficLight")
             {
-                if(carState != CarState.evade &&
+                if (carState != CarState.evade &&
                     Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
                 {
                     distToObstacle = hit.distance;
@@ -378,7 +378,7 @@ public class CarController : MonoBehaviour
         Vector3 dir = destination - transform.position;
         dir.y = 0;
 
-        if(carState != CarState.aiChaseBlock)
+        if (carState != CarState.aiChaseBlock)
         {
             float angle = Vector3.SignedAngle(dir, transform.forward, Vector3.up) / 30;
             angle = Mathf.Clamp(angle, -1.5f, 1.5f);
@@ -427,9 +427,9 @@ public class CarController : MonoBehaviour
 
         audioSourceEngine.pitch = temp;
 
-        if(carState != CarState.controlledByPlayer)
+        if (carState != CarState.controlledByPlayer)
         {
-            audioSourceEngine.volume = Mathf.Clamp(curSpeed/100, 0, 0.8f);
+            audioSourceEngine.volume = Mathf.Clamp(curSpeed / 100, 0, 0.8f);
         }
         else
         {
@@ -439,24 +439,24 @@ public class CarController : MonoBehaviour
 
     public void OnCarHpChanged(int curHp)
     {
-        if(curHp <= 0 && carState != CarState.destroied)
+        if (curHp <= 0 && carState != CarState.destroied)
         {
             carState = CarState.destroied;
-            if(driver != null)
+            if (driver != null)
                 driver.Hurt(99999);
         }
 
-        if(curHp < 30)
+        if (curHp < 30)
         {
             damageMaxSpdMultiplier = 0.5f;
         }
-        else if(curHp < 60)
+        else if (curHp < 60)
         {
             damageMaxSpdMultiplier = 0.8f;
         }
     }
 
-    public void GetOnTheCar(People driver)
+    public void GetOnTheCar(People driver)//only player
     {
         if (carState == CarState.destroied)
             return;
@@ -471,7 +471,7 @@ public class CarController : MonoBehaviour
 
         SetAiMaxSpeedMultiplier();
     }
-    public void GetOffTheCar()
+    public void GetOffTheCar()//only player
     {
         print("내림");
         driver.gameObject.SetActive(true);
@@ -484,7 +484,22 @@ public class CarController : MonoBehaviour
 
         curSpeed = 0;
     }
-
+    public void PullOutOfATheCar()//차에 있는 사람 끌어내리기
+    {
+        if (driver == null)//NPC 끌어내리기
+        {
+            SpawnManager.Instance.carDriverPool[0].gameObject.SetActive(true);
+            SpawnManager.Instance.carDriverPool[0].gameObject.transform.position = mainDoorPosition.transform.position;
+            SpawnManager.Instance.carDriverPool[0].Down();
+        }
+        else //player 임시로 
+        {
+            driver.transform.position = mainDoorPosition.transform.position;
+            driver.transform.SetParent(null);
+            driver.Down();
+            driver.gameObject.SetActive(true);
+        }
+    }
     void OnDrawGizmos()
     {
         //Gizmos.color = Color.cyan;
@@ -518,6 +533,13 @@ public class CarController : MonoBehaviour
         if(col.transform.tag == "NPC" || col.transform.tag == "Player")
         {
             col.gameObject.GetComponent<People>().Hurt((int)Mathf.Abs(curSpeed)/2);
+
+            if (col.gameObject.GetComponent<People>().isDown)
+            {
+                col.gameObject.GetComponent<People>().Hurt(500);
+                print("뚜쉬");
+            }
+                
         }
     }
 

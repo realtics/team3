@@ -10,9 +10,11 @@ public class GunFireBottle : Gun
     public int smokePoolCnt;
     public float moveThrowPower;
 
-    private float intervalDelta;
-    private int smokeIdx = 0;
-    private bool isPrevShot;
+
+
+    float intervalDelta;
+    int smokeIdx = 0;
+    bool isPrevShot;
     void Start()
     {
         gunType = GunState.FireBottle;

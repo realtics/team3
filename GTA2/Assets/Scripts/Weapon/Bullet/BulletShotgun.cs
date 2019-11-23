@@ -8,6 +8,7 @@ public class BulletShotgun : Bullet
     protected override void Start()
     {
         base.Start();
+        bulletDeActiveTime = bulletLifeTime;
     }
 
 

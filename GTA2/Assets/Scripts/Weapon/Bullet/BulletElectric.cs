@@ -55,7 +55,7 @@ public class BulletElectric : Bullet
             myTarget.gameObject.transform.position -
             gameObject.transform.position;
 
-        if (targetToVector.magnitude > electricWaveArea)
+        if (targetToVector.sqrMagnitude > electricWaveArea * electricWaveArea)
         {
             gameObject.SetActive(false);
         }
@@ -68,7 +68,6 @@ public class BulletElectric : Bullet
 
         // 이렇게 두번 해야 라인랜더러가 안 겹친다...
         myLightning.Updated();
-        myLightning.Updated();
     }
 
 
@@ -78,7 +77,6 @@ public class BulletElectric : Bullet
     protected override void Update()
     {
         base.Update();
-        myLightning.Updated();
     }
 
 
@@ -106,8 +104,9 @@ public class BulletElectric : Bullet
     }
     void SetPosition(Vector3 targetToVector)
     {
-        bulletDir.y = .0f;
+        Vector3 setVector = targetToVector * .5f;
+        setVector.y = targetToVector.y;
 
-        transform.position += (targetToVector) * .5f;
+        transform.position += setVector;
     }
 }

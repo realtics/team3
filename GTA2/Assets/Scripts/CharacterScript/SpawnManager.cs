@@ -10,9 +10,10 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public List<NPC> activeNPCList = new List<NPC>();
     public List<NPC> deactiveNPCList = new List<NPC>();
     
-    public List<GameObject> activeCarList = new List<GameObject>();
-    public List<GameObject> deactiveCarList = new List<GameObject>();
+    public List<CarController> activeCarList = new List<CarController>();
+    public List<CarController> deactiveCarList = new List<CarController>();
 
+    public List<NPC> carDriverPool = new List<NPC>();
 
     [SerializeField]
     GameObject player;
@@ -140,7 +141,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     }
     void CheckDeactiveCar()
     {
-        List<GameObject> tempRemoveCarList = new List<GameObject>();
+        List<CarController> tempRemoveCarList = new List<CarController>();
 
         foreach (var car in deactiveCarList)
         {
@@ -153,13 +154,13 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         }
         for (int i = 0; i < tempRemoveCarList.Count; i++)
         {
-            GameObject removeCar = tempRemoveCarList[i];
+            CarController removeCar = tempRemoveCarList[i];
             deactiveCarList.Remove(removeCar);
         }
     }
     void CheckActiveCar()
     {
-        List<GameObject> tempRemoveCarList = new List<GameObject>();
+        List<CarController> tempRemoveCarList = new List<CarController>();
 
         foreach (var car in activeCarList)
         {
@@ -172,7 +173,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         }
         for (int i = 0; i < tempRemoveCarList.Count; i++)
         {
-            GameObject removeCar = tempRemoveCarList[i];
+            CarController removeCar = tempRemoveCarList[i];
             activeCarList.Remove(removeCar);
         }
     }

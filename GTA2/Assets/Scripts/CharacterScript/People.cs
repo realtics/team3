@@ -18,7 +18,14 @@ public abstract class People : MonoBehaviour
     protected float hDir = 0;
     protected float vDir = 0;
 
+    public bool isWalk { get; set; }
+    public bool isShot { get; set; }
+    public bool isPunch { get; set; }
+    public bool isJump { get; set; }
+    public bool isDown { get; set; }
     public bool isDie { get; set; }
+    public abstract void Down();
+    public abstract void Rising();
     protected abstract void Die();
 
     protected virtual void Move()

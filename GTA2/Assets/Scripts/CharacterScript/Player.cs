@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class Player : People
 {
-    public bool isWalk { get; set; }
-    public bool isShot { get; set; }
-    public bool isPunch { get; set; }
-    public bool isJump { get; set; }
     public bool isChasingCar { get; set; }
-    public bool isStealingCar { get; set; }
+    public bool isGetOnTheCar { get; set; }
     public bool isBusted { get; set; }
-    public bool isDown { get; set; }
-    GameObject targetCar;
+    
+    CarController targetCar;
     float playerMoveSpeed = 2.0f;
-
     public GunState curGunIndex { get; set; }
 
     public bool isAttack { get; set; }
@@ -22,6 +17,7 @@ public class Player : People
     int defaultHp = 500;
     float jumpTime = 1.5f;
     float jumpTimer = 0.0f;
+    float jumpMinTime = 0.5f; 
     float respawnTime = 3.0f;
     float respawnTimer = 0.0f;
 
@@ -34,8 +30,10 @@ public class Player : People
 
     float carOpenTime = 0.5f;
     float carOpenTimer = 0.0f;
-    Vector3 doorPosition;
+    Transform doorTransform;
+
     // UI메니저 추가 - 조이스틱 상황에 맞게 키보드 동작을 위함
+
     void Awake()
     {
         myRigidBody = GetComponent<Rigidbody>();
@@ -70,8 +68,8 @@ public class Player : People
         animator.SetBool("isPunch", isPunch);
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
-        animator.SetBool("isStealingCar", isStealingCar);
-        if (isDie || isDown || isStealingCar)
+        animator.SetBool("isGetOnTheCar", isGetOnTheCar);
+        if (isDie || isDown || isGetOnTheCar)
             return;
         UpdateInput();
         
@@ -81,32 +79,33 @@ public class Player : People
         UpdateTargetRotation();
         UpdateSlerpedRotation();
         TimerCheck();
-        if (isStealingCar)
+        if (isGetOnTheCar)
             CarStealing();
         
         Move();
     }
     void CarStealing()
     {
-        if (targetCar.GetComponent<CarController>().isDoorOpen == false)//문열기
+        if (targetCar.isDoorOpen == false)//문열기
         {
             carOpenTimer += Time.deltaTime;
             transform.forward = targetCar.transform.forward;
-            transform.position = targetCar.GetComponent<CarController>().mainDoorPosition.transform.position;
+            transform.position = targetCar.mainDoorPosition.transform.position;
             if (carOpenTimer > carOpenTime)
             {
                 carOpenTimer = 0.0f;
-                targetCar.GetComponent<CarController>().isDoorOpen = true;
+                targetCar.isDoorOpen = true;
             }
         }
         else //탑승
         {
             transform.parent = targetCar.gameObject.transform;
-            targetCar.GetComponent<CarController>().GetOnTheCar(this);
-            isStealingCar = false;
+            isGetOnTheCar = false;
             carOpenTimer = 0.0f;
-            targetCar.GetComponent<CarController>().GetOnTheCar(this as People);
-            UIManager.Instance.CarUIMode(targetCar.GetComponent<CarController>());
+            //사람 끌어내리기
+            targetCar.PullOutOfATheCar();
+            targetCar.GetOnTheCar(this);
+            UIManager.Instance.CarUIMode(targetCar);
             print("탑승");
         }
     }
@@ -179,6 +178,14 @@ public class Player : People
 
             Hurt(bulletDamage);
         }
+        
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Car") && isChasingCar)
+        {
+            Jump();
+        }
     }
     #region lowlevelCode
     void LandCheck()
@@ -201,6 +208,11 @@ public class Player : People
                 Land();
             }
         }
+        else if(isChasingCar && jumpTimer > jumpMinTime)
+        {
+            jumpTimer = 0.0f;
+            Land();
+        }
     }
     
     protected override void Move()
@@ -215,14 +227,14 @@ public class Player : People
             }
             //차 탑승
             //TODO : 운전석으로 점프해서가서 탑승 모션 구현
-            else if (Vector3.Distance(transform.position, doorPosition) < 0.1f)
+            else if (Vector3.Distance(transform.position, doorTransform.position) < 0.3f)
             {
                 isChasingCar = false;
-                isStealingCar = true;
+                isGetOnTheCar = true;
             }
             else//차 쫓아가기
             {
-                transform.LookAt(new Vector3(targetCar.transform.position.x, targetCar.transform.position.y, targetCar.transform.position.z));
+                transform.LookAt(new Vector3(doorTransform.position.x, transform.position.y,doorTransform.position.z));
                 myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
             }
         }
@@ -442,7 +454,7 @@ public class Player : People
 
     public void SetChaseTargetCar()
     {
-        List<GameObject> activeCarList = SpawnManager.Instance.activeCarList;
+        List<CarController> activeCarList = SpawnManager.Instance.activeCarList;
         //제일 가까운 차 가져오기
 
         float minDistance = 100.0f;
@@ -451,12 +463,12 @@ public class Player : People
         {
             if (minDistance > Vector3.Distance(car.transform.position, transform.position))
             {
-                if(car.GetComponent<CarController>().carState == CarController.CarState.destroied)
+                if(car.carState == CarController.CarState.destroied)
                 {
                     continue;
                 }
                 targetCar = car;
-                doorPosition = targetCar.GetComponent<CarController>().mainDoorPosition.transform.position;
+                doorTransform = targetCar.mainDoorPosition.transform;
                 minDistance = Vector3.Distance(car.transform.position, transform.position);
             }
         }
@@ -475,6 +487,16 @@ public class Player : People
         isShot = false;
         isAttack = false;
         isPunch = false;
+    }
+
+    public override void Down()
+    {
+        isDown = true;
+    }
+
+    public override void Rising()
+    {
+        isDown = false;
     }
     #endregion
 }

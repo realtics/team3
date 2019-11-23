@@ -69,7 +69,6 @@ MonoBehaviour:
     m_Bits: 256
   isDestReached: 1
   player: {fileID: 0}
-  citizenState: 0
   animator: {fileID: 1020086614340368900}
 --- !u!65 &-3621325394877705112
 BoxCollider:
@@ -167,7 +166,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4627805122651553495, guid: 849b242af465864418a87616181549fe,
+  m_Sprite: {fileID: -9194723345426570509, guid: b4a38bb7059024a499f38492e351fd2f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -189,7 +188,7 @@ Animator:
   m_GameObject: {fileID: 6193245880112247456}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e1e10750753b72d49adfbffa6d0c9a90, type: 2}
+  m_Controller: {fileID: 22100000, guid: f928e72067afa34408120539f4211af1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

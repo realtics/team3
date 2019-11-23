@@ -16,6 +16,8 @@ public class UIManager : MonoSingleton<UIManager>
     GameEndUI gameEndUI;
     [SerializeField]
     LifeCount lifeCountUI;
+    [SerializeField]
+    GetItemText weaponTextUI;
 
     /// <summary>
     /// 플레이어에서 직접 참조하기 위해 public으로 품.
@@ -54,6 +56,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         moneyTextUI.SetMoney(GameManager.Instance.money);
         weaponUI.SetGunSprite(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
+        
         heartListUI.SetHealthPoint(player.GetHp());
         lifeCountUI.UpdateLifeCount(GameManager.Instance.remains);
 
@@ -147,6 +150,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void TurnOffEndUI()
     {
         gameEndUI.TurnOffEndUI();
+    }
+
+    public void TurnOnItemText(ItemStatus itemState)
+    {
+        weaponTextUI.SetText(itemState);
     }
 
 

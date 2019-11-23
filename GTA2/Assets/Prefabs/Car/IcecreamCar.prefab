@@ -296,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3440692971543766699}
-  - component: {fileID: 3440692971543766696}
+  - component: {fileID: 2188852534950311307}
   - component: {fileID: 3440692971543766698}
   - component: {fileID: 5234684380771204653}
   - component: {fileID: 536384915929224548}
@@ -329,11 +329,12 @@ Transform:
   - {fileID: 5481054649712359914}
   - {fileID: 3968131980282712640}
   - {fileID: 7886552892532175066}
+  - {fileID: 4597693491434631685}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3440692971543766696
-BoxCollider:
+--- !u!136 &2188852534950311307
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -342,9 +343,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.2, z: 0.6}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Radius: 0.15
+  m_Height: 0.6
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3440692971543766698
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -379,6 +381,7 @@ MonoBehaviour:
   mainDoorPosition: {fileID: 7729468293456810887}
   carState: 1
   chaseTarget: {fileID: 0}
+  driver: {fileID: 0}
   maxSpeed: 400
   rotSpeed: 250
   collisionLayer:
@@ -44186,9 +44189,84 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7729468293456810887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.181, y: 0, z: 0.154}
+  m_LocalPosition: {x: -0.237, y: 0, z: 0.154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3440692971543766699}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6373810739927546208
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3440692971543766699}
+    m_Modifications:
+    - target: {fileID: 1677195820478101187, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_Name
+      value: IceCarDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.097
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.192
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000020191071
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0000020191071
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180.00002
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1dbafdbc50dec764ca8bc9f5e413bb27, type: 3}
+--- !u!4 &4597693491434631685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+    type: 3}
+  m_PrefabInstance: {fileID: 6373810739927546208}
+  m_PrefabAsset: {fileID: 0}

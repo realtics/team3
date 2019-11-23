@@ -48,9 +48,9 @@ MonoBehaviour:
     type: 3}
   shootInterval: 1.5
   bulletToPeopleSize: 0.2
-  bulletPoolCount: 30
+  bulletPoolCount: 100
   bulletCount: 0
-  shotPerOneBullet: 8
+  shotPerOneBullet: 1
   gunSoundSource: {fileID: 6396823733035219346}
 --- !u!1 &7524593696283393645
 GameObject:

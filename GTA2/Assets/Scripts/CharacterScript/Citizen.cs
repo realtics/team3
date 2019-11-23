@@ -5,26 +5,21 @@ using UnityEngine;
 
 public class Citizen : NPC
 {
-    public enum CitizenState
-    {
-        IDLE,
-        WALK,
-        RUN,
-        DIE,
-        DOWN
-    }
-    public CitizenState citizenState = CitizenState.IDLE;
     public Animator animator;
 
+    [SerializeField]
     float patternChangeTimer;
+    [SerializeField]
     float patternChangeInterval;
-    float runawayTime = 10.0f;
+    float runawayTime = 5.0f;
 
     Rigidbody myRigidbody;
     float minIdleTime = 2.0f;
     float maxIdleTime = 5.0f;
     float minWalkTime = 2.0f;
     float maxWalkTime = 5.0f;
+
+    public bool isRunaway{get;set;}
 
     Vector3 RunawayVector;
 
@@ -35,120 +30,100 @@ public class Citizen : NPC
 
     void Start()
     {
-        base.NPCInit();
-
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
     }
     void Update()
     {
-        animator.SetInteger("CitizenState", (int)citizenState);
+        animator.SetBool("isWalk", isWalk);
+        //animator.SetBool("isShot", isShot);
+        animator.SetBool("isPunch", isPunch);
+        //animator.SetBool("isJump", isJump);
+        animator.SetBool("isDie", isDie);
+        animator.SetBool("isDown", isDown);
+        //animator.SetBool("isStealingCar", isStealingCar);
+
         base.NPCUpdate();
+        if (isDie || isDown)
+            return;
 
         TimerCheck();
         ActivityByState();
     }
     void ActivityByState()
     {
-        switch (citizenState)
+        if (isRunaway)
         {
-            case CitizenState.IDLE:
-                break;
-            case CitizenState.WALK:
-                base.Raycast();
-                base.Move();
-                break;
-            case CitizenState.RUN:
-                base.RunAway();
-                break;
-            case CitizenState.DIE:
-                break;
+            base.RunAway();
+        }
+        else if (isWalk)
+        {
+            base.Raycast();
+            base.Move();
         }
     }
     void TimerCheck()
     {
         patternChangeTimer += Time.deltaTime;
 
-        switch (citizenState)
+        if (DectectedPlayerAttack())
         {
-            case CitizenState.IDLE:
-                if (DectectedPlayerAttack())
-                {
-                    RunawayVector = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
-                    transform.LookAt(RunawayVector);
-                    transform.Rotate(0, 180, 0);
-                    citizenState = CitizenState.RUN;
-                }
-                PatternChange(patternChangeInterval);
-                break;
-            case CitizenState.WALK:
-               
-                if (DectectedPlayerAttack())
-                {
-                    RunawayVector = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
-                    transform.LookAt(RunawayVector);
-                    transform.Rotate(0, 180, 0);
-                    citizenState = CitizenState.RUN;
-                }
-                PatternChange(patternChangeInterval);
-                break;
-            case CitizenState.RUN:
-                if (DectectedPlayerAttack())
-                {
-                    citizenState = CitizenState.RUN;
-                }
-                PatternChange(runawayTime);
-                break;
-            case CitizenState.DIE:
-                break;
-            case CitizenState.DOWN:
-                break;
-            default:
-                break;
+            SetRunaway();
         }
+        else
+            PatternChange();
     }
-    void PatternChange(float patternChangeInterval)
+    void SetRunaway()
+    {
+        patternChangeTimer = 0.0f;
+        patternChangeInterval = runawayTime;
+        RunawayVector = new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z);
+        transform.LookAt(RunawayVector);
+        transform.Rotate(0, 180, 0);
+        isRunaway = true;
+        isWalk = true;
+    }
+    void PatternChange()
     {
         if (patternChangeTimer > patternChangeInterval)
         {
             patternChangeTimer = 0.0f;
-
-            switch (citizenState)
+            if (isRunaway)
             {
-                case CitizenState.IDLE:
-                    patternChangeInterval = Random.Range(minWalkTime, maxWalkTime);
-                    citizenState = CitizenState.WALK;
-                    break;
-                case CitizenState.WALK:
-                    patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
-                    citizenState = CitizenState.IDLE;
-                    break;
-                case CitizenState.RUN:
-                    citizenState = CitizenState.IDLE;
-                    break;
+                patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
+                isRunaway = false;
+                isWalk = false;
+            }
+            else if (isWalk)
+            {
+                patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
+                isWalk = false;
+            }
+            else
+            {
+                patternChangeInterval = Random.Range(minWalkTime, maxWalkTime);
+                isWalk = true;
             }
         }
     }
-    #region override method
+    #region override_method
     public override void Down()
     {
-        citizenState = CitizenState.DOWN;
+        isDown = true;
+        SetRunaway();
     }
 
     public override void Rising()
     {
-        if (citizenState == CitizenState.RUN)
-            return;
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+        transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
         transform.Rotate(0, 180, 0);
-        citizenState = CitizenState.RUN;
+        isRunaway = true;
         patternChangeTimer = 0.0f;
     }
-    protected override void Die() //리스폰 필요
+    protected override void Die()
     {
         isDie = true;
         GameManager.Instance.IncreaseMoney(money);
-        citizenState = CitizenState.DIE;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<BoxCollider>().enabled = false;
     }
@@ -157,7 +132,6 @@ public class Citizen : NPC
         patternChangeTimer = 0;
         isDie = false;
         hp = 100;
-        citizenState = CitizenState.IDLE;
         SpawnManager.Instance.NPCRepositioning(this);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
@@ -166,7 +140,7 @@ public class Citizen : NPC
     #endregion
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall" && citizenState == CitizenState.RUN)
+        if (collision.gameObject.tag == "Wall" && isRunaway)
         {
             transform.Rotate(0, Random.Range(90, 270), 0);
         }

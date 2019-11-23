@@ -140,5 +140,7 @@ public class Item : MonoBehaviour
         {
             itemSoundSource.Play();
         }
+
+        UIManager.Instance.TurnOnItemText(itemType);
     }
 }

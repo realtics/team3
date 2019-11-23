@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Police : NPC
 {
-    public bool isWalk { get; set; }
-    public bool isShot { get; set; }
-    public bool isPunch { get; set; }
-    public bool isJump { get; set; }
     public bool isStealing { get; set; }
     public bool isChasePlayer { get; set; }
 
@@ -41,9 +37,8 @@ public class Police : NPC
     }
     void Start()
     {
-        base.NPCInit();
         money = 50;
-        runSpeed = 0.8f;
+        runSpeed = 1.0f;
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
     }
@@ -134,14 +129,14 @@ public class Police : NPC
                 SetChasePlayer();
             }
             else
-                PatternChange(patternChangeInterval);
+                PatternChange();
         }
     }
     void SetChasePlayer()
     {
         isChasePlayer = true;
     }
-    void PatternChange(float patternChangeInterval)
+    void PatternChange()
     {
         if (patternChangeTimer > patternChangeInterval)
         {
