@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunFireBottle : Gun
+public class GunFireBottle : PlayerGun
 {
     // Start is called before the first frame update
     public GameObject smokePref;
@@ -14,7 +14,8 @@ public class GunFireBottle : Gun
 
     float intervalDelta;
     int smokeIdx = 0;
-    bool isPrevShot;
+
+
     void Start()
     {
         gunType = GunState.FireBottle;
@@ -67,6 +68,7 @@ public class GunFireBottle : Gun
             }
 
             smokeList[smokeIdx].SetTargetbullet(bulletList[bulletPoolIndex].gameObject);
+            MinusPlayerBulletCount();
             smokeIdx = GetPool<FireBottleSmoke>.PlusListIdx(smokeList, smokeIdx);
             
             BombFireBottle LaunchBullet = (BombFireBottle)ShootSingleBullet(userObject.transform.position);

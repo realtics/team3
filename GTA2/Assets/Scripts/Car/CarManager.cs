@@ -14,11 +14,11 @@ public class CarManager : MonoBehaviour
     public CarEffectsController carEffects;
 
     public delegate void CarEventHandler();
-    public static event CarEventHandler OnDamage; // 피해받음
-    public static event CarEventHandler OnDestroy; // 파괴됨
+    public event CarEventHandler OnDamage; // 피해받음
+    public event CarEventHandler OnDestroy; // 파괴됨
 
-    public static event CarEventHandler OnDriverGetOn; // 탑승
-    public static event CarEventHandler OnDriverGetOff; // 하차
+    public event CarEventHandler OnDriverGetOn; // 탑승
+    public event CarEventHandler OnDriverGetOff; // 하차
 
     public void OnDestroyEvent()
     {

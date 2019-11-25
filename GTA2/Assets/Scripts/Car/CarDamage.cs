@@ -20,14 +20,14 @@ public class CarDamage : MonoBehaviour
     {
         hp = maxHp;
 
-        CarManager.OnDamage += OnCarDamage;
-        CarManager.OnDestroy += OnCarDestroy;
+        carManager.OnDamage += OnCarDamage;
+        carManager.OnDestroy += OnCarDestroy;
     }
 
     void OnDisable()
     {
-        CarManager.OnDamage -= OnCarDamage;
-        CarManager.OnDestroy -= OnCarDestroy;
+        carManager.OnDamage -= OnCarDamage;
+        carManager.OnDestroy -= OnCarDestroy;
     }
 
     private void OnTriggerEnter(Collider other)

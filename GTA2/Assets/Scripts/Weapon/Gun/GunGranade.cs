@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunGranade : Gun
+public class GunGranade : PlayerGun
 {
 
     public float moveThrowPower;
 
 
     float intervalDelta;
-    bool isPrevShot;
-
+    
 
     void Start()
     {
@@ -50,6 +49,7 @@ public class GunGranade : Gun
             }
 
             BombGranade LaunchBullet = (BombGranade)ShootSingleBullet(userObject.transform.position);
+            MinusPlayerBulletCount();
             LaunchBullet.SetForce(intervalDelta);
             intervalDelta = .0f;
         }

@@ -27,18 +27,18 @@ public class CarEffectsController : MonoBehaviour
 
     void OnEnable()
     {
-        CarManager.OnDestroy += FullyDestroy;
-        CarManager.OnDestroy += EnableParticle;
-        CarManager.OnDamage += EnableParticle;
+        carManager.OnDestroy += FullyDestroy;
+        carManager.OnDestroy += EnableParticle;
+        carManager.OnDamage += EnableParticle;
 
         Init();
     }
 
     void OnDisable()
     {
-        CarManager.OnDestroy -= FullyDestroy;
-        CarManager.OnDestroy -= EnableParticle;
-        CarManager.OnDamage -= EnableParticle;
+        carManager.OnDestroy -= FullyDestroy;
+        carManager.OnDestroy -= EnableParticle;
+        carManager.OnDamage -= EnableParticle;
     }
 
     IEnumerator SirenCor()

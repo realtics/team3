@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunMachine : Gun
+public class GunMachine : PlayerGun
 {
     void Start()
     {

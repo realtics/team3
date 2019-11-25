@@ -15,10 +15,6 @@ public class PlayerPhysics : MonoBehaviour
     {
         myRigidBody = GetComponent<Rigidbody>();
     }
-    // Update is called once per frame
-    void Update()
-    {
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Car") && GameManager.Instance.player.isChasingCar)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunRocket : Gun
+public class GunRocket : PlayerGun
 {
     // Start is called before the first frame update
     public GameObject smokePref;
@@ -46,6 +46,7 @@ public class GunRocket : Gun
             {
                 smokeList[SmokeIdx].SetTargetbullet(bulletList[bulletPoolIndex].gameObject);
                 ShootSingleBullet(userObject.transform.position);
+                MinusPlayerBulletCount();
                 shootDelta = .0f;
                 SmokeIdx = GetPool<RocketSmoke>.PlusListIdx(smokeList, SmokeIdx);
             }

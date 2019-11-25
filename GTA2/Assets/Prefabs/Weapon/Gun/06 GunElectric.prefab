@@ -44,13 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2794abe67cde995458e28ee983ff88e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userObject: {fileID: 0}
   bulletPref: {fileID: 1342552342984028335, guid: e18a46b227ea7d44ca848cc458ffb63b,
     type: 3}
   shootInterval: 0.05
   bulletToPeopleSize: 0.1
   bulletPoolCount: 50
   bulletCount: 0
-  shotPerOneBullet: 50
+  shotPerOneBullet: 25
   gunSoundSource: {fileID: 5671362728586046690}
   electricWaveMaxIndex: 2
   electricWaveArea: 3

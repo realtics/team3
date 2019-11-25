@@ -20,6 +20,7 @@ public enum GunState
 public abstract class Gun : MonoBehaviour
 {
     // 사용하는 사람
+    public GameObject userObject;
     public GameObject bulletPref;
     public float shootInterval;
     public float bulletToPeopleSize;
@@ -34,7 +35,6 @@ public abstract class Gun : MonoBehaviour
     protected int bulletPoolIndex;
     protected int shotPerCurBullet;
 
-    protected GameObject userObject;
     protected Player player;
     protected GunState gunType;
 
@@ -45,25 +45,23 @@ public abstract class Gun : MonoBehaviour
     protected float shootDelta;
 
     protected GameObject bulletPool;
-    protected bool isKeyShot = false;
-    protected bool isButtonShot = false;
+
+    protected bool isShot;
+    protected bool isPrevShot;
 
 
 
 
-
-    // Start is called before the first frame update
-    protected void InitGun()
+    protected virtual void InitGun()
     {
-        userObject = GameObject.FindWithTag("Player");
-        player = userObject.GetComponent<Player>();
-
-        transform.eulerAngles = new Vector3(90.0f, 0.0f, 90.0f);
-        transform.parent = userObject.transform;
-
-        // 인터벌은 수정가능
         shootDelta = .0f;
         shotPerCurBullet = 0;
+        transform.eulerAngles = new Vector3(90.0f, 0.0f, 90.0f);
+
+        if (userObject != null)
+        {
+            transform.parent = userObject.transform;
+        }
     }
 
     protected virtual void InitBullet(string poolName)
@@ -90,7 +88,6 @@ public abstract class Gun : MonoBehaviour
         Bullet returnBullet = bulletList[bulletPoolIndex];
 
         PlusBulletIdx();
-        MinusPlayerBulletCount();
         return returnBullet;
     }
 
@@ -99,7 +96,7 @@ public abstract class Gun : MonoBehaviour
         SFXPlay();
         return Shoot(triggerPos);
     }
-    protected void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
+    protected virtual void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
     {
         List<Vector3> actVectorList =
             GameMath.DivideAngleFromCount(startAngle, endAngle, gunDir.y, bulletCnt);
@@ -111,7 +108,6 @@ public abstract class Gun : MonoBehaviour
                 gunType, userObject.transform.position, item, bulletToPeopleSize);
             PlusBulletIdx();
         }
-        MinusPlayerBulletCount();
 
         SFXPlay();
     }
@@ -129,14 +125,8 @@ public abstract class Gun : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (player.isDie == true)
-        {
-            return;
-        }
-
         UpdateDirection();
         UpdateDelta();
-        UpdateKeyInput();
         UpdateShot();
     }
 
@@ -147,27 +137,19 @@ public abstract class Gun : MonoBehaviour
     }
     protected virtual void UpdateDirection()
     {
+        if (userObject == null)
+        {
+            return;
+        }
+
         gunDir = userObject.transform.forward;
         gunDir.y = userObject.transform.eulerAngles.y;
-    }
-
-
-    protected void UpdateKeyInput()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            isKeyShot = true;
-        }
-        else
-        {
-            isKeyShot = false;
-        }
     }
 
     // 요부분은 사람이 해도 되는 거지만 일단 여기서 구현 - 총알 발사
     protected virtual void UpdateShot()
     {
-        if (isKeyShot || isButtonShot)
+        if (isShot)
         {
             if (shootInterval < shootDelta)
             {
@@ -178,37 +160,9 @@ public abstract class Gun : MonoBehaviour
         
     }
 
-    public void UpdateBottonDown()
-    {
-        isButtonShot = true;
-    }
-
-    public void UpdateBottonUp()
-    {
-        isButtonShot = false;
-    }
-
-    void PlusBulletIdx()
+    protected void PlusBulletIdx()
     {
         bulletPoolIndex = GetPool<Bullet>.PlusListIdx(bulletList, bulletPoolIndex);
-    }
-
-    void MinusPlayerBulletCount()
-    {
-        if (shotPerCurBullet + 1 < shotPerOneBullet)
-        {
-            shotPerCurBullet++;
-        }
-        else if (shotPerCurBullet + 1 == shotPerOneBullet)
-        {
-            player.gunList[(int)gunType].bulletCount--;
-            if (player.gunList[(int)gunType].bulletCount <= 0)
-            {
-                player.SwapNext();
-            }
-
-            shotPerCurBullet = 0;
-        }
     }
 
     protected void SFXPlay()

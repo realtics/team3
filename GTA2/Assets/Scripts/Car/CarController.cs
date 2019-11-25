@@ -27,7 +27,7 @@ public class CarController : MonoBehaviour
     float inputV;
     float joystickInputH, joystickInputV;
 
-    //차뺏기 추가사항
+    //===============
     public GameObject mainDoorPosition;
     public People driver;
     public bool isDoorOpen { get; set; }
@@ -42,12 +42,12 @@ public class CarController : MonoBehaviour
     void OnEnable()
     {
         carState = CarState.controlledByAi;
-        CarManager.OnDestroy += OnCarDestroy;
+        carManager.OnDestroy += OnCarDestroy;
     }
 
     void OnDisable()
     {
-        CarManager.OnDestroy -= OnCarDestroy;
+        carManager.OnDestroy -= OnCarDestroy;
     }
 
     void Update()

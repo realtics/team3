@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunElectric : Gun
+public class GunElectric : PlayerGun
 {
     public int electricWaveMaxIndex;
     public float electricWaveArea;
@@ -95,6 +95,7 @@ public class GunElectric : Gun
         foreach (var target in targetObjects)
         {
             BulletElectric fireBullet = (BulletElectric)Shoot(userObject.transform.position);
+            MinusPlayerBulletCount();
             fireBullet.SetTarget(target);
             activeBulletList.Add(fireBullet);
             activeElectricList.Add(fireBullet);

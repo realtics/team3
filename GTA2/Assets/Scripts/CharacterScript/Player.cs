@@ -12,30 +12,21 @@ public class Player : People
     CarController targetCar;
     float playerMoveSpeed = 2.0f;
     public GunState curGunIndex { get; set; }
-    public List<Gun> gunList;
-    PlayerPhysics playerPhysics;
+    public List<PlayerGun> gunList;
 
+    PlayerPhysics playerPhysics;
+    PlayerTimer playerTimer;
     int defaultHp = 500;
 
-    //Timer
-    float jumpTime = 1.5f;
-    float jumpTimer = 0.0f;
-    float jumpMinTime = 0.5f;
-    float respawnTime = 3.0f;
-    float respawnTimer = 0.0f;
-    float carOpenTime = 0.5f;
-    float carOpenTimer = 0.0f;
-    float bustedCheckTime = 3.0f;
-    float bustedCheckTimer = 3.0f;
+ 
 
     Animator animator;
-    
-    
 
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         playerPhysics = GetComponent<PlayerPhysics>();
+        playerTimer = GetComponent<PlayerTimer>();
     }
     void Start()
     {
@@ -43,13 +34,12 @@ public class Player : People
         GunListInit();
         UIManager.Instance.HumanUIMode();
     }
-    
 
     void Update()
     {
         AnimateUpdate();
 
-        if (IsStuckedAnimated())
+        if (IsStuckedAnimation())
             return;
         UpdateInput();
     }
@@ -71,13 +61,13 @@ public class Player : People
     }
     void GunListInit()
     {
-        List<Gun> gunTempList = new List<Gun>();
+        List<PlayerGun> gunTempList = new List<PlayerGun>();
         foreach (var item in gunList)
         {
             GameObject NewGun = Instantiate(item.gameObject);
             NewGun.transform.parent = transform;
             NewGun.SetActive(false);
-            gunTempList.Add(NewGun.GetComponent<Gun>());
+            gunTempList.Add(NewGun.GetComponent<PlayerGun>());
         }
         gunList.Clear();
         gunList = gunTempList;
@@ -109,59 +99,44 @@ public class Player : People
    
     void CarStealing()
     {
-        if (targetCar.isDoorOpen == false)//문열기
-        {
-            carOpenTimer += Time.deltaTime;
-            transform.forward = targetCar.transform.forward;
-            transform.position = targetCar.mainDoorPosition.transform.position;
-            if (carOpenTimer > carOpenTime)
-            {
-                carOpenTimer = 0.0f;
-                targetCar.isDoorOpen = true;
-            }
-        }
-        else //탑승
+        if (targetCar.isDoorOpen) //탑승
         {
             transform.parent = targetCar.gameObject.transform;
             isGetOnTheCar = false;
-            carOpenTimer = 0.0f;
             //사람 끌어내리기
             targetCar.PullOutOfATheCar();
             targetCar.GetOnTheCar(this);
             UIManager.Instance.CarUIMode(targetCar);
             print("탑승");
         }
+        else//문열기
+        {
+            transform.forward = targetCar.transform.forward;
+            transform.position = targetCar.mainDoorPosition.transform.position;
+
+            if (playerTimer.CarOpenTimerCheck())
+            {
+                targetCar.isDoorOpen = true;
+            }
+        }
     }
-    
 
     void TimerCheck()
     {
         if (isJump)
             LandCheck();
-        else if(isDie)
+        else if (isDie)
         {
-            RespawnTimerCheck();
+            if (playerTimer.RespawnTimerCheck())
+                Respawn();
         }
-        if(isBusted)
+        if (isBusted && playerTimer.BustedTimerCheck())
         {
-            bustedCheckTimer += Time.deltaTime;
-            if(bustedCheckTimer > bustedCheckTime)
-            {
-                isBusted = false;
-                bustedCheckTimer = 0.0f;
-            }
+            isBusted = false;
         }
     }
-    void RespawnTimerCheck()
-    {
-        respawnTimer += Time.deltaTime;
 
-        if(respawnTime < respawnTimer)
-        {
-            respawnTimer = 0.0f;
-            Respawn();
-        }
-    }
+  
     protected override void Die()
     {
         GetComponent<Rigidbody>().isKinematic = true;
@@ -209,19 +184,15 @@ public class Player : People
     {
         Debug.DrawRay(transform.position, transform.up * -1, Color.red);
 
-        jumpTimer += Time.deltaTime;
-
-        if (jumpTimer > jumpTime)
+        if (playerTimer.JumpTimerCheck())
         {
             if (!playerPhysics.IsCarExistBelow())
             {
-                jumpTimer = 0.0f;
                 Land();
             }
         }
-        else if(isChasingCar && jumpTimer > jumpMinTime)
+        else if (isChasingCar && playerTimer.JumpMinTimeCheck())
         {
-            jumpTimer = 0.0f;
             Land();
         }
     }
@@ -249,12 +220,8 @@ public class Player : People
         }
         else//그 외 입력에 의한 이동
         {
-            //playerPhysics.ChaseTheCar(moveSpeed);
             playerPhysics.MovePositionByInput(hDir, vDir, moveSpeed);
-            print(hDir + " " + vDir);
         }
-
-            
     }
     public int GetHp()
     {
@@ -323,7 +290,6 @@ public class Player : People
             SetChaseTargetCar();//내리면서 바로 타지 않기
         }
     }
-  
     public void Jump()
     {
         if (isJump)
@@ -410,8 +376,6 @@ public class Player : People
         print("Player Respawn");
     }
 
-    //TODO : UIManager에 있는것이 좋을 것 같음.
-
     public void ShotButtonDown()
     {
         ShotButtonDownGunSet();
@@ -420,7 +384,7 @@ public class Player : People
 
     void ShotButtonDownGunSet()
     {
-        if (isJump)
+        if (IsStuckedAnimation())
         {
             return;
         }
@@ -455,7 +419,7 @@ public class Player : People
                 break;
         }
     }
-    bool IsStuckedAnimated()
+    bool IsStuckedAnimation()
     {
         if (isDie || isDown || isGetOnTheCar)
             return true;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunSleepMachine : Gun
+public class GunSleepMachine : PlayerGun
 {
     void Start()
     {
