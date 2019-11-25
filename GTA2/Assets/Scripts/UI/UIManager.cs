@@ -33,7 +33,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     GameObject carJoystick;
     [SerializeField]
-    CarController targetCarControll;
+    CarManager targetCar;
 
     // Start is called before the first frame update
     private Player player;
@@ -72,7 +72,7 @@ public class UIManager : MonoSingleton<UIManager>
     // 컴퓨터용 체인저
     void UpdateGetOffCar()
     {
-        if (targetCarControll == null)
+        if (targetCar == null)
         {
             return;
         }
@@ -83,10 +83,10 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         // 타겟 팅중인 차가 없으면
-        if (targetCarControll.GetDriver() == null)
+        if (targetCar.passengerManager.passengers[0] != GameManager.Instance.player)
         {
             HumanUIMode();
-            targetCarControll = null;
+            targetCar = null;
         }
     }
 
@@ -94,28 +94,28 @@ public class UIManager : MonoSingleton<UIManager>
     {
         if (isExcelDown)
         {
-            targetCarControll.InputVertical(1.0f);
+            targetCar.input.InputVertical(1.0f);
         }
         if (isBreakDown)
         {
-            targetCarControll.InputVertical(-1.0f);
+            targetCar.input.InputVertical(-1.0f);
         }
         if (isLeftDown)
         {
-            targetCarControll.InputHorizon(-1.0f);
+            targetCar.input.InputHorizon(-1.0f);
         }
         if (isRightDown)
         {
-            targetCarControll.InputHorizon(1.0f);
+            targetCar.input.InputHorizon(1.0f);
         }
 
-        if (!isLeftDown && !isRightDown && targetCarControll != null)
+        if (!isLeftDown && !isRightDown && targetCar != null)
         {
-            targetCarControll.InputHorizon(.0f);
+            targetCar.input.InputHorizon(.0f);
         }
-        if (!isExcelDown && !isBreakDown && targetCarControll != null)
+        if (!isExcelDown && !isBreakDown && targetCar != null)
         {
-            targetCarControll.InputVertical(.0f);
+            targetCar.input.InputVertical(.0f);
         }
     }
     void UpdateDieUI()
@@ -126,7 +126,6 @@ public class UIManager : MonoSingleton<UIManager>
             carJoystick.SetActive(false);
         }
     }
-
 
     public bool IsHumanUI()
     {
@@ -162,9 +161,9 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
 
-    public void CarUIMode(CarController targetCar)
+    public void CarUIMode(CarManager targetCar)
     {
-        targetCarControll = targetCar;
+        this.targetCar = targetCar;
         humanJoystick.SetActive(false);
         carJoystick.SetActive(true);
     }
@@ -251,7 +250,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void ReturnButtonDown()
     {
-        targetCarControll.InputReturn();
+        targetCar.input.InputReturn();
     }
     #endregion
 }

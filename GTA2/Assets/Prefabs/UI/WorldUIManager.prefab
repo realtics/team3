@@ -50,6 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74474ca0bdbcfd74aa5c40d101fc4a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreTextPref: {fileID: 4441075228745056247, guid: 9720eb8b4dc96c248941b70ce31cf4b6,
+    type: 3}
+  scorePoolCount: 50
 --- !u!223 &6470372338508347493
 Canvas:
   m_ObjectHideFlags: 0

@@ -67,11 +67,13 @@
     <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\PlayerPhysics.cs" />
     <Compile Include="Assets\PlayerTimer.cs" />
-    <Compile Include="Assets\Scripts\Car\CarControllAi.cs" />
-    <Compile Include="Assets\Scripts\Car\CarController.cs" />
+    <Compile Include="Assets\Scripts\Car\CarAi.cs" />
     <Compile Include="Assets\Scripts\Car\CarDamage.cs" />
-    <Compile Include="Assets\Scripts\Car\CarEffectsController.cs" />
+    <Compile Include="Assets\Scripts\Car\CarEffects.cs" />
+    <Compile Include="Assets\Scripts\Car\CarInput.cs" />
     <Compile Include="Assets\Scripts\Car\CarManager.cs" />
+    <Compile Include="Assets\Scripts\Car\CarMovement.cs" />
+    <Compile Include="Assets\Scripts\Car\CarPassengerManager.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Citizen.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Doctor.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\HumanController.cs" />
@@ -111,6 +113,8 @@
     <Compile Include="Assets\Scripts\UI\MoneyText.cs" />
     <Compile Include="Assets\Scripts\UI\PoliceLevel.cs" />
     <Compile Include="Assets\Scripts\UI\PoliceLevelImage.cs" />
+    <Compile Include="Assets\Scripts\UI\ScoreUI\FloatingScoreText.cs" />
+    <Compile Include="Assets\Scripts\UI\ScoreUI\TextOutline.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponImage.cs" />
     <Compile Include="Assets\Scripts\UI\WorldUIManager.cs" />

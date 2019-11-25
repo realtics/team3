@@ -5,8 +5,8 @@ using UnityEngine;
 public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 {
     [Header("최초에는 ActiveList에 Pool의 오브젝트 삽입.")]
-    public List<CarController> activeCarList = new List<CarController>();
-    public List<CarController> deactiveCarList = new List<CarController>();
+    public List<CarManager> activeCarList = new List<CarManager>();
+    public List<CarManager> deactiveCarList = new List<CarManager>();
     // Start is called before the first frame update
     void Start()
     {

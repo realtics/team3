@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CarPathManager : MonoBehaviour
 {
-    public CarControllAi carAi;
+    public CarAi carAi;
 
     WaypointForCar curWaypoint;
     WaypointForCar destWaypoint;

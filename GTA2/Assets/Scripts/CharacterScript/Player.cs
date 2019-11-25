@@ -9,7 +9,7 @@ public class Player : People
     public bool isBusted { get; set; }
     public bool isAttack { get; set; }
 
-    CarController targetCar;
+    CarManager targetCar;
     float playerMoveSpeed = 2.0f;
     public GunState curGunIndex { get; set; }
     public List<PlayerGun> gunList;
@@ -99,24 +99,24 @@ public class Player : People
    
     void CarStealing()
     {
-        if (targetCar.isDoorOpen) //탑승
+        if (targetCar.passengerManager.isLeftDoorOpen) //탑승
         {
             transform.parent = targetCar.gameObject.transform;
             isGetOnTheCar = false;
             //사람 끌어내리기
-            targetCar.PullOutOfATheCar();
-            targetCar.GetOnTheCar(this);
+            targetCar.passengerManager.PullOutDriver();
+            targetCar.passengerManager.GetOnTheCar(this);
             UIManager.Instance.CarUIMode(targetCar);
             print("탑승");
         }
         else//문열기
         {
             transform.forward = targetCar.transform.forward;
-            transform.position = targetCar.mainDoorPosition.transform.position;
+            transform.position = targetCar.passengerManager.leftDoorPosition.position;
 
             if (playerTimer.CarOpenTimerCheck())
             {
-                targetCar.isDoorOpen = true;
+                targetCar.passengerManager.isLeftDoorOpen = true;
             }
         }
     }
@@ -433,7 +433,7 @@ public class Player : People
     }
     public void SetChaseTargetCar()
     {
-        List<CarController> activeCarList = CarSpawnManager.Instance.activeCarList;
+        List<CarManager> activeCarList = CarSpawnManager.Instance.activeCarList;
 
         //제일 가까운 차 가져오기
         float minDistance = 100.0f;
@@ -442,11 +442,11 @@ public class Player : People
         {
             if (minDistance > Vector3.Distance(car.transform.position, transform.position))
             {
-                if (car.carState == CarController.CarState.destroied)
+                if (car.carState == CarManager.CarState.destroied)
                     continue;
 
                 targetCar = car;
-                playerPhysics.SetCarDoorTransform(targetCar.mainDoorPosition.transform);
+                playerPhysics.SetCarDoorTransform(targetCar.passengerManager.leftDoorPosition);
                 minDistance = Vector3.Distance(car.transform.position, transform.position);
             }
         }
@@ -478,4 +478,17 @@ public class Player : People
         isDown = false;
     }
     #endregion
+
+    public void GetOffTheCar()
+    {
+        GetComponentInChildren<SpriteRenderer>().color
+        = new Color(GetComponentInChildren<SpriteRenderer>().color.r,
+        GetComponentInChildren<SpriteRenderer>().color.g,
+        GetComponentInChildren<SpriteRenderer>().color.b, 1.0f);
+        GetComponent<BoxCollider>().enabled = true;
+        transform.SetParent(null);
+
+        CameraController.Instance.ChangeTarget(gameObject);
+        CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
+    }
 }

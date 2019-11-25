@@ -13,12 +13,12 @@ public class CarDamage : MonoBehaviour
     public CarManager carManager;
 
     public int maxHp = 100;
-    public int hp;
+    public int curHp;
     public float maxSpdMultiplier = 1.0f;
 
     void OnEnable()
     {
-        hp = maxHp;
+        curHp = maxHp;
 
         carManager.OnDamage += OnCarDamage;
         carManager.OnDestroy += OnCarDestroy;
@@ -62,28 +62,28 @@ public class CarDamage : MonoBehaviour
     {
         if (angle < -90)
         {
-            carManager.carEffects.Damage(DamageDirection.rearLeft);
+            carManager.effects.Damage(DamageDirection.rearLeft);
         }
         else if (angle < 0)
         {
-            carManager.carEffects.Damage(DamageDirection.frontLeft);
+            carManager.effects.Damage(DamageDirection.frontLeft);
         }
         else if (angle < 90)
         {
-            carManager.carEffects.Damage(DamageDirection.frontRight);
+            carManager.effects.Damage(DamageDirection.frontRight);
         }
         else
         {
-            carManager.carEffects.Damage(DamageDirection.rearRight);
+            carManager.effects.Damage(DamageDirection.rearRight);
         }
     }
 
     public void DeductHp(int amount)
     {
-        hp -= amount;
-        hp = Mathf.Clamp(hp, 0, maxHp);
+        curHp -= amount;
+        curHp = Mathf.Clamp(curHp, 0, maxHp);
 
-        if(hp <= 0)
+        if(curHp <= 0)
         {
             carManager.OnDestroyEvent();
         }
@@ -95,11 +95,11 @@ public class CarDamage : MonoBehaviour
 
     void OnCarDamage()
     {
-        if (hp < 30)
+        if (curHp < 30)
         {
             maxSpdMultiplier = 0.5f;
         }
-        else if (hp < 60)
+        else if (curHp < 60)
         {
             maxSpdMultiplier = 0.8f;
         }
@@ -108,5 +108,8 @@ public class CarDamage : MonoBehaviour
     void OnCarDestroy()
     {
         maxSpdMultiplier = 0.0f;
+
+        GameManager.Instance.IncreaseMoney(100);
+        WorldUIManager.Instance.SetScoreText(transform.position, 100);
     }
 }

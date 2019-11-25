@@ -36,8 +36,8 @@ public class Bullet : MonoBehaviour
 
         if (explosionPref != null)
         {
-            explosionEffect = GameObject.Instantiate(explosionPref).GetComponent<ExplosionEffect>();
-            // explosionEffect.gameObject.transform.parent = SetPool.poolMother.transform;
+            explosionEffect = Instantiate(explosionPref).GetComponent<ExplosionEffect>();
+            explosionEffect.gameObject.transform.parent = SetPool.poolMother.transform;
         }
     }
 

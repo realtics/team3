@@ -26,6 +26,9 @@ public class GameManager : MonoSingleton<GameManager>
     
     void Start()
     {
+        Application.targetFrameRate = 60;
+        //Screen.SetResolution(720, 1280, true);
+
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         Image image = missionArrow.GetComponent<Image>();

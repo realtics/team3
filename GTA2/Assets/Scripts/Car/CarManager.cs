@@ -2,31 +2,117 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CarController))]
-[RequireComponent(typeof(CarControllAi))]
+[RequireComponent(typeof(CarInput))]
+[RequireComponent(typeof(CarMovement))]
+[RequireComponent(typeof(CarAi))]
+[RequireComponent(typeof(CarPassengerManager))]
 [RequireComponent(typeof(CarDamage))]
-[RequireComponent(typeof(CarEffectsController))]
+[RequireComponent(typeof(CarEffects))]
 public class CarManager : MonoBehaviour
 {
-    public CarController carController;
-    public CarControllAi carAi;
-    public CarDamage carDamage;
-    public CarEffectsController carEffects;
+    public CarInput input;
+    public CarMovement movement;
+    public CarAi ai;
+    public CarPassengerManager passengerManager;
+    public CarDamage damage;
+    public CarEffects effects;
 
-    public delegate void CarEventHandler();
-    public event CarEventHandler OnDamage; // 피해받음
-    public event CarEventHandler OnDestroy; // 파괴됨
+    public delegate void CarHandler();
+    public event CarHandler OnReturnKeyDown;
 
-    public event CarEventHandler OnDriverGetOn; // 탑승
-    public event CarEventHandler OnDriverGetOff; // 하차
+    public event CarHandler OnDamage;
+    public event CarHandler OnDestroy;
+
+    public delegate void CarPassengerHandler(People people);
+    public event CarPassengerHandler OnDriverGetOn;
+    public event CarHandler OnDriverGetOff;
+
+    public enum CarState
+    {
+        idle, controlledByPlayer, controlledByAi, destroied
+    }
+    public CarState carState = CarState.controlledByAi;
+
+    void OnEnable()
+    {
+        carState = CarState.controlledByAi;
+    }
+
+    public void OnReturnKeyDownEvent()
+    {
+        OnReturnKeyDown();
+    }
 
     public void OnDestroyEvent()
     {
+        if (carState == CarState.destroied)
+            return;
+
         OnDestroy();
+        carState = CarState.destroied;
     }
 
     public void OnDamageEvent()
     {
+        if (carState == CarState.destroied)
+            return;
+
         OnDamage();
+    }
+
+    public void OnDriverGetOnEvent(People p)
+    {
+        OnDriverGetOn?.Invoke(p);
+
+        if (p == GameManager.Instance.player)
+        {
+            carState = CarState.controlledByPlayer;
+        }
+        else
+        {
+            carState = CarState.controlledByAi;
+        }
+    }
+
+    public void OnDriverGetOffEvent()
+    {
+        OnDriverGetOff();
+
+        carState = CarState.idle;
+    }
+
+    void Update()
+    {
+        switch (carState)
+        {
+            case CarState.controlledByPlayer:
+                {
+                    input.PlayerInput();
+                }
+                break;
+            case CarState.controlledByAi:
+                {
+                    // 코루틴으로 변경할것.
+                    ai.ChasePlayer();
+                }
+                break;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        switch (carState)
+        {
+            case CarState.controlledByPlayer:
+                {
+                    movement.FixedLoop();
+                }
+                break;
+            case CarState.controlledByAi:
+                {
+                    ai.FixedLoop();
+                }
+                break;
+        }
     }
 }
