@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class SetPool : MonoBehaviour
 {
-    public static GameObject poolMother = new GameObject("[SetPool]");
+    static public GameObject poolMother;
+
+    static public void Init()
+    {
+        poolMother = new GameObject("[SetPool]");
+    }
 
     static public List<GameObject> PoolMemory(
         GameObject target, GameObject motherObj, int count, string name)

@@ -8,8 +8,8 @@ public class GunGranade : Gun
     public float moveThrowPower;
 
 
-    private float intervalDelta;
-    private bool isPrevShot;
+    float intervalDelta;
+    bool isPrevShot;
 
 
     void Start()

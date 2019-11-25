@@ -9,7 +9,7 @@ public class QuestInfo : Editor
 {
     public Phone selectedPhone;
 
-    private void OnEnable()
+    void OnEnable()
     {
         // target은 Editor에 있는 변수로 선택한 오브젝트를 받아옴.
         if (AssetDatabase.Contains(target))

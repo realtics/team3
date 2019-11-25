@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CarPathManager : MonoBehaviour
 {
-    public CarController carCtr;
+    public CarControllAi carAi;
 
     WaypointForCar curWaypoint;
     WaypointForCar destWaypoint;
@@ -36,7 +36,7 @@ public class CarPathManager : MonoBehaviour
         curLane = Random.Range(0, curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count);
         transform.LookAt(new Vector3(curDestPos.x, transform.position.y, curDestPos.z));
 
-        carCtr.SetDestination(curDestPos);
+        carAi.SetDestination(curDestPos);
     }
 
     void SetRandomDestWaypoint()
@@ -77,7 +77,7 @@ public class CarPathManager : MonoBehaviour
         if (dist < 0.5f)
         {
             SetRandomDestWaypoint();
-            carCtr.SetDestination(curDestPos);
+            carAi.SetDestination(curDestPos);
         }
     }
 

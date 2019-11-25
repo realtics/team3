@@ -12,7 +12,6 @@ public abstract class NPC : People
     public bool isDestReached;
 
     protected float findRange = 10.0f;
-    protected bool isDown;
     protected float downTimer = 0.0f;
     protected float downTime = 3.0f;
 

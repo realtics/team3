@@ -9,7 +9,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     MoneyText moneyTextUI;
     [SerializeField]
-    PoliceImageList policeListUI;
+    PoliceLevel policeListUI;
     [SerializeField]
     WeaponImage weaponUI;
     [SerializeField]
@@ -18,6 +18,8 @@ public class UIManager : MonoSingleton<UIManager>
     LifeCount lifeCountUI;
     [SerializeField]
     GetItemText weaponTextUI;
+    [SerializeField]
+    PoliceLevel policeLevelUI;
 
     /// <summary>
     /// 플레이어에서 직접 참조하기 위해 public으로 품.
@@ -48,6 +50,8 @@ public class UIManager : MonoSingleton<UIManager>
 
         // TODO: 조이스틱 차냐 사람이냐에 따라 방식 설정
         humanJoystick.GetComponentInChildren<bl_Joystick>().SetCanvas(GetComponent<Canvas>());
+
+        player.SetHpDefault();
         heartListUI.SetMaxPlayerHp(player.GetHp());
     }
 
@@ -174,6 +178,11 @@ public class UIManager : MonoSingleton<UIManager>
         carJoystick.SetActive(false);
     }
 
+    public void SetPoliceLevel(int value)
+    {
+        policeLevelUI.SetPoliceLevel(value);
+    }
+
     #region HumanUI
     public void LSwapButtonDown()
     {
@@ -185,7 +194,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void JumpButtonDown()
     {
-        player.JumpButtonDown();
+        player.Jump();
     }
     public void EnterButtonDown()
     {
@@ -199,7 +208,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         player.ShotButtonUp();
     }
-
 
     #endregion
 

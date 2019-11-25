@@ -7,20 +7,27 @@ public enum DamageDirection
     frontLeft, frontRight, rearLeft, rearRight
 }
 
+[RequireComponent(typeof(CarManager))]
 public class CarDamage : MonoBehaviour
 {
-    public CarController carController;
-    public DeltasController deltasController;
+    public CarManager carManager;
+
     public int maxHp = 100;
     public int hp;
-    public GameObject fireParticle;
-    public GameObject explosionParticle;
+    public float maxSpdMultiplier = 1.0f;
 
-    private void OnEnable()
+    void OnEnable()
     {
         hp = maxHp;
-        fireParticle.SetActive(false);
-        explosionParticle.SetActive(false);
+
+        CarManager.OnDamage += OnCarDamage;
+        CarManager.OnDestroy += OnCarDestroy;
+    }
+
+    void OnDisable()
+    {
+        CarManager.OnDamage -= OnCarDamage;
+        CarManager.OnDestroy -= OnCarDestroy;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +40,6 @@ public class CarDamage : MonoBehaviour
             other.gameObject.SetActive(false);
 
             DeductHp(HitBullet.bulletDamage);
-            EnableParticle();
         }
     }
 
@@ -49,7 +55,6 @@ public class CarDamage : MonoBehaviour
 
             float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
             EnableDeltaImage(angle);
-            EnableParticle();
         }       
     }
 
@@ -57,19 +62,19 @@ public class CarDamage : MonoBehaviour
     {
         if (angle < -90)
         {
-            deltasController.Damage(DamageDirection.rearLeft);
+            carManager.carEffects.Damage(DamageDirection.rearLeft);
         }
         else if (angle < 0)
         {
-            deltasController.Damage(DamageDirection.frontLeft);
+            carManager.carEffects.Damage(DamageDirection.frontLeft);
         }
         else if (angle < 90)
         {
-            deltasController.Damage(DamageDirection.frontRight);
+            carManager.carEffects.Damage(DamageDirection.frontRight);
         }
         else
         {
-            deltasController.Damage(DamageDirection.rearRight);
+            carManager.carEffects.Damage(DamageDirection.rearRight);
         }
     }
 
@@ -77,25 +82,31 @@ public class CarDamage : MonoBehaviour
     {
         hp -= amount;
         hp = Mathf.Clamp(hp, 0, maxHp);
-        carController.OnCarHpChanged(hp);
 
         if(hp <= 0)
         {
-            carController.carState = CarController.CarState.destroied;
-            deltasController.FullyDestroy();
+            carManager.OnDestroyEvent();
+        }
+        else
+        {
+            carManager.OnDamageEvent();
         }
     }
 
-    void EnableParticle()
+    void OnCarDamage()
     {
-        if(hp <= 0)
+        if (hp < 30)
         {
-            fireParticle.SetActive(false);
-            explosionParticle.SetActive(true);
+            maxSpdMultiplier = 0.5f;
         }
-        else if(hp < 30)
+        else if (hp < 60)
         {
-            fireParticle.SetActive(true);
+            maxSpdMultiplier = 0.8f;
         }
+    }
+
+    void OnCarDestroy()
+    {
+        maxSpdMultiplier = 0.0f;
     }
 }

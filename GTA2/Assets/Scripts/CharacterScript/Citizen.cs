@@ -132,7 +132,7 @@ public class Citizen : NPC
         patternChangeTimer = 0;
         isDie = false;
         hp = 100;
-        SpawnManager.Instance.NPCRepositioning(this);
+        NPCSpawnManager.Instance.NPCRepositioning(this);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
         print("Citizen Respawn");

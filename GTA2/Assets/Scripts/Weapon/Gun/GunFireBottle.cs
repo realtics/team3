@@ -53,7 +53,7 @@ public class GunFireBottle : Gun
             isPrevShot = false;
         }
 
-        else if ((!isKeyShot && !isPrevShot))
+        else if ((!isKeyShot && !isButtonShot && !isPrevShot))
         {
             isPrevShot = true;
 

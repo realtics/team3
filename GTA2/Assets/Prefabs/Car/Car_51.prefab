@@ -23800,9 +23800,12 @@ GameObject:
   - component: {fileID: 7528266441474364975}
   - component: {fileID: 33207030229208216}
   - component: {fileID: 7528266441474364945}
+  - component: {fileID: 444654459141412240}
   - component: {fileID: 7528266441474364946}
-  - component: {fileID: 7528266441474364947}
+  - component: {fileID: 6925489156560024902}
   - component: {fileID: 7528266441474364948}
+  - component: {fileID: 5303709029227908547}
+  - component: {fileID: 7528266441474364947}
   m_Layer: 8
   m_Name: Car_51
   m_TagString: Car
@@ -23865,6 +23868,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &444654459141412240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7528266441474364949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e124bd882824fa340bc164a7472ca89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carController: {fileID: 7528266441474364946}
+  carAi: {fileID: 6925489156560024902}
+  carDamage: {fileID: 7528266441474364948}
+  carEffects: {fileID: 5303709029227908547}
 --- !u!114 &7528266441474364946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23877,21 +23896,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a93f11fd051c94c9409e4597d3b31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailLeft: {fileID: 7528266442403061377}
-  trailRight: {fileID: 7528266441011682811}
-  shadow: {fileID: 7528266442579188216}
-  mainDoorPosition: {fileID: 9211309946105888652}
-  carState: 1
-  chaseTarget: {fileID: 0}
-  driver: {fileID: 0}
+  carManager: {fileID: 444654459141412240}
+  carState: 2
   maxSpeed: 400
+  curSpeed: 0
   rotSpeed: 250
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 3328
-  audioSourceEngine: {fileID: 6465280703049209831}
-  audioSourceSkid: {fileID: 1784327929975827742}
---- !u!114 &7528266441474364947
+  mainDoorPosition: {fileID: 9211309946105888652}
+  driver: {fileID: 0}
+--- !u!114 &6925489156560024902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23900,11 +23912,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7528266441474364949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfb7bf617d88c934082176cc2ce7686f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d47d22e5cb071e41910f8cffa474652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carCtr: {fileID: 7528266441474364946}
-  curLane: 0
+  carManager: {fileID: 444654459141412240}
+  aiState: 0
+  isPolice: 0
+  chaseTarget: {fileID: 0}
+  maxSpdMultiplier: 1
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 3328
 --- !u!114 &7528266441474364948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23917,12 +23935,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f91c8d5506af4a43b72ce5ee80897f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 7528266441474364946}
-  deltasController: {fileID: 7528266442795463735}
+  carManager: {fileID: 444654459141412240}
   maxHp: 100
   hp: 0
+  maxSpdMultiplier: 1
+--- !u!114 &5303709029227908547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7528266441474364949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116aa046d33be3a4186db27f06ea1875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carManager: {fileID: 444654459141412240}
+  sirenL: {fileID: 0}
+  sirenR: {fileID: 0}
+  sirenSpeed: 0.15
+  lightFL: {fileID: 7528266442449828423}
+  lightFR: {fileID: 7528266441243151214}
+  lightRL: {fileID: 7528266441586924833}
+  lightRR: {fileID: 7528266442428691685}
+  deltaFL: {fileID: 7528266442579743115}
+  deltaFR: {fileID: 7528266442533029670}
+  deltaRL: {fileID: 7528266442616748248}
+  deltaRR: {fileID: 7528266441092134288}
+  debris: {fileID: 6908955826300075538}
+  trailLeft: {fileID: 7528266442403061377}
+  trailRight: {fileID: 7528266441011682811}
+  shadow: {fileID: 7528266442579188216}
+  audioSourceEngine: {fileID: 6465280703049209831}
+  audioSourceSkid: {fileID: 1784327929975827742}
   fireParticle: {fileID: 7528266440943946607}
   explosionParticle: {fileID: 7528266441139186751}
+--- !u!114 &7528266441474364947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7528266441474364949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb7bf617d88c934082176cc2ce7686f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carAi: {fileID: 6925489156560024902}
+  curLane: 0
 --- !u!1 &7528266441586924833
 GameObject:
   m_ObjectHideFlags: 0
@@ -39151,7 +39213,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7528266442795463734}
-  - component: {fileID: 7528266442795463735}
   m_Layer: 8
   m_Name: Deltas
   m_TagString: Untagged
@@ -39181,30 +39242,6 @@ Transform:
   m_Father: {fileID: 7528266441474364975}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7528266442795463735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7528266442795463736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116aa046d33be3a4186db27f06ea1875, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sirenL: {fileID: 0}
-  sirenR: {fileID: 0}
-  sirenSpeed: 0.15
-  lightFL: {fileID: 7528266442449828423}
-  lightFR: {fileID: 7528266441243151214}
-  lightRL: {fileID: 7528266441586924833}
-  lightRR: {fileID: 7528266442428691685}
-  deltaFL: {fileID: 7528266442579743115}
-  deltaFR: {fileID: 7528266442533029670}
-  deltaRL: {fileID: 7528266442616748248}
-  deltaRR: {fileID: 7528266441092134288}
-  debris: {fileID: 6908955826300075538}
 --- !u!1 &7528266442820461237
 GameObject:
   m_ObjectHideFlags: 0

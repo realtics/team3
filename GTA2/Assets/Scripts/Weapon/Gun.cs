@@ -84,16 +84,20 @@ public abstract class Gun : MonoBehaviour
     }
 
 
-
-    protected Bullet ShootSingleBullet(Vector3 triggerPos)
+    protected Bullet Shoot(Vector3 triggerPos)
     {
         bulletList[bulletPoolIndex].SetBullet(gunType, triggerPos, gunDir, bulletToPeopleSize);
         Bullet returnBullet = bulletList[bulletPoolIndex];
 
         PlusBulletIdx();
         MinusPlayerBulletCount();
-        SFXPlay();
         return returnBullet;
+    }
+
+    protected Bullet ShootSingleBullet(Vector3 triggerPos)
+    {
+        SFXPlay();
+        return Shoot(triggerPos);
     }
     protected void ShootAngleBullet(float startAngle, float endAngle, int bulletCnt)
     {
@@ -207,7 +211,7 @@ public abstract class Gun : MonoBehaviour
         }
     }
 
-    void SFXPlay()
+    protected void SFXPlay()
     {
         if (gunSoundSource != null)
         {

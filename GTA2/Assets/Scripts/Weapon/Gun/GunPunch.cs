@@ -39,7 +39,7 @@ public class GunPunch : Gun
 
     protected override void UpdateShot()
     {
-        if (isKeyShot)
+        if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)
             {

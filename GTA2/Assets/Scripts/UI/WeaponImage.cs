@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class WeaponImage : MonoBehaviour
 {
     [SerializeField]
-    private Sprite[] gunSpriteList;
+    Sprite[] gunSpriteList;
     [SerializeField]
-    private Text myText;
+    Text myText;
 
-    private Image myImage;
+    Image myImage;
 
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
         myImage = GetComponent<Image>();
     }
@@ -43,7 +43,7 @@ public class WeaponImage : MonoBehaviour
 
 
 
-    private void SetPosition(GunState gs)
+    void SetPosition(GunState gs)
     {
         if (gs == GunState.FireBottle || gs == GunState.Granade)
         {

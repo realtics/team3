@@ -15,7 +15,7 @@ public class GunDoublePistol : Gun
     protected override void UpdateShot()
     {
         shootDelta += Time.deltaTime;
-        if (isKeyShot)
+        if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)
             {

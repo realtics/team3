@@ -9,7 +9,7 @@ public class GunRocket : Gun
     public List<RocketSmoke> smokeList;
     public int smokePoolCnt;
 
-    private int SmokeIdx = 0;
+    int SmokeIdx = 0;
     void Start()
     {
         gunType = GunState.RocketLauncher;
@@ -40,7 +40,7 @@ public class GunRocket : Gun
 
     protected override void UpdateShot()
     {
-        if (isKeyShot)
+        if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)
             {

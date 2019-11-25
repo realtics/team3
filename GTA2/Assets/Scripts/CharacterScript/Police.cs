@@ -19,7 +19,6 @@ public class Police : NPC
     public GunState curGunIndex { get; set; }
 
     public bool isAttack { get; set; }
-    public int money { get; set; }
 
     Rigidbody myRigidbody;
 
@@ -112,7 +111,7 @@ public class Police : NPC
         isDie = false;
         isWalk = false;
         hp = 100;
-        SpawnManager.Instance.NPCRepositioning(this);
+        NPCSpawnManager.Instance.NPCRepositioning(this);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
         print("Police Respawn");

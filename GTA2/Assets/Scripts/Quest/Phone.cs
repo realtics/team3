@@ -21,6 +21,7 @@ public class Phone : MonoBehaviour
     {
         phoneAnimator = GetComponentInChildren<Animator>();
         phoneAnimator.SetBool("IsRinging", false);
+        SetRing();
     }
 
     // Update is called once per frame

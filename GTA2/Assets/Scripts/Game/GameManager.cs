@@ -11,14 +11,19 @@ public class GameManager : MonoSingleton<GameManager>
     public GameObject missionArrow;
     public float arrowToPlayer;
     public float maxArrowToPlayer;
+    //int defaultRemains = 3;
     public int remains = 3;
-    UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
-    public Player player;
-    bool isMissionSuccess = false;
 
+    UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
+    [HideInInspector] public Player player;
+    public List<Transform> playerRespawnPoint;
+
+    bool isMissionSuccess = false;
     //GameManager ReFactoring field
     public int money{ get; set; }
-    public List<Transform> playerRespawnPoint;
+
+    public int wantedLevel = 0; // 수배레벨
+    
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
@@ -28,6 +33,8 @@ public class GameManager : MonoSingleton<GameManager>
         Material updatedMaterial = new Material(existingGlobalMat);
         updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);
         image.material = updatedMaterial;
+
+        SetPool.Init();
     }
     void Update()
     {
@@ -91,12 +98,8 @@ public class GameManager : MonoSingleton<GameManager>
         player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
         
         //카메라 위치 조정
-         CameraController.Instance.ChangeTarget(player.gameObject);
-        //자동차 셋팅
-        //사람위치 재할당
-        SpawnManager.Instance.Init();
-        //TODO : 고장난차 복구
-        //죽은사람도 부활
+        CameraController.Instance.ChangeTarget(player.gameObject);
+        NPCSpawnManager.Instance.NPCPositionInit();
     }
     public void IncreaseMoney(int earnings)
     {

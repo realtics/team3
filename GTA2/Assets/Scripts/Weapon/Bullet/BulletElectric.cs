@@ -34,39 +34,28 @@ public class BulletElectric : Bullet
     // 이미 타겟이 잡힌 경우란 것이다.
     public void SetTarget(GameObject obj)
     {
-        
         if (obj != null)
         {
             myTarget = obj;
         }
 
-
-        NPC checkNPC = myTarget.GetComponent<NPC>();
-        if (checkNPC != null)
+        if (myTarget == null)
         {
-            if((checkNPC as People).isDie)
-            {
-                gameObject.SetActive(false);
-            }
+            return;
         }
-        
+
 
         targetToVector =
             myTarget.gameObject.transform.position -
             gameObject.transform.position;
-
-        if (targetToVector.sqrMagnitude > electricWaveArea * electricWaveArea)
-        {
-            gameObject.SetActive(false);
-        }
-
 
         SetScale(targetToVector);
         SetRotate();
         SetPosition(targetToVector);
 
 
-        // 이렇게 두번 해야 라인랜더러가 안 겹친다...
+        // 이렇게 두번 해야 라인랜더러가 안 겹친다... - 이전 상태에서 최신화가 된다.
+        myLightning.Updated();
         myLightning.Updated();
     }
 
@@ -108,5 +97,11 @@ public class BulletElectric : Bullet
         setVector.y = targetToVector.y;
 
         transform.position += setVector;
+    }
+
+    public override void Explosion()
+    {
+        base.Explosion();
+        myTarget = null;
     }
 }

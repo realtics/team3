@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 3
-  bulletLifeTime: 2
+  bulletLifeTime: 1
   bulletSpeed: 3
-  bulletDir: {x: 0, y: 0, z: 0}
-  bulletType: 0
+  explosionArea: 0
+  explosionPref: {fileID: 0}

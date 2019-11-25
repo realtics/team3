@@ -8,10 +8,12 @@ public class GunElectric : Gun
     public float electricWaveArea;
     public float electricWaveAngle;
 
-    private List<GameObject> objectList;
-    private List<GameObject> noneTargetObjectList;
 
-    private List<BulletElectric> activeElectricList;
+
+    List<GameObject> objectList;
+    List<GameObject> noneTargetObjectList;
+
+    List<BulletElectric> activeElectricList;
 
     void Start()
     {
@@ -22,18 +24,23 @@ public class GunElectric : Gun
         noneTargetObjectList = new List<GameObject>();
         activeElectricList = new List<BulletElectric>();
 
-        foreach (var citizen in SpawnManager.Instance.activeNPCList)
+        foreach (var citizen in NPCSpawnManager.Instance.activeNPCList)
         {
             objectList.Add(citizen.gameObject);
         }
 
-        foreach (var car in SpawnManager.Instance.activeCarList)
+        foreach (var car in CarSpawnManager.Instance.activeCarList)
         {
             objectList.Add(car.gameObject);
         }
 
         InitGun();
         base.InitBullet("Electric");
+
+        foreach (var item in bulletList)
+        {
+            ((BulletElectric)item).SetArea(electricWaveArea);
+        }
     }
 
 
@@ -50,7 +57,7 @@ public class GunElectric : Gun
     }
     protected override void UpdateShot()
     {
-        if (isKeyShot)
+        if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)
             {
@@ -60,7 +67,7 @@ public class GunElectric : Gun
             }
         }
         
-        else if (!isKeyShot)
+        else if (!(isKeyShot || isButtonShot))
         {
             StopGun();
         }
@@ -87,12 +94,17 @@ public class GunElectric : Gun
 
         foreach (var target in targetObjects)
         {
-            BulletElectric fireBullet = (BulletElectric)ShootSingleBullet(userObject.transform.position);
+            BulletElectric fireBullet = (BulletElectric)Shoot(userObject.transform.position);
             fireBullet.SetTarget(target);
             activeBulletList.Add(fireBullet);
             activeElectricList.Add(fireBullet);
 
             noneTargetObjectList.Remove(target);
+        }
+
+        if (activeElectricList.Count != 0)
+        {
+            SFXPlay();
         }
 
         ElectricWave(noneTargetObjectList, activeBulletList, electricWaveMaxIndex);
@@ -105,7 +117,6 @@ public class GunElectric : Gun
         {
             Vector3 electricVector = item.transform.position;
             electricVector.y = userObject.transform.position.y;
-            item.SetArea(electricWaveArea);
         }
     }
 
@@ -129,7 +140,7 @@ public class GunElectric : Gun
             foreach (var target in targetObjects)
             {
                 
-                BulletElectric fireBullet = (BulletElectric)ShootSingleBullet(triggerPos);
+                BulletElectric fireBullet = (BulletElectric)Shoot(triggerPos);
                 fireBullet.SetTarget(target);
                 nextWaveList.Add(fireBullet);
                 activeElectricList.Add(fireBullet);
@@ -138,9 +149,7 @@ public class GunElectric : Gun
 
             ElectricWave(noneTargetObjectList, nextWaveList,--count);
         }
-
     }
-
 
     void StopGun()
     {
@@ -173,11 +182,9 @@ public class GunElectric : Gun
 
 
         Vector3 toTargetDirNormalize = toTargetDir;
-
         toTargetDirNormalize.Normalize();
 
         // 방향 필터링
-
         float dotToTarget = Vector3.Dot(userObject.transform.forward, toTargetDirNormalize);
 
         if ((dotToTarget < .0f) ||
@@ -186,6 +193,16 @@ public class GunElectric : Gun
             return false;
         }
 
+
+
+        NPC checkNPC = targetObj.GetComponent<NPC>();
+        if (checkNPC != null)
+        {
+            if ((checkNPC as People).isDie)
+            {
+                return false;
+            }
+        }
 
 
         // 물체 감지 필터링

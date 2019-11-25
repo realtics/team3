@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class HeartImageList : MonoBehaviour
 {
     [SerializeField]
-    private Sprite heartSprite;
-    private Image[] heartImgList;
+    Sprite heartSprite;
+    Image[] heartImgList;
 
 
-    private int maxPlayerHp;
+    int maxPlayerHp;
 
 
-    private void Start()
+    void Start()
     {
         heartImgList = GetComponentsInChildren<Image>();
         heartImgList[0].color = new Color(1.0f, .0f, .0f, 1.0f);
@@ -70,7 +70,7 @@ public class HeartImageList : MonoBehaviour
         }
     }
 
-    private void InitImage()
+    void InitImage()
     {
         for (int i = 0; i < heartImgList.Length; i++)
         {

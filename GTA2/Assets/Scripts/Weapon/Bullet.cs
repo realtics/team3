@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     protected bool isLife = false;
     protected float bulletActiveDelta = .0f;
-    protected float bulletDeActiveTime = .1f;
+    protected float bulletDeActiveTime = .01f;
 
     protected ExplosionEffect explosionEffect;
 
@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
         if (explosionPref != null)
         {
             explosionEffect = GameObject.Instantiate(explosionPref).GetComponent<ExplosionEffect>();
-            explosionEffect.gameObject.transform.parent = SetPool.poolMother.transform;
+            // explosionEffect.gameObject.transform.parent = SetPool.poolMother.transform;
         }
     }
 
