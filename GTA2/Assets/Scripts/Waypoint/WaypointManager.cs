@@ -75,4 +75,58 @@ public class WaypointManager : MonoBehaviour
             return null;
         }
     }
+
+    public GameObject FindRandomWaypointOutOfCameraView(WaypointType type)
+    {
+        GameObject[] allWaypoints;
+
+        if (type == WaypointType.car)
+        {
+            allWaypoints = allWaypointsForCar;
+        }
+        else
+        {
+            allWaypoints = allWaypointsForHuman;
+        }
+
+        float offset = 1f;
+        while (true)
+        {
+            GameObject wp = allWaypoints[Random.Range(0, allWaypoints.Length)];
+            Vector3 pos = Camera.main.WorldToViewportPoint(wp.transform.position);
+            if (pos.x < 0 - offset ||
+                pos.x > 1 + offset ||
+                pos.y < 0 - offset ||
+                pos.y > 1 + offset)
+            {
+                return wp;
+            }
+        }
+    }
+
+    public GameObject FindRandomCarSpawnPosition()
+    {
+        float offset = 0.2f;
+        GameObject wp = FindClosestWaypoint(
+            WaypointType.car,
+            Camera.main.transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)),
+            false);
+
+        while (true)
+        {
+            Vector3 pos = Camera.main.WorldToViewportPoint(wp.transform.position);
+            if (pos.x < 0 - offset ||
+                pos.x > 1 + offset ||
+                pos.y < 0 - offset ||
+                pos.y > 1 + offset)
+            {
+                return wp;
+            }
+            else
+            {
+                WaypointForCar wpc = wp.GetComponent<WaypointForCar>();
+                wp = wpc.prev[Random.Range(0, wpc.prev.Count)].gameObject;
+            }
+        }
+    }
 }

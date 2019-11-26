@@ -11,14 +11,12 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
     void Start()
     {
         CarPositionInit();
+        InvokeRepeating("RespawnDisabledCar", 0.5f, 0.5f);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void CarPositionInit() //중복 방지 생성
+
+    public void CarPositionInit() //중복 방지 생성
     {
         List<Vector3> position = new List<Vector3>();
 
@@ -80,4 +78,31 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
             activeCarList.Remove(removeCar);
         }
     }*/
+
+    // 꺼진차 켜기
+    void RespawnDisabledCar()
+    {
+        foreach (var car in activeCarList)
+        {
+            if (car.gameObject.activeSelf)
+                continue;
+
+            GameObject go = WaypointManager.instance.FindRandomCarSpawnPosition();
+
+            
+            if (Physics.Raycast(go.transform.position + (Vector3.up * 5), Vector3.down, 10, 1<<8))
+            {
+                print("스폰지점에 차가 있음");
+            }
+            else
+            {
+                car.transform.position = go.transform.position;
+                car.gameObject.SetActive(true);
+                car.GetComponent<CarManager>().movement.curSpeed = 200;
+
+                Debug.DrawLine(GameManager.Instance.player.transform.position, car.transform.position, Color.red, 0.5f);
+                break;
+            }
+        }
+    }
 }

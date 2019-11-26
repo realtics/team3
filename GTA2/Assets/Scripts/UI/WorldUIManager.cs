@@ -8,15 +8,18 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
     GameObject scoreTextPref;
     [SerializeField]
     int scorePoolCount;
-    GameObject scoreTextPool;
+
+
+
+
 
     List<FloatingScoreText> scoreTextList;
+    GameObject scoreTextPool;
     int scoreTextIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-        scoreTextIndex = 0;
         InitTextMesh();
     }
 
@@ -35,7 +38,7 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
 
         scoreTextList =
             GetPool<FloatingScoreText>.GetListComponent(
-            SetPool.PoolMemory(
+            SetPool.Instance.PoolMemory(
                 scoreTextPref, scoreTextPool, scorePoolCount, "ScoreText"));
 
         foreach (var item in scoreTextList)
@@ -47,6 +50,11 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
    
     public void SetScoreText(Vector3 targetPos, int scoreValue)
     {
+        if (scoreTextIndex >= scoreTextList.Count)
+        {
+            scoreTextIndex = 0;
+        }
+
         scoreTextList[scoreTextIndex].FloatingText(targetPos, scoreValue);
         scoreTextIndex++;
     }

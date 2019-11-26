@@ -15,7 +15,7 @@ public class GunPunch : PlayerGun
     {
         bulletList =
             GetPool<Bullet>.GetListComponent(
-            SetPool.PoolMemory(
+            SetPool.Instance.PoolMemory(
                 bulletPref, this.gameObject, bulletPoolCount, "Bullet"));
 
         foreach (var item in bulletList)

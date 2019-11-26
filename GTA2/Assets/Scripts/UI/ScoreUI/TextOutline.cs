@@ -27,6 +27,7 @@ public class TextOutline : MonoBehaviour
             GameObject outline = new GameObject("outline", typeof(TextMesh));
             outline.transform.parent = transform;
             outline.transform.localScale = new Vector3(1, 1, 1);
+            outline.transform.eulerAngles = new Vector3(90.0f, .0f, .0f);
             MeshRenderer otherMeshRenderer = outline.GetComponent<MeshRenderer>();
             otherMeshRenderer.material = new Material(meshRenderer.material);
             otherMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -66,7 +67,7 @@ public class TextOutline : MonoBehaviour
             bool doublePixel = resolutionDependant && (Screen.width > doubleResolution || Screen.height > doubleResolution);
             Vector3 pixelOffset = GetOffset(i) * (doublePixel ? 2.0f * pixelSize : pixelSize);
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(screenPoint + pixelOffset);
-            other.transform.position = worldPoint;
+            other.transform.position = worldPoint - Vector3.up * .01f;
 
             //레이어 오더
             MeshRenderer otherMeshRenderer = transform.GetChild(i).GetComponent<MeshRenderer>();

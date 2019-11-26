@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Police : NPC
 {
-    public bool isStealing { get; set; }
     public bool isChasePlayer { get; set; }
+    //경찰이 차에 탈때, 경찰이 플레이어 꺼낼때 모두 사용
+    public bool isGetOnTheCar { get; set; } 
 
     float patternChangeTimer = 3.0f;
     float patternChangeInterval = 3.0f;
@@ -13,9 +14,10 @@ public class Police : NPC
     float curAttackCoolTime = 0.0f;
     float jumpTime = 1.5f;
     float jumpTimer = 0.0f;
+    float carOpenTimer = 0.0f;
+    float carOpenTime = 0.5f;
 
     GameObject targetCar; //TODO : 경찰차 다시 타기에 사용
-
     public GunState curGunIndex { get; set; }
 
     public bool isAttack { get; set; }
@@ -49,47 +51,28 @@ public class Police : NPC
         animator.SetBool("isPunch", isPunch);
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
+        animator.SetBool("isGetOnTheCar", isGetOnTheCar);
 
         base.NPCUpdate();
         if (isDie)
             return;
         TimerCheck();
         ActivityByState();
+        PlayerStateCheck();
     }
     void ActivityByState()
     {
         if(isChasePlayer)
         {
-            if (PlayerOutofRange())
+            if(GameManager.Instance.player.isDriver)
             {
-                isChasePlayer = false;
-                return;
-            }
-            if (InPunchRange())
-            {
-                isWalk = false;
-                //TODO : 총쏘기
-                //InShotRange();
-                //if (InPunchRange())
-                //{
-                //    isPunch = true;
-                //    isShot = true;
-                //}
-
-                //TODO : NPC punch 완성되는 대로 샷
-                //GunPunch Shot
-
-                isShot = false;
-                isPunch = true;
-                gunList[0].GetComponent<NpcGunPunch>().StartShot();
+                ChasePlayerCharacterInCar();
             }
             else
             {
-                gunList[0].GetComponent<NpcGunPunch>().StopShot();
-                isWalk = true;
-                base.ChasePlayer();
+                ChasePlayerCharacter();
             }
-                
+               
         }
         else if(isWalk)
         {
@@ -97,7 +80,97 @@ public class Police : NPC
             base.Move();
         }
     }
+    void ChasePlayerCharacter()
+    {
+        if (PlayerOutofRange())
+        {
+            isChasePlayer = false;
+            return;
+        }
+        if (InPunchRange())
+        {
+            isWalk = false;
+            isShot = false;
+            isPunch = true;
+            gunList[0].GetComponent<NPCGun>().StartShot();
+        }
+        else
+        {
+            gunList[0].GetComponent<NPCGun>().StopShot();
+            isWalk = true;
+            base.ChasePlayer();
+        }
+    }
+    void ChasePlayerCharacterInCar()
+    {
+        if (PlayerOutofRange())
+        {
+            isChasePlayer = false;
+            return;
+        }
+        if(InShotRange())
+        {
+            //차뺏기
+            isWalk = false;
+            if (InPunchRange())
+            {
+                transform.forward = GameManager.Instance.player.transform.forward;
+                transform.position = GameManager.Instance.player.transform.position;
 
+                //플레이어 끌어내리기
+                if (CarOpenTimerCheck())
+                {
+                    GameManager.Instance.player.GetOffTheCar();
+                    GameManager.Instance.player.isDown = true;
+                    GameManager.Instance.player.isBusted = true;
+                    GameManager.Instance.player.isDriver = false;
+                }
+                else
+                {
+                    //문열기 애니메이션
+                    isGetOnTheCar = true;
+                }
+            }
+            else //사격
+            {
+                gunList[1].GetComponent<NPCGun>().StartShot();
+            }
+        }
+        else
+        {
+            gunList[1].GetComponent<NPCGun>().StopShot();
+            isWalk = true;
+            isShot = true;
+            isPunch = false;
+            base.ChasePlayer();
+        }
+    }
+    void PlayerStateCheck()
+    {
+        if (GameManager.Instance.player.isDie)
+        {
+            SetDefault();
+        }
+    }
+    void SetDefault()
+    {
+        hp = 100;
+        isChasePlayer = false;
+        isWalk = false;
+        isGetOnTheCar = false;
+        isPunch = false;
+    }
+    public bool CarOpenTimerCheck()
+    {
+        carOpenTimer += Time.deltaTime;
+
+        if (carOpenTimer > carOpenTime)
+        {
+            carOpenTimer = 0.0f;
+            return true;
+        }
+        return false;
+    }
     protected override void Die() //리스폰 필요
     {
         isDie = true;
@@ -164,7 +237,6 @@ public class Police : NPC
         //경찰은 맞아도 일어 나기만 함
         isDown = false;
     }
-
   
     #endregion
 }

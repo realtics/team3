@@ -22,10 +22,11 @@ public class GameManager : MonoSingleton<GameManager>
     //GameManager ReFactoring field
     public int money{ get; set; }
 
-    public int wantedLevel = 0; // 수배레벨
+    public float wantedLevel = 0; // 수배레벨
     
     void Start()
     {
+        // 요부분 리펙토링
         Application.targetFrameRate = 60;
         //Screen.SetResolution(720, 1280, true);
 
@@ -36,8 +37,6 @@ public class GameManager : MonoSingleton<GameManager>
         Material updatedMaterial = new Material(existingGlobalMat);
         updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);
         image.material = updatedMaterial;
-
-        SetPool.Init();
     }
     void Update()
     {
@@ -90,7 +89,6 @@ public class GameManager : MonoSingleton<GameManager>
         missionArrow.transform.eulerAngles = new Vector3(90.0f, tempVector.y, .0f);
     }
 
-    //GameManager ReFactoring Method
     public void RespawnSetting()
     {
         if(remains == 0)//RIP
@@ -99,13 +97,37 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
         player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
-        
+        CarSpawnManager.Instance.CarPositionInit();
+        NPCSpawnManager.Instance.NPCPositionInit();
         //카메라 위치 조정
         CameraController.Instance.ChangeTarget(player.gameObject);
-        NPCSpawnManager.Instance.NPCPositionInit();
+        
     }
     public void IncreaseMoney(int earnings)
     {
         money += earnings;
+    }
+
+    // [ 수배레벨 ]
+    public void IncreaseWantedLevel(float amount)
+    {
+        int old = (int)wantedLevel;
+
+        if (old > 0)
+            amount /= (old*2);
+
+        wantedLevel += amount;
+
+        if(old != (int)wantedLevel)
+        {
+            // 수배레벨이 증가함.
+            UIManager.Instance.SetPoliceLevel((int)wantedLevel);
+        }
+    }
+
+    public void ResetWantedLevel()
+    {
+        wantedLevel = 0;
+        UIManager.Instance.SetPoliceLevel(0);
     }
 }

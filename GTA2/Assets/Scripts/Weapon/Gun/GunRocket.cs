@@ -30,7 +30,7 @@ public class GunRocket : PlayerGun
 
         smokeList =
             GetPool<RocketSmoke>.GetListComponent(
-            SetPool.PoolMemory(smokePref, EffectPool, smokePoolCnt, "Smoke"));
+            SetPool.Instance.PoolMemory(smokePref, EffectPool, smokePoolCnt, "Smoke"));
 
         foreach (var item in smokeList)
         {

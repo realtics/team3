@@ -27,11 +27,6 @@ public class PoliceLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (policeLevelIdx >= policeImages.Length)
-        {
-            policeLevelIdx = policeImages.Length;
-        }
-
         for (int i = 0; i < policeLevelIdx; i++)
         {
             policeImages[i].gameObject.SetActive(true);
@@ -40,7 +35,13 @@ public class PoliceLevel : MonoBehaviour
 
     public void SetPoliceLevel(int value)
     {
-        policeLevelIdx = value; 
+        policeLevelIdx = value;
+        if (policeLevelIdx >= policeImages.Length)
+        {
+            policeLevelIdx = policeImages.Length;
+        }
+
+
         foreach (var item in policeImages)
         {
             item.gameObject.SetActive(false);

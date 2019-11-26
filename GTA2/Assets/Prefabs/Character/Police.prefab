@@ -168,11 +168,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isDestReached: 1
-  player: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 1167477734086649170}
   gunList:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -6292103021144967684, guid: 1875a2e7d4badf14294bed56181d7943, type: 3}
+  - {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591, type: 3}
 --- !u!65 &1358635159880621219
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -52,4 +52,12 @@ public class PoliceLevelImage : MonoBehaviour
 
         myImage.sprite = mySprites[spriteChangeIndex];
     }
+
+    void SetLevel(bool value)
+    {
+        if (!value)
+        {
+            myImage.sprite = null;
+        }
+    }
 }

@@ -33,6 +33,13 @@ public class CarAi : MonoBehaviour
     {
         aiState = AiState.normal;
         SetAiMaxSpeedMultiplier();
+
+        StartCoroutine(RaycastCor());
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     public void FixedLoop()
@@ -88,6 +95,15 @@ public class CarAi : MonoBehaviour
         }
     }
 
+    IEnumerator RaycastCor()
+    {
+        while (true)
+        {
+            Raycast();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     void Raycast()
     {
         distToObstacle = Mathf.Infinity;
@@ -128,6 +144,7 @@ public class CarAi : MonoBehaviour
         if (chaseTarget == null)
         {
             aiState = AiState.normal;
+            carManager.effects.TurnOffSiren();
             return;
         }
 
@@ -167,7 +184,10 @@ public class CarAi : MonoBehaviour
         float dist = dir.magnitude;
 
         if (dist > 16)
+        {
             aiState = AiState.normal;
+            carManager.effects.TurnOffSiren();
+        }            
 
         switch (aiState)
         {
@@ -273,7 +293,10 @@ public class CarAi : MonoBehaviour
 
     public void ChasePlayer()
     {
-        if (GameManager.Instance.wantedLevel <= 0)
+        if (!isPolice)
+            return;
+
+        if (GameManager.Instance.wantedLevel < 1)
             return;
 
         if (aiState != AiState.normal)
@@ -284,6 +307,8 @@ public class CarAi : MonoBehaviour
 
         chaseTarget = GameManager.Instance.player.transform;
         aiState = AiState.chase;
+
+        carManager.effects.TurnOnSiren();
     }
 
     void OnDrawGizmosSelected()

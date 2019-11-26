@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetPool : MonoBehaviour
+public class SetPool : MonoSingleton<SetPool>
 {
-    static public GameObject poolMother;
-
-    static public void Init()
-    {
-        poolMother = new GameObject("[SetPool]");
-    }
-
-    static public List<GameObject> PoolMemory(
+    public List<GameObject> PoolMemory(
         GameObject target, GameObject motherObj, int count, string name)
     {
         List<GameObject> returnList = new List<GameObject>(count);
@@ -24,7 +17,7 @@ public class SetPool : MonoBehaviour
             returnList.Add(tmpObject);
         }
 
-        motherObj.transform.parent = poolMother.transform;
+        motherObj.transform.parent = transform;
         return returnList;
     }
 }

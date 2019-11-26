@@ -9,8 +9,6 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     MoneyText moneyTextUI;
     [SerializeField]
-    PoliceLevel policeListUI;
-    [SerializeField]
     WeaponImage weaponUI;
     [SerializeField]
     GameEndUI gameEndUI;

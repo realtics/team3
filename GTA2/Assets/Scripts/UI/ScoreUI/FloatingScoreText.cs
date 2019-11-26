@@ -6,6 +6,10 @@ public class FloatingScoreText : MonoBehaviour
 {
     [SerializeField]
     float floatSpeed;
+    [SerializeField]
+    float scaleSpeed;
+    [SerializeField]
+    float colorSpeed;
 
     [SerializeField]
     float activeTime;
@@ -13,8 +17,17 @@ public class FloatingScoreText : MonoBehaviour
 
 
     // Start is called before the first frame update
+    Vector3 originScale;
     TextMesh myTextMesh;
     float activeDelta;
+
+
+
+
+    void Start()
+    {
+        originScale = transform.localScale;
+    }
 
 
     public void FloatingText(Vector3 targetPos, int scoreValue)
@@ -22,6 +35,7 @@ public class FloatingScoreText : MonoBehaviour
         targetPos.y += 1.0f;
         activeDelta = .0f;
         transform.position = targetPos;
+        transform.localScale = originScale;
         gameObject.SetActive(true);
 
         SetTextMesh(scoreValue);
@@ -48,12 +62,22 @@ public class FloatingScoreText : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        else
+        {
+            UpdateText();
+        }
+    }
+
+    void UpdateText()
+    {
+        transform.localScale += Vector3.one * Time.deltaTime * scaleSpeed;
+        myTextMesh.color -= new Color(.0f, .0f, .0f, Time.deltaTime * colorSpeed);
     }
 
 
     Color RandomColor()
     {
-        int idx = Random.Range(0, 9);
+        int idx = Random.Range(0, 8);
 
         switch (idx)
         {
@@ -73,8 +97,6 @@ public class FloatingScoreText : MonoBehaviour
                 return Color.cyan;
             case 7:
                 return Color.magenta;
-            case 8:
-                return Color.grey;
         }
 
         return Color.clear;

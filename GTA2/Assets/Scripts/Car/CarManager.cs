@@ -20,8 +20,9 @@ public class CarManager : MonoBehaviour
     public delegate void CarHandler();
     public event CarHandler OnReturnKeyDown;
 
-    public event CarHandler OnDamage;
-    public event CarHandler OnDestroy;
+    public delegate void CarDamageHandler(bool sourceIsPlayer);
+    public event CarDamageHandler OnDamage;
+    public event CarDamageHandler OnDestroy;
 
     public delegate void CarPassengerHandler(People people);
     public event CarPassengerHandler OnDriverGetOn;
@@ -36,6 +37,9 @@ public class CarManager : MonoBehaviour
     void OnEnable()
     {
         carState = CarState.controlledByAi;
+
+        StopAllCoroutines();
+        StartCoroutine(DisableIfOutOfCamera());
     }
 
     public void OnReturnKeyDownEvent()
@@ -43,21 +47,21 @@ public class CarManager : MonoBehaviour
         OnReturnKeyDown();
     }
 
-    public void OnDestroyEvent()
+    public void OnDestroyEvent(bool isDamagedByPlayer)
     {
         if (carState == CarState.destroied)
             return;
 
-        OnDestroy();
+        OnDestroy(isDamagedByPlayer);
         carState = CarState.destroied;
     }
 
-    public void OnDamageEvent()
+    public void OnDamageEvent(bool sourceIsPlayer)
     {
         if (carState == CarState.destroied)
             return;
 
-        OnDamage();
+        OnDamage(sourceIsPlayer);
     }
 
     public void OnDriverGetOnEvent(People p)
@@ -113,6 +117,22 @@ public class CarManager : MonoBehaviour
                     ai.FixedLoop();
                 }
                 break;
+        }
+    }
+
+    IEnumerator DisableIfOutOfCamera()
+    {
+        while (true)
+        {
+            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+            float offset = 3f;
+            if (pos.x < 0 - offset ||
+                pos.x > 1 + offset ||
+                pos.y < 0 - offset ||
+                pos.y > 1 + offset)
+                gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }

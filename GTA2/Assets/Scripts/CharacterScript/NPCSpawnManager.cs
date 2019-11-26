@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 {
-    float carSpawnRange = 10.0f;
+    //float carSpawnRange = 10.0f;
 
     //TODO : Area Manager로 상위에서 관리하게 되면 여러 스폰매니저로 active, deactive 설정예정
 
     [Header("최초에는 ActiveList에 Pool의 오브젝트 삽입.")]
     public List<NPC> activeNPCList = new List<NPC>();
     public List<NPC> deactiveNPCList = new List<NPC>();
-
-    public List<NPC> carDriverPool = new List<NPC>();
 
     void Start()
     {

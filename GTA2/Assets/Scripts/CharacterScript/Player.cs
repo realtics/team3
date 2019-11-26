@@ -6,9 +6,10 @@ public class Player : People
 {
     public bool isChasingCar { get; set; }
     public bool isGetOnTheCar { get; set; }
+    //public bool isGetOffTheCar { get; set; }
     public bool isBusted { get; set; }
     public bool isAttack { get; set; }
-
+    
     CarManager targetCar;
     float playerMoveSpeed = 2.0f;
     public GunState curGunIndex { get; set; }
@@ -17,8 +18,6 @@ public class Player : People
     PlayerPhysics playerPhysics;
     PlayerTimer playerTimer;
     int defaultHp = 500;
-
- 
 
     Animator animator;
 
@@ -39,8 +38,11 @@ public class Player : People
     {
         AnimateUpdate();
 
-        if (IsStuckedAnimation())
+        if (IsStuckedAnimation() || isDriver)
+        {
             return;
+        }
+            
         UpdateInput();
     }
     void FixedUpdate()
@@ -84,6 +86,7 @@ public class Player : People
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
         animator.SetBool("isGetOnTheCar", isGetOnTheCar);
+        //animator.SetBool("isGetOffTheCar", isGetOffTheCar);
     }
     void UpdateInput()
     {
@@ -95,15 +98,22 @@ public class Player : People
         ActiveControl();
         WeaponSwap();
     }
-    
-   
     void CarStealing()
     {
         if (targetCar.passengerManager.isLeftDoorOpen) //탑승
         {
-            transform.parent = targetCar.gameObject.transform;
             isGetOnTheCar = false;
+            isWalk = false;
+
+            if (targetCar.ai.isPolice)
+            {
+                targetCar.passengerManager.doorAnimator[0].SetTrigger("Close");
+                return;
+            }
+                
             //사람 끌어내리기
+            transform.parent = targetCar.gameObject.transform;
+            isDriver = true;
             targetCar.passengerManager.PullOutDriver();
             targetCar.passengerManager.GetOnTheCar(this);
             UIManager.Instance.CarUIMode(targetCar);
@@ -112,15 +122,16 @@ public class Player : People
         else//문열기
         {
             transform.forward = targetCar.transform.forward;
-            transform.position = targetCar.passengerManager.leftDoorPosition.position;
+            transform.position = targetCar.passengerManager.doorPositions[0].position;
 
             if (playerTimer.CarOpenTimerCheck())
             {
                 targetCar.passengerManager.isLeftDoorOpen = true;
+                targetCar.passengerManager.doorAnimator[0].SetTrigger("Close");
             }
         }
     }
-
+    
     void TimerCheck()
     {
         if (isJump)
@@ -158,6 +169,8 @@ public class Player : People
         {
             UIManager.Instance.TurnOnWastedSprite();
         }
+
+        GameManager.Instance.ResetWantedLevel();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -167,7 +180,7 @@ public class Player : People
             other.gameObject.SetActive(false);
             int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
             isBusted = true;
-            Hurt(bulletDamage, true);
+            Hurt(bulletDamage);
         }
         else if (other.gameObject.CompareTag("NPCBullet"))
         {
@@ -176,7 +189,6 @@ public class Player : People
 
             Hurt(bulletDamage);
         }
-        
     }
    
     #region lowlevelCode
@@ -211,6 +223,7 @@ public class Player : People
             {
                 isChasingCar = false;
                 isGetOnTheCar = true;
+                targetCar.passengerManager.doorAnimator[0].SetTrigger("Open");
             }
             else//차 쫓아가기
             {
@@ -366,8 +379,13 @@ public class Player : People
     {
         UIManager.Instance.HumanUIMode();
         GameManager.Instance.RespawnSetting();
+        gameObject.transform.SetParent(null);
         SetHpDefault();
+        isDown = false;
+        isWalk = false;
         isDie = false;
+        //isGetOffTheCar = false;
+        GetComponentInChildren<SpriteRenderer>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
 
@@ -446,7 +464,7 @@ public class Player : People
                     continue;
 
                 targetCar = car;
-                playerPhysics.SetCarDoorTransform(targetCar.passengerManager.leftDoorPosition);
+                playerPhysics.SetCarDoorTransform(targetCar.passengerManager.doorPositions[0]);
                 minDistance = Vector3.Distance(car.transform.position, transform.position);
             }
         }
@@ -481,14 +499,8 @@ public class Player : People
 
     public void GetOffTheCar()
     {
-        GetComponentInChildren<SpriteRenderer>().color
-        = new Color(GetComponentInChildren<SpriteRenderer>().color.r,
-        GetComponentInChildren<SpriteRenderer>().color.g,
-        GetComponentInChildren<SpriteRenderer>().color.b, 1.0f);
-        GetComponent<BoxCollider>().enabled = true;
-        transform.SetParent(null);
-
-        CameraController.Instance.ChangeTarget(gameObject);
-        CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
+        StartCoroutine(targetCar.GetComponent<CarPassengerManager>().GetOffTheCar(0));
+        
+        isWalk = false;
     }
 }

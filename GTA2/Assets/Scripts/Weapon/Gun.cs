@@ -71,7 +71,7 @@ public abstract class Gun : MonoBehaviour
 
         bulletList =
             GetPool<Bullet>.GetListComponent(
-            SetPool.PoolMemory(
+            SetPool.Instance.PoolMemory(
                 bulletPref, bulletPool, bulletPoolCount, "Bullet"));
 
         foreach (var item in bulletList)

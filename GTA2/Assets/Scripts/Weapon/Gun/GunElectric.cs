@@ -206,7 +206,7 @@ public class GunElectric : PlayerGun
         }
 
 
-        // 물체 감지 필터링
+        // 물체 감지 필터링 - 레이케스트를 소니 제일 마지막에 쓰는 것으로...
         Ray originRay = new Ray();
         RaycastHit originRayHit = new RaycastHit();
 

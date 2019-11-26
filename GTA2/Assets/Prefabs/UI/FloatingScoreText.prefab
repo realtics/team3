@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4441075228745056242}
   - component: {fileID: 4441075228745056245}
   - component: {fileID: -8910200037784331650}
+  - component: {fileID: -4459234960603647681}
   m_Layer: 0
   m_Name: FloatingScoreText
   m_TagString: Untagged
@@ -105,5 +106,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fc38c1322a10b4d9854e383497c213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatSpeed: 5
+  floatSpeed: 1
+  scaleSpeed: 0.3
+  colorSpeed: 1
   activeTime: 3
+--- !u!114 &-4459234960603647681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441075228745056247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68604d3f2c1144b439125a3ecba7ff67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelSize: 5
+  outlineColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+  resolutionDependant: 0
+  doubleResolution: 1024

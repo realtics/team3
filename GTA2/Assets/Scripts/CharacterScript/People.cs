@@ -24,6 +24,7 @@ public abstract class People : MonoBehaviour
     public bool isJump { get; set; }
     public bool isDown { get; set; }
     public bool isDie { get; set; }
+    public bool isDriver { get; set; }
     public abstract void Down();
     public abstract void Rising();
     protected abstract void Die();
@@ -39,7 +40,12 @@ public abstract class People : MonoBehaviour
     }
     public virtual void Hurt(int damage)
     {
-        hp -= damage;
+        if (isDown)
+        {
+            hp = 0;
+        }
+        else
+            hp -= damage;
 
         if (hp <= 0)
         {
@@ -47,19 +53,6 @@ public abstract class People : MonoBehaviour
             isDie = true;
         }
     }
-    public void Hurt(int damage, bool isBusted)
-    {
-        //Busted
-        hp -= damage;
-        if(hp <= 0)
-        {
-            isBusted = true;
-            Die();
-            isDie = true;
-        }
-    }
-
-    //FIX ME : 현재 isBusted를 어떤 값을 보내도Busted로 동작
     protected void UpdateTargetRotation()
     {
         targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;

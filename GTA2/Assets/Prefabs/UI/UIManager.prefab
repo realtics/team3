@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 5080991118470246611}
   - component: {fileID: 5080991118470246608}
   - component: {fileID: 5080991118470246609}
+  - component: {fileID: 2632327615243035113}
   m_Layer: 5
   m_Name: PoliceLevelPanel
   m_TagString: Untagged
@@ -220,7 +221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -79}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5080991118470246608
@@ -244,6 +245,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   policeLevelIdx: 0
+--- !u!114 &2632327615243035113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080991118470246620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
 --- !u!1 &5080991118573874814
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,9 +303,9 @@ RectTransform:
   m_Father: {fileID: 5080991118470246611}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5080991118573874803
@@ -1575,7 +1601,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heartListUI: {fileID: 5080991119219235100}
   moneyTextUI: {fileID: 5080991120179412443}
-  policeListUI: {fileID: 5080991118470246609}
   weaponUI: {fileID: 5080991119487890523}
   gameEndUI: {fileID: 5526246336194414281}
   lifeCountUI: {fileID: 1257801883593471418}
@@ -1584,7 +1609,7 @@ MonoBehaviour:
   playerJoystick: {fileID: 5080991118753426420}
   humanJoystick: {fileID: 5080991119753176046}
   carJoystick: {fileID: 5080991120379413411}
-  targetCarControll: {fileID: 0}
+  targetCar: {fileID: 0}
 --- !u!1 &5080991119401535363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,9 +2384,9 @@ RectTransform:
   m_Father: {fileID: 5080991118470246611}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5080991119613830674
@@ -2449,9 +2474,9 @@ RectTransform:
   m_Father: {fileID: 5080991118470246611}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5080991119633251779
@@ -2539,9 +2564,9 @@ RectTransform:
   m_Father: {fileID: 5080991118470246611}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5080991119727993420
@@ -2629,9 +2654,9 @@ RectTransform:
   m_Father: {fileID: 5080991118470246611}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5080991119733559580
@@ -2769,9 +2794,9 @@ RectTransform:
   m_Father: {fileID: 5080991118470246611}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5080991119815187575

@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
         if (explosionPref != null)
         {
             explosionEffect = Instantiate(explosionPref).GetComponent<ExplosionEffect>();
-            explosionEffect.gameObject.transform.parent = SetPool.poolMother.transform;
+            explosionEffect.gameObject.transform.parent = SetPool.Instance.transform;
         }
     }
 
@@ -71,7 +71,9 @@ public class Bullet : MonoBehaviour
     protected virtual void UpdateBullet()
     {
         bulletDir.y = .0f;
-        transform.position += bulletDir * bulletSpeed * Time.deltaTime;
+        transform.position +=  bulletDir * bulletSpeed * Time.deltaTime;
+        // transform.position = Vector3.MoveTowards(transform.position, bulletDir,bulletSpeed * Time.deltaTime);
+        // transform.Translate(transform.forward * bulletSpeed * Time.deltaTime * -1.0f);
 
         bulletLifeDelta += Time.deltaTime;
         if (bulletLifeTime < bulletLifeDelta)

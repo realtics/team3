@@ -6,6 +6,7 @@ using UnityEngine;
 public class Citizen : NPC
 {
     public Animator animator;
+    public bool isRunaway { get; set; }
 
     [SerializeField]
     float patternChangeTimer;
@@ -18,8 +19,6 @@ public class Citizen : NPC
     float maxIdleTime = 5.0f;
     float minWalkTime = 2.0f;
     float maxWalkTime = 5.0f;
-
-    public bool isRunaway{get;set;}
 
     Vector3 RunawayVector;
 

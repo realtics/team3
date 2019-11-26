@@ -44198,10 +44198,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 178703844134331502}
-  leftDoorPosition: {fileID: 4892016458960053090}
-  rightDoorPosition: {fileID: 0}
-  leftDoorAnimator: {fileID: 6730530210032726613}
-  rightDoorAnimator: {fileID: 0}
+  doorPositions:
+  - {fileID: 4892016458960053090}
+  doorAnimator:
+  - {fileID: 6730530210032726613}
   passengers:
   - {fileID: 0}
 --- !u!114 &7028039128798893206

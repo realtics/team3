@@ -39,7 +39,7 @@ public class CarDamage : MonoBehaviour
             Bullet HitBullet = other.GetComponent<Bullet>();
             other.gameObject.SetActive(false);
 
-            DeductHp(HitBullet.bulletDamage);
+            DeductHp(HitBullet.bulletDamage, other.tag != "NPCBullet");
         }
     }
 
@@ -51,7 +51,7 @@ public class CarDamage : MonoBehaviour
         int force = (int)col.relativeVelocity.sqrMagnitude / 3;
         if(force > 1)
         {
-            DeductHp(force);
+            DeductHp(force, false);
 
             float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
             EnableDeltaImage(angle);
@@ -78,22 +78,22 @@ public class CarDamage : MonoBehaviour
         }
     }
 
-    public void DeductHp(int amount)
+    public void DeductHp(int amount, bool isDamagedByPlayer)
     {
         curHp -= amount;
         curHp = Mathf.Clamp(curHp, 0, maxHp);
 
         if(curHp <= 0)
         {
-            carManager.OnDestroyEvent();
+            carManager.OnDestroyEvent(isDamagedByPlayer);
         }
         else
         {
-            carManager.OnDamageEvent();
+            carManager.OnDamageEvent(isDamagedByPlayer);
         }
     }
 
-    void OnCarDamage()
+    void OnCarDamage(bool isDamagedByPlayer)
     {
         if (curHp < 30)
         {
@@ -103,13 +103,37 @@ public class CarDamage : MonoBehaviour
         {
             maxSpdMultiplier = 0.8f;
         }
+
+        if (isDamagedByPlayer)
+        {
+            if (carManager.ai.isPolice && GameManager.Instance.wantedLevel < 1)
+            {
+                GameManager.Instance.IncreaseWantedLevel(1.0f);
+            }
+            else
+            {
+                GameManager.Instance.IncreaseWantedLevel(0.1f);
+            }            
+        }            
     }
 
-    void OnCarDestroy()
+    void OnCarDestroy(bool isDamagedByPlayer)
     {
         maxSpdMultiplier = 0.0f;
 
         GameManager.Instance.IncreaseMoney(100);
         WorldUIManager.Instance.SetScoreText(transform.position, 100);
+
+        if (isDamagedByPlayer)
+        {
+            if(carManager.ai.isPolice && GameManager.Instance.wantedLevel < 1)
+            {
+                GameManager.Instance.IncreaseWantedLevel(1.0f);
+            }
+            else
+            {
+                GameManager.Instance.IncreaseWantedLevel(0.5f);
+            }            
+        }            
     }
 }

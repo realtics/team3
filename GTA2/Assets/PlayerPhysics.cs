@@ -10,7 +10,6 @@ public class PlayerPhysics : MonoBehaviour
     RaycastHit hit;
     Transform carDoorTransform;
 
-    // Start is called before the first frame update
     void Start()
     {
         myRigidBody = GetComponent<Rigidbody>();

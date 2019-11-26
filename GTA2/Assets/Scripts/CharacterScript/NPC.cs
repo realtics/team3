@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
 
 public abstract class NPC : People
@@ -6,7 +8,7 @@ public abstract class NPC : People
     //HumanCtr스크립트 참조 코드
     RaycastHit hit;
     float distToObstacle = Mathf.Infinity;
-    TrafficLight trafficLight = null;
+    
     protected Vector3 destination;
     public LayerMask collisionLayer;
     public bool isDestReached;
@@ -15,16 +17,15 @@ public abstract class NPC : People
     protected float downTimer = 0.0f;
     protected float downTime = 3.0f;
 
-    protected float punchRange = 0.2f;
-    protected float shotRange = 5.0f;
-    protected float outofRange = 20.0f;
+    //sqrMagnitude 사용해서 제곱함.
+    protected float punchRange = 0.04f;
+    protected float shotRange = 25.0f;
+    protected float outofRange = 400.0f;
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
     protected int money = 10; //사망시 플레이어에게 주는 돈
-
     public abstract void Respawn();
-
     protected void NPCUpdate()
     {
         if(isDown)
@@ -141,26 +142,25 @@ public abstract class NPC : People
         {
             distToObstacle = Mathf.Infinity;
         }
-
         DrawRaycastDebugLine();
     }
     protected bool InPunchRange()
     {
-        if (Vector3.Distance(GameManager.Instance.player.transform.position, transform.position) < punchRange)
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < punchRange)
             return true;
         else
             return false;
     }
     protected bool InShotRange()
     {
-        if (Vector3.Distance(GameManager.Instance.player.transform.position, transform.position) < shotRange)
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < shotRange)
             return true;
         else
             return false;
     }
     protected bool PlayerOutofRange()
     {
-        if (Vector3.Distance(GameManager.Instance.player.transform.position, transform.position) > outofRange)
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) > outofRange)
             return true;
         else
             return false;

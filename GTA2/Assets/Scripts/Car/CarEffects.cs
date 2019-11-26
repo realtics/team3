@@ -43,14 +43,6 @@ public class CarEffects : MonoBehaviour
 
     void Init()
     {
-        StopAllCoroutines();
-
-        if (sirenL != null && sirenR != null)
-        {
-            sirenSpeed += Random.Range(-0.1f, 0.1f);
-            StartCoroutine(SirenCor());
-        }
-
         lightFL.SetActive(false);
         lightFR.SetActive(false);
         lightRL.SetActive(false);
@@ -83,6 +75,16 @@ public class CarEffects : MonoBehaviour
             sirenL.SetActive(false);
             sirenR.SetActive(true);
             yield return new WaitForSeconds(sirenSpeed);
+        }
+    }
+
+    public void TurnOnSiren()
+    {
+        StopAllCoroutines();
+
+        if (sirenL != null && sirenR != null)
+        {
+            StartCoroutine(SirenCor());
         }
     }
 
@@ -150,7 +152,7 @@ public class CarEffects : MonoBehaviour
         }
     }
 
-    void FullyDestroy()
+    void FullyDestroy(bool sourceIsPlayer)
     {
         if(sirenL != null)
             TurnOffSiren();
@@ -208,7 +210,7 @@ public class CarEffects : MonoBehaviour
         }
     }
 
-    void EnableParticle()
+    void EnableParticle(bool sourceIsPlayer)
     {
         if (carManager.damage.curHp <= 0)
         {
