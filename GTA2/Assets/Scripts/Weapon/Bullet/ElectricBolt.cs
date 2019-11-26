@@ -5,34 +5,33 @@ using UnityEngine;
 public class ElectricBolt : MonoBehaviour
 {
     [SerializeField]
-    int waveCount;
-    [SerializeField]
-    float boltSize;
+    float wavePerScale;
     [SerializeField]
     float waveSize;
 
 
     LineRenderer lineRenderer;
     float waveSizePerCount;
+    float boltSize;
+    int waveCount;
 
 
     // Start is called before the first frame update
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = waveCount;
-
-        waveSizePerCount = boltSize * 2.0f / (waveCount - 1);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         UpdateWave();
     }
 
-    void UpdateWave()
+
+    public void UpdateWave()
     {
+        waveCount = (int)(transform.localScale.x * wavePerScale);
+        lineRenderer.positionCount = waveCount;
+
+        boltSize = transform.localScale.x;
+        waveSizePerCount = boltSize * 2.0f / (waveCount - 1);
+
         lineRenderer.SetPosition(0, new Vector3(boltSize * -1.0f, .0f, .0f));
         lineRenderer.SetPosition(waveCount - 1, new Vector3(boltSize * 1.0f, .0f, .0f));
 

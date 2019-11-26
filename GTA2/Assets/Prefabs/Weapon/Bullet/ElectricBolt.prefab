@@ -174,6 +174,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4117e32bb24ed074b80c5b5fad74ca00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCount: 40
-  boltSize: 15
-  waveSize: 0.2
+  wavePerScale: 10
+  waveSize: 0.3

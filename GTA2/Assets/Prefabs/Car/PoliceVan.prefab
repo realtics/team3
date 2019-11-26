@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4176382790938013067}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LeftDoorPosition
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -166,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 169410627790170107}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RightDoorPosition
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -5007,7 +5007,7 @@ GameObject:
   - component: {fileID: 1535439413788955730}
   - component: {fileID: 3546891810088905223}
   - component: {fileID: 1535439413788955733}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: PoliceVan
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -5140,7 +5140,7 @@ MonoBehaviour:
   maxSpdMultiplier: 1
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 3328
+    m_Bits: 7424
 --- !u!114 &6525980868056218021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29513,7 +29513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1535439414601197923}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Deltas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44605,7 +44605,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8940647410545745663}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44890,11 +44890,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: policeVanDoor R
       objectReference: {fileID: 0}
-    - target: {fileID: 6138103827842198033, guid: 54be5373f9a94a14b9ea2631f47035ed,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2486843979033897746, guid: 54be5373f9a94a14b9ea2631f47035ed,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -44934,6 +44929,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6138103827842198033, guid: 54be5373f9a94a14b9ea2631f47035ed,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54be5373f9a94a14b9ea2631f47035ed, type: 3}

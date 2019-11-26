@@ -68,6 +68,7 @@
     <Compile Include="Assets\SubAsset\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
     <Compile Include="Assets\SubAsset\JMO Assets\WarFX\Editor\CFX_SpawnSystemEditor.cs" />
     <Compile Include="Assets\SubAsset\LightningBolt\Editor\LightningBoltEditor.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\Editor\ReporterEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

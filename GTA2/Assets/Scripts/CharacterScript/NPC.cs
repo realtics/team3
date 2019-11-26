@@ -20,11 +20,23 @@ public abstract class NPC : People
     //sqrMagnitude 사용해서 제곱함.
     protected float punchRange = 0.04f;
     protected float shotRange = 25.0f;
+    protected float chaseRange = 9.0f;
     protected float outofRange = 400.0f;
 
     float respawnTimer = 0.0f;
     float respawnTime = 5.0f;
     protected int money = 10; //사망시 플레이어에게 주는 돈
+
+    void OnEnable()
+    {
+        StartCoroutine(DisableIfOutOfCamera());
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     public abstract void Respawn();
     protected void NPCUpdate()
     {
@@ -158,6 +170,13 @@ public abstract class NPC : People
         else
             return false;
     }
+    protected bool InChaseRange() //차에 타고있을때 플레이어 내리기 시도하는 거리
+    {
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < chaseRange)
+            return true;
+        else
+            return false;
+    }
     protected bool PlayerOutofRange()
     {
         if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) > outofRange)
@@ -194,6 +213,22 @@ public abstract class NPC : People
         destination = transform.position;
         isDestReached = true;
     }
-   
+
     #endregion
+
+    IEnumerator DisableIfOutOfCamera()
+    {
+        while (true)
+        {
+            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+            float offset = 3f;
+            if (pos.x < 0 - offset ||
+                pos.x > 1 + offset ||
+                pos.y < 0 - offset ||
+                pos.y > 1 + offset)
+                gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
 }

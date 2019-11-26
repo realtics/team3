@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 3440692971543766678}
   - component: {fileID: 7339181161204447394}
   - component: {fileID: 536384915929224548}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: IcecreamCar
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
   maxSpdMultiplier: 1
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 3328
+    m_Bits: 7424
 --- !u!114 &4043613851703649319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10703,7 +10703,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5481054649486259537}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Deltas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44087,7 +44087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3968131980282712640}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44246,7 +44246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7886552892532175066}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LeftDoorPosition
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -44278,11 +44278,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: IceCarDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6252683242121195954, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7474315977701018469, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
         type: 3}
@@ -44338,6 +44333,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180.00002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252683242121195954, guid: 1dbafdbc50dec764ca8bc9f5e413bb27,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dbafdbc50dec764ca8bc9f5e413bb27, type: 3}

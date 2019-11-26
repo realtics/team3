@@ -19,6 +19,16 @@ public class HumanPathManager : MonoBehaviour
     }
     void Start()
     {
+        Init();
+    }
+
+    void OnEnable()
+    {
+        Init();
+    }
+
+    void Init()
+    {
         SetRandomDestWaypoint();
         humanCtr.SetDestination(curDestPos);
     }

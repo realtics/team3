@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 1342552342974206495}
   - component: {fileID: -5473507111328649291}
   - component: {fileID: -1110922541649982334}
-  - component: {fileID: -1269571993267820036}
+  - component: {fileID: -8364699842060992214}
   m_Layer: 0
   m_Name: BulletElectric
   m_TagString: PlayerBullet
@@ -143,7 +143,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.054945055
-        value: 0.1408397
+        value: 0.21101487
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -151,35 +151,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.34065902
-        value: 0.70422524
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.4725243
-        value: 0.49295586
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.68900436
-        value: 1
-        inSlope: -0.7485612
-        outSlope: -0.7485612
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.9615398
-        value: 0.16901398
+        time: 1
+        value: 0.21287537
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -191,16 +164,16 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.996537, g: 1, b: 0.4009434, a: 1}
-      key1: {r: 0.9886583, g: 1, b: 0.7688679, a: 1}
-      key2: {r: 1, g: 0.9670999, b: 0.2783019, a: 0}
+      key0: {r: 0.44028127, g: 0.7044948, b: 0.9622642, a: 1}
+      key1: {r: 0.6839622, g: 0.84507966, b: 1, a: 1}
+      key2: {r: 0.27843142, g: 0.6861729, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 30069
+      ctime1: 65535
       ctime2: 64571
       ctime3: 0
       ctime4: 0
@@ -216,7 +189,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 3
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 3
     numCapVertices: 0
@@ -256,8 +229,8 @@ MonoBehaviour:
   bulletSpeed: 0
   explosionArea: 0
   explosionPref: {fileID: 0}
-  targetToVector: {x: 0, y: 0, z: 0}
---- !u!114 &-1269571993267820036
+  myLightning: {fileID: -8364699842060992214}
+--- !u!114 &-8364699842060992214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,9 +239,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1342552342984028335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4117e32bb24ed074b80c5b5fad74ca00, type: 3}
+  m_Script: {fileID: 11500000, guid: cfb4d413de9f1d541915329635c9f2bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCount: 0
-  boltSize: 0
-  waveSize: 0
+  StartObject: {fileID: 1342552342983978097}
+  StartPosition: {x: 0, y: 0, z: 0}
+  EndObject: {fileID: 1342552342983953903}
+  EndPosition: {x: 0, y: 0, z: 0}
+  Generations: 6
+  Duration: 0.05
+  ChaosFactor: 0.15
+  ManualMode: 0
+  Rows: 1
+  Columns: 1
+  AnimationMode: 3
+  lineRenderer: {fileID: 1342552342974206495}

@@ -63,10 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CarSpawnManager.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
-    <Compile Include="Assets\PlayerPhysics.cs" />
-    <Compile Include="Assets\PlayerTimer.cs" />
     <Compile Include="Assets\Scripts\Car\CarAi.cs" />
     <Compile Include="Assets\Scripts\Car\CarDamage.cs" />
     <Compile Include="Assets\Scripts\Car\CarEffects.cs" />
@@ -74,6 +70,7 @@
     <Compile Include="Assets\Scripts\Car\CarManager.cs" />
     <Compile Include="Assets\Scripts\Car\CarMovement.cs" />
     <Compile Include="Assets\Scripts\Car\CarPassengerManager.cs" />
+    <Compile Include="Assets\Scripts\CharacterScript\CarSpawnManager.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Citizen.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Doctor.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\HumanController.cs" />
@@ -81,6 +78,9 @@
     <Compile Include="Assets\Scripts\CharacterScript\NPCSpawnManager.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\People.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Player.cs" />
+    <Compile Include="Assets\Scripts\CharacterScript\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\CharacterScript\PlayerPhysics.cs" />
+    <Compile Include="Assets\Scripts\CharacterScript\PlayerTimer.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Police.cs" />
     <Compile Include="Assets\Scripts\Debug\CameraController.cs" />
     <Compile Include="Assets\Scripts\Debug\DrawArrow.cs" />
@@ -134,6 +134,7 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletRocketLauncher.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\BulletShotgun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Bullet\ElectricBolt.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet\NBulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\BulletEffect.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\FireBottleSmoke.cs" />
@@ -175,6 +176,12 @@
     <Compile Include="Assets\SubAsset\UJoystick\Content\Script\Core\bl_Joystick.cs" />
     <Compile Include="Assets\SubAsset\UJoystick\Content\Script\Internal\bl_JoystickUtils.cs" />
     <Compile Include="Assets\SubAsset\UJoystick\Example\Scrips\bl_ControllerExample.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\Reporter.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\ReporterGUI.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
+    <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend Scroll.shader" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Particle AddSoft A8.shader" />
     <None Include="Assets\SubAsset\UJoystick\ReadMe.txt" />

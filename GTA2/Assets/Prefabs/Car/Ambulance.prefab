@@ -89,7 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4892016458960053090}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LeftDoorPosition
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -373,7 +373,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8960691355694895053}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24614,7 +24614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7028039128291289513}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Deltas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44055,7 +44055,7 @@ GameObject:
   - component: {fileID: 7028039128798893206}
   - component: {fileID: 1597798858382472807}
   - component: {fileID: 7028039128798893207}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Ambulance
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -44184,7 +44184,7 @@ MonoBehaviour:
   maxSpdMultiplier: 1
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 7424
 --- !u!114 &1047443971703956942
 MonoBehaviour:
   m_ObjectHideFlags: 0

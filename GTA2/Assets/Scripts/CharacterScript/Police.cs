@@ -112,31 +112,42 @@ public class Police : NPC
         {
             //차뺏기
             isWalk = false;
-            if (InPunchRange())
+            transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
+            if(InChaseRange())
             {
-                transform.forward = GameManager.Instance.player.transform.forward;
-                transform.position = GameManager.Instance.player.transform.position;
+                gunList[1].GetComponent<NPCGun>().StopShot();
+                isWalk = true;
+                isShot = false;
+                isPunch = false;
+                base.ChasePlayer();
 
-                //플레이어 끌어내리기
-                if (CarOpenTimerCheck())
+                if (InPunchRange())
                 {
-                    GameManager.Instance.player.GetOffTheCar();
-                    GameManager.Instance.player.isDown = true;
-                    GameManager.Instance.player.isBusted = true;
-                    GameManager.Instance.player.isDriver = false;
-                }
-                else
-                {
-                    //문열기 애니메이션
-                    isGetOnTheCar = true;
+                    transform.forward = GameManager.Instance.player.transform.forward;
+                    transform.position = GameManager.Instance.player.transform.position;
+
+                    //플레이어 끌어내리기
+                    if (CarOpenTimerCheck())
+                    {
+                        GameManager.Instance.player.GetOffTheCar();
+                        GameManager.Instance.player.isDown = true;
+                        GameManager.Instance.player.isBusted = true;
+                        GameManager.Instance.player.isDriver = false;
+                    }
+                    else
+                    {
+                        //문열기 애니메이션
+                        isGetOnTheCar = true;
+                    }
                 }
             }
-            else //사격
-            {
-                gunList[1].GetComponent<NPCGun>().StartShot();
-            }
+            
+            //사격
+            isShot = true;
+            gunList[1].GetComponent<NPCGun>().StartShot();
+            
         }
-        else
+        else //쫓아가기
         {
             gunList[1].GetComponent<NPCGun>().StopShot();
             isWalk = true;
@@ -174,6 +185,8 @@ public class Police : NPC
     protected override void Die() //리스폰 필요
     {
         isDie = true;
+        gunList[0].GetComponent<NPCGun>().StopShot();
+        gunList[1].GetComponent<NPCGun>().StopShot();
         GameManager.Instance.IncreaseMoney(money);
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<BoxCollider>().enabled = false;

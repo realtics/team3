@@ -205,21 +205,22 @@ public class GunElectric : PlayerGun
             }
         }
 
-
+        #region 방향체크
         // 물체 감지 필터링 - 레이케스트를 소니 제일 마지막에 쓰는 것으로...
-        Ray originRay = new Ray();
-        RaycastHit originRayHit = new RaycastHit();
+        //Ray originRay = new Ray();
+        //RaycastHit originRayHit = new RaycastHit();
 
-        originRay.origin = waveCenterPos;
-        originRay.direction = toTargetDir;
-        bool isHit = Physics.Raycast(originRay, out originRayHit, electricWaveArea);
-        Debug.DrawRay(originRay.origin, originRay.direction * toTargetDir.magnitude, Color.red, .0f);
+        //originRay.origin = waveCenterPos;
+        //originRay.direction = toTargetDir;
+        //bool isHit = Physics.Raycast(originRay, out originRayHit, electricWaveArea);
+        //Debug.DrawRay(originRay.origin, originRay.direction * toTargetDir.magnitude, Color.red, .0f);
 
-        if (isHit &&
-            originRayHit.transform.gameObject != targetObj)
-        {
-            return false;
-        }
+        //if (isHit &&
+        //    originRayHit.transform.gameObject != targetObj)
+        //{
+        //    return false;
+        //}
+        #endregion
 
         return true;
     }

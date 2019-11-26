@@ -205,7 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 0
 --- !u!114 &1272307600
 MonoBehaviour:
   m_ObjectHideFlags: 0

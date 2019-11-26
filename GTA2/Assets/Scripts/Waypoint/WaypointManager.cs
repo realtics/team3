@@ -89,7 +89,7 @@ public class WaypointManager : MonoBehaviour
             allWaypoints = allWaypointsForHuman;
         }
 
-        float offset = 1f;
+        float offset = 0.5f;
         while (true)
         {
             GameObject wp = allWaypoints[Random.Range(0, allWaypoints.Length)];

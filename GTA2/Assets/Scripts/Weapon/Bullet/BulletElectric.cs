@@ -5,10 +5,12 @@ using UnityEngine;
 public class BulletElectric : Bullet
 {
     // Start is called before the first frame update
-    public Vector3 targetToVector;
-    //public DigitalRuby.LightningBolt.LightningBoltScript myLightning;
+
+    [SerializeField]
+    DigitalRuby.LightningBolt.LightningBoltScript myLightning;
     
 
+    Vector3 targetToVector;
     GameObject myTarget;
     float electricWaveArea;
 
@@ -17,7 +19,7 @@ public class BulletElectric : Bullet
     protected override void Start()
     {
         base.Start();
-        //myLightning.Started();
+        myLightning.Started();
     }
 
     public override void SetBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
@@ -55,7 +57,8 @@ public class BulletElectric : Bullet
 
 
         // 이렇게 두번 해야 라인랜더러가 안 겹친다... - 이전 상태에서 최신화가 된다.
-       // myLightning.Updated();
+       myLightning.Updated();
+       myLightning.Updated();
     }
 
 

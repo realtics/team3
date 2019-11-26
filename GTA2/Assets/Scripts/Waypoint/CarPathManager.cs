@@ -33,9 +33,11 @@ public class CarPathManager : MonoBehaviour
     {
         GameObject go = WaypointManager.instance.FindClosestWaypoint(WaypointManager.WaypointType.car, transform.position);
         curWaypoint = go.GetComponent<WaypointForCar>();
+
+        curLane = Random.Range(0, 3);
         SetRandomDestWaypoint();
 
-        curLane = Random.Range(0, curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count);
+        transform.position = curWaypoint.carRoadDict[destWaypoint].laneStartPosition[curLane];
         transform.LookAt(new Vector3(curDestPos.x, transform.position.y, curDestPos.z));
 
         carAi.SetDestination(curDestPos);

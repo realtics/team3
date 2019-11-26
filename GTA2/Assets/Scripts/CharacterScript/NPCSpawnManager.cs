@@ -15,6 +15,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
     void Start()
     {
         NPCPositionInit();
+        InvokeRepeating("RespawnDisabledPeople", 0.5f, 0.5f);
     }
 
     //WayPoints
@@ -42,75 +43,92 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
         npc.gameObject.transform.position = WaypointManager.instance.allWaypointsForHuman[randomIndex].transform.position;
     }
     //TODO : 이후 필요한 클래스로 매개변수 변경
-    
-        /*
-    IEnumerator ActiveObjects()
-    {
-        while (true)
-        {
-            CheckDeactiveCitizen();
-            CheckDeactiveCar();
 
-            yield return new WaitForSeconds(1.0f);
-        }
-    }
-    IEnumerator DeactiveObjects()
+    /*
+IEnumerator ActiveObjects()
+{
+    while (true)
     {
-        while (true)
-        {
-            CheckActiveCitizen();
-            CheckActiveCar();
+        CheckDeactiveCitizen();
+        CheckDeactiveCar();
 
-            yield return new WaitForSeconds(1.0f);
-        }
+        yield return new WaitForSeconds(1.0f);
     }
-    //TODO : 제네릭메소드로 변경
-    void CheckDeactiveCitizen()
+}
+IEnumerator DeactiveObjects()
+{
+    while (true)
     {
-        List<NPC> tempRemoveCitizenList = new List<NPC>();
+        CheckActiveCitizen();
+        CheckActiveCar();
 
-        foreach (var citizen in deactiveNPCList)
-        {
-            if (!IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
-            {
-                citizen.gameObject.SetActive(true);
-                activeNPCList.Add(citizen);
-                tempRemoveCitizenList.Add(citizen);
-            }
-        }
-        for(int i = 0; i < tempRemoveCitizenList.Count; i++)
-        {
-            NPC removeCitizen = tempRemoveCitizenList[i];
-            deactiveNPCList.Remove(removeCitizen);
-        }
-      
+        yield return new WaitForSeconds(1.0f);
     }
-    void CheckActiveCitizen()
+}
+//TODO : 제네릭메소드로 변경
+void CheckDeactiveCitizen()
+{
+    List<NPC> tempRemoveCitizenList = new List<NPC>();
+
+    foreach (var citizen in deactiveNPCList)
     {
-        List<NPC> tempRemoveCitizenList = new List<NPC>();
-        foreach (var citizen in activeNPCList)
+        if (!IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
         {
-            if (IsSpawnRange(citizen.transform.position) && citizen.gameObject.activeSelf)
-            {
-                citizen.gameObject.SetActive(false);
-                deactiveNPCList.Add(citizen);
-                tempRemoveCitizenList.Add(citizen);
-            }
-        }
-        for (int i = 0; i < tempRemoveCitizenList.Count; i++)
-        {
-            NPC removeCitizen = tempRemoveCitizenList[i];
-            activeNPCList.Remove(removeCitizen);
+            citizen.gameObject.SetActive(true);
+            activeNPCList.Add(citizen);
+            tempRemoveCitizenList.Add(citizen);
         }
     }
-    
-   
-    public bool IsSpawnRange(Vector3 position)
+    for(int i = 0; i < tempRemoveCitizenList.Count; i++)
     {
-        if (carSpawnRange < Vector3.Distance(position, player.transform.position))
-            return true;
-        else
-            return false;
+        NPC removeCitizen = tempRemoveCitizenList[i];
+        deactiveNPCList.Remove(removeCitizen);
     }
-    */
+
+}
+void CheckActiveCitizen()
+{
+    List<NPC> tempRemoveCitizenList = new List<NPC>();
+    foreach (var citizen in activeNPCList)
+    {
+        if (IsSpawnRange(citizen.transform.position) && citizen.gameObject.activeSelf)
+        {
+            citizen.gameObject.SetActive(false);
+            deactiveNPCList.Add(citizen);
+            tempRemoveCitizenList.Add(citizen);
+        }
+    }
+    for (int i = 0; i < tempRemoveCitizenList.Count; i++)
+    {
+        NPC removeCitizen = tempRemoveCitizenList[i];
+        activeNPCList.Remove(removeCitizen);
+    }
+}
+
+
+public bool IsSpawnRange(Vector3 position)
+{
+    if (carSpawnRange < Vector3.Distance(position, player.transform.position))
+        return true;
+    else
+        return false;
+}
+*/
+
+    void RespawnDisabledPeople()
+    {
+        foreach (var pop in activeNPCList)
+        {
+            if (pop.gameObject.activeSelf)
+                continue;
+
+            GameObject go = WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.human);
+
+            pop.transform.position = go.transform.position;
+            pop.gameObject.SetActive(true);
+
+            //Debug.DrawLine(GameManager.Instance.player.transform.position, pop.transform.position, Color.red, 0.5f);
+            break;
+        }
+    }
 }

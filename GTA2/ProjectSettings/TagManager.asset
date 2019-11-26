@@ -30,11 +30,11 @@ TagManager:
   - UI
   - 
   - 
-  - trafficBlock
+  - TrafficLight
   - road
   - NPC
   - Player
-  - 
+  - Car
   - 
   - 
   - 

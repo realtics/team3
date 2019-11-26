@@ -110,7 +110,6 @@ public class Player : People
                 targetCar.passengerManager.doorAnimator[0].SetTrigger("Close");
                 return;
             }
-                
             //사람 끌어내리기
             transform.parent = targetCar.gameObject.transform;
             isDriver = true;
@@ -146,8 +145,6 @@ public class Player : People
             isBusted = false;
         }
     }
-
-  
     protected override void Die()
     {
         GetComponent<Rigidbody>().isKinematic = true;

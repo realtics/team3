@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &12373482
 Transform:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &40892212
 Transform:
   m_ObjectHideFlags: 0
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 0
+  signalColor: 1
   fakeLight: {fileID: 1375365366}
   lightObjGreen: {fileID: 387560090}
   lightObjRed: {fileID: 1577518306}
@@ -1573,7 +1573,7 @@ BoxCollider:
   m_GameObject: {fileID: 102670125}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.75, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1680,7 +1680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &112084784
 Transform:
   m_ObjectHideFlags: 0
@@ -1861,7 +1861,7 @@ BoxCollider:
   m_GameObject: {fileID: 135564907}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2151,7 +2151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &162203793
 Transform:
   m_ObjectHideFlags: 0
@@ -2284,7 +2284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &168293510
 Transform:
   m_ObjectHideFlags: 0
@@ -3274,7 +3274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &263872618
 Transform:
   m_ObjectHideFlags: 0
@@ -4150,7 +4150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 1
+  signalColor: 0
   fakeLight: {fileID: 352616440}
   lightObjGreen: {fileID: 162203792}
   lightObjRed: {fileID: 168293509}
@@ -4166,7 +4166,7 @@ BoxCollider:
   m_GameObject: {fileID: 334283173}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.51, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4222,18 +4222,6 @@ Transform:
   m_Father: {fileID: 237372294}
   m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &340982222 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5118239136496993423, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &342732988 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5462412708528683700, guid: d23782ccd9fec984cbe3e3f69f484357,
@@ -4345,7 +4333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 1
+  signalColor: 0
   fakeLight: {fileID: 1863217621}
   lightObjGreen: {fileID: 1069849919}
   lightObjRed: {fileID: 2053963848}
@@ -4361,7 +4349,7 @@ BoxCollider:
   m_GameObject: {fileID: 346295683}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.51, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4590,7 +4578,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4838,7 +4826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 0
+  signalColor: 1
   fakeLight: {fileID: 1051463641}
   lightObjGreen: {fileID: 446697725}
   lightObjRed: {fileID: 782360094}
@@ -4854,7 +4842,7 @@ BoxCollider:
   m_GameObject: {fileID: 367384162}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.75, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5040,7 +5028,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &387560091
 Transform:
   m_ObjectHideFlags: 0
@@ -5275,7 +5263,7 @@ BoxCollider:
   m_GameObject: {fileID: 409755754}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5420,7 +5408,7 @@ BoxCollider:
   m_GameObject: {fileID: 438802924}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5493,7 +5481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &446697726
 Transform:
   m_ObjectHideFlags: 0
@@ -5623,7 +5611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &453267633
 Transform:
   m_ObjectHideFlags: 0
@@ -6233,7 +6221,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6567,7 +6555,7 @@ BoxCollider:
   m_GameObject: {fileID: 511167906}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -7745,7 +7733,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8179,22 +8167,10 @@ BoxCollider:
   m_GameObject: {fileID: 691931237}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &698111947 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3296832110319873673, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &699967691
 GameObject:
   m_ObjectHideFlags: 0
@@ -8244,7 +8220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 1
+  signalColor: 0
   fakeLight: {fileID: 1694146367}
   lightObjGreen: {fileID: 803056413}
   lightObjRed: {fileID: 1473016032}
@@ -8260,7 +8236,7 @@ BoxCollider:
   m_GameObject: {fileID: 699967691}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 6.77, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -8448,7 +8424,7 @@ BoxCollider:
   m_GameObject: {fileID: 712288581}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -9140,7 +9116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &781629984
 Transform:
   m_ObjectHideFlags: 0
@@ -9220,7 +9196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &782360095
 Transform:
   m_ObjectHideFlags: 0
@@ -9638,7 +9614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &803056414
 Transform:
   m_ObjectHideFlags: 0
@@ -9755,18 +9731,6 @@ MonoBehaviour:
   - {x: -46.968952, y: 0, z: -22.050045}
   parentWaypoint: {fileID: 630356214}
   endWaypoint: {fileID: 468691450}
---- !u!114 &815942923 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2764923016372793021, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &818940724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9969,18 +9933,6 @@ Transform:
   m_Father: {fileID: 237372294}
   m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &823248187 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2698575062092110589, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &828798791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8462026011354507148, guid: d23782ccd9fec984cbe3e3f69f484357,
@@ -10095,7 +10047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 0
+  signalColor: 1
   fakeLight: {fileID: 1245148525}
   lightObjGreen: {fileID: 2004693639}
   lightObjRed: {fileID: 1185618226}
@@ -10111,7 +10063,7 @@ BoxCollider:
   m_GameObject: {fileID: 865743895}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6.74, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -10185,7 +10137,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -10276,7 +10228,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bulletPref
       value: 
-      objectReference: {fileID: 5601948333027549373, guid: ea7501b3a453fb3438bcabf6f3b63a4a,
+      objectReference: {fileID: 1342552342984028335, guid: e18a46b227ea7d44ca848cc458ffb63b,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7aadfcaf4c8ec045bc7c42ac5bebe07, type: 3}
@@ -10387,7 +10339,7 @@ BoxCollider:
   m_GameObject: {fileID: 881775938}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -11047,7 +10999,7 @@ BoxCollider:
   m_GameObject: {fileID: 939074969}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -11362,7 +11314,7 @@ BoxCollider:
   m_GameObject: {fileID: 963280662}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -11606,7 +11558,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -11686,7 +11638,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -11824,18 +11776,6 @@ MonoBehaviour:
   - {x: -48.832455, y: 0, z: -48.63922}
   parentWaypoint: {fileID: 1648998688}
   endWaypoint: {fileID: 1594820203}
---- !u!114 &996108972 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6570260866679715816, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &997514393
 GameObject:
   m_ObjectHideFlags: 0
@@ -12061,30 +12001,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1004972383 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6216134359936516175, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1010765291 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5876902803125136259, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1013452801
 GameObject:
   m_ObjectHideFlags: 0
@@ -12651,7 +12567,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -12777,7 +12693,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1069849920
 Transform:
   m_ObjectHideFlags: 0
@@ -12929,7 +12845,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -13728,7 +13644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1170242049
 Transform:
   m_ObjectHideFlags: 0
@@ -14229,7 +14145,7 @@ BoxCollider:
   m_GameObject: {fileID: 1178587336}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -14396,7 +14312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1185618227
 Transform:
   m_ObjectHideFlags: 0
@@ -14668,25 +14584,13 @@ BoxCollider:
   m_GameObject: {fileID: 1203107573}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1204552048 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3979184193555021544, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1206608117 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8108485601185582718, guid: d23782ccd9fec984cbe3e3f69f484357,
     type: 3}
   m_PrefabInstance: {fileID: 1502216580}
   m_PrefabAsset: {fileID: 0}
@@ -15055,7 +14959,7 @@ BoxCollider:
   m_GameObject: {fileID: 1233358740}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -15236,18 +15140,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01a93f11fd051c94c9409e4597d3b31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1244171545 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1065537456171574818, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1244330775
@@ -15462,7 +15354,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -15521,7 +15413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 0
+  signalColor: 1
   fakeLight: {fileID: 988988102}
   lightObjGreen: {fileID: 781629983}
   lightObjRed: {fileID: 263872617}
@@ -15537,7 +15429,7 @@ BoxCollider:
   m_GameObject: {fileID: 1249429366}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.75, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -15631,7 +15523,7 @@ BoxCollider:
   m_GameObject: {fileID: 1252871188}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -16373,7 +16265,7 @@ BoxCollider:
   m_GameObject: {fileID: 1335153512}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -16462,7 +16354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 1
+  signalColor: 0
   fakeLight: {fileID: 625233257}
   lightObjGreen: {fileID: 1650597967}
   lightObjRed: {fileID: 1170242048}
@@ -16478,7 +16370,7 @@ BoxCollider:
   m_GameObject: {fileID: 1346222541}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.51, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -16605,7 +16497,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -16655,7 +16547,7 @@ BoxCollider:
   m_GameObject: {fileID: 1384362543}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -17193,7 +17085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 0
+  signalColor: 1
   fakeLight: {fileID: 468791364}
   lightObjGreen: {fileID: 453267632}
   lightObjRed: {fileID: 1537514431}
@@ -17209,7 +17101,7 @@ BoxCollider:
   m_GameObject: {fileID: 1425130501}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6.73, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -17367,7 +17259,7 @@ BoxCollider:
   m_GameObject: {fileID: 1431287449}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -17939,7 +17831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1473016033
 Transform:
   m_ObjectHideFlags: 0
@@ -18259,7 +18151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 0
+  signalColor: 1
   fakeLight: {fileID: 992204797}
   lightObjGreen: {fileID: 112084783}
   lightObjRed: {fileID: 1540061409}
@@ -18275,7 +18167,7 @@ BoxCollider:
   m_GameObject: {fileID: 1492786909}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.75, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -19212,18 +19104,6 @@ MonoBehaviour:
   - {fileID: 406554102}
   - {fileID: 777223498}
   deactiveNPCList: []
-  carDriverPool:
-  - {fileID: 996108972}
-  - {fileID: 823248187}
-  - {fileID: 340982222}
-  - {fileID: 1206608117}
-  - {fileID: 815942923}
-  - {fileID: 1244171545}
-  - {fileID: 1542597252}
-  - {fileID: 1010765291}
-  - {fileID: 1004972383}
-  - {fileID: 1700820410}
-  - {fileID: 698111947}
 --- !u!114 &1502216583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19870,7 +19750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1512328467
 Transform:
   m_ObjectHideFlags: 0
@@ -19974,7 +19854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1527406656
 Transform:
   m_ObjectHideFlags: 0
@@ -20084,7 +19964,7 @@ BoxCollider:
   m_GameObject: {fileID: 1530796815}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -20207,7 +20087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1537514432
 Transform:
   m_ObjectHideFlags: 0
@@ -20287,7 +20167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1540061410
 Transform:
   m_ObjectHideFlags: 0
@@ -20438,18 +20318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95fec52c90a55e4cb8fbaab70b336d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1542597252 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6418259847171643674, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1575108489
 GameObject:
   m_ObjectHideFlags: 0
@@ -20540,7 +20408,7 @@ BoxCollider:
   m_GameObject: {fileID: 1576327642}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -20610,7 +20478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1577518307
 Transform:
   m_ObjectHideFlags: 0
@@ -21109,7 +20977,7 @@ BoxCollider:
   m_GameObject: {fileID: 1615276382}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -21316,7 +21184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 1
+  signalColor: 0
   fakeLight: {fileID: 1097074497}
   lightObjGreen: {fileID: 1527406655}
   lightObjRed: {fileID: 40892211}
@@ -21332,7 +21200,7 @@ BoxCollider:
   m_GameObject: {fileID: 1628304340}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 6.77, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -21658,7 +21526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1650597968
 Transform:
   m_ObjectHideFlags: 0
@@ -21853,7 +21721,7 @@ BoxCollider:
   m_GameObject: {fileID: 1674840764}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -22008,7 +21876,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -22174,18 +22042,6 @@ PrefabInstance:
       objectReference: {fileID: 952512366}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1373b99d42ffc2f42b2d4b5c239fb687, type: 3}
---- !u!114 &1700820410 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9195093903792456611, guid: d23782ccd9fec984cbe3e3f69f484357,
-    type: 3}
-  m_PrefabInstance: {fileID: 1502216580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c68457dc3ec5d54489e5a9a1c1a952a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1704244108
 GameObject:
   m_ObjectHideFlags: 0
@@ -22447,7 +22303,7 @@ BoxCollider:
   m_GameObject: {fileID: 1719556513}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -22736,7 +22592,7 @@ BoxCollider:
   m_GameObject: {fileID: 1752918224}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -23066,7 +22922,7 @@ BoxCollider:
   m_GameObject: {fileID: 1801107312}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -23573,7 +23429,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2ddc273e64af778418c509c979ccc543, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 1, b: 0, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -24847,7 +24703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2004693640
 Transform:
   m_ObjectHideFlags: 0
@@ -25001,7 +24857,7 @@ BoxCollider:
   m_GameObject: {fileID: 2005872015}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -25282,7 +25138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faefd3c6f3ea54e46a1d7e2b5a00ada6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalColor: 1
+  signalColor: 0
   fakeLight: {fileID: 876485244}
   lightObjGreen: {fileID: 1512328466}
   lightObjRed: {fileID: 12373481}
@@ -25298,7 +25154,7 @@ BoxCollider:
   m_GameObject: {fileID: 2021286473}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.51, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
@@ -25463,7 +25319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2053963849
 Transform:
   m_ObjectHideFlags: 0
