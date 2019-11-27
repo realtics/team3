@@ -14,12 +14,12 @@ public class CarInput : MonoBehaviour
 
     void OnEnable()
     {
-        carManager.OnDriverGetOff += ReleaseInput;
+        carManager.OnDriverGetOff += ReleaseInputWhenDriverGetOff;
     }
 
     void OnDisable()
     {
-        carManager.OnDriverGetOff -= ReleaseInput;
+        carManager.OnDriverGetOff -= ReleaseInputWhenDriverGetOff;
     }
 
     public void PlayerInput()
@@ -72,7 +72,7 @@ public class CarInput : MonoBehaviour
         carManager.OnReturnKeyDownEvent();
     }
 
-    void ReleaseInput()
+    void ReleaseInputWhenDriverGetOff(People p, int idx)
     {
         inputH = 0;
         inputV = 0;

@@ -57,8 +57,8 @@ public class BulletElectric : Bullet
 
 
         // 이렇게 두번 해야 라인랜더러가 안 겹친다... - 이전 상태에서 최신화가 된다.
-       myLightning.Updated();
-       myLightning.Updated();
+        myLightning.Updated();
+        myLightning.Updated();
     }
 
 

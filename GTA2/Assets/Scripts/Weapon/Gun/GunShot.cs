@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunShot : PlayerGun
 {
-    void Start()
+    public override void Init()
     {
         gunType = GunState.ShotGun;
 

@@ -20,7 +20,6 @@ public class Phone : MonoBehaviour
     void Start()
     {
         phoneAnimator = GetComponentInChildren<Animator>();
-        phoneAnimator.SetBool("IsRinging", false);
         SetRing();
     }
 

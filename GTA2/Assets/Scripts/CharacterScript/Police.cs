@@ -10,10 +10,10 @@ public class Police : NPC
 
     float patternChangeTimer = 3.0f;
     float patternChangeInterval = 3.0f;
-    float attackInterval = 1.0f;
-    float curAttackCoolTime = 0.0f;
-    float jumpTime = 1.5f;
-    float jumpTimer = 0.0f;
+    //float attackInterval = 1.0f;
+    //float curAttackCoolTime = 0.0f;
+    //float jumpTime = 1.5f;
+    //float jumpTimer = 0.0f;
     float carOpenTimer = 0.0f;
     float carOpenTime = 0.5f;
 
@@ -27,10 +27,10 @@ public class Police : NPC
     public Animator animator;
     public List<NPCGun> gunList;
 
-    float minIdleTime = 2.0f;
-    float maxIdleTime = 5.0f;
-    float minWalkTime = 2.0f;
-    float maxWalkTime = 5.0f;
+    float minIdleTime = 0.3f;
+    float maxIdleTime = 1.0f;
+    float minWalkTime = 10.0f;
+    float maxWalkTime = 15.0f;
 
     void Awake()
     {
@@ -39,7 +39,8 @@ public class Police : NPC
     void Start()
     {
         money = 50;
-        runSpeed = 1.0f;
+        moveSpeed = 1.0f;
+        runSpeed = 1.5f;
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
     }
@@ -51,10 +52,11 @@ public class Police : NPC
         animator.SetBool("isPunch", isPunch);
         animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
+        animator.SetBool("isDown", isDown);
         animator.SetBool("isGetOnTheCar", isGetOnTheCar);
 
         base.NPCUpdate();
-        if (isDie)
+        if (isDie || isDown)
             return;
         TimerCheck();
         ActivityByState();
@@ -70,9 +72,9 @@ public class Police : NPC
             }
             else
             {
+                isShot = false;
                 ChasePlayerCharacter();
             }
-               
         }
         else if(isWalk)
         {
@@ -90,7 +92,6 @@ public class Police : NPC
         if (InPunchRange())
         {
             isWalk = false;
-            isShot = false;
             isPunch = true;
             gunList[0].GetComponent<NPCGun>().StartShot();
         }
@@ -108,20 +109,23 @@ public class Police : NPC
             isChasePlayer = false;
             return;
         }
+        //사격
         if(InShotRange())
         {
-            //차뺏기
             isWalk = false;
             transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
-            if(InChaseRange())
+            if(InChaseRange())//player 끌어내리러 가기
             {
-                gunList[1].GetComponent<NPCGun>().StopShot();
-                isWalk = true;
-                isShot = false;
+                //사격
+                //한번만
+                isShot = true;
                 isPunch = false;
+                isWalk = true;
+                gunList[1].GetComponent<NPCGun>().StartShot();
+                
                 base.ChasePlayer();
-
-                if (InPunchRange())
+                
+                if (InPunchRange())//player 끌어내리기
                 {
                     transform.forward = GameManager.Instance.player.transform.forward;
                     transform.position = GameManager.Instance.player.transform.position;
@@ -141,17 +145,12 @@ public class Police : NPC
                     }
                 }
             }
-            
-            //사격
-            isShot = true;
-            gunList[1].GetComponent<NPCGun>().StartShot();
-            
         }
         else //쫓아가기
         {
             gunList[1].GetComponent<NPCGun>().StopShot();
             isWalk = true;
-            isShot = true;
+            isShot = false;
             isPunch = false;
             base.ChasePlayer();
         }
@@ -162,6 +161,10 @@ public class Police : NPC
         {
             SetDefault();
         }
+        else if(!PlayerOutofRange() && GameManager.Instance.wantedLevel >= 1)
+        {
+            isChasePlayer = true;
+        }
     }
     void SetDefault()
     {
@@ -169,6 +172,8 @@ public class Police : NPC
         isChasePlayer = false;
         isWalk = false;
         isGetOnTheCar = false;
+        isShot = false;
+        gunList[1].GetComponent<NPCGun>().StopShot();
         isPunch = false;
     }
     public bool CarOpenTimerCheck()

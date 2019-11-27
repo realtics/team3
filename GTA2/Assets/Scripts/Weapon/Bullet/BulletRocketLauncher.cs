@@ -11,6 +11,7 @@ public class BulletRocketLauncher : Bullet
     {
         base.Start();
         camExplosion = CameraController.Instance;
+        bulletDeActiveTime = .1f;
     }
 
     // Update is called once per frame

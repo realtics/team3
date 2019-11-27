@@ -5176,7 +5176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 33751798998058349}
-  maxHp: 200
+  maxHp: 700
   curHp: 0
   maxSpdMultiplier: 1
 --- !u!114 &3546891810088905223

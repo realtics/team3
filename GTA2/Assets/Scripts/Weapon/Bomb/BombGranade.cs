@@ -15,6 +15,7 @@ public class BombGranade : Bullet
     protected override void Start()
     {
         base.Start();
+        bulletDeActiveTime = .1f;
         myCollider.isTrigger = false;
     }
 

@@ -5,8 +5,7 @@ using UnityEngine;
 public class GunFire : PlayerGun
 {
     // Start is called before the first frame update.
-
-    void Start()
+    public override void Init()
     {
         gunType = GunState.FireGun;
         bulletPoolCount = 50;

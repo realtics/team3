@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5686571842335923557}
   - component: {fileID: 8312672914563677024}
-  - component: {fileID: 3959140396483973752}
+  - component: {fileID: 5605323986602024106}
   - component: {fileID: 4884092535892849771}
   m_Layer: 0
   m_Name: BulletPistol
@@ -83,19 +83,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!135 &3959140396483973752
-SphereCollider:
+--- !u!136 &5605323986602024106
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5797233812644291545}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.099999994
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.15, z: 0}
 --- !u!114 &4884092535892849771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832aa4eec250cac49941957c6b7a9593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 100
+  bulletDamage: 25
   bulletLifeTime: 2
   bulletSpeed: 10
   explosionArea: 0

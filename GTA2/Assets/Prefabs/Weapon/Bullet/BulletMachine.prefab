@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6637734629954141571}
   - component: {fileID: -845700606838391573}
-  - component: {fileID: 638896828462363168}
   - component: {fileID: 3706229108799607415}
+  - component: {fileID: 7719329666911759124}
   m_Layer: 0
   m_Name: BulletMachine
   m_TagString: PlayerBullet
@@ -83,19 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!135 &638896828462363168
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8350089297614652173}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3706229108799607415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +95,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575ba50b69de43b409d926d69011e3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 5
+  bulletDamage: 15
   bulletLifeTime: 1
   bulletSpeed: 10
   explosionArea: 0
   explosionPref: {fileID: 0}
+--- !u!136 &7719329666911759124
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8350089297614652173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 0.6
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.2, z: 0}

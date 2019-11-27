@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1167477734086649168}
   - component: {fileID: 1167477734086649171}
   - component: {fileID: 1167477734086649170}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4627805122651553495, guid: 849b242af465864418a87616181549fe,
+  m_Sprite: {fileID: -2214034502796586735, guid: ee9a8d1ea3798074db7766346be04b01,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -113,7 +113,8 @@ GameObject:
   - component: {fileID: 1167477734680987161}
   - component: {fileID: 8897160060990038603}
   - component: {fileID: 1358635159880621219}
-  m_Layer: 0
+  - component: {fileID: 2198147270773191501}
+  m_Layer: 10
   m_Name: Police
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -187,6 +188,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.16986847, y: 0.32845825, z: 0.116737366}
   m_Center: {x: -0.010332108, y: 0.09440443, z: -0.0014324188}
+--- !u!114 &2198147270773191501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167477734680987156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194ae97cccb82694b85ad3d4b3b620cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humanCtr: {fileID: 8897160060990038603}
 --- !u!1001 &1518263386565546812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,6 +212,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01 NGunPistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 261153185466536259, guid: a3b485bcb1b296e498510fe0e59c8591,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591,
         type: 3}
@@ -259,6 +278,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4178879768575453749, guid: a3b485bcb1b296e498510fe0e59c8591,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3b485bcb1b296e498510fe0e59c8591, type: 3}
 --- !u!4 &433027729083999133 stripped
@@ -290,6 +314,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 00 NGunPunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7829914115591520641, guid: 1875a2e7d4badf14294bed56181d7943,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7829914115591520671, guid: 1875a2e7d4badf14294bed56181d7943,
         type: 3}

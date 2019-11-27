@@ -19,7 +19,6 @@ public class BulletFireGun : Bullet
 
     protected void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision Wall");
         if (collision.gameObject.CompareTag("Wall"))
         {
             Explosion();

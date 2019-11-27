@@ -53,6 +53,10 @@ public abstract class People : MonoBehaviour
             isDie = true;
         }
     }
+    protected void RunOver()
+    {
+
+    }
     protected void UpdateTargetRotation()
     {
         targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;

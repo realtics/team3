@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunPistol : PlayerGun
 {
-    void Start()
+    public override void Init()
     {
         gunType = GunState.Pistol;
         bulletPoolCount = 30;

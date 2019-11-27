@@ -91,12 +91,29 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void RespawnSetting()
     {
-        if(remains == 0)//RIP
+        if (remains == 0)//RIP
         {
             SceneManager.LoadScene("Rip");
             return;
         }
-        player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
+        if (player.isBusted)
+        {
+            CarSpawnManager.Instance.policeCarList[0].gameObject.SetActive(true);
+            CarSpawnManager.Instance.policeCarList[0].passengerManager.passengers[1] = player;
+            CarSpawnManager.Instance.policeCarList[0].GetComponent<CarPassengerManager>().GetOnTheCar(player, 1);
+            player.transform.position = CarSpawnManager.Instance.policeCarList[0].passengerManager.doorPositions[1].position;
+
+            for(int i = 1; i < player.gunList.Count; i++)
+                player.gunList[1].bulletCount = 0;
+            player.curGunIndex = GunState.None;
+            StartCoroutine(CarSpawnManager.Instance.policeCarList[0].passengerManager.GetOffTheCar(1));
+            //player.Down();
+            //Invoke(player.Down(), 1.0f);
+        }
+        else
+        {
+            player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
+        }
         CarSpawnManager.Instance.CarPositionInit();
         NPCSpawnManager.Instance.NPCPositionInit();
         //카메라 위치 조정

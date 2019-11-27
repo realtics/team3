@@ -14,11 +14,9 @@ public class GunElectric : PlayerGun
     List<GameObject> noneTargetObjectList;
 
     List<BulletElectric> activeElectricList;
-
-    void Start()
+    public override void Init()
     {
         gunType = GunState.Electric;
-        bulletPoolCount = 50;
 
         objectList = new List<GameObject>();
         noneTargetObjectList = new List<GameObject>();
@@ -26,11 +24,19 @@ public class GunElectric : PlayerGun
 
         foreach (var citizen in NPCSpawnManager.Instance.activeNPCList)
         {
+            if (citizen == null)
+            {
+                continue;
+            }
             objectList.Add(citizen.gameObject);
         }
 
-        foreach (var car in CarSpawnManager.Instance.activeCarList)
+        foreach (var car in CarSpawnManager.Instance.normalCarList)
         {
+            if (car == null)
+            {
+                continue;
+            }
             objectList.Add(car.gameObject);
         }
 
@@ -116,8 +122,10 @@ public class GunElectric : PlayerGun
     {
         foreach (var item in activeElectricList)
         {
-            Vector3 electricVector = item.transform.position;
-            electricVector.y = userObject.transform.position.y;
+            Vector3 electricVector = userObject.transform.position;
+            electricVector.y = userObject.transform.position.y * 1.5f;
+
+            item.UpdateBullet(gunType, electricVector, gunDir, .0f);
         }
     }
 

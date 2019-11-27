@@ -18,7 +18,7 @@ public abstract class NPC : People
     protected float downTime = 3.0f;
 
     //sqrMagnitude 사용해서 제곱함.
-    protected float punchRange = 0.04f;
+    protected float punchRange = 0.08f;
     protected float shotRange = 25.0f;
     protected float chaseRange = 9.0f;
     protected float outofRange = 400.0f;
@@ -154,7 +154,7 @@ public abstract class NPC : People
         {
             distToObstacle = Mathf.Infinity;
         }
-        DrawRaycastDebugLine();
+        //DrawRaycastDebugLine();
     }
     protected bool InPunchRange()
     {

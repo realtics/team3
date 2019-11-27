@@ -5,8 +5,8 @@ using UnityEngine;
 public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 {
     [Header("최초에는 ActiveList에 Pool의 오브젝트 삽입.")]
-    public List<CarManager> activeCarList = new List<CarManager>();
-    public List<CarManager> deactiveCarList = new List<CarManager>();
+    public List<CarManager> normalCarList = new List<CarManager>();
+    public List<CarManager> policeCarList = new List<CarManager>();
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +25,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
             position.Add(WaypointManager.instance.allWaypointsForCar[i].transform.position);
         }
 
-        foreach (var car in activeCarList)
+        foreach (var car in normalCarList)
         {
             int randomIndex = Random.Range(0, position.Count);
             //print(randomIndex + " " + position.Count + " " + );
@@ -40,49 +40,12 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
         int randomIndex = Random.Range(0, WaypointManager.instance.allWaypointsForCar.Length);
         car.gameObject.transform.position = WaypointManager.instance.allWaypointsForCar[randomIndex].transform.position;
     }
-    /*   void CheckDeactiveCar()
-    {
-        List<CarController> tempRemoveCarList = new List<CarController>();
-
-        foreach (var car in deactiveCarList)
-        {
-            if (!IsSpawnRange(car.transform.position) && !car.gameObject.activeSelf)
-            {
-                car.gameObject.SetActive(true);
-                activeCarList.Add(car);
-                tempRemoveCarList.Add(car);
-            }
-        }
-        for (int i = 0; i < tempRemoveCarList.Count; i++)
-        {
-            CarController removeCar = tempRemoveCarList[i];
-            deactiveCarList.Remove(removeCar);
-        }
-    }
-    void CheckActiveCar()
-    {
-        List<CarController> tempRemoveCarList = new List<CarController>();
-
-        foreach (var car in activeCarList)
-        {
-            if (IsSpawnRange(car.transform.position) && car.gameObject.activeSelf)
-            {
-                car.gameObject.SetActive(false);
-                deactiveCarList.Add(car);
-                tempRemoveCarList.Add(car);
-            }
-        }
-        for (int i = 0; i < tempRemoveCarList.Count; i++)
-        {
-            CarController removeCar = tempRemoveCarList[i];
-            activeCarList.Remove(removeCar);
-        }
-    }*/
+    
 
     // 꺼진차 켜기
     void RespawnDisabledCar()
     {
-        foreach (var car in activeCarList)
+        foreach (var car in normalCarList)
         {
             if (car.gameObject.activeSelf)
                 continue;

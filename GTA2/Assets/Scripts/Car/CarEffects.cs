@@ -217,7 +217,7 @@ public class CarEffects : MonoBehaviour
             fireParticle.SetActive(false);
             explosionParticle.SetActive(true);
         }
-        else if (carManager.damage.curHp < 30)
+        else if (carManager.damage.curHp < 100)
         {
             fireParticle.SetActive(true);
         }

@@ -88,7 +88,7 @@ public class CarMovement : MonoBehaviour
         rbody.velocity = dir * curSpeed * Time.deltaTime + reboundForce;
     }
 
-    void OnDriverGetOff()
+    void OnDriverGetOff(People people, int idx)
     {
         curSpeed = 0;
     }

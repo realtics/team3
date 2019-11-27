@@ -50,6 +50,11 @@ public abstract class Gun : MonoBehaviour
     protected bool isPrevShot;
 
 
+    public virtual void Init()
+    {
+
+    }
+
 
 
     protected virtual void InitGun()
@@ -76,8 +81,8 @@ public abstract class Gun : MonoBehaviour
 
         foreach (var item in bulletList)
         {
-            item.gameObject.SetActive(true);
             item.gameObject.transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
+            item.gameObject.SetActive(true);
         }
     }
 

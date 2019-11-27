@@ -16,6 +16,7 @@ public class BombFireBottle : Bullet
     protected override void Start()
     {
         base.Start();
+        bulletDeActiveTime = .1f;
         camExplosion = CameraController.Instance;
     }
 
@@ -39,7 +40,12 @@ public class BombFireBottle : Bullet
 
     protected void OnTriggerEnter(Collider other)
     {
-        base.Explosion(); 
-        CameraController.Instance.StartShake(explosionPower, transform.position);
+        if (
+            other.gameObject.CompareTag("Ground") ||
+            other.gameObject.CompareTag("Wall"))
+        {
+            base.Explosion();
+            CameraController.Instance.StartShake(explosionPower, transform.position);
+        }
     }
 }

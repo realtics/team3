@@ -44,12 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9d5194fce8da642a2073f196001b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userObject: {fileID: 0}
   bulletPref: {fileID: 5797233812644291545, guid: 07eb2e4ade597304a8639f02639dbfcb,
     type: 3}
   shootInterval: 0.5
   bulletToPeopleSize: 0.2
   bulletPoolCount: 30
-  bulletCount: 1000
+  bulletCount: 10
   shotPerOneBullet: 1
   gunSoundSource: {fileID: 5576794373524539854}
 --- !u!1 &3296169648752023043

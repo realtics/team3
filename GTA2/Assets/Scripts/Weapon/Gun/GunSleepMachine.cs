@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunSleepMachine : PlayerGun
 {
-    void Start()
+    public override void Init()
     {
         gunType = GunState.SleepMachinegun;
         bulletPoolCount = 50;

@@ -10,7 +10,9 @@ public class GunRocket : PlayerGun
     public int smokePoolCnt;
 
     int SmokeIdx = 0;
-    void Start()
+    
+    
+    public override void Init()
     {
         gunType = GunState.RocketLauncher;
         bulletPoolCount = 10;

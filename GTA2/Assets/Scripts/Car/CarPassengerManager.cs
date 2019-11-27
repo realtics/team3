@@ -17,12 +17,16 @@ public class CarPassengerManager : MonoBehaviour
     {
         carManager.OnDestroy += OnCarDestroy;
         carManager.OnReturnKeyDown += OnReturnKeyDown;
+        carManager.OnDriverGetOn += OnDriverGetOn;
+        carManager.OnDriverGetOff += OnDriverGetOff;
     }
 
     void OnDisable()
     {
         carManager.OnDestroy -= OnCarDestroy;
         carManager.OnReturnKeyDown -= OnReturnKeyDown;
+        carManager.OnDriverGetOn -= OnDriverGetOn;
+        carManager.OnDriverGetOff -= OnDriverGetOff;
     }
 
     void OnCarDestroy(bool sourceIsPlayer)
@@ -41,14 +45,14 @@ public class CarPassengerManager : MonoBehaviour
         }
     }
     
-    public void GetOnTheCar(People people)
+    public void GetOnTheCar(People people, int idx = 0)
     {
         if (carManager.carState == CarManager.CarState.destroied)
             return;
         isLeftDoorOpen = false;
-        passengers[0] = people;
-        passengers[0].GetComponent<Rigidbody>().isKinematic = true;
-        passengers[0].GetComponent<BoxCollider>().enabled = false;
+        passengers[idx] = people;
+        passengers[idx].GetComponent<Rigidbody>().isKinematic = true;
+        passengers[idx].GetComponent<BoxCollider>().enabled = false;
         people.GetComponentInChildren<SpriteRenderer>().enabled = false;
         people.transform.SetParent(transform);
 
@@ -57,11 +61,12 @@ public class CarPassengerManager : MonoBehaviour
             CameraController.Instance.ChangeTarget(gameObject);
             CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.car);
         }
-        carManager.OnDriverGetOnEvent(people);
+        carManager.OnDriverGetOnEvent(people, idx);
     }
 
     public IEnumerator GetOffTheCar(int idx)
     {
+        
         doorAnimator[idx].SetTrigger("Open");
         yield return new WaitForSeconds(0.5f);
         doorAnimator[idx].SetTrigger("Close");
@@ -71,8 +76,8 @@ public class CarPassengerManager : MonoBehaviour
         passengers[idx].transform.SetParent(null);
         passengers[idx].GetComponentInChildren<SpriteRenderer>().enabled = true;
 
-        passengers[0].GetComponent<Rigidbody>().isKinematic = false;
-        passengers[0].GetComponent<BoxCollider>().enabled = true;
+        passengers[idx].GetComponent<Rigidbody>().isKinematic = false;
+        passengers[idx].GetComponent<BoxCollider>().enabled = true;
         passengers[idx].isDriver = false;
         
         //passengers[idx].transform.position = doorPositions[idx].position;
@@ -85,7 +90,7 @@ public class CarPassengerManager : MonoBehaviour
 
         passengers[idx] = null;
 
-        carManager.OnDriverGetOffEvent();
+        carManager.OnDriverGetOffEvent(passengers[idx], idx);
     }
 
     public void PullOutDriver()//운전자 끌어내리기.
@@ -112,5 +117,15 @@ public class CarPassengerManager : MonoBehaviour
             //passengers[0].gameObject.transform.SetParent(GameObject.FindWithTag("SpawnManager"));
             //NPCSpawnManager.Instance.carDriverPool[0].Down();
         }
+    }
+
+    void OnDriverGetOn(People people, int idx)
+    {
+
+    }
+
+    void OnDriverGetOff(People people, int idx)
+    {
+
     }
 }

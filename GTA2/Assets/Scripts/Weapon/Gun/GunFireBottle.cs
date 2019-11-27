@@ -15,8 +15,7 @@ public class GunFireBottle : PlayerGun
     float intervalDelta;
     int smokeIdx = 0;
 
-
-    void Start()
+    public override void Init()
     {
         gunType = GunState.FireBottle;
 

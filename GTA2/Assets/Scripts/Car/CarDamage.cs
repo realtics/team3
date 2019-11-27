@@ -12,13 +12,14 @@ public class CarDamage : MonoBehaviour
 {
     public CarManager carManager;
 
-    public int maxHp = 100;
+    public int maxHp = 500;
     public int curHp;
     public float maxSpdMultiplier = 1.0f;
 
     void OnEnable()
     {
         curHp = maxHp;
+        maxSpdMultiplier = 1.0f;
 
         carManager.OnDamage += OnCarDamage;
         carManager.OnDestroy += OnCarDestroy;
@@ -37,7 +38,7 @@ public class CarDamage : MonoBehaviour
             other.CompareTag("NPCBullet"))
         {
             Bullet HitBullet = other.GetComponent<Bullet>();
-            other.gameObject.SetActive(false);
+            HitBullet.Explosion();
 
             DeductHp(HitBullet.bulletDamage, other.tag != "NPCBullet");
         }
@@ -48,7 +49,8 @@ public class CarDamage : MonoBehaviour
         if (col.transform.tag != "Wall" && col.transform.tag != "Car")
             return;
 
-        int force = (int)col.relativeVelocity.sqrMagnitude / 3;
+        int force = (int)col.relativeVelocity.sqrMagnitude / 2;
+
         if(force > 1)
         {
             DeductHp(force, false);
@@ -80,6 +82,9 @@ public class CarDamage : MonoBehaviour
 
     public void DeductHp(int amount, bool isDamagedByPlayer)
     {
+        if (curHp <= 0)
+            return;
+
         curHp -= amount;
         curHp = Mathf.Clamp(curHp, 0, maxHp);
 
@@ -95,11 +100,11 @@ public class CarDamage : MonoBehaviour
 
     void OnCarDamage(bool isDamagedByPlayer)
     {
-        if (curHp < 30)
+        if (curHp < 100)
         {
             maxSpdMultiplier = 0.5f;
         }
-        else if (curHp < 60)
+        else if (curHp < 200)
         {
             maxSpdMultiplier = 0.8f;
         }
@@ -134,6 +139,36 @@ public class CarDamage : MonoBehaviour
             {
                 GameManager.Instance.IncreaseWantedLevel(0.5f);
             }            
-        }            
+        }
+
+        CameraController.Instance.StartShake(0.3f, transform.position);
+        //Explode(isDamagedByPlayer);
+        StartCoroutine(Explode(isDamagedByPlayer));
+    }
+
+    IEnumerator Explode(bool isDamagedByPlayer)
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.8f);
+        foreach (var col in colliders)
+        {
+            if (col.gameObject == this)
+                continue;
+
+            if (col.tag != "NPC" && col.tag != "Car" && col.tag != "Player")
+                continue;
+
+            float dist = (col.transform.position - transform.position).magnitude;
+            dist /= 1.8f;
+
+            if(col.tag == "Car")
+            {
+                yield return new WaitForSeconds(0.1f);
+                col.GetComponent<CarDamage>().DeductHp((int)(1000 * (1 - dist)), isDamagedByPlayer);
+            }
+            else
+            {
+                col.GetComponent<People>().Hurt((int)(250 * (1 - dist)));
+            }            
+        }
     }
 }

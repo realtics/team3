@@ -70,9 +70,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1342552342983650091}
   - component: {fileID: 1342552342974206495}
-  - component: {fileID: -5473507111328649291}
   - component: {fileID: -1110922541649982334}
   - component: {fileID: -8364699842060992214}
+  - component: {fileID: 2953090833430294909}
   m_Layer: 0
   m_Name: BulletElectric
   m_TagString: PlayerBullet
@@ -199,19 +199,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!135 &-5473507111328649291
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342552342984028335}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Center: {x: 4, y: 0, z: 0}
 --- !u!114 &-1110922541649982334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,8 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa9537504fe4ef459b4b319604ffd9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 4
-  bulletLifeTime: 0.005
+  bulletDamage: 1
+  bulletLifeTime: 1
   bulletSpeed: 0
   explosionArea: 0
   explosionPref: {fileID: 0}
@@ -254,3 +241,17 @@ MonoBehaviour:
   Columns: 1
   AnimationMode: 3
   lineRenderer: {fileID: 1342552342974206495}
+--- !u!136 &2953090833430294909
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342552342984028335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 0.3
+  m_Direction: 1
+  m_Center: {x: 4, y: 0, z: 0}

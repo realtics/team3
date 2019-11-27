@@ -33,10 +33,9 @@ public class KillMission : QuestCondition
     }
 }
 
-// 누가 어디에 도착하는가.
+// 어디에 도착하는가.
 public class ArriveMission : QuestCondition
 {
-    public GameObject whoIsStart;
     public GameObject arrivePosTarget;
 
     public override bool CheckCondition()

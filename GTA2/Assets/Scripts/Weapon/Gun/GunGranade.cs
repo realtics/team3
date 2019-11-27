@@ -9,9 +9,8 @@ public class GunGranade : PlayerGun
 
 
     float intervalDelta;
-    
 
-    void Start()
+    public override void Init()
     {
         gunType = GunState.Granade;
         bulletPoolCount = 50;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4506803799218540964}
   - component: {fileID: 7051117049651222268}
-  - component: {fileID: -5914497354892182703}
+  - component: {fileID: 4139040173449420848}
   m_Layer: 0
   m_Name: BulletPunch
   m_TagString: PlayerPunch
@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881388531e0c226459303ea2234477ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 5
+  bulletDamage: 0
   bulletLifeTime: 0.3
   bulletSpeed: 0
   explosionArea: 0
   explosionPref: {fileID: 0}
---- !u!135 &-5914497354892182703
-SphereCollider:
+--- !u!136 &4139040173449420848
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -59,6 +59,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

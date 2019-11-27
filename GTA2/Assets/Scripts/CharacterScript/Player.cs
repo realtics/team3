@@ -17,7 +17,7 @@ public class Player : People
 
     PlayerPhysics playerPhysics;
     PlayerTimer playerTimer;
-    int defaultHp = 500;
+    int defaultHp = 200;
 
     Animator animator;
 
@@ -69,7 +69,10 @@ public class Player : People
             GameObject NewGun = Instantiate(item.gameObject);
             NewGun.transform.parent = transform;
             NewGun.SetActive(false);
-            gunTempList.Add(NewGun.GetComponent<PlayerGun>());
+
+            PlayerGun NewPlayerGun = NewGun.GetComponent<PlayerGun>();
+            NewPlayerGun.Init();
+            gunTempList.Add(NewPlayerGun);
         }
         gunList.Clear();
         gunList = gunTempList;
@@ -130,7 +133,6 @@ public class Player : People
             }
         }
     }
-    
     void TimerCheck()
     {
         if (isJump)
@@ -140,13 +142,15 @@ public class Player : People
             if (playerTimer.RespawnTimerCheck())
                 Respawn();
         }
-        if (isBusted && playerTimer.BustedTimerCheck())
+        if (isBusted && playerTimer.BustedTimerCheck() && !isDie)
         {
             isBusted = false;
         }
     }
     protected override void Die()
     {
+        if (isDie)
+            return;
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<BoxCollider>().enabled = false;
         hDir = 0;
@@ -182,6 +186,7 @@ public class Player : People
         else if (other.gameObject.CompareTag("NPCBullet"))
         {
             int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
+            other.gameObject.GetComponent<Bullet>().Explosion();
             isBusted = false;
 
             Hurt(bulletDamage);
@@ -376,18 +381,25 @@ public class Player : People
     {
         UIManager.Instance.HumanUIMode();
         GameManager.Instance.RespawnSetting();
-        gameObject.transform.SetParent(null);
         SetHpDefault();
+        isDriver = false;
         isDown = false;
         isWalk = false;
         isDie = false;
-        //isGetOffTheCar = false;
-        GetComponentInChildren<SpriteRenderer>().enabled = true;
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<BoxCollider>().enabled = true;
+        UIManager.Instance.TurnOffEndUI();
 
-        UIManager.Instance.TurnOffEndUI();
-        UIManager.Instance.TurnOffEndUI();
+        if (isBusted)
+        {
+            //Invoke("Down", 0.2f);
+        }
+        else
+        {
+            gameObject.transform.SetParent(null);
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<BoxCollider>().enabled = true;
+        }
+        
         print("Player Respawn");
     }
 
@@ -448,7 +460,7 @@ public class Player : People
     }
     public void SetChaseTargetCar()
     {
-        List<CarManager> activeCarList = CarSpawnManager.Instance.activeCarList;
+        List<CarManager> activeCarList = CarSpawnManager.Instance.normalCarList;
 
         //제일 가까운 차 가져오기
         float minDistance = 100.0f;

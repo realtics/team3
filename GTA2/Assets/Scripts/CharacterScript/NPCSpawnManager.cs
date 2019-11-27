@@ -10,7 +10,6 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 
     [Header("최초에는 ActiveList에 Pool의 오브젝트 삽입.")]
     public List<NPC> activeNPCList = new List<NPC>();
-    public List<NPC> deactiveNPCList = new List<NPC>();
 
     void Start()
     {
@@ -44,77 +43,6 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
     }
     //TODO : 이후 필요한 클래스로 매개변수 변경
 
-    /*
-IEnumerator ActiveObjects()
-{
-    while (true)
-    {
-        CheckDeactiveCitizen();
-        CheckDeactiveCar();
-
-        yield return new WaitForSeconds(1.0f);
-    }
-}
-IEnumerator DeactiveObjects()
-{
-    while (true)
-    {
-        CheckActiveCitizen();
-        CheckActiveCar();
-
-        yield return new WaitForSeconds(1.0f);
-    }
-}
-//TODO : 제네릭메소드로 변경
-void CheckDeactiveCitizen()
-{
-    List<NPC> tempRemoveCitizenList = new List<NPC>();
-
-    foreach (var citizen in deactiveNPCList)
-    {
-        if (!IsSpawnRange(citizen.transform.position) && !citizen.gameObject.activeSelf)
-        {
-            citizen.gameObject.SetActive(true);
-            activeNPCList.Add(citizen);
-            tempRemoveCitizenList.Add(citizen);
-        }
-    }
-    for(int i = 0; i < tempRemoveCitizenList.Count; i++)
-    {
-        NPC removeCitizen = tempRemoveCitizenList[i];
-        deactiveNPCList.Remove(removeCitizen);
-    }
-
-}
-void CheckActiveCitizen()
-{
-    List<NPC> tempRemoveCitizenList = new List<NPC>();
-    foreach (var citizen in activeNPCList)
-    {
-        if (IsSpawnRange(citizen.transform.position) && citizen.gameObject.activeSelf)
-        {
-            citizen.gameObject.SetActive(false);
-            deactiveNPCList.Add(citizen);
-            tempRemoveCitizenList.Add(citizen);
-        }
-    }
-    for (int i = 0; i < tempRemoveCitizenList.Count; i++)
-    {
-        NPC removeCitizen = tempRemoveCitizenList[i];
-        activeNPCList.Remove(removeCitizen);
-    }
-}
-
-
-public bool IsSpawnRange(Vector3 position)
-{
-    if (carSpawnRange < Vector3.Distance(position, player.transform.position))
-        return true;
-    else
-        return false;
-}
-*/
-
     void RespawnDisabledPeople()
     {
         foreach (var pop in activeNPCList)
@@ -127,7 +55,6 @@ public bool IsSpawnRange(Vector3 position)
             pop.transform.position = go.transform.position;
             pop.gameObject.SetActive(true);
 
-            //Debug.DrawLine(GameManager.Instance.player.transform.position, pop.transform.position, Color.red, 0.5f);
             break;
         }
     }

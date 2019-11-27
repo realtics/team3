@@ -15,10 +15,10 @@ public class Citizen : NPC
     float runawayTime = 5.0f;
 
     Rigidbody myRigidbody;
-    float minIdleTime = 2.0f;
-    float maxIdleTime = 5.0f;
-    float minWalkTime = 2.0f;
-    float maxWalkTime = 5.0f;
+    float minIdleTime = 0.3f;
+    float maxIdleTime = 1.0f;
+    float minWalkTime = 10.0f;
+    float maxWalkTime = 15.0f;
 
     Vector3 RunawayVector;
 
@@ -31,34 +31,47 @@ public class Citizen : NPC
     {
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
+        StartCoroutine(ActivityByState());
     }
     void Update()
     {
         animator.SetBool("isWalk", isWalk);
-        //animator.SetBool("isShot", isShot);
         animator.SetBool("isPunch", isPunch);
-        //animator.SetBool("isJump", isJump);
         animator.SetBool("isDie", isDie);
         animator.SetBool("isDown", isDown);
-        //animator.SetBool("isStealingCar", isStealingCar);
 
         base.NPCUpdate();
         if (isDie || isDown)
             return;
 
         TimerCheck();
-        ActivityByState();
     }
-    void ActivityByState()
+    private void FixedUpdate()
     {
+        if (isDie || isDown)
+            return;
         if (isRunaway)
         {
             base.RunAway();
         }
         else if (isWalk)
         {
-            base.Raycast();
             base.Move();
+        }
+    }
+    IEnumerator ActivityByState()
+    {
+        while(true)
+        {
+            if (isDie || isDown)
+                yield break;
+            
+            else if (isWalk)
+            {
+                base.Raycast();
+            }
+
+            yield return new WaitForSeconds(0.3f);
         }
     }
     void TimerCheck()
@@ -76,7 +89,8 @@ public class Citizen : NPC
     {
         patternChangeTimer = 0.0f;
         patternChangeInterval = runawayTime;
-        RunawayVector = new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z);
+        Vector3 playerPosition = GameManager.Instance.player.transform.position;
+        RunawayVector = new Vector3(playerPosition.x, transform.position.y, playerPosition.z);
         transform.LookAt(RunawayVector);
         transform.Rotate(0, 180, 0);
         isRunaway = true;
@@ -91,7 +105,7 @@ public class Citizen : NPC
             {
                 patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
                 isRunaway = false;
-                isWalk = false;
+                //isWalk = false;
             }
             else if (isWalk)
             {

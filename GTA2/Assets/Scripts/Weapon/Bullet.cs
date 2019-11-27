@@ -11,13 +11,14 @@ public class Bullet : MonoBehaviour
     public float bulletSpeed;
     public float explosionArea;
 
+    public AudioSource bulletSoundSource;
     public GameObject explosionPref;
 
     protected Vector3 bulletStartPos;
     protected Vector3 bulletDir;
     protected GunState bulletType;
 
-    protected SphereCollider myCollider;
+    protected CapsuleCollider myCollider;
     protected float bulletLifeDelta = .0f;
     protected float bulletArea;
 
@@ -29,7 +30,7 @@ public class Bullet : MonoBehaviour
 
     protected virtual void Start()
     {
-        myCollider = GetComponent<SphereCollider>();
+        myCollider = GetComponent<CapsuleCollider>();
         myCollider.isTrigger = true;
 
         bulletArea = myCollider.radius;
@@ -95,6 +96,11 @@ public class Bullet : MonoBehaviour
         if (explosionEffect != null)
         {
             explosionEffect.SetExplosion(transform.position);
+        }
+
+        if (bulletSoundSource != null)
+        {
+            bulletSoundSource.Play();
         }
     }
 

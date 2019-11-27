@@ -21,6 +21,7 @@ TagManager:
   - SpawnManager
   - NPCPunch
   - PlayerCar
+  - Ground
   layers:
   - Default
   - TransparentFX

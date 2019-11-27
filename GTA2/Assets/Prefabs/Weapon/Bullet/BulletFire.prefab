@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7079599344940869147}
-  - component: {fileID: 7079599344940869146}
   - component: {fileID: 5355283548673740291}
   - component: {fileID: 7079599344940869124}
   - component: {fileID: 3188997210512407124}
+  - component: {fileID: -7254516017709631810}
   m_Layer: 0
   m_Name: BulletFire
   m_TagString: PlayerFireBullet
@@ -34,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7079599344940869146
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7079599344940869127}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &5355283548673740291
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4510,7 +4497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71bb2fc392f691e4cb22d743341de705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 100
+  bulletDamage: 15
   bulletLifeTime: 1
   bulletSpeed: 3
   explosionArea: 0
@@ -4578,3 +4565,17 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!136 &-7254516017709631810
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7079599344940869127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.5, z: 0}
