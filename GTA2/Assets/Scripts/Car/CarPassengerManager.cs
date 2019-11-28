@@ -15,6 +15,7 @@ public class CarPassengerManager : MonoBehaviour
     
     void OnEnable()
     {
+        carManager.OnDamage += OnDamaged;
         carManager.OnDestroy += OnCarDestroy;
         carManager.OnReturnKeyDown += OnReturnKeyDown;
         carManager.OnDriverGetOn += OnDriverGetOn;
@@ -23,6 +24,7 @@ public class CarPassengerManager : MonoBehaviour
 
     void OnDisable()
     {
+        carManager.OnDamage -= OnDamaged;
         carManager.OnDestroy -= OnCarDestroy;
         carManager.OnReturnKeyDown -= OnReturnKeyDown;
         carManager.OnDriverGetOn -= OnDriverGetOn;
@@ -50,11 +52,9 @@ public class CarPassengerManager : MonoBehaviour
         if (carManager.carState == CarManager.CarState.destroied)
             return;
         isLeftDoorOpen = false;
+
         passengers[idx] = people;
-        passengers[idx].GetComponent<Rigidbody>().isKinematic = true;
-        passengers[idx].GetComponent<BoxCollider>().enabled = false;
-        people.GetComponentInChildren<SpriteRenderer>().enabled = false;
-        people.transform.SetParent(transform);
+        DriverSetting(idx, true);
 
         if (people == GameManager.Instance.player)
         {
@@ -64,61 +64,67 @@ public class CarPassengerManager : MonoBehaviour
         carManager.OnDriverGetOnEvent(people, idx);
     }
 
-    public IEnumerator GetOffTheCar(int idx)
+    public IEnumerator GetOffTheCar(int idx = 0)
     {
-        
         doorAnimator[idx].SetTrigger("Open");
         yield return new WaitForSeconds(0.5f);
         doorAnimator[idx].SetTrigger("Close");
+
         if (passengers[idx] == null)
             yield break;
 
-        passengers[idx].transform.SetParent(null);
-        passengers[idx].GetComponentInChildren<SpriteRenderer>().enabled = true;
-
-        passengers[idx].GetComponent<Rigidbody>().isKinematic = false;
-        passengers[idx].GetComponent<BoxCollider>().enabled = true;
-        passengers[idx].isDriver = false;
-        
-        //passengers[idx].transform.position = doorPositions[idx].position;
+        DriverSetting(idx, false);
 
         if (passengers[idx] == GameManager.Instance.player)
         {
             CameraController.Instance.ChangeTarget(passengers[idx].gameObject);
             CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
         }
-
         passengers[idx] = null;
 
         carManager.OnDriverGetOffEvent(passengers[idx], idx);
     }
-
+    
     public void PullOutDriver()//운전자 끌어내리기.
     {
         if (passengers[0] == GameManager.Instance.player)
         {
             passengers[0].transform.position = doorPositions[0].position;
             passengers[0].transform.SetParent(null);
-            passengers[0].Down();
             passengers[0].gameObject.SetActive(true);
+            passengers[0].Down();
         }
-        else
+        else //시민
         {
             GameManager.Instance.IncreaseWantedLevel(1.0f); // 임시.
             if(passengers[0] != null)
             {
-                passengers[0].gameObject.transform.SetParent(null);
-                passengers[0].gameObject.transform.position = doorPositions[0].position;
-                //new Vector3(doorPositions[0].position.x, 1, doorPositions[0].position.z);
-                passengers[0].gameObject.SetActive(true);
-                
+                DriverSetting(0, false);
                 passengers[0].Down();
+                DebugX.Log("차뺏기");
             }
-            //passengers[0].gameObject.transform.SetParent(GameObject.FindWithTag("SpawnManager"));
-            //NPCSpawnManager.Instance.carDriverPool[0].Down();
         }
     }
+    void DriverSetting(int idx, bool GetOn) //orGetoff
+    {
+        if (GetOn)
+        {
+            passengers[idx].GetComponent<Rigidbody>().isKinematic = true;
+            passengers[idx].GetComponent<BoxCollider>().enabled = false;
+            passengers[idx].GetComponentInChildren<SpriteRenderer>().enabled = false;
+            passengers[idx].transform.SetParent(transform);
+        }
+        else
+        {
+            passengers[idx].transform.position = doorPositions[0].transform.position;
+            passengers[idx].GetComponentInChildren<SpriteRenderer>().enabled = true;
+            passengers[idx].GetComponent<Rigidbody>().isKinematic = false;
+            passengers[idx].GetComponent<BoxCollider>().enabled = true;
+            passengers[idx].isDriver = false;
+            passengers[idx].transform.SetParent(null);
+        }
 
+    }
     void OnDriverGetOn(People people, int idx)
     {
 
@@ -127,5 +133,20 @@ public class CarPassengerManager : MonoBehaviour
     void OnDriverGetOff(People people, int idx)
     {
 
+    }
+
+    void OnDamaged(bool sourceIsPlayer)
+    {
+        if (carManager.movement.curSpeed < 20.0f)
+        {
+            if (passengers[0] == null)
+                return;
+            if (passengers[0] == GameManager.Instance.player)
+                return;
+                for (int i = 0; i < doorPositions.Length; i++)
+            {
+                StartCoroutine(GetOffTheCar(i));
+            }
+        }
     }
 }

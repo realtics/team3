@@ -96,6 +96,7 @@ public class CarDamage : MonoBehaviour
         {
             carManager.OnDamageEvent(isDamagedByPlayer);
         }
+
     }
 
     void OnCarDamage(bool isDamagedByPlayer)
@@ -148,7 +149,7 @@ public class CarDamage : MonoBehaviour
 
     IEnumerator Explode(bool isDamagedByPlayer)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.8f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2f);
         foreach (var col in colliders)
         {
             if (col.gameObject == this)
@@ -158,16 +159,16 @@ public class CarDamage : MonoBehaviour
                 continue;
 
             float dist = (col.transform.position - transform.position).magnitude;
-            dist /= 1.8f;
+            dist /= 2f;
 
             if(col.tag == "Car")
             {
                 yield return new WaitForSeconds(0.1f);
-                col.GetComponent<CarDamage>().DeductHp((int)(1000 * (1 - dist)), isDamagedByPlayer);
+                col.GetComponent<CarDamage>().DeductHp((int)(1500 * (1 - dist)), isDamagedByPlayer);
             }
             else
             {
-                col.GetComponent<People>().Hurt((int)(250 * (1 - dist)));
+                col.GetComponent<People>().Hurt((int)(150 * (1 - dist)));
             }            
         }
     }

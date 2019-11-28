@@ -18,7 +18,7 @@ public class FloatingScoreText : MonoBehaviour
 
     // Start is called before the first frame update
     Vector3 originScale;
-    TextMesh myTextMesh;
+    TextMesh textMesh;
     float activeDelta;
 
 
@@ -43,13 +43,13 @@ public class FloatingScoreText : MonoBehaviour
 
     void SetTextMesh(int scoreValue)
     {
-        if (myTextMesh == null)
+        if (textMesh == null)
         {
-            myTextMesh = GetComponent<TextMesh>();
+            textMesh = GetComponent<TextMesh>();
         }
 
-        myTextMesh.color = RandomColor();
-        myTextMesh.text = scoreValue.ToString();
+        textMesh.color = RandomColor();
+        textMesh.text = scoreValue.ToString();
     }
 
     void Update()
@@ -71,7 +71,7 @@ public class FloatingScoreText : MonoBehaviour
     void UpdateText()
     {
         transform.localScale += Vector3.one * Time.deltaTime * scaleSpeed;
-        myTextMesh.color -= new Color(.0f, .0f, .0f, Time.deltaTime * colorSpeed);
+        textMesh.color -= new Color(.0f, .0f, .0f, Time.deltaTime * colorSpeed);
     }
 
 

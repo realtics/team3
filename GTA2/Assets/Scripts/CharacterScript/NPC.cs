@@ -8,14 +8,11 @@ public abstract class NPC : People
     //HumanCtr스크립트 참조 코드
     RaycastHit hit;
     float distToObstacle = Mathf.Infinity;
-    
     protected Vector3 destination;
     public LayerMask collisionLayer;
     public bool isDestReached;
 
     protected float findRange = 10.0f;
-    protected float downTimer = 0.0f;
-    protected float downTime = 3.0f;
 
     //sqrMagnitude 사용해서 제곱함.
     protected float punchRange = 0.08f;
@@ -23,48 +20,19 @@ public abstract class NPC : People
     protected float chaseRange = 9.0f;
     protected float outofRange = 400.0f;
 
-    float respawnTimer = 0.0f;
-    float respawnTime = 5.0f;
+   
     protected int money = 10; //사망시 플레이어에게 주는 돈
 
     void OnEnable()
     {
-        StartCoroutine(DisableIfOutOfCamera());
+        //StartCoroutine(DisableIfOutOfCamera());
     }
 
     void OnDisable()
     {
         StopAllCoroutines();
     }
-
-    public abstract void Respawn();
-    protected void NPCUpdate()
-    {
-        if(isDown)
-        {
-            downTimer += Time.deltaTime;
-
-            if(downTimer > downTime)
-            {
-                downTimer = 0;
-                isDown = false;
-                Rising();
-            }
-        }
-        else if(isDie)
-        {
-            respawnTimer += Time.deltaTime;
-
-            if (respawnTimer > respawnTime)
-            {
-                respawnTimer = 0;
-                isDie = false;
-
-                Respawn();
-            }
-        }
-    }
-    
+        
     protected bool DectectedPlayerAttack()
     {
         if (GameManager.Instance.player.isAttack &&
@@ -220,15 +188,15 @@ public abstract class NPC : People
     {
         while (true)
         {
+            yield return new WaitForSeconds(1.0f);
+
             Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
             float offset = 3f;
             if (pos.x < 0 - offset ||
                 pos.x > 1 + offset ||
                 pos.y < 0 - offset ||
                 pos.y > 1 + offset)
-                gameObject.SetActive(false);
-
-            yield return new WaitForSeconds(1.0f);
+                gameObject.SetActive(false);            
         }
     }
 }

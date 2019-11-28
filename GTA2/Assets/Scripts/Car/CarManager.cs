@@ -36,8 +36,7 @@ public class CarManager : MonoBehaviour
 
     void OnEnable()
     {
-        if(carState == CarState.destroied)
-            carState = CarState.controlledByAi;
+        carState = CarState.controlledByAi;
 
         StopAllCoroutines();
         StartCoroutine(DisableIfOutOfCamera());

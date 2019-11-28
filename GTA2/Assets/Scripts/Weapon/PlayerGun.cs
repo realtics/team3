@@ -20,6 +20,17 @@ public class PlayerGun : Gun
         base.InitGun();
     }
 
+    public void ResetBulletCount()
+    {
+        if (gunType == GunState.None)
+        {
+            bulletCount = 1;
+        }
+        else
+        {
+            bulletCount = 0;
+        }
+    }
 
     protected override void Update()
     {
@@ -28,6 +39,7 @@ public class PlayerGun : Gun
             return;
         }
 
+        UpdateBulletCount();
         UpdateDirection();
         UpdateDelta();
         UpdateKeyInput();
@@ -44,7 +56,14 @@ public class PlayerGun : Gun
 
 
 
-
+    void UpdateBulletCount()
+    {
+     
+        if (bulletCount <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     protected void UpdateKeyInput()
     {
         if (Input.GetKey(KeyCode.A))
@@ -61,7 +80,7 @@ public class PlayerGun : Gun
     {
         if (isKeyShot || isButtonShot)
         {
-            if (shootInterval < shootDelta)
+            if (shootInterval < shootDelta && bulletCount > 0)
             {
                 ShootSingleBullet(userObject.transform.position);
                 MinusPlayerBulletCount();

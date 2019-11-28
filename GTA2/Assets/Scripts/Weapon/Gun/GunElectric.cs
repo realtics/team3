@@ -22,7 +22,7 @@ public class GunElectric : PlayerGun
         noneTargetObjectList = new List<GameObject>();
         activeElectricList = new List<BulletElectric>();
 
-        foreach (var citizen in NPCSpawnManager.Instance.activeNPCList)
+        foreach (var citizen in NPCSpawnManager.Instance.activeCitizenList)
         {
             if (citizen == null)
             {
@@ -38,6 +38,15 @@ public class GunElectric : PlayerGun
                 continue;
             }
             objectList.Add(car.gameObject);
+        }
+
+        foreach (var policeCar in CarSpawnManager.Instance.policeCarList)
+        {
+            if (policeCar == null)
+            {
+                continue;
+            }
+            objectList.Add(policeCar.gameObject);
         }
 
         InitGun();
@@ -101,7 +110,6 @@ public class GunElectric : PlayerGun
         foreach (var target in targetObjects)
         {
             BulletElectric fireBullet = (BulletElectric)Shoot(userObject.transform.position);
-            MinusPlayerBulletCount();
             fireBullet.SetTarget(target);
             activeBulletList.Add(fireBullet);
             activeElectricList.Add(fireBullet);
@@ -111,6 +119,7 @@ public class GunElectric : PlayerGun
 
         if (activeElectricList.Count != 0)
         {
+            MinusPlayerBulletCount();
             SFXPlay();
         }
 

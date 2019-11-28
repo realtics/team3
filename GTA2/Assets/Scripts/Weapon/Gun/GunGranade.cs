@@ -33,7 +33,7 @@ public class GunGranade : PlayerGun
             isPrevShot = false;
         }
 
-        else if (!isKeyShot && !isPrevShot)
+        else if (!isKeyShot && !isPrevShot) 
         {
             isPrevShot = true;
 

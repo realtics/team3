@@ -55,7 +55,7 @@ public class Police : NPC
         animator.SetBool("isDown", isDown);
         animator.SetBool("isGetOnTheCar", isGetOnTheCar);
 
-        base.NPCUpdate();
+        base.PeopleUpdate();
         if (isDie || isDown)
             return;
         TimerCheck();
@@ -73,6 +73,7 @@ public class Police : NPC
             else
             {
                 isShot = false;
+                gunList[0].GetComponent<NPCGun>().StopShot();
                 ChasePlayerCharacter();
             }
         }
@@ -133,9 +134,11 @@ public class Police : NPC
                     //플레이어 끌어내리기
                     if (CarOpenTimerCheck())
                     {
+                        //player가 타고있는 차
+
                         GameManager.Instance.player.GetOffTheCar();
-                        GameManager.Instance.player.isDown = true;
-                        GameManager.Instance.player.isBusted = true;
+                        GameManager.Instance.player.Down();
+                        //GameManager.Instance.player.isBusted = true;
                         GameManager.Instance.player.isDriver = false;
                     }
                     else

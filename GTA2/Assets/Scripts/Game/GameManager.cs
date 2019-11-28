@@ -115,7 +115,7 @@ public class GameManager : MonoSingleton<GameManager>
             player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
         }
         CarSpawnManager.Instance.CarPositionInit();
-        NPCSpawnManager.Instance.NPCPositionInit();
+        NPCSpawnManager.Instance.CitizenPositionInit();
         //카메라 위치 조정
         CameraController.Instance.ChangeTarget(player.gameObject);
         
@@ -139,6 +139,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             // 수배레벨이 증가함.
             UIManager.Instance.SetPoliceLevel((int)wantedLevel);
+            CarSpawnManager.Instance.SpawnPoliceCar();
         }
     }
 

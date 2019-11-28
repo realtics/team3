@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     protected Vector3 bulletDir;
     protected GunState bulletType;
 
-    protected CapsuleCollider myCollider;
+    protected CapsuleCollider collider;
     protected float bulletLifeDelta = .0f;
     protected float bulletArea;
 
@@ -30,10 +30,10 @@ public class Bullet : MonoBehaviour
 
     protected virtual void Start()
     {
-        myCollider = GetComponent<CapsuleCollider>();
-        myCollider.isTrigger = true;
+        collider = GetComponent<CapsuleCollider>();
+        collider.isTrigger = true;
 
-        bulletArea = myCollider.radius;
+        bulletArea = collider.radius;
 
         if (explosionPref != null)
         {
@@ -57,9 +57,9 @@ public class Bullet : MonoBehaviour
         isLife = true;
         bulletActiveDelta = .0f;
 
-        if (myCollider != null)
+        if (collider != null)
         {
-            myCollider.radius = bulletArea;
+            collider.radius = bulletArea;
         }
     }
 
@@ -86,9 +86,9 @@ public class Bullet : MonoBehaviour
 
     public virtual void Explosion()
     {
-        if (myCollider != null)
+        if (collider != null)
         {
-            myCollider.radius = explosionArea;
+            collider.radius = explosionArea;
         }
 
         isLife = false;

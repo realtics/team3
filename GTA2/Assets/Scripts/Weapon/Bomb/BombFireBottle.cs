@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombFireBottle : Bullet
 {
     // Start is called before the first frame update
-    public Rigidbody myRigidBody;
+    public Rigidbody rigidBody;
     public float yLaunchPos;
     public float yLaunchPower;
 
@@ -32,8 +32,8 @@ public class BombFireBottle : Bullet
         Vector3 newVec3 = bulletDir * bulletSpeed * forceValue;
         newVec3.y = yLaunchPower;
 
-        myRigidBody.velocity = Vector3.zero;
-        myRigidBody.AddForce(newVec3, ForceMode.Impulse);
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.AddForce(newVec3, ForceMode.Impulse);
     }
 
 

@@ -27,7 +27,7 @@ public class Doctor : NPC
         //죽으면 대기
         if (doctorState == DOCTORSTATE.DIE)
             return;
-        base.NPCUpdate();
+        base.PeopleUpdate();
         anim.SetInteger("DoctorState", (int)doctorState);
         TimerCheck();
         ActivityByState();

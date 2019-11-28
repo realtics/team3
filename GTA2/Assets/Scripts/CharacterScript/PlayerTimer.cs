@@ -15,6 +15,7 @@ public class PlayerTimer : MonoBehaviour
     float carOpenTimer = 0.0f;
     float bustedCheckTime = 3.0f;
     float bustedCheckTimer = 3.0f;
+
     void Start()
     {
         

@@ -7,11 +7,11 @@ public class BulletElectric : Bullet
     // Start is called before the first frame update
 
     [SerializeField]
-    DigitalRuby.LightningBolt.LightningBoltScript myLightning;
+    DigitalRuby.LightningBolt.LightningBoltScript lightning;
     
 
     Vector3 targetToVector;
-    GameObject myTarget;
+    GameObject targetObject;
     float electricWaveArea;
 
 
@@ -19,7 +19,7 @@ public class BulletElectric : Bullet
     protected override void Start()
     {
         base.Start();
-        myLightning.Started();
+        lightning.Started();
     }
 
     public override void SetBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
@@ -38,17 +38,17 @@ public class BulletElectric : Bullet
     {
         if (obj != null)
         {
-            myTarget = obj;
+            targetObject = obj;
         }
 
-        if (myTarget == null)
+        if (targetObject == null)
         {
             return;
         }
 
 
         targetToVector =
-            myTarget.gameObject.transform.position -
+            targetObject.gameObject.transform.position -
             gameObject.transform.position;
 
         SetScale(targetToVector);
@@ -57,8 +57,8 @@ public class BulletElectric : Bullet
 
 
         // 이렇게 두번 해야 라인랜더러가 안 겹친다... - 이전 상태에서 최신화가 된다.
-        myLightning.Updated();
-        myLightning.Updated();
+        lightning.Updated();
+        lightning.Updated();
     }
 
 
@@ -90,7 +90,7 @@ public class BulletElectric : Bullet
     }
     void SetRotate()
     {
-        gameObject.transform.LookAt(myTarget.transform, Vector3.up);
+        gameObject.transform.LookAt(targetObject.transform, Vector3.up);
         gameObject.transform.localEulerAngles += Vector3.up * 270.0f;
     }
     void SetPosition(Vector3 targetToVector)
@@ -104,6 +104,6 @@ public class BulletElectric : Bullet
     public override void Explosion()
     {
         base.Explosion();
-        myTarget = null;
+        targetObject = null;
     }
 }

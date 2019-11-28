@@ -45,8 +45,8 @@ public class Item : MonoBehaviour
     [SerializeField]
     Sprite[] spriteAnimation;
 
-    SpriteRenderer mySpriteRender;
-    SphereCollider mySphereCollider;
+    SpriteRenderer spriteRender;
+    SphereCollider sphereCollider;
     float animationTime = .3f;
     float animationDelta = .0f;
     int aniIdx = 0;
@@ -55,8 +55,8 @@ public class Item : MonoBehaviour
     Player userPlayer;
     void Start()
     {
-        mySpriteRender = GetComponent<SpriteRenderer>();
-        mySphereCollider = GetComponent<SphereCollider>();
+        spriteRender = GetComponent<SpriteRenderer>();
+        sphereCollider = GetComponent<SphereCollider>();
         userPlayer = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
@@ -80,7 +80,7 @@ public class Item : MonoBehaviour
             aniIdx = 0;
         }
 
-        mySpriteRender.sprite = spriteAnimation[aniIdx];
+        spriteRender.sprite = spriteAnimation[aniIdx];
     }
 
     void UpdateRespawn()
@@ -96,15 +96,15 @@ public class Item : MonoBehaviour
 
     void ActiveOn()
     {
-        mySpriteRender.enabled = true;
-        mySphereCollider.enabled = true;
+        spriteRender.enabled = true;
+        sphereCollider.enabled = true;
     }
 
     void ActiveOff()
     {
         RespawnDelta = .0f;
-        mySpriteRender.enabled = false;
-        mySphereCollider.enabled = false;
+        spriteRender.enabled = false;
+        sphereCollider.enabled = false;
     }
 
     void OnTriggerEnter(Collider collision)

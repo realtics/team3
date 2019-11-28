@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class MoneyText : MonoBehaviour
 {
-    Text myText;
+    Text text;
 
     // Start is called before the first frame update
     void Start()
     {
-        myText = GetComponent<Text>();
+        text = GetComponent<Text>();
     }
 
     public void SetMoney(int Money)
     {
-        myText.text = "$" + Money;
+        text.text = "$" + Money;
     }
 }

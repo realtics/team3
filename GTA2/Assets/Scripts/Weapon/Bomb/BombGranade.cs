@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombGranade : Bullet
 {
     // Start is called before the first frame update
-    public Rigidbody myRigidBody;
+    public Rigidbody rigidBody;
     public float yLaunchPos;
     public float yLaunchPower;
 
@@ -16,14 +16,14 @@ public class BombGranade : Bullet
     {
         base.Start();
         bulletDeActiveTime = .1f;
-        myCollider.isTrigger = false;
+        collider.isTrigger = false;
     }
 
 
     // Update is called once per frame
     public override void SetBullet(GunState type, Vector3 pos, Vector3 dir, float bullettoSize)
     {
-        myCollider.isTrigger = false;
+        collider.isTrigger = false;
         base.SetBullet(type, pos, dir, bullettoSize);
         transform.position += Vector3.up * yLaunchPos;
     }
@@ -33,13 +33,13 @@ public class BombGranade : Bullet
         Vector3 NewVec3 = bulletDir * bulletSpeed * forceValue;
         NewVec3.y = yLaunchPower;
 
-        myRigidBody.velocity = Vector3.zero;
-        myRigidBody.AddForce(NewVec3, ForceMode.Impulse);
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.AddForce(NewVec3, ForceMode.Impulse);
     }
 
     public override void Explosion()
     {
-        myCollider.isTrigger = true;
+        collider.isTrigger = true;
         base.Explosion();
         CameraController.Instance.StartShake(explosionPower, transform.position);
 

@@ -26,7 +26,7 @@ public class CarAi : MonoBehaviour
 
     void Start()
     {
-        SetAiMaxSpeedMultiplier();
+       SetAiMaxSpeedMultiplier();
     }
 
     void OnEnable()

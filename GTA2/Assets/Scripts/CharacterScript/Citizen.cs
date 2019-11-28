@@ -7,14 +7,13 @@ public class Citizen : NPC
 {
     public Animator animator;
     public bool isRunaway { get; set; }
-
-    [SerializeField]
+        [SerializeField]
     float patternChangeTimer;
     [SerializeField]
     float patternChangeInterval;
     float runawayTime = 5.0f;
 
-    Rigidbody myRigidbody;
+    Rigidbody rigidbody;
     float minIdleTime = 0.3f;
     float maxIdleTime = 1.0f;
     float minWalkTime = 10.0f;
@@ -24,7 +23,7 @@ public class Citizen : NPC
 
     void Awake()
     {
-        myRigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -32,6 +31,13 @@ public class Citizen : NPC
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
         StartCoroutine(ActivityByState());
+        
+        if(isDriver)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<BoxCollider>().enabled = false;
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+        }
     }
     void Update()
     {
@@ -40,7 +46,7 @@ public class Citizen : NPC
         animator.SetBool("isDie", isDie);
         animator.SetBool("isDown", isDown);
 
-        base.NPCUpdate();
+        base.PeopleUpdate();
         if (isDie || isDown)
             return;
 

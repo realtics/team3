@@ -72,9 +72,9 @@ public class CarPathManager : MonoBehaviour
     {
         Vector3 dir = (curDestPos - transform.position);
         dir.y = 0;
-        float dist = dir.magnitude;
+        float dist = dir.sqrMagnitude;
 
-        if (dist < 0.5f)
+        if (dist < 0.5f * 0.5f)
         {
             curWaypoint = destWaypoint;
             SetRandomDestWaypoint();

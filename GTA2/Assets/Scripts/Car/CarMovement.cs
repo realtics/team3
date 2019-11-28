@@ -13,6 +13,7 @@ public class CarMovement : MonoBehaviour
     public float maxSpeed;
     public float curSpeed;
     public float rotSpeed;
+    public float acceleration;
 
     Vector3[] oldForwards = new Vector3[20];
     Vector3 reboundForce = Vector3.zero;
@@ -51,7 +52,7 @@ public class CarMovement : MonoBehaviour
     {
         reboundForce *= 0.85f;
 
-        curSpeed += 100 * carManager.input.GetInputV() * Time.deltaTime;
+        curSpeed += acceleration * carManager.input.GetInputV() * Time.deltaTime;
 
         if (carManager.input.GetInputV() == 0)
         {
@@ -126,7 +127,6 @@ public class CarMovement : MonoBehaviour
             if (col.gameObject.GetComponent<People>().isDown)
             {
                 col.gameObject.GetComponent<People>().Hurt(500);
-                print("뚜쉬");
             }
         }
     }

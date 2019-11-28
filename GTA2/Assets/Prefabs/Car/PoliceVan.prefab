@@ -5118,9 +5118,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 33751798998058349}
-  maxSpeed: 300
+  maxSpeed: 380
   curSpeed: 0
   rotSpeed: 250
+  acceleration: 100
 --- !u!114 &8845598254965877513
 MonoBehaviour:
   m_ObjectHideFlags: 0

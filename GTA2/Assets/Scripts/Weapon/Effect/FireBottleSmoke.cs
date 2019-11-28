@@ -6,8 +6,8 @@ public class FireBottleSmoke : BulletEffect
 {
     public void SetTargetbullet(GameObject target)
     {
-        myParticle = GetComponent<ParticleSystem>();
-        myParticle.Play();
+        particle = GetComponent<ParticleSystem>();
+        particle.Play();
         gameObject.SetActive(true);
         bulletTarget = target;
         releaseDelta = .0f;

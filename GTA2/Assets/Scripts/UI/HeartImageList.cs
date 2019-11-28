@@ -64,7 +64,7 @@ public class HeartImageList : MonoBehaviour
         int lastHeart = ((lastHeartValue * 2) / oneHeartHp );
 
         // 하트가 반개
-        if (lastHeart == 0)
+        if (lastHeart == 0 && heartCount <= heartImgList.Length)
         {
             heartImgList[heartCount].rectTransform.localScale = new Vector3(.7f, .7f, .7f);
         }

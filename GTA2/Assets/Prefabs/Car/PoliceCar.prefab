@@ -43908,6 +43908,7 @@ MonoBehaviour:
   maxSpeed: 400
   curSpeed: 0
   rotSpeed: 250
+  acceleration: 300
 --- !u!114 &3142805350844273554
 MonoBehaviour:
   m_ObjectHideFlags: 0

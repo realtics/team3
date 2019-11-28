@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class PoliceLevelImage : MonoBehaviour
 {
     [SerializeField]
-    Sprite[] mySprites;
-    Image myImage;
-    RectTransform myRectTransform;
+    Sprite[] sprites;
+    [SerializeField]
+    Image image;
+    [SerializeField]
+    RectTransform rectTransform;
 
 
     float moveHeightMaxSize = 25.0f;
@@ -21,12 +23,10 @@ public class PoliceLevelImage : MonoBehaviour
     int spriteChangeIndex;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        myImage = GetComponent<Image>();
         spriteChangeIndex = 0;
-        myRectTransform = GetComponent<RectTransform>();
-        originYPos = myRectTransform.rect.y;
+        originYPos = rectTransform.rect.y;
         trueIsUp = true;
     }
 
@@ -45,19 +45,19 @@ public class PoliceLevelImage : MonoBehaviour
         spriteChangeDelta = .0f;
         spriteChangeIndex++;
 
-        if (mySprites.Length <= spriteChangeIndex)
+        if (sprites.Length <= spriteChangeIndex)
         {
             spriteChangeIndex = 0;
         }
 
-        myImage.sprite = mySprites[spriteChangeIndex];
+        image.sprite = sprites[spriteChangeIndex];
     }
 
     void SetLevel(bool value)
     {
         if (!value)
         {
-            myImage.sprite = null;
+            image.sprite = null;
         }
     }
 }

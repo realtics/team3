@@ -6,7 +6,7 @@ public class BulletEffect : MonoBehaviour
 {
     // Start is called before the first frame update
     protected GameObject bulletTarget = null;
-    protected ParticleSystem myParticle = null;
+    protected ParticleSystem particle = null;
 
     // Start is called before the first frame update
     protected float releaseTime = 3.0f;
@@ -15,8 +15,8 @@ public class BulletEffect : MonoBehaviour
 
     protected virtual void Start()
     {
-        myParticle = GetComponent<ParticleSystem>();
-        myParticle.Play();
+        particle = GetComponent<ParticleSystem>();
+        particle.Play();
     }
 
 
@@ -59,11 +59,11 @@ public class BulletEffect : MonoBehaviour
         releaseDelta += Time.deltaTime;
         if (releaseDelta > stopTime)
         {
-            myParticle.Stop();
+            particle.Stop();
         }
         if (releaseDelta > releaseTime)
         {
-            myParticle.Stop();
+            particle.Stop();
             gameObject.SetActive(false);
             bulletTarget = null;
         }

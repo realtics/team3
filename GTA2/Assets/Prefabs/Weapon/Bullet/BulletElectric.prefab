@@ -215,8 +215,9 @@ MonoBehaviour:
   bulletLifeTime: 1
   bulletSpeed: 0
   explosionArea: 0
+  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
-  myLightning: {fileID: -8364699842060992214}
+  lightning: {fileID: -8364699842060992214}
 --- !u!114 &-8364699842060992214
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,11 +24,14 @@ public abstract class People : MonoBehaviour
     public bool isJump { get; set; }
     public bool isDown { get; set; }
     public bool isDie { get; set; }
-    public bool isDriver { get; set; }
+    public bool isDriver;
     public abstract void Down();
     public abstract void Rising();
     protected abstract void Die();
-
+    protected float downTimer = 0.0f;
+    protected float downTime = 3.0f;
+    float respawnTimer = 0.0f;
+    float respawnTime = 5.0f;
     protected virtual void Move()
     {
         Vector3 Pos = transform.position;
@@ -42,7 +45,7 @@ public abstract class People : MonoBehaviour
     {
         if (isDown)
         {
-            hp = 0;
+            hp -= damage * 2;
         }
         else
             hp -= damage;
@@ -53,6 +56,33 @@ public abstract class People : MonoBehaviour
             isDie = true;
         }
     }
+    public void PeopleUpdate()
+    {
+        if (isDown)
+        {
+            downTimer += Time.deltaTime;
+
+            if (downTimer > downTime)
+            {
+                downTimer = 0;
+                isDown = false;
+                Rising();
+            }
+        }
+        else if (isDie)
+        {
+            respawnTimer += Time.deltaTime;
+
+            if (respawnTimer > respawnTime)
+            {
+                respawnTimer = 0;
+                isDie = false;
+
+                Respawn();
+            }
+        }
+    }
+    public abstract void Respawn();
     protected void RunOver()
     {
 

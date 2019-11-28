@@ -15,16 +15,15 @@ public class GetItemText : MonoBehaviour
     Sprite[] activeItemTexts;
     [SerializeField]
     Sprite[] weaponItemTexts;
+    [SerializeField]
+    Image image;
 
-
-    Image myImage;
     float turnOnDel;
 
     // Start is called before the first frame update
     void Start()
     {
-        myImage = GetComponent<Image>();
-        myImage.enabled = false;
+        image.enabled = false;
         turnOnDel = .0f;
     }
 
@@ -34,7 +33,7 @@ public class GetItemText : MonoBehaviour
         turnOnDel += Time.deltaTime;
         if (turnOnDel > turnOnTime)
         {
-            myImage.enabled = false;
+            image.enabled = false;
         }
     }
 
@@ -45,26 +44,26 @@ public class GetItemText : MonoBehaviour
             itemState < ItemStatus.ActiveItemEndIndex)
         {
             itemIDX -= (int)ItemStatus.ActiveItemStartIndex + 1;
-            myImage.sprite = activeItemTexts[itemIDX];
+            image.sprite = activeItemTexts[itemIDX];
         }
         else if (
             itemState > ItemStatus.GunStartIndex &&
             itemState < ItemStatus.GunEndIndex)
         {
             itemIDX -= (int)ItemStatus.GunStartIndex + 1;
-            myImage.sprite = weaponItemTexts[itemIDX];
+            image.sprite = weaponItemTexts[itemIDX];
         }
 
 
 
         turnOnDel = .0f;
-        myImage.enabled = true;
+        image.enabled = true;
 
 
         // 종횡비를 맞춰서 이미지를 늘린다.
-        float plusSize = heightSize / myImage.sprite.rect.height;
-        myImage.rectTransform.sizeDelta = new Vector2(
-            myImage.sprite.rect.width * plusSize,
+        float plusSize = heightSize / image.sprite.rect.height;
+        image.rectTransform.sizeDelta = new Vector2(
+            image.sprite.rect.width * plusSize,
             heightSize);
     }
 }

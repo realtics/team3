@@ -52,7 +52,6 @@ public abstract class Gun : MonoBehaviour
 
     public virtual void Init()
     {
-
     }
 
 
@@ -156,7 +155,7 @@ public abstract class Gun : MonoBehaviour
     {
         if (isShot)
         {
-            if (shootInterval < shootDelta)
+            if (shootInterval < shootDelta && bulletCount > 0)
             {
                 ShootSingleBullet(userObject.transform.position);
                 shootDelta = .0f;

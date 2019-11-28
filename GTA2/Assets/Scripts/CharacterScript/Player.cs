@@ -10,7 +10,7 @@ public class Player : People
     public bool isBusted { get; set; }
     public bool isAttack { get; set; }
     
-    CarManager targetCar;
+    public CarManager targetCar { get; set; }
     float playerMoveSpeed = 2.0f;
     public GunState curGunIndex { get; set; }
     public List<PlayerGun> gunList;
@@ -36,6 +36,7 @@ public class Player : People
 
     void Update()
     {
+        base.PeopleUpdate();
         AnimateUpdate();
 
         if (IsStuckedAnimation() || isDriver)
@@ -144,7 +145,17 @@ public class Player : People
         }
         if (isBusted && playerTimer.BustedTimerCheck() && !isDie)
         {
+            ResetGunBullet();
             isBusted = false;
+        }
+    }
+
+    // 주석 - Busted 시 전체 총알 리셋
+    void ResetGunBullet()
+    {
+        foreach (var item in gunList)
+        {
+            item.ResetBulletCount();
         }
     }
     protected override void Die()
@@ -377,7 +388,7 @@ public class Player : People
         gunList[(int)curGunIndex].gameObject.SetActive(true);
         Debug.Log(curGunIndex);
     }
-    public void Respawn()
+    public override void Respawn()
     {
         UIManager.Instance.HumanUIMode();
         GameManager.Instance.RespawnSetting();
@@ -460,12 +471,13 @@ public class Player : People
     }
     public void SetChaseTargetCar()
     {
-        List<CarManager> activeCarList = CarSpawnManager.Instance.normalCarList;
+        List<CarManager> activeCitizenCarList = CarSpawnManager.Instance.normalCarList;
+        List<CarManager> activePoliceCarList = CarSpawnManager.Instance.policeCarList;
 
         //제일 가까운 차 가져오기
         float minDistance = 100.0f;
 
-        foreach (var car in activeCarList)
+        foreach (var car in activeCitizenCarList)
         {
             if (minDistance > Vector3.Distance(car.transform.position, transform.position))
             {
@@ -477,6 +489,19 @@ public class Player : People
                 minDistance = Vector3.Distance(car.transform.position, transform.position);
             }
         }
+        foreach (var car in activeCitizenCarList)
+        {
+            if (minDistance > Vector3.Distance(car.transform.position, transform.position))
+            {
+                if (car.carState == CarManager.CarState.destroied)
+                    continue;
+
+                targetCar = car;
+                playerPhysics.SetCarDoorTransform(targetCar.passengerManager.doorPositions[0]);
+                minDistance = Vector3.Distance(car.transform.position, transform.position);
+            }
+        }
+
         if (Vector3.Distance(transform.position, targetCar.transform.position) < 5)
         {
             isChasingCar = true;
