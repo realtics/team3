@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerPhysics : MonoBehaviour
 {
-    [Header("이 오브젝트와 충돌할 레이어")]
-    public LayerMask collisionLayer;
     Rigidbody myRigidBody;
-    RaycastHit hit;
+    
     Transform carDoorTransform;
 
     void Start()
@@ -21,22 +19,16 @@ public class PlayerPhysics : MonoBehaviour
             GameManager.Instance.player.Jump();
         }
     }
-    public bool IsCarExistBelow()
-    {
-        if (Physics.Raycast(transform.position, transform.up * -1, out hit, 1f, collisionLayer)
-            && hit.transform.CompareTag("Car"))
-            return true;
-        else
-            return false;
-    }
+    
     public void ChaseTheCar(float moveSpeed)
     {
         myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
     }
     public void MovePositionByInput(float hDir, float vDir, float moveSpeed)
     {
-        transform.position += (new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed);
-    }
+		//transform.position += (new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed);
+		myRigidBody.MovePosition(transform.position + new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed);
+	}
     public bool InChasingDistance()
     {
         if (Vector3.SqrMagnitude(transform.position -carDoorTransform.position) > 25)

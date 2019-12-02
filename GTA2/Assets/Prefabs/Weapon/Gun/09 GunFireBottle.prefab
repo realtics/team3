@@ -43,16 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed9623a1acc8ee4e8109d64f8bafae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPref: {fileID: 7073515812447598054, guid: b02b8d7aa05f11d4dad0553064e9e4fc,
-    type: 3}
-  shootInterval: 5
-  bulletToPeopleSize: 0.5
-  bulletPoolCount: 10
-  bulletCount: 0
-  shotPerOneBullet: 1
+  userObject: {fileID: 0}
+  gunInfo: {fileID: 11400000, guid: f703ecbc6c138a446ab7af10e7893cd8, type: 2}
   gunSoundSource: {fileID: 0}
+  bulletCount: 0
   smokePref: {fileID: 5958144597228890584, guid: 483366f38358d604783f2ccf2721dbf3,
     type: 3}
-  smokeList: []
-  smokePoolCnt: 10
   moveThrowPower: 3

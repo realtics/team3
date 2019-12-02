@@ -45,14 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userObject: {fileID: 0}
-  bulletPref: {fileID: 1342552342984028335, guid: e18a46b227ea7d44ca848cc458ffb63b,
-    type: 3}
-  shootInterval: 0.0005
-  bulletToPeopleSize: 0.1
-  bulletPoolCount: 100
-  bulletCount: 0
-  shotPerOneBullet: 25
+  gunInfo: {fileID: 11400000, guid: 96d92075eadce004d856a19a63f69f8c, type: 2}
   gunSoundSource: {fileID: 5671362728586046690}
+  bulletCount: 0
   electricWaveMaxIndex: 2
   electricWaveArea: 3
   electricWaveAngle: 90

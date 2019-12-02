@@ -48,6 +48,8 @@ MonoBehaviour:
   bulletLifeTime: 0.3
   bulletSpeed: 0
   explosionArea: 0
+  bulletInfo: {fileID: 11400000, guid: 4f69fc71febcf5647b875e7bf3b98321, type: 2}
+  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
 --- !u!136 &4139040173449420848
 CapsuleCollider:

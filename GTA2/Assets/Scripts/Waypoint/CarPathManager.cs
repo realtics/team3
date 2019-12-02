@@ -14,10 +14,10 @@ public class CarPathManager : MonoBehaviour
     Vector3 curDestPos;
     public int curLane = 0;
 
-    void Start()
-    {
-        Init();
-    }
+    //void Start()
+    //{
+    //    Init();
+    //}
 
     void OnEnable()
     {
@@ -42,6 +42,15 @@ public class CarPathManager : MonoBehaviour
 
         carAi.SetDestination(curDestPos);
     }
+
+	public void SelectNewDestinationImmediate()
+	{
+		GameObject go = WaypointManager.instance.FindClosestWaypoint(WaypointManager.WaypointType.car, transform.position);
+		curWaypoint = go.GetComponent<WaypointForCar>();
+		curLane = Random.Range(0, 3);
+		SetRandomDestWaypoint();
+		carAi.SetDestination(curDestPos);
+	}
 
     void SetRandomDestWaypoint()
     {

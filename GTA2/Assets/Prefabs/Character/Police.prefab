@@ -166,10 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ee92f8c96f96348a1017269d2498f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
+  hp: 100
+  isDriver: 0
   isDestReached: 1
   animator: {fileID: 1167477734086649170}
   gunList:
@@ -218,11 +219,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591,
-        type: 3}
-      propertyPath: userObject
-      value: 
-      objectReference: {fileID: 1167477734680987156}
     - target: {fileID: 1374610456668975265, guid: a3b485bcb1b296e498510fe0e59c8591,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -283,6 +279,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591,
+        type: 3}
+      propertyPath: userObject
+      value: 
+      objectReference: {fileID: 1167477734680987156}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3b485bcb1b296e498510fe0e59c8591, type: 3}
 --- !u!4 &433027729083999133 stripped

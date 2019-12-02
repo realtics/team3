@@ -4501,6 +4501,8 @@ MonoBehaviour:
   bulletLifeTime: 1
   bulletSpeed: 3
   explosionArea: 0
+  bulletInfo: {fileID: 11400000, guid: 388b33fcba3be764d87c9fcdaa3c7509, type: 2}
+  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
 --- !u!199 &3188997210512407124
 ParticleSystemRenderer:

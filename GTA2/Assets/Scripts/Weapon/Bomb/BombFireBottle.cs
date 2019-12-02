@@ -12,12 +12,10 @@ public class BombFireBottle : Bullet
 
 
     float explosionPower = 2.0f;
-    CameraController camExplosion;
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         bulletDeActiveTime = .1f;
-        camExplosion = CameraController.Instance;
     }
 
     // Update is called once per frame

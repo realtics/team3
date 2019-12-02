@@ -143,8 +143,7 @@ public class CarAi : MonoBehaviour
     {
         if (chaseTarget == null)
         {
-            aiState = AiState.normal;
-            carManager.effects.TurnOffSiren();
+			StopChase();
             return;
         }
 
@@ -185,9 +184,15 @@ public class CarAi : MonoBehaviour
 
         if (dist > 16)
         {
-            aiState = AiState.normal;
-            carManager.effects.TurnOffSiren();
-        }            
+			StopChase();
+        }
+		else if(dist < 3f && carManager.movement.curSpeed < 10)
+		{
+			aiState = AiState.normal;
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+			return;
+		}
 
         switch (aiState)
         {
@@ -310,6 +315,13 @@ public class CarAi : MonoBehaviour
 
         carManager.effects.TurnOnSiren();
     }
+
+	public void StopChase()
+	{
+		chaseTarget = null;
+		aiState = AiState.normal;
+		carManager.effects.TurnOffSiren();
+	}
 
     void OnDrawGizmosSelected()
     {

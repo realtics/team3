@@ -47,7 +47,7 @@ public class CarPassengerManager : MonoBehaviour
         }
     }
     
-    public void GetOnTheCar(People people, int idx = 0)
+    public void GetOnTheCar(People people, int idx)
     {
         if (carManager.carState == CarManager.CarState.destroied)
             return;
@@ -64,14 +64,14 @@ public class CarPassengerManager : MonoBehaviour
         carManager.OnDriverGetOnEvent(people, idx);
     }
 
-    public IEnumerator GetOffTheCar(int idx = 0)
+    public IEnumerator GetOffTheCar(int idx)
     {
+        if (passengers[idx] == null)
+            yield break;
+
         doorAnimator[idx].SetTrigger("Open");
         yield return new WaitForSeconds(0.5f);
         doorAnimator[idx].SetTrigger("Close");
-
-        if (passengers[idx] == null)
-            yield break;
 
         DriverSetting(idx, false);
 
@@ -80,7 +80,9 @@ public class CarPassengerManager : MonoBehaviour
             CameraController.Instance.ChangeTarget(passengers[idx].gameObject);
             CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
         }
-        passengers[idx] = null;
+
+		passengers[idx] = null;
+
 
         carManager.OnDriverGetOffEvent(passengers[idx], idx);
     }
@@ -114,7 +116,7 @@ public class CarPassengerManager : MonoBehaviour
             passengers[idx].GetComponentInChildren<SpriteRenderer>().enabled = false;
             passengers[idx].transform.SetParent(transform);
         }
-        else
+        else if(passengers[idx] != null)
         {
             passengers[idx].transform.position = doorPositions[0].transform.position;
             passengers[idx].GetComponentInChildren<SpriteRenderer>().enabled = true;

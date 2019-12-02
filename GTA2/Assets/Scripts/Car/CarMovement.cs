@@ -122,12 +122,7 @@ public class CarMovement : MonoBehaviour
 
         if(col.transform.tag == "NPC" || col.transform.tag == "Player")
         {
-            col.gameObject.GetComponent<People>().Hurt((int)Mathf.Abs(curSpeed)/2);
-
-            if (col.gameObject.GetComponent<People>().isDown)
-            {
-                col.gameObject.GetComponent<People>().Hurt(500);
-            }
+			col.gameObject.GetComponent<People>().Runover(curSpeed, transform.position);
         }
     }
 

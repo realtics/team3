@@ -12,9 +12,9 @@ public class BombGranade : Bullet
 
     float explosionPower = 2.0f;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         bulletDeActiveTime = .1f;
         collider.isTrigger = false;
     }
@@ -42,12 +42,5 @@ public class BombGranade : Bullet
         collider.isTrigger = true;
         base.Explosion();
         CameraController.Instance.StartShake(explosionPower, transform.position);
-
-
-    }
-
-    protected override void OnCollisionEnter(Collision collision)
-    {
-        return;
     }
 }

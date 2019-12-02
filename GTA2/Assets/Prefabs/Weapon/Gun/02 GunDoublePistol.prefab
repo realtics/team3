@@ -171,11 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec168f3df769a084f81263d727c388c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPref: {fileID: 5797233812644291545, guid: 07eb2e4ade597304a8639f02639dbfcb,
-    type: 3}
-  shootInterval: 0.5
-  bulletToPeopleSize: 0.2
-  bulletPoolCount: 50
-  bulletCount: 0
-  shotPerOneBullet: 1
+  userObject: {fileID: 0}
+  gunInfo: {fileID: 11400000, guid: 84b0666d4805ce641a8f495bf35b1a93, type: 2}
   gunSoundSource: {fileID: 3690720324617039509}
+  bulletCount: 0

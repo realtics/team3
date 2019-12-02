@@ -10,10 +10,6 @@ public class Police : NPC
 
     float patternChangeTimer = 3.0f;
     float patternChangeInterval = 3.0f;
-    //float attackInterval = 1.0f;
-    //float curAttackCoolTime = 0.0f;
-    //float jumpTime = 1.5f;
-    //float jumpTimer = 0.0f;
     float carOpenTimer = 0.0f;
     float carOpenTime = 0.5f;
 
@@ -73,7 +69,7 @@ public class Police : NPC
             else
             {
                 isShot = false;
-                gunList[0].GetComponent<NPCGun>().StopShot();
+                gunList[1].GetComponent<NPCGun>().StopShot();
                 ChasePlayerCharacter();
             }
         }
@@ -83,23 +79,25 @@ public class Police : NPC
             base.Move();
         }
     }
-    void ChasePlayerCharacter()
+	
+	void ChasePlayerCharacter()
     {
         if (PlayerOutofRange())
         {
             isChasePlayer = false;
             return;
         }
-        if (InPunchRange())
+		
+		if (InPunchRange())
         {
             isWalk = false;
             isPunch = true;
             gunList[0].GetComponent<NPCGun>().StartShot();
-        }
+		}
         else
         {
-            gunList[0].GetComponent<NPCGun>().StopShot();
-            isWalk = true;
+			isWalk = true;
+			gunList[0].GetComponent<NPCGun>().StopShot();
             base.ChasePlayer();
         }
     }
@@ -113,21 +111,11 @@ public class Police : NPC
         //사격
         if(InShotRange())
         {
-            isWalk = false;
-            transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
-            if(InChaseRange())//player 끌어내리러 가기
+			if (InChaseRange())
             {
-                //사격
-                //한번만
-                isShot = true;
-                isPunch = false;
-                isWalk = true;
-                gunList[1].GetComponent<NPCGun>().StartShot();
-                
-                base.ChasePlayer();
-                
                 if (InPunchRange())//player 끌어내리기
                 {
+					isWalk = false;
                     transform.forward = GameManager.Instance.player.transform.forward;
                     transform.position = GameManager.Instance.player.transform.position;
 
@@ -135,10 +123,8 @@ public class Police : NPC
                     if (CarOpenTimerCheck())
                     {
                         //player가 타고있는 차
-
                         GameManager.Instance.player.GetOffTheCar();
                         GameManager.Instance.player.Down();
-                        //GameManager.Instance.player.isBusted = true;
                         GameManager.Instance.player.isDriver = false;
                     }
                     else
@@ -147,7 +133,26 @@ public class Police : NPC
                         isGetOnTheCar = true;
                     }
                 }
+				else//player 끌어내리러 쫓아 가기
+				{
+					isWalk = true;
+					isShot = false;
+					isPunch = false;
+
+					gunList[1].GetComponent<NPCGun>().StopShot();
+					base.ChasePlayer();
+				}
             }
+			else //멈춰서 사격
+			{
+				isWalk = false;
+				isShot = true;
+				isPunch = false;
+
+				transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
+				gunList[0].GetComponent<NPCGun>().StopShot();
+				gunList[1].GetComponent<NPCGun>().StartShot();
+			}
         }
         else //쫓아가기
         {
@@ -168,6 +173,10 @@ public class Police : NPC
         {
             isChasePlayer = true;
         }
+		else
+		{
+			isChasePlayer = false;
+		}
     }
     void SetDefault()
     {
@@ -217,13 +226,12 @@ public class Police : NPC
 
         if(!isChasePlayer)
         {
-            if(DectectedPlayerAttack())
-            {
-                SetChasePlayer();
-            }
-            else
-                PatternChange();
+			PatternChange();
         }
+		if(DectectedPlayerAttack() && !isChasePlayer)
+		{
+			GameManager.Instance.IncreaseWantedLevel(1f);
+		}
     }
     void SetChasePlayer()
     {
@@ -247,8 +255,15 @@ public class Police : NPC
             }
         }
     }
-    #region override method
-    public override void Down()
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Car") && isChasePlayer)
+		{
+			Jump();
+		}
+	}
+	#region override method
+	public override void Down()
     {
         isDown = true;
     }

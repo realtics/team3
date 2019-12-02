@@ -44,14 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8002f504a845aa4ca1b77ff0a06e628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPref: {fileID: 8834039304450826970, guid: 682684a6cb5ddb249bd0947f3b9c1979,
-    type: 3}
-  shootInterval: 1.5
-  bulletToPeopleSize: 0.2
-  bulletPoolCount: 100
-  bulletCount: 0
-  shotPerOneBullet: 1
+  userObject: {fileID: 0}
+  gunInfo: {fileID: 11400000, guid: 18c9e06d152c8714bae8b703313096ab, type: 2}
   gunSoundSource: {fileID: 6396823733035219346}
+  bulletCount: 0
 --- !u!1 &7524593696283393645
 GameObject:
   m_ObjectHideFlags: 0

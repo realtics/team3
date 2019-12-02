@@ -45,14 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userObject: {fileID: 0}
-  bulletPref: {fileID: 5797233812644291545, guid: 07eb2e4ade597304a8639f02639dbfcb,
-    type: 3}
-  shootInterval: 0.5
-  bulletToPeopleSize: 0.2
-  bulletPoolCount: 30
-  bulletCount: 10
-  shotPerOneBullet: 1
+  gunInfo: {fileID: 11400000, guid: de326eef38a543745a7966de8e05aa7f, type: 2}
   gunSoundSource: {fileID: 5576794373524539854}
+  bulletCount: 10
 --- !u!1 &3296169648752023043
 GameObject:
   m_ObjectHideFlags: 0

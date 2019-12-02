@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8335540915229729997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1861816974745650758}
+  - component: {fileID: 424324285448808973}
+  m_Layer: 0
+  m_Name: '[WeaponManager]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1861816974745650758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335540915229729997}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &424324285448808973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335540915229729997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc13deadd7f19e4f8c7a3768c0f7b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  machineBulletObject: {fileID: 8350089297614652173, guid: 7f5f59f08bf30f6469b25dd474ac92fe,
+    type: 3}
+  machineBulletCount: 50
+  pistolBulletObject: {fileID: 5797233812644291545, guid: 07eb2e4ade597304a8639f02639dbfcb,
+    type: 3}
+  pistolBulletCount: 50
+  fireBottleBulletObject: {fileID: 7073515812447598054, guid: b02b8d7aa05f11d4dad0553064e9e4fc,
+    type: 3}
+  fireBottleBulletCount: 100
+  granadeBulletObject: {fileID: 4224439575330150017, guid: b50ff494fd4de8844a10e6ec31801560,
+    type: 3}
+  granadeBulletCount: 30
+  electricBulletObject: {fileID: 1342552342984028335, guid: e18a46b227ea7d44ca848cc458ffb63b,
+    type: 3}
+  electricBulletCount: 75
+  punchBulletObject: {fileID: 3145138659859705785, guid: 0c523eefca01a374da02a61649e6613b,
+    type: 3}
+  punchBulletCount: 2
+  rocketBulletObject: {fileID: 6311451646435724220, guid: 6f917f11b5cc7a147885e2d1d759c0c9,
+    type: 3}
+  rocketBulletCount: 10
+  shotBulletObject: {fileID: 8834039304450826970, guid: 682684a6cb5ddb249bd0947f3b9c1979,
+    type: 3}
+  shotBulletCount: 50
+  npcPistolBulletObject: {fileID: 5797233812644291545, guid: d4b4d10df88aeec44b02b7dfadfedf8e,
+    type: 3}
+  npcPistolBulletCount: 100
+  npcPunchBulletObject: {fileID: 3145138659859705785, guid: f4f04a3356c788f4facd00f4a2df2e3a,
+    type: 3}
+  npcPunchBulletCount: 2
+  rocketSmokeObject: {fileID: 3313274292029683021, guid: b279f9732fa462549923ee582ff2a040,
+    type: 3}
+  rocketSmokeCount: 75
+  fireBottleSmokeObject: {fileID: 5958144597228890584, guid: 483366f38358d604783f2ccf2721dbf3,
+    type: 3}
+  fireBottleSmokeCount: 75
+  bombExplosionObject: {fileID: 9085315079043664107, guid: 328eceba7c9fce540b82a20ce6be221e,
+    type: 3}
+  bombExplosionCount: 30
+  fireExplosionObject: {fileID: 2438298873875627045, guid: 47784d3079595614f8e59f2fbb6a99d1,
+    type: 3}
+  fireExplosionCount: 30

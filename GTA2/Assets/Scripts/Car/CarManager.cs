@@ -68,7 +68,7 @@ public class CarManager : MonoBehaviour
     {
         OnDriverGetOn?.Invoke(p, idx);
 
-        if(idx == 0)
+		if (idx == 0)
         {
             if (p == GameManager.Instance.player)
             {

@@ -21,11 +21,13 @@ public class GameManager : MonoSingleton<GameManager>
     bool isMissionSuccess = false;
     //GameManager ReFactoring field
     public int money{ get; set; }
+    public int killCount { get; set; }
 
     public float wantedLevel = 0; // 수배레벨
     
     void Start()
     {
+        float ts = Time.time;
         // 요부분 리펙토링
         Application.targetFrameRate = 60;
         //Screen.SetResolution(720, 1280, true);
@@ -93,33 +95,32 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (remains == 0)//RIP
         {
+            SaveGta2Data();
             SceneManager.LoadScene("Rip");
             return;
         }
         if (player.isBusted)
         {
-            CarSpawnManager.Instance.policeCarList[0].gameObject.SetActive(true);
-            CarSpawnManager.Instance.policeCarList[0].passengerManager.passengers[1] = player;
-            CarSpawnManager.Instance.policeCarList[0].GetComponent<CarPassengerManager>().GetOnTheCar(player, 1);
-            player.transform.position = CarSpawnManager.Instance.policeCarList[0].passengerManager.doorPositions[1].position;
+			CarManager copCar = CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
+			copCar.gameObject.SetActive(false);
+			copCar.gameObject.SetActive(true);
+			copCar.passengerManager.GetOnTheCar(player, 1);
+            StartCoroutine(copCar.passengerManager.GetOffTheCar(1));
 
             for(int i = 1; i < player.gunList.Count; i++)
                 player.gunList[1].bulletCount = 0;
+
             player.curGunIndex = GunState.None;
-            StartCoroutine(CarSpawnManager.Instance.policeCarList[0].passengerManager.GetOffTheCar(1));
-            //player.Down();
-            //Invoke(player.Down(), 1.0f);
         }
         else
         {
             player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
         }
-        CarSpawnManager.Instance.CarPositionInit();
-        NPCSpawnManager.Instance.CitizenPositionInit();
-        //카메라 위치 조정
-        CameraController.Instance.ChangeTarget(player.gameObject);
-        
-    }
+
+		//카메라 위치 조정
+		CameraController.Instance.ChangeTarget(player.gameObject);
+		CameraController.Instance.ZoomOut();
+	}
     public void IncreaseMoney(int earnings)
     {
         money += earnings;
@@ -139,13 +140,29 @@ public class GameManager : MonoSingleton<GameManager>
         {
             // 수배레벨이 증가함.
             UIManager.Instance.SetPoliceLevel((int)wantedLevel);
-            CarSpawnManager.Instance.SpawnPoliceCar();
+            CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomCarSpawnPosition().transform.position);
         }
     }
-
     public void ResetWantedLevel()
     {
         wantedLevel = 0;
         UIManager.Instance.SetPoliceLevel(0);
+		CarSpawnManager.Instance.StopAllPoliceCarChasing();
+    }
+
+    public void CompliteGame()
+    {
+        SaveGta2Data();
+        SceneManager.LoadScene("End");
+    }
+
+    void SaveGta2Data()
+    {
+        Gta2Data myObject = new Gta2Data();
+        myObject.money = money;
+        myObject.gameTime = (double)Time.time;
+        myObject.kills = killCount;
+
+        JsonManager.Instance.Save(myObject);
     }
 }

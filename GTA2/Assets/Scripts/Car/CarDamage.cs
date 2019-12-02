@@ -168,8 +168,9 @@ public class CarDamage : MonoBehaviour
             }
             else
             {
-                col.GetComponent<People>().Hurt((int)(150 * (1 - dist)));
-            }            
+				//col.GetComponent<People>().Hurt((int)(150 * (1 - dist)));
+				col.GetComponent<People>().Runover((int)(300 * (1 - dist)), transform.position);
+			}            
         }
     }
 }

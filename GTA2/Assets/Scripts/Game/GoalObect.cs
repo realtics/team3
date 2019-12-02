@@ -10,7 +10,7 @@ public class GoalObect : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(2);
+            GameManager.Instance.CompliteGame();
         }
     }
 }

@@ -6,18 +6,16 @@ using UnityEditor;
 public abstract class NPC : People
 {
     //HumanCtr스크립트 참조 코드
-    RaycastHit hit;
     float distToObstacle = Mathf.Infinity;
     protected Vector3 destination;
-    public LayerMask collisionLayer;
     public bool isDestReached;
 
     protected float findRange = 10.0f;
 
     //sqrMagnitude 사용해서 제곱함.
     protected float punchRange = 0.08f;
-    protected float shotRange = 25.0f;
-    protected float chaseRange = 9.0f;
+    protected float shotRange = 10.0f;
+    protected float chaseRange = 7.0f;
     protected float outofRange = 400.0f;
 
    
@@ -25,8 +23,9 @@ public abstract class NPC : People
 
     void OnEnable()
     {
-        //StartCoroutine(DisableIfOutOfCamera());
-    }
+		
+		//StartCoroutine(DisableIfOutOfCamera());
+	}
 
     void OnDisable()
     {
@@ -52,8 +51,9 @@ public abstract class NPC : People
     }
     protected virtual void ChasePlayer()
     {
-        transform.LookAt(GameManager.Instance.player.transform.position);
+		Vector3 lookAtVector = new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z);
 
+        transform.LookAt(lookAtVector);
         Vector3 Pos = transform.position;
         Pos.x += transform.forward.x * Time.deltaTime * runSpeed;
         Pos.z += transform.forward.z * Time.deltaTime * runSpeed;

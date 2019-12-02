@@ -113,4 +113,6 @@ MonoBehaviour:
   bulletLifeTime: 0.1
   bulletSpeed: 15
   explosionArea: 0
+  bulletInfo: {fileID: 11400000, guid: 49198627fb7ef594cb5d1145908ef55a, type: 2}
+  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
