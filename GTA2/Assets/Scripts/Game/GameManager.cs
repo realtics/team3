@@ -22,12 +22,13 @@ public class GameManager : MonoSingleton<GameManager>
     //GameManager ReFactoring field
     public int money{ get; set; }
     public int killCount { get; set; }
-
-    public float wantedLevel = 0; // 수배레벨
     
+    double gameTime;
     void Start()
     {
-        float ts = Time.time;
+        gameTime = .0f;
+        killCount = 0;
+
         // 요부분 리펙토링
         Application.targetFrameRate = 60;
         //Screen.SetResolution(720, 1280, true);
@@ -44,6 +45,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         UpdateGoal();
         UpdateArrow();
+        UpdateTime();
     }
 
     void UpdateGoal()
@@ -91,6 +93,11 @@ public class GameManager : MonoSingleton<GameManager>
         missionArrow.transform.eulerAngles = new Vector3(90.0f, tempVector.y, .0f);
     }
 
+    void UpdateTime()
+    {
+        gameTime += Time.deltaTime;
+    }
+
     public void RespawnSetting()
     {
         if (remains == 0)//RIP
@@ -99,9 +106,13 @@ public class GameManager : MonoSingleton<GameManager>
             SceneManager.LoadScene("Rip");
             return;
         }
+
         if (player.isBusted)
         {
 			CarManager copCar = CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
+
+			CameraController.Instance.ChangeTarget(copCar.gameObject);
+
 			copCar.gameObject.SetActive(false);
 			copCar.gameObject.SetActive(true);
 			copCar.passengerManager.GetOnTheCar(player, 1);
@@ -126,30 +137,6 @@ public class GameManager : MonoSingleton<GameManager>
         money += earnings;
     }
 
-    // [ 수배레벨 ]
-    public void IncreaseWantedLevel(float amount)
-    {
-        int old = (int)wantedLevel;
-
-        if (old > 0)
-            amount /= (old*2);
-
-        wantedLevel += amount;
-
-        if(old != (int)wantedLevel)
-        {
-            // 수배레벨이 증가함.
-            UIManager.Instance.SetPoliceLevel((int)wantedLevel);
-            CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomCarSpawnPosition().transform.position);
-        }
-    }
-    public void ResetWantedLevel()
-    {
-        wantedLevel = 0;
-        UIManager.Instance.SetPoliceLevel(0);
-		CarSpawnManager.Instance.StopAllPoliceCarChasing();
-    }
-
     public void CompliteGame()
     {
         SaveGta2Data();
@@ -160,9 +147,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Gta2Data myObject = new Gta2Data();
         myObject.money = money;
-        myObject.gameTime = (double)Time.time;
+        myObject.gameTime = gameTime;
         myObject.kills = killCount;
 
-        JsonManager.Instance.Save(myObject);
+        JsonStreamer js = new JsonStreamer();
+        js.Save(myObject, "Gta2Data.json");
     }
 }

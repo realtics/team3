@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2794abe67cde995458e28ee983ff88e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userObject: {fileID: 0}
   gunInfo: {fileID: 11400000, guid: 96d92075eadce004d856a19a63f69f8c, type: 2}
   gunSoundSource: {fileID: 5671362728586046690}
   bulletCount: 0
+  userObject: {fileID: 0}
   electricWaveMaxIndex: 2
-  electricWaveArea: 3
+  electricWaveArea: 1.5
   electricWaveAngle: 90
 --- !u!1 &4841082761574765787
 GameObject:

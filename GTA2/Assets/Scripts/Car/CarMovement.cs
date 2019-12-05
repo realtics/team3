@@ -10,10 +10,8 @@ public class CarMovement : MonoBehaviour
 
     Rigidbody rbody;
 
-    public float maxSpeed;
+	public CarData data;
     public float curSpeed;
-    public float rotSpeed;
-    public float acceleration;
 
     Vector3[] oldForwards = new Vector3[20];
     Vector3 reboundForce = Vector3.zero;
@@ -26,12 +24,14 @@ public class CarMovement : MonoBehaviour
     void OnEnable()
     {
         carManager.OnDriverGetOff += OnDriverGetOff;
-    }
+		carManager.OnDestroy += OnCarDestroy;
+	}
 
     void OnDisable()
     {
         carManager.OnDriverGetOff -= OnDriverGetOff;
-    }
+		carManager.OnDestroy -= OnCarDestroy;
+	}
 
     public void FixedLoop()
     {
@@ -52,7 +52,7 @@ public class CarMovement : MonoBehaviour
     {
         reboundForce *= 0.85f;
 
-        curSpeed += acceleration * carManager.input.GetInputV() * Time.deltaTime;
+        curSpeed += data.acceleration * carManager.input.GetInputV() * Time.deltaTime;
 
         if (carManager.input.GetInputV() == 0)
         {
@@ -67,10 +67,10 @@ public class CarMovement : MonoBehaviour
         if (carManager.carState == CarManager.CarState.controlledByAi)
             maxSpdMul = carManager.ai.maxSpdMultiplier;
 
-        float finalMaxSpd = maxSpeed * maxSpdMul * carManager.damage.maxSpdMultiplier;
+        float finalMaxSpd = data.maxSpeed * maxSpdMul * carManager.damage.maxSpdMultiplier;
         curSpeed = Mathf.Clamp(curSpeed, finalMaxSpd * -0.5f, finalMaxSpd);
 
-        transform.Rotate(0, carManager.input.GetInputH() * rotSpeed * Time.deltaTime * (Mathf.Abs(curSpeed) / 400), 0);
+        transform.Rotate(0, carManager.input.GetInputH() * data.rotSpeed * Time.deltaTime * (Mathf.Abs(curSpeed) / 400), 0);
 
         Vector3 dir = Vector3.zero;
         if (carManager.carState == CarManager.CarState.controlledByPlayer && carManager.input.GetInputH() != 0)
@@ -93,6 +93,11 @@ public class CarMovement : MonoBehaviour
     {
         curSpeed = 0;
     }
+
+	void OnCarDestroy(bool sourceIsPlayer)
+	{
+		curSpeed = 0;
+	}
 
     void OnDrawGizmos()
     {

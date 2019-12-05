@@ -269,7 +269,7 @@ public class CarAi : MonoBehaviour
         }
         else
         {
-            targetSpeed = Mathf.Clamp(distToObstacle - 1, 0, 1) * carManager.movement.maxSpeed * maxSpdMultiplier * carManager.damage.maxSpdMultiplier;
+            targetSpeed = Mathf.Clamp(distToObstacle - 1, 0, 1) * carManager.movement.data.maxSpeed * maxSpdMultiplier * carManager.damage.maxSpdMultiplier;
         }
 
         targetSpeed *= (1 - (Mathf.Abs(h) / 2f));
@@ -301,7 +301,7 @@ public class CarAi : MonoBehaviour
         if (!isPolice)
             return;
 
-        if (GameManager.Instance.wantedLevel < 1)
+        if (WantedLevel.instance.level < 1)
             return;
 
         if (aiState != AiState.normal)

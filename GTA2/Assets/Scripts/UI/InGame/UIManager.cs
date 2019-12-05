@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class UIManager : MonoSingleton<UIManager>
@@ -22,14 +23,19 @@ public class UIManager : MonoSingleton<UIManager>
     PoliceLevel policeLevelUI;
     [SerializeField]
     Image carNumberUI;
+    [SerializeField]
+    GameObject pauseUI;
 
     /// <summary>
     /// 플레이어에서 직접 참조하기 위해 public으로 품.
     /// </summary>
     /// //[SerializeField]
     //private bl_Joystick playerJoystick;
-    public bl_Joystick playerJoystick;
-    
+    public bl_Joystick playerMoveJoystick;
+    public bl_Joystick playerWeaponJoystick;
+
+
+
     [SerializeField]
     GameObject humanJoystick;
     [SerializeField]
@@ -38,7 +44,7 @@ public class UIManager : MonoSingleton<UIManager>
     CarManager targetCar;
 
     // Start is called before the first frame update
-    private Player player;
+    Player player;
 
     // TODO: 조이스틱 플레이어 휴먼 및 자동차 연결
     bool isLeftDown;
@@ -53,12 +59,15 @@ public class UIManager : MonoSingleton<UIManager>
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         // TODO: 조이스틱 차냐 사람이냐에 따라 방식 설정
-        humanJoystick.GetComponentInChildren<bl_Joystick>().SetCanvas(GetComponent<Canvas>());
+        playerMoveJoystick.SetCanvas(GetComponent<Canvas>());
+        playerWeaponJoystick.SetCanvas(GetComponent<Canvas>());
 
         player.SetHpDefault();
         heartListUI.SetMaxPlayerHp(player.GetHp());
         carNumberUI.gameObject.SetActive(false);
         carNumberText = carNumberUI.GetComponentInChildren<Text>();
+
+        pauseUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -73,6 +82,7 @@ public class UIManager : MonoSingleton<UIManager>
         UpdateDieUI();
         UpdateGetOffCar();
         UpdateButton();
+        UpdatePause();
     }
 
     // 컴퓨터용 체인저
@@ -132,6 +142,22 @@ public class UIManager : MonoSingleton<UIManager>
             carJoystick.SetActive(false);
         }
     }
+    void UpdatePause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseUI.activeInHierarchy)
+            {
+                ClosePauseWindow();
+            }
+            else if (!pauseUI.activeInHierarchy)
+            {
+                Time.timeScale = .0f;
+                pauseUI.SetActive(true);
+            }
+        }
+    }
+
 
     public bool IsHumanUI()
     {
@@ -262,4 +288,17 @@ public class UIManager : MonoSingleton<UIManager>
         targetCar.input.InputReturn();
     }
     #endregion
+
+
+    public void ClosePauseWindow()
+    {
+        Time.timeScale = 1.0f;
+        pauseUI.SetActive(false);
+    }
+
+    public void ExitGame()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("MainMenu");
+    }
 }

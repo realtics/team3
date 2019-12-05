@@ -6,7 +6,7 @@ public abstract class People : MonoBehaviour
 {
 	protected float jumpTime = 1.5f;
 	protected float jumpTimer = 0.0f;
-	protected float jumpMinTime = 0.5f;
+	protected float jumpMinTime = 0.3f;
 
 	protected float rotateSpeed = 0.1f;
     protected float moveSpeed = 0.5f;
@@ -122,9 +122,14 @@ public abstract class People : MonoBehaviour
     public void Runover(float runoverSpeed, Vector3 carPosition)
     {
 		Vector3 runoverVector = transform.position - carPosition;
-		//보정수치
-		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-
+        if (runoverSpeed < 50)
+        {
+            return;
+        }
+        //보정수치
+        this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+        
+        
 		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
 		print(this.runoverVector.magnitude);
 		//if(this.runoverVector.magnitude )
@@ -133,7 +138,7 @@ public abstract class People : MonoBehaviour
 		hDir = 0;
 		vDir = 0;
 		transform.LookAt(carPosition);
-		
+		DebugX.Log("차에치임");
 
 		//보정 수치
 		if (runoverSpeed > 200)
@@ -169,7 +174,7 @@ public abstract class People : MonoBehaviour
 		GetComponent<Rigidbody>().useGravity = false;
 		transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
 	}
-	protected void Land()
+	protected virtual void Land()
 	{
 		isJump = false;
 		transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
@@ -179,7 +184,8 @@ public abstract class People : MonoBehaviour
 	public bool JumpTimerCheck()
 	{
 		jumpTimer += Time.deltaTime;
-
+		DebugX.DrawRay(transform.position, transform.up * -1, Color.black);
+		
 		if (jumpTimer > jumpTime)
 		{
 			jumpTimer = 0.0f;
@@ -190,11 +196,14 @@ public abstract class People : MonoBehaviour
 	public bool JumpMinTimeCheck()
 	{
 		if (jumpTimer > jumpMinTime)
+		{
+			jumpTimer = 0.0f;
 			return true;
+		}
 		else
 			return false;
 	}
-	void LandCheck()
+	protected virtual void LandCheck()
 	{
 		Debug.DrawRay(transform.position, transform.up * -1, Color.red);
 
@@ -203,12 +212,11 @@ public abstract class People : MonoBehaviour
 			if (!IsCarExistBelow())
 				Land();
 		}
-		//else if (JumpMinTimeCheck())
-		//  Land();
 	}
 	public bool IsCarExistBelow()
 	{
 		DebugX.DrawRay(transform.position, transform.up * -1, Color.black);
+
 		if (Physics.Raycast(transform.position, transform.up * -1, out hit, 1f, collisionLayer)
 			&& hit.transform.CompareTag("Car"))
 			return true;

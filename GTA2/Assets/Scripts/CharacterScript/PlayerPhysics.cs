@@ -5,23 +5,28 @@ using UnityEngine;
 public class PlayerPhysics : MonoBehaviour
 {
     Rigidbody myRigidBody;
-    
-    Transform carDoorTransform;
+	public CarManager targetCar { get; set; }
+	Transform carDoorTransform;
 
-    void Start()
+	void Start()
     {
         myRigidBody = GetComponent<Rigidbody>();
     }
     private void OnCollisionEnter(Collision collision)
     {
+		//속도 너무 빠르면 Runover 
         if (collision.gameObject.CompareTag("Car") && GameManager.Instance.player.isChasingCar)
         {
-            GameManager.Instance.player.Jump();
+            //GameManager.Instance.player.Jump();
         }
     }
     
     public void ChaseTheCar(float moveSpeed)
     {
+		if(Vector3.SqrMagnitude(carDoorTransform.position - transform.position) < 0.05f)
+		{
+			return;
+		}
         myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
     }
     public void MovePositionByInput(float hDir, float vDir, float moveSpeed)
@@ -40,14 +45,27 @@ public class PlayerPhysics : MonoBehaviour
     {
         transform.LookAt(new Vector3(carDoorTransform.position.x, transform.position.y, carDoorTransform.position.z));
     }
-    public bool InStealingDistance()
+	public void LookAtCar()
+	{
+		transform.LookAt(new Vector3(targetCar.transform.position.x, transform.position.y, targetCar.transform.position.z));
+		DebugX.DrawRay(transform.position, (targetCar.transform.position - transform.position).normalized);
+	}
+
+	public bool InStealingDistance()
     {
         if (Vector3.Distance(transform.position, carDoorTransform.position) < 0.3f)
             return true;
         else
             return false;
     }
-    public void SetCarDoorTransform(Transform carDoorTransform)
+	public bool IsGetOnDistance()
+	{
+		if (Vector3.Distance(transform.position, carDoorTransform.position) < 0.7f)
+			return true;
+		else
+			return false;
+	}
+	public void SetCarDoorTransform(Transform carDoorTransform)
     {
         this.carDoorTransform = carDoorTransform;
     }

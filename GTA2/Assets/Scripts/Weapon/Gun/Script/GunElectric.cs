@@ -41,10 +41,12 @@ public class GunElectric : PlayerGun
 
         InitGun();
 
-        //foreach (var item in bulletList)
-        //{
-        //    ((BulletElectric)item).SetArea(electricWaveArea);
-        //}
+
+        List<GameObject> bulletList = PoolManager.GetAllObject(bulletPref);
+        foreach (var item in bulletList)
+        {
+            item.GetComponent<BulletElectric>().SetAreaAndMaxCount(electricWaveArea, electricWaveMaxIndex);
+        }
     }
 
 
@@ -99,7 +101,7 @@ public class GunElectric : PlayerGun
         foreach (var target in targetObjects)
         {
             BulletElectric fireBullet = (BulletElectric)Shoot(userObject.transform.position);
-            fireBullet.SetTarget(target);
+            fireBullet.SetTarget(userObject, target);
             activeBulletList.Add(fireBullet);
             activeElectricList.Add(fireBullet);
 
@@ -127,28 +129,27 @@ public class GunElectric : PlayerGun
         }
     }
 
-    void ElectricWave(List<GameObject> objectList, List<BulletElectric> nextBulletList,  int count)
+    void ElectricWave(List<GameObject> objectList, List<BulletElectric> prevBulletList,  int count)
     {
-        if (count <= 0 || nextBulletList.Count == 0 || objectList.Count == 0)
+        if (count <= 0 || prevBulletList.Count == 0 || objectList.Count == 0)
         {
             return;
         }
 
         List<BulletElectric> nextWaveList = new List<BulletElectric>();
 
-        foreach (var bulletObj in nextBulletList)
+        foreach (var bulletObj in prevBulletList)
         {
             Vector3 triggerPos = bulletObj.gameObject.transform.position;
             Vector3 rightVector = 
                 bulletObj.gameObject.transform.right * bulletObj.gameObject.transform.localScale.x * 4.0f;
             triggerPos += rightVector;
-            List<GameObject> targetObjects = GetObjectsInAttackRange(triggerPos, objectList);
+            List<GameObject> targetObjects = GetObjectsInAttackRange(bulletObj.TargetObject().transform.position, objectList);
 
             foreach (var target in targetObjects)
             {
-                
                 BulletElectric fireBullet = (BulletElectric)Shoot(triggerPos);
-                fireBullet.SetTarget(target);
+                fireBullet.SetTarget(bulletObj.TargetObject(), target);
                 nextWaveList.Add(fireBullet);
                 activeElectricList.Add(fireBullet);
                 objectList.Remove(target);

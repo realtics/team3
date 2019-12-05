@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radio: 15
-  SmoothTime: 0.85
+  SmoothTime: 1
   OnPressScale: 1.2
   NormalColor: {r: 1, g: 1, b: 1, a: 1}
   PressColor: {r: 0.065689884, g: 0.99264705, b: 0.7924658, a: 1}

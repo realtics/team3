@@ -6,8 +6,8 @@ public class Police : NPC
 {
     public bool isChasePlayer { get; set; }
     //경찰이 차에 탈때, 경찰이 플레이어 꺼낼때 모두 사용
-    public bool isGetOnTheCar { get; set; } 
-
+    public bool isGetOnTheCar { get; set; }
+    
     float patternChangeTimer = 3.0f;
     float patternChangeInterval = 3.0f;
     float carOpenTimer = 0.0f;
@@ -31,7 +31,8 @@ public class Police : NPC
     void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
-    }
+		gameManager = GameManager.Instance;
+	}
     void Start()
     {
         money = 50;
@@ -39,10 +40,13 @@ public class Police : NPC
         runSpeed = 1.5f;
         patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
         patternChangeTimer = patternChangeInterval;
+        jumpTime = 0.5f;
     }
 
     void Update()
     {
+        if (isDriver)
+            return;
         animator.SetBool("isWalk", isWalk);
         animator.SetBool("isShot", isShot);
         animator.SetBool("isPunch", isPunch);
@@ -96,6 +100,7 @@ public class Police : NPC
 		}
         else
         {
+			isPunch = false;
 			isWalk = true;
 			gunList[0].GetComponent<NPCGun>().StopShot();
             base.ChasePlayer();
@@ -113,28 +118,27 @@ public class Police : NPC
         {
 			if (InChaseRange())
             {
-                if (InPunchRange())//player 끌어내리기
+                if (InPunchRange())
                 {
+					isGetOnTheCar = true;
 					isWalk = false;
-                    transform.forward = GameManager.Instance.player.transform.forward;
-                    transform.position = GameManager.Instance.player.transform.position;
+                    //transform.forward = GameManager.Instance.player.transform.forward;
+                    //transform.position = GameManager.Instance.player.transform.position;
 
                     //플레이어 끌어내리기
                     if (CarOpenTimerCheck())
                     {
-                        //player가 타고있는 차
-                        GameManager.Instance.player.GetOffTheCar();
+						//player가 타고있는 차
+						isGetOnTheCar = false;
+						GameManager.Instance.player.GetOffTheCar();
                         GameManager.Instance.player.Down();
-                        GameManager.Instance.player.isDriver = false;
+						GameManager.Instance.player.isDriver = false;
                     }
-                    else
-                    {
-                        //문열기 애니메이션
-                        isGetOnTheCar = true;
-                    }
+                    
                 }
 				else//player 끌어내리러 쫓아 가기
 				{
+					isGetOnTheCar = false;
 					isWalk = true;
 					isShot = false;
 					isPunch = false;
@@ -169,7 +173,7 @@ public class Police : NPC
         {
             SetDefault();
         }
-        else if(!PlayerOutofRange() && GameManager.Instance.wantedLevel >= 1)
+        else if(!PlayerOutofRange() && WantedLevel.instance.level >= 1)
         {
             isChasePlayer = true;
         }
@@ -228,9 +232,9 @@ public class Police : NPC
         {
 			PatternChange();
         }
-		if(DectectedPlayerAttack() && !isChasePlayer)
+		if(DetectedPlayerAttack() && !isChasePlayer)
 		{
-			GameManager.Instance.IncreaseWantedLevel(1f);
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, gameManager.player.transform.position);
 		}
     }
     void SetChasePlayer()

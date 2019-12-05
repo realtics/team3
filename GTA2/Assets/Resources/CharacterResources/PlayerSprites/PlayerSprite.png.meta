@@ -560,9 +560,9 @@ TextureImporter:
       name: PlayerSprite_13
       rect:
         serializedVersion: 2
-        x: 5
-        y: 107
-        width: 17
+        x: 4
+        y: 106
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -581,10 +581,10 @@ TextureImporter:
       name: PlayerSprite_14
       rect:
         serializedVersion: 2
-        x: 27
-        y: 107
-        width: 13
-        height: 18
+        x: 23
+        y: 111
+        width: 17
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -602,10 +602,10 @@ TextureImporter:
       name: PlayerSprite_15
       rect:
         serializedVersion: 2
-        x: 45
-        y: 104
-        width: 13
-        height: 21
+        x: 41
+        y: 110
+        width: 21
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -623,10 +623,10 @@ TextureImporter:
       name: PlayerSprite_16
       rect:
         serializedVersion: 2
-        x: 63
-        y: 105
-        width: 13
-        height: 19
+        x: 64
+        y: 110
+        width: 19
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -644,10 +644,10 @@ TextureImporter:
       name: PlayerSprite_17
       rect:
         serializedVersion: 2
-        x: 79
-        y: 103
-        width: 13
-        height: 19
+        x: 85
+        y: 110
+        width: 19
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -665,10 +665,10 @@ TextureImporter:
       name: PlayerSprite_18
       rect:
         serializedVersion: 2
-        x: 92
-        y: 103
-        width: 16
-        height: 19
+        x: 107
+        y: 108
+        width: 19
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -686,10 +686,10 @@ TextureImporter:
       name: PlayerSprite_19
       rect:
         serializedVersion: 2
-        x: 110
-        y: 106
-        width: 12
-        height: 17
+        x: 128
+        y: 112
+        width: 17
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -707,10 +707,10 @@ TextureImporter:
       name: PlayerSprite_20
       rect:
         serializedVersion: 2
-        x: 127
+        x: 149
         y: 111
-        width: 15
-        height: 16
+        width: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -728,7 +728,7 @@ TextureImporter:
       name: PlayerSprite_21
       rect:
         serializedVersion: 2
-        x: 142
+        x: 178
         y: 97
         width: 14
         height: 18
@@ -1489,7 +1489,7 @@ TextureImporter:
         width: 18
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

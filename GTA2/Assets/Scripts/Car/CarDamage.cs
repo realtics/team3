@@ -12,13 +12,13 @@ public class CarDamage : MonoBehaviour
 {
     public CarManager carManager;
 
-    public int maxHp = 500;
+	public CarData data;
     public int curHp;
     public float maxSpdMultiplier = 1.0f;
 
     void OnEnable()
     {
-        curHp = maxHp;
+        curHp = data.maxHp;
         maxSpdMultiplier = 1.0f;
 
         carManager.OnDamage += OnCarDamage;
@@ -86,7 +86,7 @@ public class CarDamage : MonoBehaviour
             return;
 
         curHp -= amount;
-        curHp = Mathf.Clamp(curHp, 0, maxHp);
+        curHp = Mathf.Clamp(curHp, 0, data.maxHp);
 
         if(curHp <= 0)
         {
@@ -112,34 +112,20 @@ public class CarDamage : MonoBehaviour
 
         if (isDamagedByPlayer)
         {
-            if (carManager.ai.isPolice && GameManager.Instance.wantedLevel < 1)
-            {
-                GameManager.Instance.IncreaseWantedLevel(1.0f);
-            }
-            else
-            {
-                GameManager.Instance.IncreaseWantedLevel(0.1f);
-            }            
-        }            
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.hitCar, transform.position);
+		}            
     }
 
     void OnCarDestroy(bool isDamagedByPlayer)
     {
         maxSpdMultiplier = 0.0f;
 
-        GameManager.Instance.IncreaseMoney(100);
-        WorldUIManager.Instance.SetScoreText(transform.position, 100);
+        GameManager.Instance.IncreaseMoney(data.score);
+        WorldUIManager.Instance.SetScoreText(transform.position, data.score);
 
         if (isDamagedByPlayer)
         {
-            if(carManager.ai.isPolice && GameManager.Instance.wantedLevel < 1)
-            {
-                GameManager.Instance.IncreaseWantedLevel(1.0f);
-            }
-            else
-            {
-                GameManager.Instance.IncreaseWantedLevel(0.5f);
-            }            
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.destroyCar, transform.position);    
         }
 
         CameraController.Instance.StartShake(0.3f, transform.position);
@@ -164,7 +150,7 @@ public class CarDamage : MonoBehaviour
             if(col.tag == "Car")
             {
                 yield return new WaitForSeconds(0.1f);
-                col.GetComponent<CarDamage>().DeductHp((int)(1500 * (1 - dist)), isDamagedByPlayer);
+                col.GetComponent<CarDamage>().DeductHp((int)(data.maxHp * 3 * (1 - dist)), isDamagedByPlayer);
             }
             else
             {

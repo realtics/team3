@@ -2,22 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WantedLevel : MonoSingleton<WantedLevel>
+public class WantedLevel : MonoBehaviour
 {
-	public int[] agroSteps;
+	public static WantedLevel instance;
+	public WantedLevelData data;
+
+	public float[] agroSteps;
 	public float agro;
 	public int level;
 
+	void Awake()
+	{
+		if(instance == null)
+		{
+			instance = this;
+			agroSteps = data.agroSteps;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+	}
+
 	public enum CrimeType
 	{
-		gunFire, hitPeople, killPeople, killCop, hitCar, destroyCar
+		gunFire, hitPeople, killPeople, killCop, stealCar, hitCar, destroyCar
 	}
 
 	public void CommitCrime(CrimeType type, Vector3 position)
 	{
-		// 경찰차는 car, 경찰관은 npc
-
-		//if (Physics.OverlapSphere())
 		bool isPoliceExist = false;
 
 		foreach (var car in CarSpawnManager.Instance.allPoliceCar)
@@ -32,26 +45,31 @@ public class WantedLevel : MonoSingleton<WantedLevel>
 			}
 		}
 
+		// todo: 주변에 경찰관이 있는지 확인하는 내용이 여기에 있어야함.
+
 		float agroAmount = 0;
 		switch (type)
 		{
 			case CrimeType.gunFire:
-				agroAmount = 0.1f;
+				agroAmount = data.gunFire;
 				break;
 			case CrimeType.hitPeople:
-				agroAmount = 0.25f;
+				agroAmount = data.hitPeople;
 				break;
 			case CrimeType.killPeople:
-				agroAmount = 1.0f;
+				agroAmount = data.killPeople;
 				break;
 			case CrimeType.killCop:
-				agroAmount = 2.0f;
+				agroAmount = data.killCop;
+				break;
+			case CrimeType.stealCar:
+				agroAmount = data.stealCar;
 				break;
 			case CrimeType.hitCar:
-				agroAmount = 0.2f;
+				agroAmount = data.hitCar;
 				break;
 			case CrimeType.destroyCar:
-				agroAmount = 0.1f;
+				agroAmount = data.destroyCar;
 				break;
 		}
 
@@ -65,19 +83,27 @@ public class WantedLevel : MonoSingleton<WantedLevel>
 
 	void IncreaseAgro(float amount)
 	{
+		if (agro + amount >= agroSteps[agroSteps.Length-1])
+			return;
+
 		agro += amount;
-		CalcWantedLevel();
+
+		if (agro >= agroSteps[level])
+		{
+			IncreaseWantedLevel();
+		}
 	}
 
-	void CalcWantedLevel()
+	public void IncreaseWantedLevel()
 	{
-		for (int i = 0; i < agroSteps.Length; i++)
-		{
-			if(agro < agroSteps[i])
-			{
-				level = i;
-				break;
-			}
-		}
+		level++;
+		UIManager.Instance.SetPoliceLevel(level);
+	}
+
+	public void ResetWantedLevel()
+	{
+		level = 0;
+		UIManager.Instance.SetPoliceLevel(0);
+		CarSpawnManager.Instance.StopAllPoliceCarChasing();
 	}
 }

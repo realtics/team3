@@ -102,7 +102,7 @@ public class PoolManager : MonoSingleton<PoolManager>
     }
 
 
-    private GameObject InstantiatePrefab(GameObject prefab)
+    GameObject InstantiatePrefab(GameObject prefab)
     {
         var go = GameObject.Instantiate(prefab) as GameObject;
         if (root != null) go.transform.parent = root;
@@ -111,6 +111,25 @@ public class PoolManager : MonoSingleton<PoolManager>
 		go.name = prefab.name;
         return go;
     }
+
+    List<GameObject> getAllObject(GameObject clone)
+    {
+        List<GameObject> returnList = new List<GameObject>();
+
+        if (prefabLookup.ContainsKey(clone))
+        {
+            var Temp = prefabLookup[clone].GetItemList();
+
+            for (int i = 0; i < Temp.Count; i++)
+            {
+                returnList.Add(Temp[i].gameObject);
+            }
+        }
+
+        return returnList;
+    }
+
+
 
     #region Static API
 
@@ -142,6 +161,11 @@ public class PoolManager : MonoSingleton<PoolManager>
     public static void ReleaseAllObject(GameObject clone)
     {
         Instance.releaseAllObject(clone);
+    }
+
+    public static List<GameObject> GetAllObject(GameObject clone)
+    {
+        return Instance.getAllObject(clone);
     }
 
     #endregion

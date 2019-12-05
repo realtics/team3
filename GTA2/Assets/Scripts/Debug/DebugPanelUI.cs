@@ -24,12 +24,12 @@ public class DebugPanelUI : MonoBehaviour
 
     public void IncreaseWantedLevel()
     {
-        GameManager.Instance.IncreaseWantedLevel(1);
+		WantedLevel.instance.IncreaseWantedLevel();
     }
 
     public void ResetWantedLevel()
     {
-        GameManager.Instance.ResetWantedLevel();
+		WantedLevel.instance.ResetWantedLevel();
     }
 
     public void AddPlayerHealth()

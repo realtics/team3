@@ -24,7 +24,8 @@ public class Citizen : NPC
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
-    }
+		gameManager = GameManager.Instance;
+	}
 
     void Start()
     {
@@ -84,7 +85,7 @@ public class Citizen : NPC
     {
         patternChangeTimer += Time.deltaTime;
 
-        if (DectectedPlayerAttack())
+        if (DetectedPlayerAttack())
         {
             SetRunaway();
         }

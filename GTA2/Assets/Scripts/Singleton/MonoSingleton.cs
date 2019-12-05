@@ -12,7 +12,11 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            ptr = FindObjectOfType(typeof(T)) as T;
+            if (ptr == null)
+            {
+                ptr = FindObjectOfType(typeof(T)) as T;
+            }
+
             if (ptr == null)
             {
                 ptr = new GameObject("@" + typeof(T).ToString(),

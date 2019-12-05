@@ -26,6 +26,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 		PoolManager.WarmPool(TruckPrefab, 5);
 
 		GameObject[] allCarObjects = GameObject.FindGameObjectsWithTag("Car");
+
 		foreach (var obj in allCarObjects)
 		{
 			CarManager cm = obj.GetComponent<CarManager>();
@@ -53,23 +54,21 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
     void RespawnDisabledCar()
     {
-        foreach (var car in allCars)
+		int policeCarCount = 0;
+		foreach (var p in allPoliceCar)
+		{
+			if (p.gameObject.activeSelf)
+				policeCarCount++;
+		}
+
+		foreach (var car in allCars)
         {
             if (car.gameObject.activeSelf)
                 continue;
 
-			if(car.ai.isPolice)
-			{
-				int policeCarCount = 0;
-				foreach (var p in allPoliceCar)
-				{
-					if (p.gameObject.activeSelf)
-						policeCarCount++;
-				}
-
-				if(policeCarCount > GameManager.Instance.wantedLevel)
-					continue;
-			}				
+			if (policeCarCount >= WantedLevel.instance.level &&
+				car.ai.isPolice)
+				continue;
 
 			GameObject go = WaypointManager.instance.FindRandomCarSpawnPosition();
 

@@ -23916,10 +23916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 444654459141412240}
-  maxSpeed: 400
+  data: {fileID: 11400000, guid: a97380793d9d9354eb9c0553aa704128, type: 2}
   curSpeed: 0
-  rotSpeed: 300
-  acceleration: 300
 --- !u!114 &6925489156560024902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23959,6 +23957,7 @@ MonoBehaviour:
   - {fileID: 7996982137629468136}
   passengers:
   - {fileID: 556203225619719254}
+  isRunningOpenTheDoor: 0
 --- !u!114 &7528266441474364948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23972,7 +23971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 444654459141412240}
-  maxHp: 500
+  data: {fileID: 11400000, guid: a97380793d9d9354eb9c0553aa704128, type: 2}
   curHp: 0
   maxSpdMultiplier: 1
 --- !u!114 &5303709029227908547
@@ -39175,7 +39174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7528266442616748247
 Transform:
   m_ObjectHideFlags: 0

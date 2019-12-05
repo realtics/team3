@@ -44162,10 +44162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 178703844134331502}
-  maxSpeed: 400
+  data: {fileID: 11400000, guid: d0d7bd9b435ee064db7506d80d490a45, type: 2}
   curSpeed: 0
-  rotSpeed: 250
-  acceleration: 100
 --- !u!114 &3873456438635101049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44218,7 +44216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 178703844134331502}
-  maxHp: 500
+  data: {fileID: 11400000, guid: d0d7bd9b435ee064db7506d80d490a45, type: 2}
   curHp: 0
   maxSpdMultiplier: 1
 --- !u!114 &1597798858382472807

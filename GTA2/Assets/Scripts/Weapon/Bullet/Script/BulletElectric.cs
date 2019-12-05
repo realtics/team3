@@ -11,9 +11,16 @@ public class BulletElectric : Bullet
     
 
     Vector3 targetToVector;
+    GameObject startObject;
     GameObject targetObject;
     float electricWaveArea;
+    int maxWaveCount;
 
+
+    public GameObject TargetObject()
+    {
+        return targetObject;
+    }
 
 
     protected override void Awake()
@@ -27,29 +34,36 @@ public class BulletElectric : Bullet
         base.SetBullet(type, triggerPos, dir, bullettoSize);
     }
 
-    public void SetArea(float area)
+    public void SetAreaAndMaxCount(float area, int maxWaveCount)
     {
         electricWaveArea = area;
+        this.maxWaveCount = maxWaveCount;
     }
 
+    
     // Null이 들어올 경우 타겟의 최신화가 이루어지지 않는다.
     // 이미 타겟이 잡힌 경우란 것이다.
-    public void SetTarget(GameObject obj)
+    public void SetTarget(GameObject origin, GameObject obj)
     {
+        if (origin != null)
+        {
+            startObject = origin;
+        }
         if (obj != null)
         {
             targetObject = obj;
         }
 
-        if (targetObject == null)
+        if (targetObject == null || startObject == null)
         {
             return;
         }
 
 
         targetToVector =
-            targetObject.gameObject.transform.position -
-            gameObject.transform.position;
+            targetObject.transform.position -
+            // gameObject.transform.position;
+            startObject.transform.position;
 
         SetScale(targetToVector);
         SetRotate();
@@ -73,8 +87,8 @@ public class BulletElectric : Bullet
 
     public void UpdateBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
     {
-        base.SetBullet(type, triggerPos, dir, bullettoSize);
-        SetTarget(null);
+        // base.SetBullet(type, triggerPos, dir, bullettoSize);
+        SetTarget(null, null);
     }
 
 
@@ -98,7 +112,7 @@ public class BulletElectric : Bullet
         Vector3 setVector = targetToVector * .5f;
         setVector.y = targetToVector.y;
 
-        transform.position += setVector;
+        transform.position = setVector + startObject.transform.position;
     }
 
     public override void Explosion()

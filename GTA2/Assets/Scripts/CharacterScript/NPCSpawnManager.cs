@@ -13,7 +13,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 	void Awake()
 	{
 		PoolManager.WarmPool(Citizen, 10);
-		PoolManager.WarmPool(Police, 10);
+		PoolManager.WarmPool(Police, 2);
 
 		allNPC = GameObject.FindGameObjectsWithTag("NPC");
 

@@ -17,13 +17,12 @@ public abstract class NPC : People
     protected float shotRange = 10.0f;
     protected float chaseRange = 7.0f;
     protected float outofRange = 400.0f;
+	protected GameManager gameManager;
 
-   
-    protected int money = 10; //사망시 플레이어에게 주는 돈
-
-    void OnEnable()
+	protected int money = 10; //사망시 플레이어에게 주는 돈
+	
+	void OnEnable()
     {
-		
 		//StartCoroutine(DisableIfOutOfCamera());
 	}
 
@@ -32,7 +31,7 @@ public abstract class NPC : People
         StopAllCoroutines();
     }
         
-    protected bool DectectedPlayerAttack()
+    protected bool DetectedPlayerAttack()
     {
         if (GameManager.Instance.player.isAttack &&
             findRange > Vector3.Distance(transform.position, GameManager.Instance.player.transform.position))
@@ -73,6 +72,11 @@ public abstract class NPC : People
             //HitBullet.누가쐈는지
             Hurt(HitBullet.bulletDamage);
             HitBullet.Explosion();
+
+            if (isDie == true)
+            {
+                GameManager.Instance.killCount++;
+            }
         }
         else if(other.CompareTag("PlayerPunch"))
         {

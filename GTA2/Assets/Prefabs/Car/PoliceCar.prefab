@@ -24533,7 +24533,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -24586,7 +24586,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -43905,10 +43905,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 4552042903000137208}
-  maxSpeed: 400
+  data: {fileID: 11400000, guid: c15877d687bba044b88dfeedc50ce7c8, type: 2}
   curSpeed: 0
-  rotSpeed: 250
-  acceleration: 300
 --- !u!114 &3142805350844273554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43964,7 +43962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 4552042903000137208}
-  maxHp: 500
+  data: {fileID: 11400000, guid: c15877d687bba044b88dfeedc50ce7c8, type: 2}
   curHp: 0
   maxSpdMultiplier: 1
 --- !u!114 &5911781915644547779
@@ -44706,6 +44704,11 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8897160060990038603, guid: d5dcadd957bf55e4eba70902d22a3c01,
+        type: 3}
+      propertyPath: isDriver
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1358635159880621219, guid: d5dcadd957bf55e4eba70902d22a3c01,
         type: 3}
       propertyPath: m_Enabled
@@ -44877,6 +44880,11 @@ PrefabInstance:
     - target: {fileID: 1167477734680987161, guid: d5dcadd957bf55e4eba70902d22a3c01,
         type: 3}
       propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8897160060990038603, guid: d5dcadd957bf55e4eba70902d22a3c01,
+        type: 3}
+      propertyPath: isDriver
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1358635159880621219, guid: d5dcadd957bf55e4eba70902d22a3c01,

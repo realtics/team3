@@ -11,7 +11,7 @@ public class Gta2Data
 }
 
 [SerializeField]
-public class Gta2SaveData
+public class HighScoreData
 {
     public int highScore;
 }

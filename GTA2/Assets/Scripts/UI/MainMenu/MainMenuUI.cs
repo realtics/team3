@@ -18,6 +18,11 @@ public class MainMenuUI : MonoBehaviour
     Text activeStageText;
     [SerializeField]
     Sprite[] stageSprites;
+    [SerializeField]
+    Text highscoreText;
+    [SerializeField]
+    GameObject exitUI;
+
 
 
     int stageIndex = 1;
@@ -25,11 +30,30 @@ public class MainMenuUI : MonoBehaviour
     int minStageIndex = 1;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        CloseExitWindow();
         GotoStart();
+        SetHighscore();
     }
 
+
+    void SetHighscore()
+    {
+        JsonStreamer js = new JsonStreamer();
+        HighScoreData highData = js.Load<HighScoreData>("HighScoreData.json");
+        highscoreText.text = "HIGH SCORE: ";
+
+
+        if (highData != null)
+        {
+            highscoreText.text += highData.highScore.ToString();
+        }
+        else
+        {
+            highscoreText.text += "0";
+        }
+    }
 
     public void GotoStart()
     {
@@ -71,6 +95,7 @@ public class MainMenuUI : MonoBehaviour
     {
         UpdateStageInfo();
         UpdateMenu();
+        UpdateExit();
     }
 
     void UpdateStageInfo()
@@ -93,7 +118,26 @@ public class MainMenuUI : MonoBehaviour
             }
         }
     }
+    void UpdateExit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (exitUI.activeInHierarchy)
+            {
+                CloseExitWindow();
+            }
+            else if (!exitUI.activeInHierarchy)
+            {
+                exitUI.SetActive(true);
+            }
+        }
+    }
 
+
+    public void CloseExitWindow()
+    {
+        exitUI.SetActive(false);
+    }
     public void ExitGame()
     {
         Application.Quit();

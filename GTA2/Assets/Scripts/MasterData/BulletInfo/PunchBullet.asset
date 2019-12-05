@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PunchBullet
   m_EditorClassIdentifier: 
   bulletDamage: 0
-  bulletLifeTime: 0.3
+  bulletLifeTime: 0.1
   bulletSpeed: 0
   explosionArea: 0

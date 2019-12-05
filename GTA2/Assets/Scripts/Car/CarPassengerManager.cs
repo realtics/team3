@@ -10,8 +10,9 @@ public class CarPassengerManager : MonoBehaviour
     public Transform[] doorPositions;
     public Animator[] doorAnimator;
     public People[] passengers;
-    public bool isLeftDoorOpen { get; set; }
-    public bool isRightDoorOpen { get; set; }
+	public bool isRunningOpenTheDoor = false;
+	public bool isRunningCloseTheDoor = false;
+	public bool[] isDoorOpen { get; set; } = new bool[2];
     
     void OnEnable()
     {
@@ -51,7 +52,7 @@ public class CarPassengerManager : MonoBehaviour
     {
         if (carManager.carState == CarManager.CarState.destroied)
             return;
-        isLeftDoorOpen = false;
+		isDoorOpen[0] = false;
 
         passengers[idx] = people;
         DriverSetting(idx, true);
@@ -64,7 +65,21 @@ public class CarPassengerManager : MonoBehaviour
         carManager.OnDriverGetOnEvent(people, idx);
     }
 
-    public IEnumerator GetOffTheCar(int idx)
+	public IEnumerator OpenTheDoor(int idx)
+	{
+		isRunningOpenTheDoor = true;
+		doorAnimator[idx].SetTrigger("Open");
+		yield return new WaitForSeconds(0.5f);
+		isDoorOpen[idx] = true;
+	}
+	public IEnumerator CloseTheDoor(int idx)
+	{
+		isRunningOpenTheDoor = false;
+		doorAnimator[idx].SetTrigger("Close");
+		yield return new WaitForSeconds(0.5f);
+		isDoorOpen[idx] = false;
+	}
+	public IEnumerator GetOffTheCar(int idx)
     {
         if (passengers[idx] == null)
             yield break;
@@ -83,10 +98,10 @@ public class CarPassengerManager : MonoBehaviour
 
 		passengers[idx] = null;
 
-
         carManager.OnDriverGetOffEvent(passengers[idx], idx);
     }
     
+	//OpenTheDoor(0) 먼저 호출후 확인하고 운전자 끌어내리기
     public void PullOutDriver()//운전자 끌어내리기.
     {
         if (passengers[0] == GameManager.Instance.player)
@@ -98,11 +113,13 @@ public class CarPassengerManager : MonoBehaviour
         }
         else //시민
         {
-            GameManager.Instance.IncreaseWantedLevel(1.0f); // 임시.
             if(passengers[0] != null)
             {
                 DriverSetting(0, false);
                 passengers[0].Down();
+
+				WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.stealCar, transform.position);
+
                 DebugX.Log("차뺏기");
             }
         }

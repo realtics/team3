@@ -20,6 +20,6 @@
     }
     public static void DrawRay(UnityEngine.Vector3 start, UnityEngine.Vector3 dir, UnityEngine.Color color)
     {
-        DrawRay(start, dir, color);
+        UnityEngine.Debug.DrawRay(start, dir, color);
     }
 }     

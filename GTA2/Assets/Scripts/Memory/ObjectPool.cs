@@ -65,6 +65,16 @@ public class ObjectPool<T>
         return container.Item;
     }
 
+    public List<T> GetItemList()
+    {
+        List<T> returnList = new List<T>();
+        for (int i = 0; i < list.Count; i++)
+        {
+            returnList.Add(list[i].Item);
+        }
+        return returnList;
+    }
+
     public void ReleaseItem(object item)
     {
         ReleaseItem((T)item);

@@ -169,7 +169,7 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
-  hp: 100
+  hp: 50
   isDriver: 0
   isDestReached: 1
   animator: {fileID: 1167477734086649170}
@@ -274,16 +274,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4178879768575453749, guid: a3b485bcb1b296e498510fe0e59c8591,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591,
         type: 3}
       propertyPath: userObject
       value: 
       objectReference: {fileID: 1167477734680987156}
+    - target: {fileID: 4178879768575453749, guid: a3b485bcb1b296e498510fe0e59c8591,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3b485bcb1b296e498510fe0e59c8591, type: 3}
 --- !u!4 &433027729083999133 stripped
