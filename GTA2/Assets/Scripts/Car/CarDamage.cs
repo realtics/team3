@@ -37,7 +37,7 @@ public class CarDamage : MonoBehaviour
             other.CompareTag("PlayerFireBullet") ||
             other.CompareTag("NPCBullet"))
         {
-            Bullet HitBullet = other.GetComponent<Bullet>();
+            Bullet HitBullet = other.GetComponentInParent<Bullet>();
             HitBullet.Explosion();
 
             DeductHp(HitBullet.bulletDamage, other.tag != "NPCBullet");

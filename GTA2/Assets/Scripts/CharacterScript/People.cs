@@ -9,39 +9,40 @@ public abstract class People : MonoBehaviour
 	protected float jumpMinTime = 0.3f;
 
 	protected float rotateSpeed = 0.1f;
-    protected float moveSpeed = 0.5f;
-    protected float runSpeed = 1.2f;
-    
-    protected Vector3 movement;
-    protected Vector3 direction;
-    protected Vector3 targetDirectionVector = Vector3.zero;
+	protected float moveSpeed = 0.5f;
+	protected float runSpeed = 1.2f;
+
+	protected Vector3 movement;
+	protected Vector3 direction;
+	protected Vector3 targetDirectionVector = Vector3.zero;
 	protected RaycastHit hit;
 	public LayerMask collisionLayer;
+	protected float runoverSpeed;
+	public float runoverMinSpeed { get; set; } = 50.0f;
 
 	[SerializeField]
-    protected int hp = 100;
+	protected int hp = 100;
 
-    protected float hDir = 0;
-    protected float vDir = 0;
+	protected float hDir = 0;
+	protected float vDir = 0;
 
-    public bool isWalk { get; set; }
-    public bool isShot { get; set; }
-    public bool isPunch { get; set; }
-    public bool isJump { get; set; }
-    public bool isDown { get; set; }
-    public bool isDie { get; set; }
-    public bool isRunover { get; set; }
-    public bool isDriver;
-    public abstract void Down();
-    public abstract void Rising();
-    protected abstract void Die();
-    protected float downTimer = 0.0f;
-    protected float downTime = 3.0f;
-    float respawnTimer = 0.0f;
-    float respawnTime = 5.0f;
-    float runoverTimer = 0.0f;
-    float runoverTime = 0.5f;
-    protected float runoverSpeed;
+	public bool isWalk { get; set; }
+	public bool isShot { get; set; }
+	public bool isPunch { get; set; }
+	public bool isJump { get; set; }
+	public bool isDown { get; set; }
+	public bool isDie { get; set; }
+	public bool isRunover { get; set; }
+	public bool isDriver;
+	public abstract void Down();
+	public abstract void Rising();
+	protected abstract void Die();
+	protected float downTimer = 0.0f;
+	protected float downTime = 2.0f;
+	float respawnTimer = 0.0f;
+	float respawnTime = 5.0f;
+	float runoverTimer = 0.0f;
+	float runoverTime = 0.5f;
     protected Vector3 runoverVector;
 
     protected virtual void Move()
@@ -108,7 +109,7 @@ public abstract class People : MonoBehaviour
                 isRunover = false;
 
 				//보정 수치
-				if (runoverSpeed > 150.0f)
+				if (runoverSpeed > 0.039f)
                 {
 					hDir = 0; vDir = 0;
                     Down();
@@ -119,26 +120,22 @@ public abstract class People : MonoBehaviour
 			LandCheck();
     }
     public abstract void Respawn();
-    public void Runover(float runoverSpeed, Vector3 carPosition)
+    public virtual void Runover(float runoverSpeed, Vector3 carPosition)
     {
 		Vector3 runoverVector = transform.position - carPosition;
-        if (runoverSpeed < 50)
+
+        if (runoverSpeed < runoverMinSpeed)
         {
             return;
         }
         //보정수치
         this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-        
-        
-		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
-		print(this.runoverVector.magnitude);
-		//if(this.runoverVector.magnitude )
-
+		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right))) * 3.0f;
+		
 		isRunover = true;
 		hDir = 0;
 		vDir = 0;
 		transform.LookAt(carPosition);
-		DebugX.Log("차에치임");
 
 		//보정 수치
 		if (runoverSpeed > 200)
@@ -151,9 +148,7 @@ public abstract class People : MonoBehaviour
 			{
 				Hurt((int)(runoverSpeed / 4));
 			}
-			
 		}
-			
     }
     protected void UpdateTargetRotation()
     {

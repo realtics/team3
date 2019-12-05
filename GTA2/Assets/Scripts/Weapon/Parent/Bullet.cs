@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
 
     protected virtual void Awake()
     {
-        collider = GetComponent<CapsuleCollider>();
+        collider = GetComponentInChildren<CapsuleCollider>();
         collider.isTrigger = true;
 
         bulletArea = collider.radius;

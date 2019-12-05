@@ -25,7 +25,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 
 	void Start()
 	{
-		//InvokeRepeating("RespawnDisabledNPC", 0.25f, 0.25f);
+		InvokeRepeating("RespawnDisabledNPC", 0.25f, 0.25f);
 
 		foreach (var npc in allNPC)
 		{

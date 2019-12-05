@@ -15,13 +15,13 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
             if (ptr == null)
             {
                 ptr = FindObjectOfType(typeof(T)) as T;
+                if (ptr == null)
+                {
+                    ptr = new GameObject("@" + typeof(T).ToString(),
+                                               typeof(T)).AddComponent<T>();
+                }
             }
-
-            if (ptr == null)
-            {
-                ptr = new GameObject("@" + typeof(T).ToString(),
-                                           typeof(T)).AddComponent<T>();
-            }
+           
             return ptr;
         }
     }

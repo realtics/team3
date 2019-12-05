@@ -14,7 +14,7 @@ public class Player : People
     public GunState curGunIndex { get; set; }
     public List<PlayerGun> gunList;
 
-    PlayerPhysics playerPhysics;
+    public PlayerPhysics playerPhysics;
     PlayerTimer playerTimer;
     int defaultHp = 200;
 
@@ -35,24 +35,29 @@ public class Player : People
     void Update()
     {
 		DebugX.DrawRay(transform.position, transform.forward);
-        base.PeopleUpdate();
-        AnimateUpdate();
-		
+
+		base.PeopleUpdate();
+		AnimateUpdate();
 		if (IsStuckedAnimation() || isDriver)
         {
             return;
         }
-		
-        UpdateInput();
+		UpdateInput();
     }
     void FixedUpdate()
     {
-        UpdateTargetRotation();
-        UpdateSlerpedRotation();
         TimerCheck();
-        if (isGetOnTheCar)
-            CarStealing();
-        Move();
+		UpdateTargetRotation();
+		UpdateSlerpedRotation();
+		if (isGetOnTheCar)
+			CarStealing();
+		Move();
+
+		//if (IsStuckedAnimation() || isDriver)
+		//{
+		//	return;
+		//}
+        
     }
 
     //Init
@@ -104,6 +109,8 @@ public class Player : People
     }
     void CarStealing()
     {
+		if (isDie)
+			return;
 		if (playerPhysics.targetCar.passengerManager.isDoorOpen[0]) //탑승
         {
 			isChasingCar = false;
@@ -115,7 +122,7 @@ public class Player : People
 				StartCoroutine(playerPhysics.targetCar.passengerManager.CloseTheDoor(0));
 			}
 
-			if (playerPhysics.targetCar.ai.isPolice)
+			if (playerPhysics.targetCar.ai.isPolice && playerPhysics.targetCar.passengerManager.passengers[0] != null)
             {
 				playerPhysics.targetCar.passengerManager.doorAnimator[0].SetTrigger("Close");
                 return;
@@ -123,11 +130,9 @@ public class Player : People
 			
 			//사람 끌어내리기
 			transform.parent = playerPhysics.targetCar.gameObject.transform;
-            isDriver = true;
 			playerPhysics.targetCar.passengerManager.PullOutDriver();
-			playerPhysics.targetCar.passengerManager.GetOnTheCar(this,0);
-            UIManager.Instance.CarUIMode(playerPhysics.targetCar);
-            print("탑승");
+			playerPhysics.targetCar.passengerManager.GetOnTheCar(this, 0);
+			UIManager.Instance.CarUIMode(playerPhysics.targetCar);
         }
         else//문열기
         {
@@ -147,10 +152,10 @@ public class Player : People
 				isGetOnTheCar = false;
 				return;
 			}
-			
         }
     }
-    void TimerCheck()
+	
+	void TimerCheck()
     {
 		if (isDie)
         {
@@ -206,13 +211,13 @@ public class Player : People
         if (other.gameObject.CompareTag("NPCPunch"))
         {
             other.gameObject.SetActive(false);
-            int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
+            int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
             isBusted = true;
             Hurt(bulletDamage);
         }
         else if (other.gameObject.CompareTag("NPCBullet"))
         {
-            int bulletDamage = other.gameObject.GetComponent<Bullet>().bulletDamage;
+            int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
             other.gameObject.GetComponent<Bullet>().Explosion();
             isBusted = false;
 
@@ -414,6 +419,7 @@ public class Player : People
 		else if (isChasingCar && JumpMinTimeCheck())
 		  Land();
 	}
+
 	public void ShotButtonDown()
     {
         ShotButtonDownGunSet();

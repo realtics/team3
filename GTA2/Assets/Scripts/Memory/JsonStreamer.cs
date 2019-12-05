@@ -9,7 +9,6 @@ public class JsonStreamer : MonoBehaviour
     public T Load<T>(string path)
     {
         string json = null;
-#if !WEB_BUILD
         string allpath = pathForDocumentsFile(path);
 
         if (File.Exists(allpath))
@@ -21,9 +20,6 @@ public class JsonStreamer : MonoBehaviour
             sr.Close();
             file.Close();
         }
-#else
-return null;
-#endif
 
         return JsonUtility.FromJson<T>(json);
     }
@@ -33,7 +29,6 @@ return null;
         string str = JsonUtility.ToJson(myObject);
 
 
-#if !WEB_BUILD
         string allPath = pathForDocumentsFile(path);
         FileStream file = new FileStream(allPath, FileMode.Create, FileAccess.Write);
 
@@ -42,8 +37,6 @@ return null;
 
         sw.Close();
         file.Close();
-#endif
-
     }
 
     public string pathForDocumentsFile(string filename)

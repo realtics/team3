@@ -122,20 +122,39 @@ public class Police : NPC
                 {
 					isGetOnTheCar = true;
 					isWalk = false;
-                    //transform.forward = GameManager.Instance.player.transform.forward;
-                    //transform.position = GameManager.Instance.player.transform.position;
 
-                    //플레이어 끌어내리기
-                    if (CarOpenTimerCheck())
-                    {
-						//player가 타고있는 차
+					//GameManager.Instance.player.playerPhysics 전부 수정
+
+					//문이 열려있는지 확인
+					if (GameManager.Instance.player.playerPhysics.targetCar.passengerManager.isDoorOpen[0])
+					{
+						//플레이어 끌어내리기
 						isGetOnTheCar = false;
-						GameManager.Instance.player.GetOffTheCar();
-                        GameManager.Instance.player.Down();
-						GameManager.Instance.player.isDriver = false;
-                    }
-                    
-                }
+						transform.parent = GameManager.Instance.player.playerPhysics.targetCar.gameObject.transform;
+						GameManager.Instance.player.playerPhysics.targetCar.passengerManager.PullOutDriver();
+					}
+					else
+					{
+						//문열기
+						isWalk = false;
+						GameManager.Instance.player.playerPhysics.LookAtCar();
+
+						if (!GameManager.Instance.player.playerPhysics.targetCar.passengerManager.isRunningOpenTheDoor)
+						{
+							transform.forward = GameManager.Instance.player.playerPhysics.targetCar.transform.forward;
+							StartCoroutine(GameManager.Instance.player.playerPhysics.targetCar.passengerManager.OpenTheDoor(0));
+						}
+
+						//거리 멀어지면 실패
+						if (Vector3.SqrMagnitude(transform.position - GameManager.Instance.player.playerPhysics.targetCar.transform.position) < 0.1f)
+						{
+							Down();
+							isGetOnTheCar = false;
+							return;
+						}
+					}
+
+				}
 				else//player 끌어내리러 쫓아 가기
 				{
 					isGetOnTheCar = false;

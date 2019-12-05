@@ -67,7 +67,7 @@ public abstract class NPC : People
     {
         if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
         {
-            Bullet HitBullet = other.GetComponent<Bullet>();
+            Bullet HitBullet = other.GetComponentInParent<Bullet>();
 
             //HitBullet.누가쐈는지
             Hurt(HitBullet.bulletDamage);

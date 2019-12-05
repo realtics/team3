@@ -160,7 +160,7 @@ public class Citizen : NPC
     #endregion
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall" && isRunaway)
+        if (collision.gameObject.tag == "Wall" && collision.gameObject.tag == "Car" && isRunaway)
         {
             transform.Rotate(0, Random.Range(90, 270), 0);
         }

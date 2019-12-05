@@ -14,10 +14,13 @@ public class PlayerPhysics : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-		//속도 너무 빠르면 Runover 
-        if (collision.gameObject.CompareTag("Car") && GameManager.Instance.player.isChasingCar)
+		//속도 너무 빠르면 Runover
+        if (collision.gameObject.CompareTag("Car") && GameManager.Instance.player.isChasingCar &&
+			collision.gameObject.GetComponent<CarManager>().movement.curSpeed < GameManager.Instance.player.runoverMinSpeed &&
+			Vector3.SqrMagnitude(carDoorTransform.position - transform.position) > 0.1f
+			)
         {
-            //GameManager.Instance.player.Jump();
+            GameManager.Instance.player.Jump();
         }
     }
     
@@ -60,7 +63,7 @@ public class PlayerPhysics : MonoBehaviour
     }
 	public bool IsGetOnDistance()
 	{
-		if (Vector3.Distance(transform.position, carDoorTransform.position) < 0.7f)
+		if (Vector3.Distance(transform.position, carDoorTransform.position) < 1.0f)
 			return true;
 		else
 			return false;
