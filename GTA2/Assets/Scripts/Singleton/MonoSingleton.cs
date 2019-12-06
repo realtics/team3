@@ -17,8 +17,9 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
                 ptr = FindObjectOfType(typeof(T)) as T;
                 if (ptr == null)
                 {
-                    ptr = new GameObject("@" + typeof(T).ToString(),
-                                               typeof(T)).AddComponent<T>();
+                    DebugX.Log("There's no active ManagerClass object");
+                    // ptr = new GameObject("@" + typeof(T).ToString(),
+                    //                            typeof(T)).AddComponent<T>();
                 }
             }
            

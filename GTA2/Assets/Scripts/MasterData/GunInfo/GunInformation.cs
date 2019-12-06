@@ -11,4 +11,5 @@ public class GunInformation : ScriptableObject
     public float shootInterval;
     public float bulletToPeopleSize;
     public int shotPerOneBullet;
+    public string shotSFX;
 }

@@ -43,7 +43,7 @@ public class TrafficLight : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+	void OnDrawGizmos()
     {
         if(signalColor == SignalColor.SC_Green)
         {

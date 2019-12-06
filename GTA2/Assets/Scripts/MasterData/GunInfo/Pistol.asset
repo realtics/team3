@@ -18,3 +18,4 @@ MonoBehaviour:
   shootInterval: 0.5
   bulletToPeopleSize: 0.2
   shotPerOneBullet: 1
+  shotSFX: SFX_PISTOL_SHOT

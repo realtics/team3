@@ -14,6 +14,13 @@ public class GunElectric : PlayerGun
     List<GameObject> noneTargetObjectList;
 
     List<BulletElectric> activeElectricList;
+
+
+
+    float soundPlayInverval = .3f;
+    float soundPlayDelta;
+
+
     public override void Init()
     {
 		base.Init();
@@ -42,10 +49,10 @@ public class GunElectric : PlayerGun
         InitGun();
 
 
-        List<GameObject> bulletList = PoolManager.GetAllObject(bulletPref);
+        List<BulletElectric> bulletList = PoolManager.GetAllObject<BulletElectric>(bulletPref);
         foreach (var item in bulletList)
         {
-            item.GetComponent<BulletElectric>().SetAreaAndMaxCount(electricWaveArea, electricWaveMaxIndex);
+            item.SetAreaAndMaxCount(electricWaveArea, electricWaveMaxIndex);
         }
     }
 
@@ -60,6 +67,9 @@ public class GunElectric : PlayerGun
         UpdateDelta();
         UpdateKeyInput();
         UpdateShot();
+
+
+        soundPlayDelta += Time.deltaTime;
     }
     protected override void UpdateShot()
     {
@@ -229,5 +239,15 @@ public class GunElectric : PlayerGun
         #endregion
 
         return true;
+    }
+
+
+    protected override void SFXPlay()
+    {
+        if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
+        {
+            SoundManager.Instance.PlayGunShot(shotSFXName);
+            soundPlayDelta = .0f;
+        }
     }
 }

@@ -16,11 +16,9 @@ public enum GunState
     FireBottle,
     Granade,
 }
-
 public abstract class Gun : MonoBehaviour
 {
     public GunInformation gunInfo;
-    public AudioSource gunSoundSource;
     
     [HideInInspector]
     public int bulletCount;
@@ -48,6 +46,7 @@ public abstract class Gun : MonoBehaviour
 
     protected bool isShot;
     protected bool isPrevShot;
+    protected string shotSFXName;
 
 
     public virtual void Init()
@@ -57,9 +56,8 @@ public abstract class Gun : MonoBehaviour
         shootInterval = gunInfo.shootInterval;
         bulletToPeopleSize = gunInfo.bulletToPeopleSize;
         shotPerOneBullet = gunInfo.shotPerOneBullet;
+        shotSFXName = gunInfo.shotSFX;
     }
-
-
 
     protected virtual void InitGun()
     {
@@ -142,11 +140,11 @@ public abstract class Gun : MonoBehaviour
         }
         
     }
-    protected void SFXPlay()
+    protected virtual void SFXPlay()
     {
-        if (gunSoundSource != null)
+        if (shotSFXName != null)
         {
-            gunSoundSource.PlayOneShot(gunSoundSource.clip);
+            SoundManager.Instance.PlayGunShot(shotSFXName);
         }
     }
 }

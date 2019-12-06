@@ -22,8 +22,8 @@ public class GameManager : MonoSingleton<GameManager>
     //GameManager ReFactoring field
     public int money{ get; set; }
     public int killCount { get; set; }
-    
     double gameTime;
+
     void Start()
     {
         gameTime = .0f;
@@ -118,9 +118,7 @@ public class GameManager : MonoSingleton<GameManager>
 			copCar.passengerManager.GetOnTheCar(player, 1);
             StartCoroutine(copCar.passengerManager.GetOffTheCar(1));
 
-            for(int i = 1; i < player.gunList.Count; i++)
-                player.gunList[1].bulletCount = 0;
-
+			player.ResetAllGunBullet();
             player.curGunIndex = GunState.None;
         }
         else

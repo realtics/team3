@@ -129,7 +129,6 @@ public class CarDamage : MonoBehaviour
         }
 
         CameraController.Instance.StartShake(0.3f, transform.position);
-        //Explode(isDamagedByPlayer);
         StartCoroutine(Explode(isDamagedByPlayer));
     }
 
@@ -152,9 +151,8 @@ public class CarDamage : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 col.GetComponent<CarDamage>().DeductHp((int)(data.maxHp * 3 * (1 - dist)), isDamagedByPlayer);
             }
-            else
+            else//폭발에 의한 밀림
             {
-				//col.GetComponent<People>().Hurt((int)(150 * (1 - dist)));
 				col.GetComponent<People>().Runover((int)(300 * (1 - dist)), transform.position);
 			}            
         }

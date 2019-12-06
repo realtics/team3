@@ -18,3 +18,4 @@ MonoBehaviour:
   shootInterval: 0.01
   bulletToPeopleSize: 0.3
   shotPerOneBullet: 30
+  shotSFX: SFX_FLAME_THROWER

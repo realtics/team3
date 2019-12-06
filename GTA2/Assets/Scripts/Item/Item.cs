@@ -35,9 +35,6 @@ public class Item : MonoBehaviour
     public ItemStatus itemType;
     public int itemCount;
     public float RespawnTime;
-    public AudioSource itemSoundSource;
-
-
 
 
     float RespawnDelta;
@@ -139,11 +136,7 @@ public class Item : MonoBehaviour
             ActiveOff();
         }
 
-        if (itemSoundSource != null)
-        {
-            itemSoundSource.Play();
-        }
-
+        SoundManager.Instance.PlayMainVoice(gameObject.name);
         UIManager.Instance.TurnOnItemText(itemType);
     }
 }

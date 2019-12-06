@@ -18,3 +18,4 @@ MonoBehaviour:
   shootInterval: 0.1
   bulletToPeopleSize: 0.3
   shotPerOneBullet: 8
+  shotSFX: SFX_MACHINE_GUN

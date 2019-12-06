@@ -112,12 +112,12 @@ public class PlayerGun : Gun
 
 
 
-    public void UpdateBottonDown()
+    public void UpdateButtonDown()
     {
         isButtonShot = true;
     }
 
-    public void UpdateBottonUp()
+    public void UpdateButtonUp()
     {
         isButtonShot = false;
     }

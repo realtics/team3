@@ -23958,6 +23958,7 @@ MonoBehaviour:
   passengers:
   - {fileID: 556203225619719254}
   isRunningOpenTheDoor: 0
+  isRunningCloseTheDoor: 0
 --- !u!114 &7528266441474364948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44424,6 +44425,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616351041589429949, guid: d3dcf17b1dc39f945a7d4b4ac377027e,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6016576917009530089, guid: d3dcf17b1dc39f945a7d4b4ac377027e,
         type: 3}

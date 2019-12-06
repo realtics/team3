@@ -18,3 +18,4 @@ MonoBehaviour:
   shootInterval: 0.0005
   bulletToPeopleSize: 0.2
   shotPerOneBullet: 50
+  shotSFX: SFX_TAZER

@@ -18,3 +18,4 @@ MonoBehaviour:
   shootInterval: 1.5
   bulletToPeopleSize: 0.2
   shotPerOneBullet: 1
+  shotSFX: SFX_ROCKET_LAUNCHER

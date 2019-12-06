@@ -107,6 +107,7 @@ public class PoolManager : MonoSingleton<PoolManager>
         var go = GameObject.Instantiate(prefab) as GameObject;
         if (root != null) go.transform.parent = root;
 
+        go.SetActive(false);
         go.transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);
 		go.name = prefab.name;
         return go;
@@ -114,21 +115,13 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     List<GameObject> getAllObject(GameObject clone)
     {
-        List<GameObject> returnList = new List<GameObject>();
-
         if (prefabLookup.ContainsKey(clone))
         {
-            var Temp = prefabLookup[clone].GetItemList();
-
-            for (int i = 0; i < Temp.Count; i++)
-            {
-                returnList.Add(Temp[i].gameObject);
-            }
+            return prefabLookup[clone].GetItemList();
         }
 
-        return returnList;
+        return null;
     }
-
 
 
     #region Static API
@@ -166,6 +159,19 @@ public class PoolManager : MonoSingleton<PoolManager>
     public static List<GameObject> GetAllObject(GameObject clone)
     {
         return Instance.getAllObject(clone);
+    }
+
+    public static List<T> GetAllObject<T>(GameObject clone)
+    {
+        List<T> returnList = new List<T>();
+        List<GameObject> gameObjects = Instance.getAllObject(clone);
+
+        foreach (var item in gameObjects)
+        {
+            returnList.Add(item.GetComponent<T>());
+        }
+
+        return returnList;
     }
 
     #endregion

@@ -18,6 +18,7 @@ public class GunPunch : PlayerGun
         }
         base.UpdateDirection();
         UpdateDelta();
+        UpdateCount();
         UpdateKeyInput();
         this.UpdateShot();
     }
@@ -46,5 +47,13 @@ public class GunPunch : PlayerGun
             tempGunDir * 
             bulletToPeopleSize;
         return returnVector;
+    }
+
+    void UpdateCount()
+    {
+        if (bulletCount <= 0)
+        {
+            bulletCount = 1;
+        }
     }
 }

@@ -25,17 +25,20 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 		PoolManager.WarmPool(TaxiPrefab, 12);
 		PoolManager.WarmPool(TruckPrefab, 5);
 
-		GameObject[] allCarObjects = GameObject.FindGameObjectsWithTag("Car");
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(policeCarPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(policeVanPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(AmbulancePrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(Car51Prefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(IceCarPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(TaxiPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(TruckPrefab));
 
-		foreach (var obj in allCarObjects)
+		foreach (var obj in allCars)
 		{
-			CarManager cm = obj.GetComponent<CarManager>();
+			if (obj.ai.isPolice)
+				allPoliceCar.Add(obj);
 
-			allCars.Add(cm);
-			if (cm.ai.isPolice)
-				allPoliceCar.Add(cm);
-
-			obj.SetActive(false);
+			obj.gameObject.SetActive(false);
 		}
 
 		for (int i = 0; i < allCars.Count; i++)

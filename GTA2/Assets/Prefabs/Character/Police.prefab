@@ -169,8 +169,7 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
-  hp: 50
-  isDriver: 0
+  hp: 100
   isDestReached: 1
   animator: {fileID: 1167477734086649170}
   gunList:

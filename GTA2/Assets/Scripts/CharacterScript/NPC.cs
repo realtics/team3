@@ -5,33 +5,77 @@ using UnityEditor;
 
 public abstract class NPC : People
 {
-    //HumanCtr스크립트 참조 코드
+    //FindWay
     float distToObstacle = Mathf.Infinity;
-    protected Vector3 destination;
-    public bool isDestReached;
+    bool isDestReached;
+	protected Vector3 destination;
 
-    protected float findRange = 10.0f;
-
-    //sqrMagnitude 사용해서 제곱함.
+	//Range
+	protected float findRange = 10.0f;
     protected float punchRange = 0.08f;
     protected float shotRange = 10.0f;
     protected float chaseRange = 7.0f;
     protected float outofRange = 400.0f;
 	protected GameManager gameManager;
 
+	public bool isRunaway { get; set; }
+	protected Vector3 RunawayVector;
+	public bool isChasePlayer { get; set; }
+	public bool isAttack { get; set; }
+
+	//Time Check
+	protected float minIdleTime = 0.3f;
+    protected float maxIdleTime = 1.0f;
+    protected float minWalkTime = 10.0f;
+    protected float maxWalkTime = 15.0f;
+	protected float carOpenTimer = 0.0f;
+	protected float carOpenTime = 0.5f;
+	protected float runawayTime = 5.0f;
+	GameObject targetCar;
+	public GunState curGunIndex { get; set; }
+	
+	protected float patternChangeTimer;
+	protected float patternChangeInterval;
 	protected int money = 10; //사망시 플레이어에게 주는 돈
 	
+	public Animator animator;
+	public List<NPCGun> gunList;
+
 	void OnEnable()
     {
-		//StartCoroutine(DisableIfOutOfCamera());
+		StartCoroutine(DisableIfOutOfCamera());
 	}
 
     void OnDisable()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
+        StopCoroutine(DisableIfOutOfCamera());
     }
-        
-    protected bool DetectedPlayerAttack()
+    protected void NPCInit()
+	{
+		rigidbody = GetComponent<Rigidbody>();
+		boxCollider = GetComponent<BoxCollider>();
+		patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
+		patternChangeTimer = patternChangeInterval;
+	}
+	protected void NPCUpdate()
+	{
+		if (isDriver)
+			return;
+		AnimateUpdate();
+	}
+	protected void SetRunaway()
+	{
+		patternChangeTimer = 0.0f;
+		patternChangeInterval = runawayTime;
+		Vector3 playerPosition = GameManager.Instance.player.transform.position;
+		RunawayVector = new Vector3(playerPosition.x, transform.position.y, playerPosition.z);
+		transform.LookAt(RunawayVector);
+		transform.Rotate(0, 180, 0);
+		isRunaway = true;
+		isWalk = true;
+	}
+	protected bool DetectedPlayerAttack()
     {
         if (GameManager.Instance.player.isAttack &&
             findRange > Vector3.Distance(transform.position, GameManager.Instance.player.transform.position))
@@ -58,11 +102,8 @@ public abstract class NPC : People
         Pos.z += transform.forward.z * Time.deltaTime * runSpeed;
         transform.position = Pos;
     }
-    protected void UpdateTargetDirection()
-    {
-        transform.Rotate(0, Random.Range(0, 360), 0);
-    }
     
+    //TODO : Down에서 isTrigger
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
@@ -81,12 +122,17 @@ public abstract class NPC : People
         else if(other.CompareTag("PlayerPunch"))
         {
             Down();
-            
-            print("Punched");
         }
     }
-    #region RefHumanCtr
-    protected override void Move()
+	protected override void Die()
+	{
+		isDie = true;
+		GameManager.Instance.IncreaseMoney(money);
+		rigidbody.isKinematic = true;
+		boxCollider.enabled = false;
+	}
+	#region RefHumanCtr
+	protected override void Move()
     {
         if (isDestReached)
         {
@@ -128,35 +174,7 @@ public abstract class NPC : People
         }
         //DrawRaycastDebugLine();
     }
-    protected bool InPunchRange()
-    {
-        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < punchRange)
-            return true;
-        else
-            return false;
-    }
-    protected bool InShotRange()
-    {
-        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < shotRange)
-            return true;
-        else
-            return false;
-    }
-    protected bool InChaseRange() //차에 타고있을때 플레이어 내리기 시도하는 거리
-    {
-        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < chaseRange)
-            return true;
-        else
-            return false;
-    }
-    protected bool PlayerOutofRange()
-    {
-        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) > outofRange)
-            return true;
-        else
-            return false;
-    }
-   
+       
     void DrawRaycastDebugLine()
     {
         if (distToObstacle < Mathf.Infinity)
@@ -187,8 +205,52 @@ public abstract class NPC : People
     }
 
     #endregion
-
-    IEnumerator DisableIfOutOfCamera()
+    #region RangeCheck
+    protected bool InPunchRange()
+    {
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < punchRange)
+            return true;
+        else
+            return false;
+    }
+    protected bool InShotRange()
+    {
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < shotRange)
+            return true;
+        else
+            return false;
+    }
+    protected bool InChaseRange() //차에 타고있을때 플레이어 내리기 시도하는 거리
+    {
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < chaseRange)
+            return true;
+        else
+            return false;
+    }
+    protected bool PlayerOutofRange()
+    {
+        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) > outofRange)
+            return true;
+        else
+            return false;
+    }
+    #endregion
+    protected void UpdateTargetDirection()
+    {
+        transform.Rotate(0, Random.Range(0, 360), 0);
+    }
+	void AnimateUpdate()
+	{
+		animator.SetBool("isWalk", isWalk);
+		animator.SetBool("isShot", isShot);
+		animator.SetBool("isPunch", isPunch);
+		animator.SetBool("isJump", isJump);
+		animator.SetBool("isDie", isDie);
+		animator.SetBool("isDown", isDown);
+		animator.SetBool("isRunover", isRunover);
+		animator.SetBool("isGetOnTheCar", isGetOnTheCar);
+	}
+	IEnumerator DisableIfOutOfCamera()
     {
         while (true)
         {
@@ -203,4 +265,51 @@ public abstract class NPC : People
                 gameObject.SetActive(false);            
         }
     }
+	protected void PatternChange()
+	{
+		if (patternChangeTimer > patternChangeInterval)
+		{
+			patternChangeTimer = 0.0f;
+
+			if (isWalk)
+			{
+				patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
+				isWalk = false;
+			}
+			else
+			{
+				patternChangeInterval = Random.Range(minWalkTime, maxWalkTime);
+				isWalk = true;
+			}
+		}
+	}
+	protected void StartPunch()
+	{
+		isWalk = false;
+		isPunch = true;
+		gunList[1].GetComponent<NPCGun>().StopShot();
+		gunList[0].GetComponent<NPCGun>().StartShot();
+	}
+	protected void StopPunch()
+	{
+		isPunch = false;
+		isWalk = true;
+		gunList[0].GetComponent<NPCGun>().StopShot();
+	}
+	protected void StartShot()
+	{
+		isWalk = false;
+		isShot = true;
+		isPunch = false;
+		gunList[0].GetComponent<NPCGun>().StopShot();
+		gunList[1].GetComponent<NPCGun>().StartShot();
+	}
+	protected void StopShot()
+	{
+		isWalk = true;
+		isShot = false;
+		isPunch = false;
+		gunList[1].GetComponent<NPCGun>().StopShot();
+	}
+
 }

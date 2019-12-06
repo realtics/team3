@@ -15,7 +15,7 @@ public class BulletEffect : MonoBehaviour
 
     protected virtual void Awake()
     {
-        particle = GetComponent<ParticleSystem>();
+        particle = GetComponentInChildren<ParticleSystem>();
         particle.Play();
     }
 

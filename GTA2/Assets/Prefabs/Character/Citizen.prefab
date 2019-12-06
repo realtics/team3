@@ -92,7 +92,7 @@ Animator:
   m_GameObject: {fileID: 5718492031384131605}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e168e560301492c49bd2cccf4dbc39a9, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -169,11 +169,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   hp: 100
-  isDriver: 0
   isDestReached: 1
   animator: {fileID: 1020086614340368900}
-  patternChangeTimer: 0
-  patternChangeInterval: 0
+  gunList: []
 --- !u!65 &-3621325394877705112
 BoxCollider:
   m_ObjectHideFlags: 0
