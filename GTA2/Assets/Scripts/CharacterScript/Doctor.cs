@@ -86,8 +86,5 @@ public class Doctor : NPC
         throw new System.NotImplementedException();
     }
 
-    public override void Respawn()
-    {
-        throw new System.NotImplementedException();
-    }
+   
 }

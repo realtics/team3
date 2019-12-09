@@ -72,7 +72,7 @@ public class CarInput : MonoBehaviour
         carManager.OnReturnKeyDownEvent();
     }
 
-    void ReleaseInputWhenDriverGetOff(People p, int idx)
+    void ReleaseInputWhenDriverGetOff(People.PeopleType peopleType, int idx)
     {
         inputH = 0;
         inputV = 0;

@@ -115,6 +115,7 @@ public class WaypointManager : MonoBehaviour
         while (true)
         {
             Vector3 pos = Camera.main.WorldToViewportPoint(wp.transform.position);
+
             if (pos.x < 0 - offset ||
                 pos.x > 1 + offset ||
                 pos.y < 0 - offset ||
@@ -129,4 +130,13 @@ public class WaypointManager : MonoBehaviour
             }
         }
     }
+    public GameObject FindRandomNPCSpawnPosition()
+    {
+		GameObject wp = FindClosestWaypoint(
+			WaypointType.human,
+			Camera.main.transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)),
+			true);
+		wp.transform.position = new Vector3(wp.transform.position.x + Random.Range(-5, 5), wp.transform.position.y, wp.transform.position.z + Random.Range(-5, 5));
+		return wp;
+	}
 }

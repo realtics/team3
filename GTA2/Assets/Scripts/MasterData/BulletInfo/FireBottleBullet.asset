@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletDamage: 1000
   bulletLifeTime: 100
-  bulletSpeed: 1
-  explosionArea: 4
+  bulletSpeed: 0.3
+  explosionArea: 3

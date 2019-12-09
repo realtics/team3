@@ -55,9 +55,10 @@ public class HumanPathManager : MonoBehaviour
                 break;
         }
         lastWaypoint = curWaypoint;
-
-        curDestPos = destWaypoint.transform.position;
-    }
+		
+		curDestPos = destWaypoint.transform.position;
+		new Vector3(destWaypoint.transform.position.x + Random.Range(-1, 1),								destWaypoint.transform.position.y,							destWaypoint.transform.position.z + Random.Range(-1, 1));
+	}
 
     void SetNewDestination()
     {

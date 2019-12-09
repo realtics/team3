@@ -15,4 +15,4 @@ MonoBehaviour:
   bulletDamage: 500
   bulletLifeTime: 3
   bulletSpeed: 7
-  explosionArea: 3
+  explosionArea: 1

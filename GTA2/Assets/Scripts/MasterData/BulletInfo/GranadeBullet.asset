@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GranadeBullet
   m_EditorClassIdentifier: 
   bulletDamage: 1000
-  bulletLifeTime: 5
-  bulletSpeed: 1
+  bulletLifeTime: 3
+  bulletSpeed: 0.3
   explosionArea: 3

@@ -23,7 +23,10 @@ public class CarEffects : MonoBehaviour
     public AudioSource audioSourceSkid;
 
     public GameObject fireParticle;
-    public GameObject explosionParticle;
+    public GameObject explosionPref;
+
+
+    protected ExplosionEffect explosionParticle;
 
     void OnEnable()
     {
@@ -54,7 +57,15 @@ public class CarEffects : MonoBehaviour
         debris.SetActive(false);
 
         fireParticle.SetActive(false);
-        explosionParticle.SetActive(false);
+
+        audioSourceEngine.volume = 0.1f;
+
+        if (explosionPref != null)
+        {
+            explosionParticle = Instantiate(explosionPref).GetComponent<ExplosionEffect>();
+            explosionParticle.gameObject.transform.parent = PoolManager.Instance.transform;
+            explosionParticle.gameObject.name = "Test";
+        }            
     }
 
     void Update()
@@ -202,7 +213,7 @@ public class CarEffects : MonoBehaviour
 
         if (carState != CarManager.CarState.controlledByPlayer)
         {
-            audioSourceEngine.volume = Mathf.Clamp(curSpeed / 100, 0, 0.8f);
+            audioSourceEngine.volume = Mathf.Clamp(curSpeed / 100, 0, 0.1f);
         }
         else
         {
@@ -215,7 +226,7 @@ public class CarEffects : MonoBehaviour
         if (carManager.damage.curHp <= 0)
         {
             fireParticle.SetActive(false);
-            explosionParticle.SetActive(true);
+            explosionParticle.SetExplosion(gameObject.transform.position /*+ new Vector3(.0f, .5f)*/);
         }
         else if (carManager.damage.curHp < 100)
         {

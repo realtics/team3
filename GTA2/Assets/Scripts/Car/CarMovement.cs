@@ -7,8 +7,8 @@ using UnityEngine;
 public class CarMovement : MonoBehaviour
 {
     public CarManager carManager;
-
-    Rigidbody rbody;
+	
+	Rigidbody rbody;
 
 	public CarData data;
     public float curSpeed;
@@ -89,7 +89,7 @@ public class CarMovement : MonoBehaviour
         rbody.velocity = dir * curSpeed * Time.deltaTime + reboundForce;
     }
 
-    void OnDriverGetOff(People people, int idx)
+    void OnDriverGetOff(People.PeopleType peopleType, int idx)
     {
         curSpeed = 0;
     }

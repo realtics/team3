@@ -95,11 +95,15 @@ public class EndScene : MonoBehaviour
 
     public void OnClickRePlayButton()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(gta2GetData.curScene);
     }
 
     public void OnClickExitButton()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void OnClickNextButton()
+    {
+        SceneManager.LoadScene(gta2GetData.nextScene);
     }
 }

@@ -13,6 +13,7 @@ public class GameManager : MonoSingleton<GameManager>
     public float maxArrowToPlayer;
     //int defaultRemains = 3;
     public int remains = 3;
+    public string nextScene;
 
     UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
     [HideInInspector] public Player player;
@@ -99,38 +100,47 @@ public class GameManager : MonoSingleton<GameManager>
         gameTime += Time.deltaTime;
     }
 
-    public void RespawnSetting()
-    {
-        if (remains == 0)//RIP
-        {
-            SaveGta2Data();
-            SceneManager.LoadScene("Rip");
-            return;
-        }
+	public void RespawnSetting()
+	{
+		if (remains == 0)//RIP
+		{
+			SaveGta2Data();
+			SceneManager.LoadScene("Rip");
+			return;
+		}
 
-        if (player.isBusted)
-        {
-			CarManager copCar = CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
-
-			CameraController.Instance.ChangeTarget(copCar.gameObject);
-
-			copCar.gameObject.SetActive(false);
-			copCar.gameObject.SetActive(true);
-			copCar.passengerManager.GetOnTheCar(player, 1);
-            StartCoroutine(copCar.passengerManager.GetOffTheCar(1));
+		if (player.isBusted)
+		{
+			StartCoroutine(GetOffFromCopCarCor());
 
 			player.ResetAllGunBullet();
-            player.curGunIndex = GunState.None;
-        }
-        else
-        {
-            player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
-        }
+			player.curGunIndex = GunState.None;
+		}
+		else
+		{
+			player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
+		}
 
 		//카메라 위치 조정
 		CameraController.Instance.ChangeTarget(player.gameObject);
 		CameraController.Instance.ZoomOut();
+		WantedLevel.instance.ResetWantedLevel();
 	}
+
+	IEnumerator GetOffFromCopCarCor()
+	{
+		CarManager copCar = CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
+		CameraController.Instance.ChangeTarget(copCar.gameObject);
+
+		copCar.gameObject.SetActive(false);
+		copCar.gameObject.SetActive(true);
+		copCar.passengerManager.GetOnTheCar(People.PeopleType.Player, 1);
+
+		yield return new WaitForSeconds(1f);
+
+		StartCoroutine(copCar.passengerManager.GetOffTheCar(1));
+	}
+
     public void IncreaseMoney(int earnings)
     {
         money += earnings;
@@ -148,6 +158,8 @@ public class GameManager : MonoSingleton<GameManager>
         myObject.money = money;
         myObject.gameTime = gameTime;
         myObject.kills = killCount;
+        myObject.curScene = SceneManager.GetActiveScene().name;
+        myObject.nextScene = nextScene;
 
         JsonStreamer js = new JsonStreamer();
         js.Save(myObject, "Gta2Data.json");

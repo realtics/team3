@@ -11,7 +11,6 @@ public class GunFireBottle : PlayerGun
 
 
     float intervalDelta;
-    int smokeIdx = 0;
 
     public override void Init()
     {
@@ -47,7 +46,8 @@ public class GunFireBottle : PlayerGun
             {
                 intervalDelta = shootInterval;
             }
-            if (player.isWalk)
+            if (UIManager.Instance.playerMoveJoystick.Horizontal > .01f &&
+                UIManager.Instance.playerMoveJoystick.Vertical > .01f )
             {
                 intervalDelta += moveThrowPower;
             }

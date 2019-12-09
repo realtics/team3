@@ -11,7 +11,6 @@ public enum DamageDirection
 public class CarDamage : MonoBehaviour
 {
     public CarManager carManager;
-
 	public CarData data;
     public int curHp;
     public float maxSpdMultiplier = 1.0f;
@@ -41,6 +40,11 @@ public class CarDamage : MonoBehaviour
             HitBullet.Explosion();
 
             DeductHp(HitBullet.bulletDamage, other.tag != "NPCBullet");
+			
+			if(carManager.movement.curSpeed < 10 && carManager.passengerManager.passengerType != People.PeopleType.Player)
+			{
+				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+			}
         }
     }
 
@@ -154,7 +158,7 @@ public class CarDamage : MonoBehaviour
             else//폭발에 의한 밀림
             {
 				col.GetComponent<People>().Runover((int)(300 * (1 - dist)), transform.position);
-			}            
+			}
         }
     }
 }

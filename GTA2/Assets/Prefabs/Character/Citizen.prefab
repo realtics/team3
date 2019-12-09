@@ -169,7 +169,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   hp: 100
-  isDestReached: 1
   animator: {fileID: 1020086614340368900}
   gunList: []
 --- !u!65 &-3621325394877705112

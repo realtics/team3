@@ -63,6 +63,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  playerCar: {fileID: 0}
 --- !u!114 &41055368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,5 +82,6 @@ MonoBehaviour:
   - 3
   - 7
   - 15
+  - 999
   agro: 0
   level: 0

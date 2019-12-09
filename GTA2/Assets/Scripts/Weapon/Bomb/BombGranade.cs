@@ -43,4 +43,9 @@ public class BombGranade : Bullet
         base.Explosion();
         CameraController.Instance.StartShake(explosionPower, transform.position);
     }
+
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        return;
+    }
 }

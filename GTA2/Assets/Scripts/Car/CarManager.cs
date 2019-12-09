@@ -24,20 +24,26 @@ public class CarManager : MonoBehaviour
     public event CarDamageHandler OnDamage;
     public event CarDamageHandler OnDestroy;
 
-    public delegate void CarPassengerHandler(People people, int idx);
+    public delegate void CarPassengerHandler(People.PeopleType peopleType, int idx);
     public event CarPassengerHandler OnDriverGetOn;
     public event CarPassengerHandler OnDriverGetOff;
+    public CarType carType;
+    public enum CarType
+    {
+        citizen,
+        police
+    }
 
     public enum CarState
     {
         idle, controlledByPlayer, controlledByAi, destroied
     }
     public CarState carState = CarState.controlledByAi;
-
+    
     void OnEnable()
     {
         carState = CarState.controlledByAi;
-
+        passengerManager.passengersInit();
         StopAllCoroutines();
         StartCoroutine(DisableIfOutOfCamera());
     }
@@ -64,13 +70,16 @@ public class CarManager : MonoBehaviour
         OnDamage(sourceIsPlayer);
     }
 
-    public void OnDriverGetOnEvent(People p, int idx)
+    public void OnDriverGetOnEvent(People.PeopleType peopleType, int idx)
     {
-        OnDriverGetOn?.Invoke(p, idx);
+        OnDriverGetOn?.Invoke(peopleType, idx);
+
+        //if (OnDriverGetOn != null)
+        //   OnDriverGetOn(idx);
 
 		if (idx == 0)
         {
-            if (p == GameManager.Instance.player)
+            if (peopleType == People.PeopleType.Player)
             {
                 carState = CarState.controlledByPlayer;
             }
@@ -81,9 +90,9 @@ public class CarManager : MonoBehaviour
         }
     }
 
-    public void OnDriverGetOffEvent(People p, int idx)
+    public void OnDriverGetOffEvent(People.PeopleType peopleType, int idx)
     {
-        OnDriverGetOff?.Invoke(p, idx);
+        OnDriverGetOff?.Invoke(peopleType, idx);
 
         if(idx == 0)
             carState = CarState.idle;

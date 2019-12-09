@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosionEffect : MonoBehaviour
 {
     // Start is called before the first frame update
-    protected ParticleSystem particle = null;
+    // protected ParticleSystem particle = null;
 
     // Start is called before the first frame update
     protected float releaseTime = 6.0f;
@@ -13,7 +13,6 @@ public class ExplosionEffect : MonoBehaviour
 
     void Awake()
     {
-        particle = GetComponent<ParticleSystem>();
         gameObject.SetActive(false);
     }
 
@@ -33,7 +32,6 @@ public class ExplosionEffect : MonoBehaviour
         transform.position = pos;
         releaseDelta = .0f;
         gameObject.SetActive(true);
-        particle.Play();
     }
 
 

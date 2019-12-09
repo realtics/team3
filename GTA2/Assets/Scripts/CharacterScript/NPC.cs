@@ -45,7 +45,6 @@ public abstract class NPC : People
     {
 		StartCoroutine(DisableIfOutOfCamera());
 	}
-
     void OnDisable()
     {
         //StopAllCoroutines();
@@ -60,8 +59,6 @@ public abstract class NPC : People
 	}
 	protected void NPCUpdate()
 	{
-		if (isDriver)
-			return;
 		AnimateUpdate();
 	}
 	protected void SetRunaway()
@@ -257,14 +254,20 @@ public abstract class NPC : People
             yield return new WaitForSeconds(1.0f);
 
             Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-            float offset = 3f;
+            float offset = 2f;
             if (pos.x < 0 - offset ||
                 pos.x > 1 + offset ||
                 pos.y < 0 - offset ||
                 pos.y > 1 + offset)
-                gameObject.SetActive(false);            
+			{
+				NPCSpawnManager.Instance.NPCNum--;
+				gameObject.SetActive(false);
+			}
+                
         }
-    }
+		
+
+	}
 	protected void PatternChange()
 	{
 		if (patternChangeTimer > patternChangeInterval)
@@ -282,6 +285,10 @@ public abstract class NPC : People
 				isWalk = true;
 			}
 		}
+	}
+	protected void LookAtPlayer()
+	{
+		transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
 	}
 	protected void StartPunch()
 	{
@@ -311,5 +318,5 @@ public abstract class NPC : People
 		isPunch = false;
 		gunList[1].GetComponent<NPCGun>().StopShot();
 	}
-
+   
 }

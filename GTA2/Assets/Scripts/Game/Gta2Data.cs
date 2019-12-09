@@ -8,6 +8,8 @@ public class Gta2Data
     public int money;
     public double gameTime;
     public int kills;
+    public string curScene;
+    public string nextScene;
 }
 
 [SerializeField]

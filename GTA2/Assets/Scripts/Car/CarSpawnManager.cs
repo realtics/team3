@@ -79,7 +79,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
             RaycastHit hit;
             if(Physics.SphereCast(ray, 2f, out hit, 10, 1<<12))
             {
-                Debug.DrawLine(GameManager.Instance.player.transform.position, go.transform.position, Color.red, 0.5f);
+                //Debug.DrawLine(GameManager.Instance.player.transform.position, go.transform.position, Color.red, 0.5f);
             }
             else
             {
@@ -87,7 +87,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
                 car.gameObject.SetActive(true);
                 car.GetComponent<CarManager>().movement.curSpeed = 100;
 
-                Debug.DrawLine(GameManager.Instance.player.transform.position, car.transform.position, Color.green, 0.5f);
+                //Debug.DrawLine(GameManager.Instance.player.transform.position, car.transform.position, Color.green, 0.5f);
             }
 
             break;

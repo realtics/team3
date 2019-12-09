@@ -43,8 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3c08448acf89d4f8b7908daeaeef3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userObject: {fileID: 0}
   gunInfo: {fileID: 11400000, guid: 147471fca84b9c94894e3a3b87bb5166, type: 2}
-  gunSoundSource: {fileID: 0}
   bulletCount: 0
+  userObject: {fileID: 0}
   moveThrowPower: 3

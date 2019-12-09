@@ -16,5 +16,6 @@ MonoBehaviour:
   bulletPref: {fileID: 7073515812447598054, guid: b02b8d7aa05f11d4dad0553064e9e4fc,
     type: 3}
   shootInterval: 100
-  bulletToPeopleSize: 1
+  bulletToPeopleSize: 0.3
   shotPerOneBullet: 1
+  shotSFX: 

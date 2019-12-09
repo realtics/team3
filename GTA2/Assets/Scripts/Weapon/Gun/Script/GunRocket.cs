@@ -6,11 +6,7 @@ public class GunRocket : PlayerGun
 {
     // Start is called before the first frame update
     public GameObject smokePref;
-    public int smokePoolCnt;
 
-    int SmokeIdx = 0;
-    
-    
     public override void Init()
     {
         base.Init();

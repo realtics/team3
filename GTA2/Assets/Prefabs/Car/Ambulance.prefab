@@ -44135,6 +44135,7 @@ MonoBehaviour:
   passengerManager: {fileID: 1047443971703956942}
   damage: {fileID: 7028039128798893206}
   effects: {fileID: 1597798858382472807}
+  carType: 0
   carState: 2
 --- !u!114 &6343453432815375955
 MonoBehaviour:
@@ -44201,8 +44202,10 @@ MonoBehaviour:
   - {fileID: 4892016458960053090}
   doorAnimator:
   - {fileID: 6730530210032726613}
-  passengers:
-  - {fileID: 0}
+  passengerType: 2
+  passengers: 00
+  isRunningOpenTheDoor: 0
+  isRunningCloseTheDoor: 0
 --- !u!114 &7028039128798893206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44250,7 +44253,8 @@ MonoBehaviour:
   audioSourceEngine: {fileID: 5240615182983465757}
   audioSourceSkid: {fileID: 898738788375139938}
   fireParticle: {fileID: 7028039128151396392}
-  explosionParticle: {fileID: 7028039128776981275}
+  explosionPref: {fileID: 9085315079043664107, guid: 328eceba7c9fce540b82a20ce6be221e,
+    type: 3}
 --- !u!114 &7028039128798893207
 MonoBehaviour:
   m_ObjectHideFlags: 0

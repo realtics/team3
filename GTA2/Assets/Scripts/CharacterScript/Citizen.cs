@@ -8,17 +8,14 @@ public class Citizen : NPC
     void Awake()
     {
 		gameManager = GameManager.Instance;
+        boxCollider = GetComponent<BoxCollider>();
+		rigidbody = GetComponent<Rigidbody>();
 	}
 
     void Start()
     {
 		base.NPCInit();
         StartCoroutine(ActivityByState());
-
-        if(isDriver)
-        {
-			SettingToGetOnTheCar();
-        }
     }
     void Update()
     {
@@ -96,16 +93,30 @@ public class Citizen : NPC
         isRunaway = true;
         patternChangeTimer = 0.0f;
     }
-   
-    public override void Respawn()
-    {
-        patternChangeTimer = 0;
-        isDie = false;
-        hp = 100;
-        NPCSpawnManager.Instance.NPCRepositioning(this);
-		rigidbody.isKinematic = false;
-        boxCollider.enabled = true;
-        print("Citizen Respawn");
-    }
-    #endregion
+	public override void Runover(float runoverSpeed, Vector3 carPosition)
+	{
+		Vector3 runoverVector = transform.position - carPosition;
+
+		if (runoverSpeed < 50)
+			return;
+
+		//속도에 비례한 피해 데미지 보정수치
+		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
+		isRunover = true;
+		hDir = 0; vDir = 0;
+
+		transform.LookAt(carPosition);
+
+		if (isDown && runoverSpeed > 30)
+		{
+			Hurt((int)(runoverSpeed * 4));
+		}
+		else if (runoverSpeed > 200)
+		{
+			Hurt((int)(runoverSpeed / 4));
+		}
+		SetRunaway();
+	}
+	#endregion
 }

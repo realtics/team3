@@ -19,7 +19,10 @@ public class Police : NPC
 		base.PeopleUpdate();
 		base.NPCUpdate();
         if (isDie || isDown)
+        {
+            StopPunch();
             return;
+        }
         TimerCheck();
         ActivityByState();
         PlayerStateCheck();
@@ -44,6 +47,48 @@ public class Police : NPC
 		else if (isWalk)
 		{
 			base.Move();
+		}
+	}
+	void ChasePlayerCharacterInCar()
+	{
+		if (PlayerOutofRange())
+		{
+			isChasePlayer = false;
+			return;
+		}
+		//끌어내리는 범위
+		if (InPunchRange())//InPullOutRange()
+		{
+			isGetOnTheCar = true;
+			isWalk = false;
+
+			//문이 열려있는지 확인
+			if (GameManager.Instance.player.playerPhysics.targetCar.isDoorOpen[0])
+			{
+				PullOutDriver();
+			}
+			else
+			{
+				OpenTheDoor();
+			}
+		}
+		else if (InShotRange()) //사격
+		{
+			base.LookAtPlayer();
+			base.StartShot();
+		}
+		else //추격
+		{
+			isGetOnTheCar = false;
+			base.StopShot();
+			base.ChasePlayer();
+		}
+	}
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Car") && isChasePlayer)
+		{
+			Jump();
 		}
 	}
 	#region lowLevelCode
@@ -143,69 +188,32 @@ public class Police : NPC
 			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, gameManager.player.transform.position);
 		}
 	}
-	#endregion
-	void ChasePlayerCharacterInCar()
-    {
-        if (PlayerOutofRange())
-        {
-            isChasePlayer = false;
-            return;
-        }
-		//끌어내리는 범위
-		if (InPunchRange())//InPullOutRange()
-		{
-			isGetOnTheCar = true;
-			isWalk = false;
-
-			//문이 열려있는지 확인
-			if (GameManager.Instance.player.playerPhysics.targetCar.isDoorOpen[0])
-			{
-				//플레이어 끌어내리기
-				isGetOnTheCar = false;
-				transform.parent = GameManager.Instance.player.playerPhysics.targetCar.gameObject.transform;
-				GameManager.Instance.player.playerPhysics.targetCar.PullOutDriver();
-			}
-			else
-			{
-				//문열기
-				isWalk = false;
-				GameManager.Instance.player.playerPhysics.LookAtCar();
-
-				if (!GameManager.Instance.player.playerPhysics.targetCar.isRunningOpenTheDoor)
-				{
-					transform.forward = GameManager.Instance.player.playerPhysics.targetCar.transform.forward;
-					StartCoroutine(GameManager.Instance.player.playerPhysics.targetCar.OpenTheDoor(0));
-				}
-
-				//거리 멀어지면 실패
-				if (Vector3.SqrMagnitude(transform.position - GameManager.Instance.player.playerPhysics.targetCar.transform.position) < 0.1f)
-				{
-					Down();
-					isGetOnTheCar = false;
-					return;
-				}
-			}
-		}
-		else if (InShotRange()) //사격
-        {
-			transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
-			base.StartShot();
-		}
-        else //추격
-        {
-			isGetOnTheCar = false;
-			base.StopShot();
-			base.ChasePlayer();
-        }
-    }
-    
-	private void OnCollisionEnter(Collision collision)
+	void PullOutDriver()
 	{
-		if (collision.gameObject.CompareTag("Car") && isChasePlayer)
+		isGetOnTheCar = false;
+		transform.parent = GameManager.Instance.player.playerPhysics.targetCar.gameObject.transform;
+		GameManager.Instance.player.playerPhysics.targetCar.PullOutDriver();
+	}
+	void OpenTheDoor()
+	{
+		isWalk = false;
+		GameManager.Instance.player.playerPhysics.LookAtCar();
+
+		if (!GameManager.Instance.player.playerPhysics.targetCar.isRunningOpenTheDoor)
 		{
-			Jump();
+			transform.forward = GameManager.Instance.player.playerPhysics.targetCar.transform.forward;
+			StartCoroutine(GameManager.Instance.player.playerPhysics.targetCar.OpenTheDoor(0));
+		}
+
+		//거리 멀어지면 실패
+		if (Vector3.SqrMagnitude(transform.position - GameManager.Instance.player.playerPhysics.targetCar.transform.position) < 0.1f)
+		{
+			Down();
+			isGetOnTheCar = false;
+			return;
 		}
 	}
+	#endregion
 	#region override method
 	public override void Down()
     {
@@ -227,17 +235,6 @@ public class Police : NPC
 		GameManager.Instance.IncreaseMoney(money);
 		rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
-	}
-	public override void Respawn()
-	{
-		patternChangeTimer = 0;
-		isDie = false;
-		isWalk = false;
-		hp = 100;
-		NPCSpawnManager.Instance.NPCRepositioning(this);
-		rigidbody.isKinematic = false;
-		boxCollider.enabled = true;
-		print("Police Respawn");
 	}
 	#endregion
 }

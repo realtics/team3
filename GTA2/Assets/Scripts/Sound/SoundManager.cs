@@ -38,6 +38,11 @@ public class SoundManager : MonoSingleton<SoundManager>
     void PlaySource(AudioSource audioSource, SoundSFXs soundSFXs, string name, bool playOverride)
     {
         audioSource.clip = soundSFXs.FindClip(name);
+        if (audioSource.clip == null)
+        {
+            return;
+        }
+
 
         if (playOverride)
         {

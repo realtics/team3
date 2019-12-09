@@ -83,6 +83,8 @@ public abstract class Gun : MonoBehaviour
 
     protected Bullet ShootSingleBullet(Vector3 triggerPos)
     {
+        triggerPos.y += .25f;
+
         SFXPlay();
         return Shoot(triggerPos);
     }

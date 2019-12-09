@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class People : MonoBehaviour
 {
+    public enum PeopleType
+    {
+        None,
+        Player,
+        Citizen,
+        Police
+    };
 	//Timer
 	protected float jumpTime = 1.5f;
 	protected float jumpTimer = 0.0f;
@@ -11,9 +18,6 @@ public abstract class People : MonoBehaviour
 	protected float downTimer = 0.0f;
 	protected float downTime = 3.0f;
 
-	//FIXME : 리스폰 타이머 플레이어만 적용
-	float respawnTimer = 0.0f;
-	float respawnTime = 5.0f;
 	float runoverTimer = 0.0f;
 	float runoverTime = 0.5f;
 
@@ -38,9 +42,8 @@ public abstract class People : MonoBehaviour
 	protected int hp = 100;
 	protected float hDir = 0;
 	protected float vDir = 0;
-
-	//State
-	public bool isWalk { get; set; }
+    //State
+    public bool isWalk { get; set; }
 	public bool isShot { get; set; }
 	public bool isPunch { get; set; }
 	public bool isJump { get; set; }
@@ -48,11 +51,9 @@ public abstract class People : MonoBehaviour
 	public bool isDie { get; set; }
 	public bool isRunover { get; set; }
 	public bool isGetOnTheCar { get; set; }//문여는 모션
-	public bool isDriver { get; set; }
 
 	//abstract
     protected abstract void Die();
-    public abstract void Respawn();
 
     protected virtual void Move()
     {
@@ -88,20 +89,12 @@ public abstract class People : MonoBehaviour
     {
         if (isDown)
             DownCheck();
-        else if (isDie)
-            DieCheck();
         else if(isRunover)
             RunoverCheck();
 		else if (isJump)
 			LandCheck();
     }
-	protected void SettingToGetOnTheCar()
-	{
-		isDriver = true;
-		GetComponent<Rigidbody>().isKinematic = true;
-		GetComponent<BoxCollider>().enabled = false;
-		GetComponentInChildren<SpriteRenderer>().enabled = false;
-	}
+	
 	protected bool IsStuckedAnimation()
 	{
 		if (isDie || isDown || isGetOnTheCar || isRunover)
@@ -110,7 +103,7 @@ public abstract class People : MonoBehaviour
 			return false;
 	}
 	#region lowlevelCode
-	public void Runover(float runoverSpeed, Vector3 carPosition)
+	public virtual void Runover(float runoverSpeed, Vector3 carPosition)
     {
 		Vector3 runoverVector = transform.position - carPosition;
 
@@ -122,7 +115,8 @@ public abstract class People : MonoBehaviour
 		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
 		isRunover = true;
         hDir = 0; vDir = 0;
-		transform.LookAt(carPosition);
+
+        transform.LookAt(carPosition);
 
         if(isDown && runoverSpeed > 30)
         {
@@ -148,11 +142,11 @@ public abstract class People : MonoBehaviour
 		transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
 		GetComponent<Rigidbody>().useGravity = true;
 	}
-    protected void UpdateTargetRotation()
+    protected virtual void UpdateTargetRotation()
     {
         targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;
     }
-    protected void UpdateSlerpedRotation()
+    protected virtual void UpdateSlerpedRotation()
     {
         if (0 != hDir || 0 != vDir)
         {
@@ -189,17 +183,7 @@ public abstract class People : MonoBehaviour
             Rising();
         }
     }
-    void DieCheck()
-    {
-        respawnTimer += Time.deltaTime;
-
-        if (respawnTimer > respawnTime)
-        {
-            respawnTimer = 0;
-            isDie = false;
-            Respawn();
-        }
-    }
+    
     void RunoverCheck()
     {
         runoverTimer += Time.deltaTime;
@@ -216,6 +200,7 @@ public abstract class People : MonoBehaviour
             if (runoverSpeed > 150.0f)
             {
                 hDir = 0; vDir = 0;
+
                 Down();
             }
         }

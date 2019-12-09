@@ -96,6 +96,10 @@ public class WantedLevel : MonoBehaviour
 
 	public void IncreaseWantedLevel()
 	{
+		if (level >= agroSteps.Length)
+			return;
+
+		agro = agroSteps[level];
 		level++;
 		UIManager.Instance.SetPoliceLevel(level);
 	}
@@ -103,6 +107,7 @@ public class WantedLevel : MonoBehaviour
 	public void ResetWantedLevel()
 	{
 		level = 0;
+		agro = 0;
 		UIManager.Instance.SetPoliceLevel(0);
 		CarSpawnManager.Instance.StopAllPoliceCarChasing();
 	}

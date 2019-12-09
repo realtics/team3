@@ -87,7 +87,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void StartGameBtn()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Stage" + stageIndex.ToString());
     }
 
 

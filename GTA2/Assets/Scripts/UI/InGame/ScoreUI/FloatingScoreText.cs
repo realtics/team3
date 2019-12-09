@@ -36,7 +36,6 @@ public class FloatingScoreText : MonoBehaviour
         activeDelta = .0f;
         transform.position = targetPos;
         transform.localScale = originScale;
-        transform.eulerAngles = new Vector3(90.0f, .0f, .0f);
         gameObject.SetActive(true);
 
         SetTextMesh(scoreValue);
@@ -50,8 +49,11 @@ public class FloatingScoreText : MonoBehaviour
 
     void Update()
     {
-        // 90 도 누운 상태이기에 back으로 보내야 방향이 맞다.
-        transform.Translate(Vector3.back * Time.deltaTime * floatSpeed);
+        Vector3 tempPos = transform.position;
+
+        tempPos.y += Time.deltaTime * floatSpeed;
+        transform.position = tempPos;
+
 
         activeDelta += Time.deltaTime;
         if (activeDelta > activeTime)

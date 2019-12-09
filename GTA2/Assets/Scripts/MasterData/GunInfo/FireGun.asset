@@ -16,6 +16,6 @@ MonoBehaviour:
   bulletPref: {fileID: 7079599344940869127, guid: e42a24ff6f66fe84b957e30a93391d0e,
     type: 3}
   shootInterval: 0.01
-  bulletToPeopleSize: 0.3
+  bulletToPeopleSize: 0.1
   shotPerOneBullet: 30
   shotSFX: SFX_FLAME_THROWER

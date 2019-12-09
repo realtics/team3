@@ -9,6 +9,7 @@ public class Player : People
     public bool isChasingCar { get; set; }
     public bool isBusted { get; set; }
     public bool isAttack { get; set; }
+    public bool isDriver { get; set; }
 
     float playerMoveSpeed = 2.0f;
 	[HideInInspector] public float runoverMinSpeed = 30.0f;
@@ -16,17 +17,22 @@ public class Player : People
 
     public List<PlayerGun> gunList;
     public PlayerPhysics playerPhysics;
-    PlayerTimer playerTimer;
-    int defaultHp = 200;
+    public PlayerTimer playerTimer;
 
+    int defaultHp = 200;
     Animator animator;
+
+    float rotHDir;
+    float rotVDir;
+
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         playerPhysics = GetComponent<PlayerPhysics>();
         playerTimer = GetComponent<PlayerTimer>();
 		rigidbody = GetComponent<Rigidbody>();
-	}
+        boxCollider = GetComponent<BoxCollider>();
+    }
     void Start()
     {
         PlayerInit();
@@ -57,7 +63,6 @@ public class Player : People
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
 		{
-			other.gameObject.SetActive(false);
 			int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
 			isBusted = true;
 			Hurt(bulletDamage);
@@ -85,49 +90,16 @@ public class Player : People
     {
         if (isDie)
             return;
-        if (playerPhysics.targetCar.isDoorOpen[0]) //문열고 탑승
+        if (playerPhysics.targetCar.isDoorOpen[0]) //문이열려있는 경우 탑승
         {
-            isChasingCar = false;
-            isGetOnTheCar = false;
-
-            if (playerPhysics.targetCar.carManager.ai.isPolice && playerPhysics.targetCar.passengers[0] != null)
-            {
-				StartCloseTheDoor();
-                return;
-            }
-			else if (!playerPhysics.targetCar.isRunningCloseTheDoor)
-			{
-				StartCloseTheDoor();
-			}
-			//사람 끌어내리기
-			transform.parent = playerPhysics.targetCar.gameObject.transform;
-            playerPhysics.targetCar.PullOutDriver();
-            playerPhysics.targetCar.GetOnTheCar(this, 0);
-            UIManager.Instance.CarUIMode(playerPhysics.targetCar.carManager);
+			GetOntheCar();
         }
-        else//문열기
+        else//문열기 시도
         {
-            isWalk = false;
-            playerPhysics.LookAtCar();
-            if (!playerPhysics.targetCar.isRunningOpenTheDoor)
-            {
-
-                transform.forward = playerPhysics.targetCar.transform.forward;
-                StartCoroutine(playerPhysics.targetCar.OpenTheDoor(0));
-            }
-            //거리 멀어지면 실패
-            if (!playerPhysics.IsGetOnDistance())
-            {
-                Down();
-                isChasingCar = false;
-                isGetOnTheCar = false;
-                return;
-            }
+			OpenTheDoor();
         }
     }
 	
-   
-   
 	public void SetChaseTargetCar()
 	{
 		CarManager car = CarSpawnManager.Instance.FindClosestCar(transform.position);
@@ -145,7 +117,7 @@ public class Player : People
 	}
 	void ChasingCar()
 	{
-		//일정거리이상 멀어져서 차 쫓기 포기
+		//멀어져서 차 쫓기 포기
 		if (playerPhysics.InChasingDistance())
 		{
 			isChasingCar = false;
@@ -162,9 +134,34 @@ public class Player : People
 			playerPhysics.ChaseTheCar(moveSpeed);
 		}
 	}
+    public void Respawn()
+    {
+        UIManager.Instance.HumanUIMode();
+        GameManager.Instance.RespawnSetting();
+        SetHpDefault();
+        isDriver = false;
+        isDown = false;
+        isWalk = false;
+        isDie = false;
 
-	#region lowlevelCode
-	public int GetHp()
+        UIManager.Instance.TurnOffEndUI();
+
+        if (isBusted)
+        {
+            //Invoke("Down", 0.2f);
+        }
+        else
+        {
+            gameObject.transform.SetParent(null);
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            rigidbody.isKinematic = false;
+            boxCollider.enabled = true;
+        }
+
+        print("Player Respawn");
+    }
+    #region lowlevelCode
+    public int GetHp()
     {
         return hp;
     }
@@ -177,9 +174,6 @@ public class Player : People
 	void StartShot()
 	{
 		gunList[(int)curGunIndex].UpdateButtonDown();
-		isShot = true;
-		isAttack = true;
-		isPunch = false;
 	}
 	void StopShot()
 	{
@@ -241,7 +235,6 @@ public class Player : People
 			}
 		}
 		gunList[(int)curGunIndex].gameObject.SetActive(true);
-		Debug.Log(curGunIndex);
 	}
 	public void SwapPrev()
 	{
@@ -265,7 +258,6 @@ public class Player : People
 			}
 		}
 		gunList[(int)curGunIndex].gameObject.SetActive(true);
-		Debug.Log(curGunIndex);
 	}
 	void StartCloseTheDoor()
 	{
@@ -296,34 +288,72 @@ public class Player : People
 			item.ResetBulletCount();
 		}
 	}
+	void OpenTheDoor()
+	{
+		isWalk = false;
+		playerPhysics.LookAtCar();
+		if (!playerPhysics.targetCar.isRunningOpenTheDoor)
+		{
+
+			transform.forward = playerPhysics.targetCar.transform.forward;
+			StartCoroutine(playerPhysics.targetCar.OpenTheDoor(0));
+		}
+		//거리 멀어지면 실패
+		if (!playerPhysics.IsGetOnDistance())
+		{
+			Down();
+			isChasingCar = false;
+			isGetOnTheCar = false;
+			return;
+		}
+	}
+	void GetOntheCar()
+	{
+		isChasingCar = false;
+		isGetOnTheCar = false;
+
+		//경찰차면 못타고 문닫기
+		if (playerPhysics.targetCar.carManager.ai.isPolice && playerPhysics.targetCar.passengers[0])
+		{
+			StartCloseTheDoor();
+			return;
+		}
+		//탑승후 문닫기
+		if (!playerPhysics.targetCar.isRunningCloseTheDoor)
+		{
+			StartCloseTheDoor();
+		}
+		//사람 끌어내리고 타기
+		playerPhysics.targetCar.PullOutDriver();
+		playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player);
+        PlayerDriverSetting(true);
+
+        UIManager.Instance.CarUIMode(playerPhysics.targetCar.carManager);
+	}
+    public void PlayerDriverSetting(bool GetOn)
+    {
+        //플레이어 드라이버 셋팅
+        if (GetOn)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<BoxCollider>().enabled = false;
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            isDriver = true;
+            transform.SetParent(playerPhysics.targetCar.transform);
+        }
+        else
+        {
+            transform.position = GameManager.Instance.playerCar.doorPositions[0].transform.position;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<BoxCollider>().enabled = true;
+            isDriver = false;
+            transform.SetParent(null);
+        }
+    }
 	#endregion
 	#region overrideMethod
-	public override void Respawn()
-	{
-		UIManager.Instance.HumanUIMode();
-		GameManager.Instance.RespawnSetting();
-		SetHpDefault();
-		isDriver = false;
-		isDown = false;
-		isWalk = false;
-		isDie = false;
-
-		UIManager.Instance.TurnOffEndUI();
-
-		if (isBusted)
-		{
-			//Invoke("Down", 0.2f);
-		}
-		else
-		{
-			gameObject.transform.SetParent(null);
-			GetComponentInChildren<SpriteRenderer>().enabled = true;
-			rigidbody.isKinematic = false;
-			boxCollider.enabled = true;
-		}
-
-		print("Player Respawn");
-	}
+	
 	protected override void Move()
 	{
 		if (isChasingCar)
@@ -338,9 +368,6 @@ public class Player : People
 	}
 	protected override void LandCheck()
 	{
-		Debug.DrawRay(transform.position, transform.up * -1, Color.red);
-		print(jumpTimer);
-
 		if (JumpTimerCheck())
 		{
 			if (!IsCarExistBelow())
@@ -362,11 +389,29 @@ public class Player : People
 		WantedLevel.instance.ResetWantedLevel();
 		CameraController.Instance.ZoomIn();
 	}
-	
 
-	#endregion
-	#region InputLogic
-	bool MoveControlKeyboard()
+    protected override void UpdateTargetRotation()
+    {
+        targetDirectionVector = new Vector3(rotHDir, 0, rotVDir).normalized;
+    }
+    protected override void UpdateSlerpedRotation()
+    {
+        if (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
+        {
+            targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
+        }
+        else if (0 != hDir || 0 != vDir || 0 != rotHDir || 0 != rotVDir)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
+            return;
+        }
+    }
+
+
+    #endregion
+    #region InputLogic
+    bool MoveControlKeyboard()
     {
         if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
@@ -392,14 +437,44 @@ public class Player : People
 		{
 			if (!isChasingCar)
 				isWalk = false;
-			return;
+
+            if (Mathf.Abs(UIManager.Instance.playerWeaponJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerWeaponJoystick.Vertical) < 0.01f)
+                return;
 		}
 		isWalk = true;
 		isChasingCar = false;
-		hDir = UIManager.Instance.playerMoveJoystick.Horizontal / 5.0f;
-		vDir = UIManager.Instance.playerMoveJoystick.Vertical / 5.0f;
-	}
-	bool IsMoveInput()
+        
+        UpdateJoystickDirection();
+    }
+
+    void UpdateJoystickDirection()
+    {
+        float moveHDir = UIManager.Instance.playerMoveJoystick.Horizontal / 5.0f;
+        float moveVDir = UIManager.Instance.playerMoveJoystick.Vertical / 5.0f;
+
+        float weaponHDir = UIManager.Instance.playerWeaponJoystick.Horizontal / 5.0f;
+        float weaponVDir = UIManager.Instance.playerWeaponJoystick.Vertical / 5.0f;
+
+
+        if (Mathf.Abs(weaponHDir) <= .01f && Mathf.Abs(weaponVDir) <= .01f)
+        {
+            hDir = moveHDir;
+            vDir = moveVDir;
+
+            rotHDir = hDir;
+            rotVDir = vDir;
+        }
+
+        else
+        {
+            hDir = moveHDir;
+            vDir = moveVDir;
+
+            rotHDir = weaponHDir;
+            rotVDir = weaponVDir;
+        }
+    }
+    bool IsMoveInput()
     {
         if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) &&
             !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) &&
