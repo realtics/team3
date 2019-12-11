@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 1100232308619962622}
   - component: {fileID: 1100232308619962621}
   - component: {fileID: 1100232308619962620}
-  - component: {fileID: 1100232308619962623}
   m_Layer: 0
-  m_Name: PhoneSprite
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,19 +100,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &1100232308619962623
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1100232308619962619}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.3, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1100232309371420062
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1100232309371420063}
+  - component: {fileID: 543329070202307843}
   - component: {fileID: 1100232309371420256}
   m_Layer: 0
   m_Name: Phone
@@ -146,6 +133,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &543329070202307843
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100232309371420062}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.3, z: 0.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1100232309371420256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,4 +158,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbee5545846d9354eadec50be1199c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phoneName: None

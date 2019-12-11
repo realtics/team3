@@ -304,9 +304,9 @@ MonoBehaviour:
   bulletSpeed: 7
   explosionArea: 1
   bulletInfo: {fileID: 11400000, guid: 110d3a8d13146954ebbe17756cf1f0cd, type: 2}
-  bulletSoundSource: {fileID: 8920615695950592653}
   explosionPref: {fileID: 9085315079043664107, guid: 328eceba7c9fce540b82a20ce6be221e,
     type: 3}
+  explosionSound: {fileID: 8300000, guid: fd3673a057211ee4db181bf5310e6f60, type: 3}
 --- !u!54 &5244925414748715700
 Rigidbody:
   m_ObjectHideFlags: 0

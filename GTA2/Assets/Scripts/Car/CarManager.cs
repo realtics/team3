@@ -67,15 +67,12 @@ public class CarManager : MonoBehaviour
         if (carState == CarState.destroied)
             return;
 
-        OnDamage(sourceIsPlayer);
+        OnDamage?.Invoke(sourceIsPlayer);
     }
 
     public void OnDriverGetOnEvent(People.PeopleType peopleType, int idx)
     {
         OnDriverGetOn?.Invoke(peopleType, idx);
-
-        //if (OnDriverGetOn != null)
-        //   OnDriverGetOn(idx);
 
 		if (idx == 0)
         {

@@ -94,5 +94,5 @@ MonoBehaviour:
   bulletSpeed: 0
   explosionArea: 0
   bulletInfo: {fileID: 11400000, guid: 90937cc0661e6d543a4d9c4e4a6385df, type: 2}
-  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
+  explosionSound: {fileID: 0}

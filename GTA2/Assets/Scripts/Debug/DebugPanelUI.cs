@@ -49,4 +49,13 @@ public class DebugPanelUI : MonoBehaviour
             g.bulletCount += 999;
         }
     }
+	public void PlayerBust()
+	{
+		GameManager.Instance.player.isBusted = true;
+		GameManager.Instance.player.Hurt(9999);
+	}
+	public void PlayerWast()
+	{
+		GameManager.Instance.player.Hurt(9999);
+	}
 }

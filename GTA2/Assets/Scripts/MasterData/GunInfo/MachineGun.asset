@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4872aba603cbf414192260a1491a5448, type: 3}
   m_Name: MachineGun
   m_EditorClassIdentifier: 
-  gunState: 0
+  gunState: 3
   bulletPref: {fileID: 8350089297614652173, guid: 7f5f59f08bf30f6469b25dd474ac92fe,
     type: 3}
   shootInterval: 0.1

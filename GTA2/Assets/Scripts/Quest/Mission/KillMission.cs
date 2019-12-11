@@ -2,13 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillMission : QuestCondition
+public class KillMission : Quest
 {
-    public NPC killTarget;
+    [SerializeField]
+    NPC killTarget;
+    [SerializeField]
+    int rewardMoney;
 
-    void Start()
+    void Awake()
     {
+        isCorrect = false;
         questStatus = QuestStatus.Kill;
+        killTarget.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (isCorrect)
+        {
+            correctAndOffDel += Time.deltaTime;
+            if (correctAndOffTime < correctAndOffDel)
+            {
+                gameObject.SetActive(false);
+            }
+        }    
+    }
+
+
+    public override void StartQuest()
+    {
+        killTarget.gameObject.SetActive(true);
+        QuestManager.Instance.StartQuest(this);
     }
 
     public override bool CheckCondition()
@@ -18,6 +42,21 @@ public class KillMission : QuestCondition
             return true;
         }
         return false;
+    }
+
+    public override void PushReward()
+    {
+        GameManager.Instance.IncreaseMoney(rewardMoney);
+        isCorrect = true;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (killTarget != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(startPhone.transform.position, killTarget.transform.position);
+        }
     }
 }
 

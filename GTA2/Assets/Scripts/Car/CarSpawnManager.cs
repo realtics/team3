@@ -52,8 +52,8 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
 	void Start()
     {
-        InvokeRepeating("RespawnDisabledCar", 0.25f, 0.25f);
-    }
+		InvokeRepeating("RespawnDisabledCar", 0.25f, 0.25f);
+	}
 
     void RespawnDisabledCar()
     {

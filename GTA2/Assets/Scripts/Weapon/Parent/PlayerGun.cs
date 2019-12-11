@@ -22,19 +22,17 @@ public class PlayerGun : Gun
 
     public void ResetBulletCount()
     {
-        if (gunType == GunState.None)
-        {
-            bulletCount = 1;
-        }
-        else
-        {
-            bulletCount = 0;
-        }
+        bulletCount = 0;
     }
 
     protected override void Update()
     {
         if (player.isDie == true)
+        {
+            return;
+        }
+
+        if (player.curGunIndex != gunType)
         {
             return;
         }
@@ -58,10 +56,10 @@ public class PlayerGun : Gun
 
     void UpdateBulletCount()
     {
-     
         if (bulletCount <= 0)
         {
             gameObject.SetActive(false);
+            player.SwapNext();
         }
     }
     protected void UpdateKeyInput()

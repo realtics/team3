@@ -6,22 +6,56 @@ using UnityEditor;
 
 public class QuestConditionEditor : EditorWindow
 {
+    public QuestManager questManager;
+    public GameObject killPref;
+    public GameObject arrivePref;
+    public GameObject carryPref;
+
+
 
     [MenuItem("Tools/Quest")]
     public static void Open()
     {
-        GetWindow<WaypointManagerWindow>();
+        GetWindow<QuestConditionEditor>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void OnGUI()
     {
-        
+        SerializedObject obj = new SerializedObject(this);
+        EditorGUILayout.PropertyField(obj.FindProperty("questManager"));
+        EditorGUILayout.PropertyField(obj.FindProperty("killPref"));
+        EditorGUILayout.PropertyField(obj.FindProperty("arrivePref"));
+        EditorGUILayout.PropertyField(obj.FindProperty("carryPref"));
+
+        EditorGUILayout.BeginVertical("box");
+        DrawButtons();
+        EditorGUILayout.EndVertical();
+
+        obj.ApplyModifiedProperties();
     }
 
-    // Update is called once per frame
-    void Update()
+    void DrawButtons()
     {
-        
+        if (GUILayout.Button("Create Kill Mission", GUILayout.Height(40)))
+        {
+            CreateKillMission();
+        }
+        if (GUILayout.Button("Create Arrive Mission", GUILayout.Height(40)))
+        {
+            // CreateHumanWaypoint();
+        }
+        if (GUILayout.Button("Create Carry Mission", GUILayout.Height(40)))
+        {
+            // RemoveWaypoint();
+        }
+
+       
+        GUILayout.Space(10);
+
+    }
+    void CreateKillMission()
+    {
+        Quest newQuest = Instantiate(killPref).GetComponent<Quest>();
+        newQuest.transform.parent = questManager.transform;
     }
 }

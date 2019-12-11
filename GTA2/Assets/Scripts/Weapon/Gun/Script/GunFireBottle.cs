@@ -46,8 +46,13 @@ public class GunFireBottle : PlayerGun
             {
                 intervalDelta = shootInterval;
             }
-            if (UIManager.Instance.playerMoveJoystick.Horizontal > .01f &&
-                UIManager.Instance.playerMoveJoystick.Vertical > .01f )
+
+            if ((
+                Mathf.Abs(UIManager.Instance.playerMoveJoystick.Horizontal) > .01f &&
+                Mathf.Abs(UIManager.Instance.playerMoveJoystick.Vertical) > .01f) ||
+                (
+                Input.GetAxisRaw("Vertical") != .0f ||
+                Input.GetAxisRaw("Horizontal") != .0f))
             {
                 intervalDelta += moveThrowPower;
             }

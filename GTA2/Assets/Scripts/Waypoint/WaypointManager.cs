@@ -136,7 +136,6 @@ public class WaypointManager : MonoBehaviour
 			WaypointType.human,
 			Camera.main.transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)),
 			true);
-		wp.transform.position = new Vector3(wp.transform.position.x + Random.Range(-5, 5), wp.transform.position.y, wp.transform.position.z + Random.Range(-5, 5));
 		return wp;
 	}
 }

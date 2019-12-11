@@ -9,13 +9,13 @@ public abstract class NPC : People
     float distToObstacle = Mathf.Infinity;
     bool isDestReached;
 	protected Vector3 destination;
-
+	protected float runSpeed;
 	//Range
-	protected float findRange = 10.0f;
-    protected float punchRange = 0.08f;
-    protected float shotRange = 10.0f;
-    protected float chaseRange = 7.0f;
-    protected float outofRange = 400.0f;
+	protected float findRange;
+    protected float punchRange;
+    protected float shotRange;
+    protected float chaseRange;
+    protected float outofRange;
 	protected GameManager gameManager;
 
 	public bool isRunaway { get; set; }
@@ -24,19 +24,19 @@ public abstract class NPC : People
 	public bool isAttack { get; set; }
 
 	//Time Check
-	protected float minIdleTime = 0.3f;
-    protected float maxIdleTime = 1.0f;
-    protected float minWalkTime = 10.0f;
-    protected float maxWalkTime = 15.0f;
-	protected float carOpenTimer = 0.0f;
-	protected float carOpenTime = 0.5f;
-	protected float runawayTime = 5.0f;
+	protected float minIdleTime;
+	protected float maxIdleTime;
+    protected float minWalkTime;
+    protected float maxWalkTime;
+	protected float carOpenTimer;
+	protected float carOpenTime;
+	protected float runawayTime;
 	GameObject targetCar;
 	public GunState curGunIndex { get; set; }
 	
 	protected float patternChangeTimer;
 	protected float patternChangeInterval;
-	protected int money = 10; //사망시 플레이어에게 주는 돈
+	protected int money; //사망시 플레이어에게 주는 돈
 	
 	public Animator animator;
 	public List<NPCGun> gunList;
@@ -44,6 +44,24 @@ public abstract class NPC : People
 	void OnEnable()
     {
 		StartCoroutine(DisableIfOutOfCamera());
+		SetDefaultHp();
+	}
+	void AnimationInit()
+	{
+		isWalk = false;
+		isShot = false;
+		isPunch = false;
+		isJump = false;
+		isDown = false;
+		isDie = false;
+		isDown = false;
+		isRunover = false;
+		isDown = false;
+		isGetOnTheCar = false;
+	}
+	void SetDefaultHp()
+	{
+		hp = defaultHp;
 	}
     void OnDisable()
     {
@@ -54,6 +72,7 @@ public abstract class NPC : People
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		boxCollider = GetComponent<BoxCollider>();
+		hp = defaultHp;
 		patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
 		patternChangeTimer = patternChangeInterval;
 	}
@@ -113,11 +132,13 @@ public abstract class NPC : People
 
             if (isDie == true)
             {
+                WorldUIManager.Instance.SetScoreText(transform.position, money);
                 GameManager.Instance.killCount++;
             }
         }
         else if(other.CompareTag("PlayerPunch"))
         {
+            SoundManager.Instance.PlayClip(punchClip, true);
             Down();
         }
     }
@@ -135,8 +156,8 @@ public abstract class NPC : People
         {
             return;
         }
-
-        Vector3 dir = new Vector3(destination.x, transform.position.y, destination.z) - transform.position;
+		
+		Vector3 dir = new Vector3(destination.x, transform.position.y, destination.z) - transform.position;
 
         transform.rotation = Quaternion.LookRotation(dir);//Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.4f);
 

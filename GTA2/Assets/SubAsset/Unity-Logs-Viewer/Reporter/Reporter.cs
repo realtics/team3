@@ -298,6 +298,9 @@ public class Reporter : MonoBehaviour
 #endif
 	string systemMemorySize;
 
+
+    bool showBtnDown = false;
+
 	void Awake()
 	{
 		if (!Initialized)
@@ -346,7 +349,10 @@ public class Reporter : MonoBehaviour
 	public bool Initialized = false;
 	public void Initialize()
 	{
-		if (!created) {
+        showBtnDown = false;
+
+
+        if (!created) {
 			try {
 				gameObject.SendMessage("OnPreStart");
 			}
@@ -1162,6 +1168,7 @@ public class Reporter : MonoBehaviour
 
 		if (GUILayout.Button(closeContent, barStyle, GUILayout.Width(size.x * 2), GUILayout.Height(size.y * 2))) {
 			show = false;
+            showBtnDown = false;
 			ReporterGUI gui = gameObject.GetComponent<ReporterGUI>();
 			DestroyImmediate(gui);
 
@@ -1714,6 +1721,12 @@ public class Reporter : MonoBehaviour
 		return false;
 	}
 
+    public void ShowReporter()
+    {
+        showBtnDown = true;
+    }
+
+
 	float lastClickTime = -1;
 	bool isDoubleClickDone()
 	{
@@ -1850,7 +1863,7 @@ public class Reporter : MonoBehaviour
 #endif
 
 		calculateStartIndex();
-		if (!show && isGestureDone()) {
+		if (!show && (isGestureDone() || showBtnDown)) {
 			doShow();
 		}
 

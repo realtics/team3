@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunInfo: {fileID: 11400000, guid: f703ecbc6c138a446ab7af10e7893cd8, type: 2}
+  gunSound: {fileID: 0}
   bulletCount: 0
   userObject: {fileID: 0}
   smokePref: {fileID: 5958144597228890584, guid: 483366f38358d604783f2ccf2721dbf3,
     type: 3}
-  moveThrowPower: 3
+  moveThrowPower: 10

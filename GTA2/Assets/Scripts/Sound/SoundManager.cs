@@ -5,52 +5,44 @@ using UnityEngine;
 public class SoundManager : MonoSingleton<SoundManager>
 {
     [SerializeField]
-    SoundSFXs mainVoiceSFXs;
-    [SerializeField]
-    SoundSFXs gunShotSFXs;
+    float oneShotPlayTime;
+    float oneShotPlayDelta;
 
-    AudioSource mainVoiceSource;
-    AudioSource gunShotSource;
+    AudioSource mainSource;
+
 
 
     void Awake()
     {
-        mainVoiceSource = gameObject.AddComponent<AudioSource>();
-        gunShotSource = gameObject.AddComponent<AudioSource>();
+        oneShotPlayDelta = .0f;
+        mainSource = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        oneShotPlayDelta += Time.deltaTime;
     }
 
 
 
-    public void PlayMainVoice(string name)
+    public void PlayClip(AudioClip clip, bool playOneShot)
     {
-        PlaySource(mainVoiceSource, mainVoiceSFXs, name, true);
-    }
-
-    public void PlayGunShot(string name)
-    {
-        PlaySource(gunShotSource, gunShotSFXs, name, true);
-    }
-
-
-
-
-
-    void PlaySource(AudioSource audioSource, SoundSFXs soundSFXs, string name, bool playOverride)
-    {
-        audioSource.clip = soundSFXs.FindClip(name);
-        if (audioSource.clip == null)
+        if (clip == null)
         {
             return;
         }
+        
+        
+        mainSource.clip = clip;
 
-
-        if (playOverride)
+        if (playOneShot && oneShotPlayTime < oneShotPlayDelta)
         {
-            audioSource.PlayOneShot(audioSource.clip);
+            oneShotPlayDelta = .0f;
+            mainSource.PlayOneShot(mainSource.clip);
         }
-        else if(!playOverride && !audioSource.isPlaying)
+        else if (!playOneShot && !mainSource.isPlaying)
         {
-            audioSource.Play();
+            mainSource.Play();
         }
     }
 }

@@ -246,7 +246,7 @@ public class GunElectric : PlayerGun
     {
         if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
         {
-            SoundManager.Instance.PlayGunShot(shotSFXName);
+            SoundManager.Instance.PlayClip(gunSound, true);
             soundPlayDelta = .0f;
         }
     }

@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class Police : NPC
 {
+	public PoliceData policeData;
+
 	void Awake()
 	{
 		gameManager = GameManager.Instance;
 	}
 	void Start()
 	{
-		base.NPCInit();
-		SpecInit(); 
-		TimeInit();
+		MasterDataInit();
 	}
-    void Update()
+	private void OnEnable()
+	{
+		base.NPCInit();
+		StartCoroutine(ActivityByState());
+	}
+	private void OnDisable()
+	{
+	}
+	void Update()
     {
 		base.PeopleUpdate();
 		base.NPCUpdate();
@@ -92,20 +100,25 @@ public class Police : NPC
 		}
 	}
 	#region lowLevelCode
-	void SpecInit()
+
+	void MasterDataInit()
 	{
-		money = 50;
-		moveSpeed = 1.0f;
-		jumpTime = 0.3f;
-		runSpeed = 1.5f;
-	}
-	void TimeInit()
-	{
-		jumpTime = 0.5f;
-		minIdleTime = 0.3f;
-		maxIdleTime = 1.0f;
-		minWalkTime = 10.0f;
-		maxWalkTime = 15.0f;
+		defaultHp = policeData.maxHp;
+		moveSpeed = policeData.moveSpeed;
+		downTime = policeData.downTime;
+		runSpeed = policeData.runawaySpeed;
+		findRange = policeData.findRange;
+		punchRange = policeData.punchRange;
+		shotRange = policeData.shotRange;
+		chaseRange = policeData.chaseRange;
+		outofRange = policeData.outofRange;
+		minIdleTime = policeData.minIdleTime;
+		maxIdleTime = policeData.maxIdleTime;
+		minWalkTime = policeData.minWalkTime;
+		maxWalkTime = policeData.maxWalkTime;
+		carOpenTimer = policeData.carOpenTimer;
+		carOpenTime = policeData.carOpenTime;
+		money = policeData.money;
 	}
 	IEnumerator ActivityByState()
 	{
@@ -161,7 +174,8 @@ public class Police : NPC
 		isWalk = false;
 		isGetOnTheCar = false;
 		isShot = false;
-		gunList[1].GetComponent<NPCGun>().StopShot();
+        gunList[0].GetComponent<NPCGun>().StopShot();
+        gunList[1].GetComponent<NPCGun>().StopShot();
 		isPunch = false;
 	}
 	public bool CarOpenTimerCheck()

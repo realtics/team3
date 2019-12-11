@@ -5,19 +5,26 @@ using UnityEngine;
 
 public class Citizen : NPC
 {
+	public CitizenData citizenData;
     void Awake()
     {
 		gameManager = GameManager.Instance;
-        boxCollider = GetComponent<BoxCollider>();
-		rigidbody = GetComponent<Rigidbody>();
 	}
 
     void Start()
     {
-		base.NPCInit();
-        StartCoroutine(ActivityByState());
+		MasterDataInit();
     }
-    void Update()
+	private void OnEnable()
+	{
+		base.NPCInit();
+		StartCoroutine(ActivityByState());
+	}
+	private void OnDisable()
+	{
+		
+	}
+	void Update()
     {
         base.PeopleUpdate();
 		base.NPCUpdate();
@@ -74,8 +81,27 @@ public class Citizen : NPC
         else
             PatternChange();
     }
-    
-   
+	void MasterDataInit()
+	{
+		defaultHp = citizenData.maxHp;
+		moveSpeed = citizenData.moveSpeed;
+		downTime = citizenData.downTime;
+		runSpeed = citizenData.runawaySpeed;
+		findRange = citizenData.findRange;
+		punchRange = citizenData.punchRange;
+		shotRange= citizenData.shotRange;
+		chaseRange=citizenData.chaseRange;
+		outofRange=citizenData.outofRange;
+		minIdleTime=citizenData.minIdleTime;
+		maxIdleTime=citizenData.maxIdleTime;
+		minWalkTime=citizenData.minWalkTime;
+		maxWalkTime=citizenData.maxWalkTime;
+		carOpenTimer=citizenData.carOpenTimer;
+		carOpenTime=citizenData.carOpenTime;
+		runawayTime=citizenData.runawayTime;
+		money= citizenData.money;
+	}
+
 	#endregion
 	#region override_method
 	public override void Down()

@@ -57,7 +57,7 @@ public class HumanPathManager : MonoBehaviour
         lastWaypoint = curWaypoint;
 		
 		curDestPos = destWaypoint.transform.position;
-		new Vector3(destWaypoint.transform.position.x + Random.Range(-1, 1),								destWaypoint.transform.position.y,							destWaypoint.transform.position.z + Random.Range(-1, 1));
+		curDestPos = new Vector3(destWaypoint.transform.position.x + Random.Range(-0.5f, 0.5f),destWaypoint.transform.position.y, destWaypoint.transform.position.z + Random.Range(-0.5f, 0.5f));
 	}
 
     void SetNewDestination()

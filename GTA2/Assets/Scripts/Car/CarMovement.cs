@@ -117,7 +117,11 @@ public class CarMovement : MonoBehaviour
             curSpeed *= 0.25f;
             Vector3 inDirection = transform.forward;
             reboundForce = Vector3.Reflect(inDirection, col.contacts[0].normal) * curSpeed * 0.15f;
-            Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
+
+			float rotAmount = Vector3.SignedAngle(inDirection, reboundForce, Vector3.up);
+			transform.Rotate(0, rotAmount / 5, 0);
+
+			Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
             Debug.DrawLine(transform.position, transform.position + reboundForce, Color.red, 1f);
         }
         else if (col.transform.tag == "Car")

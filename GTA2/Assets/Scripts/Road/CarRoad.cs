@@ -62,15 +62,34 @@ public class CarRoad : MonoBehaviour
     {
         transform.position = transform.parent.position;
 
-        Vector3 dir = endWaypoint.transform.position - transform.position;
-        Vector3 right = Vector3.Cross(dir.normalized, Vector3.up);
+		if (parentWaypoint.prev.Count > 0)
+		{
+			//Vector3 averageForward = (parentWaypoint.prev[0].transform.forward + endWaypoint.transform.forward).normalized;
+
+			Vector3 avgDir = (endWaypoint.transform.position - parentWaypoint.prev[0].transform.position).normalized;
+			Vector3 avgLeft = Vector3.Cross(avgDir, Vector3.up);
+
+			parentWaypoint.transform.right = avgLeft * -1;
+		}
+		else
+		{
+			print("asfd");
+			parentWaypoint.transform.LookAt(endWaypoint.transform.position, Vector3.up);
+		}
+
+		//parentWaypoint.transform.LookAt(endWaypoint.transform.position, Vector3.up);
+		//endWaypoint.transform.rotation = parentWaypoint.transform.rotation;
+
+		Vector3 startLeft = parentWaypoint.transform.right * -1;
+		Vector3 endLeft = endWaypoint.transform.right * -1;
 
         laneStartPosition.Clear();
         laneEndPosition.Clear();
+
         for (int i = 0; i < numOfLane; i++)
         {
-            laneStartPosition.Add(transform.position + (right * i * laneWidth));
-            laneEndPosition.Add(laneStartPosition[i] + dir);
+			laneStartPosition.Add(parentWaypoint.transform.position + (startLeft * i * laneWidth));
+			laneEndPosition.Add(endWaypoint.transform.position + (endLeft * i * laneWidth));
         }
     }
 }

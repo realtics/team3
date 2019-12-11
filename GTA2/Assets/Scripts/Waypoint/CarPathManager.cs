@@ -11,13 +11,10 @@ public class CarPathManager : MonoBehaviour
     WaypointForCar destWaypoint;
     WaypointForCar lastWaypoint;
 
+	Vector3 finalDestPos;
     Vector3 curDestPos;
     public int curLane = 0;
-
-    //void Start()
-    //{
-    //    Init();
-    //}
+    int laneMax = 1;
 
     void OnEnable()
     {
@@ -62,7 +59,7 @@ public class CarPathManager : MonoBehaviour
         }
         lastWaypoint = curWaypoint;
 
-        int laneMax = curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count - 1;
+        laneMax = curWaypoint.carRoadDict[destWaypoint].laneEndPosition.Count - 1;
 
         if (curWaypoint.canChangeLane)
         {
@@ -74,8 +71,22 @@ public class CarPathManager : MonoBehaviour
             curLane = laneMax;
         }
 
-        curDestPos = curWaypoint.carRoadDict[destWaypoint].laneEndPosition[curLane];
-    }
+		finalDestPos = curWaypoint.carRoadDict[destWaypoint].laneEndPosition[curLane];
+		CalcSubDestPosition();		
+	}
+
+	void CalcSubDestPosition()
+	{
+		Vector3 startPos = curWaypoint.carRoadDict[destWaypoint].laneStartPosition[curLane];
+		Vector3 endPos = curWaypoint.carRoadDict[destWaypoint].laneEndPosition[curLane];
+		Vector3 dir = endPos - startPos;
+		dir.y = 0;
+
+		Vector3 originToPoint = transform.position - startPos;
+		originToPoint.y = 0;
+		float distanceFromOrigin = Vector3.Dot(dir.normalized, originToPoint.normalized) * originToPoint.magnitude;
+		curDestPos = startPos + dir.normalized * Mathf.Clamp(distanceFromOrigin+3, 0, dir.magnitude);
+	}
 
     void Move()
     {
@@ -83,12 +94,20 @@ public class CarPathManager : MonoBehaviour
         dir.y = 0;
         float dist = dir.sqrMagnitude;
 
-        if (dist < 0.5f * 0.5f)
-        {
-            curWaypoint = destWaypoint;
-            SetRandomDestWaypoint();
-            carAi.SetDestination(curDestPos);
-        }
+		if(dist < 0.5f * 0.5f)
+		{
+			if (curDestPos == finalDestPos)
+			{
+				curWaypoint = destWaypoint;
+				SetRandomDestWaypoint();
+			}
+			else
+			{
+				CalcSubDestPosition();
+			}
+
+			carAi.SetDestination(curDestPos);
+		}
     }
 
     void OnDrawGizmosSelected()
@@ -96,7 +115,7 @@ public class CarPathManager : MonoBehaviour
         if (destWaypoint != null)
         {
             Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(destWaypoint.transform.position, 0.5f);
+            Gizmos.DrawWireSphere(destWaypoint.transform.position, 0.25f);
             //Handles.Label(destWaypoint.transform.position, "destWP");
         }
 

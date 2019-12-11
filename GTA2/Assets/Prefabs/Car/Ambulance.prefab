@@ -44202,8 +44202,7 @@ MonoBehaviour:
   - {fileID: 4892016458960053090}
   doorAnimator:
   - {fileID: 6730530210032726613}
-  passengerType: 2
-  passengers: 00
+  passengers: 02000000
   isRunningOpenTheDoor: 0
   isRunningCloseTheDoor: 0
 --- !u!114 &7028039128798893206
@@ -44250,8 +44249,11 @@ MonoBehaviour:
   trailLeft: {fileID: 7028039128102520166}
   trailRight: {fileID: 7028039128461245392}
   shadow: {fileID: 7028039127036057394}
+  collsionClip: {fileID: 0}
+  explosionClip: {fileID: 8300000, guid: fd3673a057211ee4db181bf5310e6f60, type: 3}
   audioSourceEngine: {fileID: 5240615182983465757}
   audioSourceSkid: {fileID: 898738788375139938}
+  audioSourceSiren: {fileID: 0}
   fireParticle: {fileID: 7028039128151396392}
   explosionPref: {fileID: 9085315079043664107, guid: 328eceba7c9fce540b82a20ce6be221e,
     type: 3}

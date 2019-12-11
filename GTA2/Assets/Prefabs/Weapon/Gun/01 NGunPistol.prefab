@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1d8a2113e877942996dbbc1bb9e38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userObject: {fileID: 0}
   gunInfo: {fileID: 11400000, guid: c3d2aafba5b4631468ee0f5cfa30c0e2, type: 2}
-  gunSoundSource: {fileID: 3762895363760757132}
+  gunSound: {fileID: 8300000, guid: c976d2995a4c3a04f95b78fd7d64827d, type: 3}
   bulletCount: 1000
+  userObject: {fileID: 0}
 --- !u!1 &4178879768575453749
 GameObject:
   m_ObjectHideFlags: 0

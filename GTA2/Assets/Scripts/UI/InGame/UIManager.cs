@@ -63,7 +63,7 @@ public class UIManager : MonoSingleton<UIManager>
         playerWeaponJoystick.SetCanvas(GetComponent<Canvas>());
 
         player.SetHpDefault();
-        heartListUI.SetMaxPlayerHp(player.GetHp());
+        heartListUI.SetMaxPlayerHp(player.playerData.maxHp);
         carNumberUI.gameObject.SetActive(false);
         carNumberText = carNumberUI.GetComponentInChildren<Text>();
 
@@ -74,6 +74,11 @@ public class UIManager : MonoSingleton<UIManager>
     void Update()
     {
         moneyTextUI.SetMoney(GameManager.Instance.money);
+        if ((int)player.curGunIndex < 0 || (int)player.curGunIndex > (int)GunState.Granade)
+        {
+            return;
+        }
+
         weaponUI.SetSpriteSizePos(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
         
         heartListUI.SetHealthPoint(player.GetHp());
@@ -99,7 +104,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         // 차에 탄 사람이 타겟팅중인 차가 없으면
-        if (targetCar.passengerManager.passengers[0] != GameManager.Instance.player)
+        if (targetCar.passengerManager.passengers[0] != People.PeopleType.Player)
         {
             HumanUIMode();
             targetCar = null;

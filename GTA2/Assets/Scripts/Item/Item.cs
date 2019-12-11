@@ -35,6 +35,7 @@ public class Item : MonoBehaviour
     public ItemStatus itemType;
     public int itemCount;
     public float RespawnTime;
+    public AudioClip soundClip;
 
 
     float RespawnDelta;
@@ -136,7 +137,7 @@ public class Item : MonoBehaviour
             ActiveOff();
         }
 
-        SoundManager.Instance.PlayMainVoice(gameObject.name);
+        SoundManager.Instance.PlayClip(soundClip, true);
         UIManager.Instance.TurnOnItemText(itemType);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 // 어디에 무엇을 가져다 놓는가.
-public class CarryCargoMission : QuestCondition
+public class CarryCargoMission : Quest
 {
     public GameObject arrivePosTarget;
     public GameObject cargoTarget;
@@ -13,8 +13,19 @@ public class CarryCargoMission : QuestCondition
     {
         questStatus = QuestStatus.CarryCargo;
     }
+
+
+    public override void StartQuest()
+    {
+
+    }
     public override bool CheckCondition()
     {
         return true;
+    }
+
+    public override void PushReward()
+    {
+
     }
 }

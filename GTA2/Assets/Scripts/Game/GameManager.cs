@@ -16,7 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     public string nextScene;
 
     UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
-    [HideInInspector] public Player player;
+    public Player player;
 	
     public List<Transform> playerRespawnPoint;
     bool isMissionSuccess = false;
@@ -102,6 +102,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 	public void RespawnSetting()
 	{
+		NPCSpawnManager.Instance.NPCRespawn();
 		if (remains == 0)//RIP
 		{
 			SaveGta2Data();
@@ -112,6 +113,8 @@ public class GameManager : MonoSingleton<GameManager>
 		if (player.isBusted)
 		{
 			StartCoroutine(GetOffFromCopCarCor());
+			UIManager.Instance.CarUIMode(playerCar.carManager);
+			CarManager copCar = CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
 
 			player.ResetAllGunBullet();
 			player.curGunIndex = GunState.None;
@@ -119,10 +122,11 @@ public class GameManager : MonoSingleton<GameManager>
 		else
 		{
 			player.transform.position = playerRespawnPoint[Random.Range(0, playerRespawnPoint.Count)].position;
+			player.curGunIndex = GunState.None;
+			CameraController.Instance.ChangeTarget(player.gameObject);
 		}
 
 		//카메라 위치 조정
-		CameraController.Instance.ChangeTarget(player.gameObject);
 		CameraController.Instance.ZoomOut();
 		WantedLevel.instance.ResetWantedLevel();
 	}
@@ -131,14 +135,19 @@ public class GameManager : MonoSingleton<GameManager>
 	{
 		CarManager copCar = CarSpawnManager.Instance.SpawnPoliceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
 		CameraController.Instance.ChangeTarget(copCar.gameObject);
+		player.playerPhysics.targetCar = copCar.passengerManager;
 
 		copCar.gameObject.SetActive(false);
 		copCar.gameObject.SetActive(true);
-		copCar.passengerManager.GetOnTheCar(People.PeopleType.Player, 1);
+		//copCar.passengerManager.GetOnTheCar(People.PeopleType.Player, 2, true);
+        player.playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player, 2, true);
+        yield return new WaitForSeconds(3.0f);
+		StartCoroutine(copCar.passengerManager.GetOffTheCar(2));
+		player.isBusted = false;
+		yield return new WaitForSeconds(0.5f);
+        player.Down();
 
-		yield return new WaitForSeconds(1f);
-
-		StartCoroutine(copCar.passengerManager.GetOffTheCar(1));
+        CameraController.Instance.ChangeTarget(player.gameObject);
 	}
 
     public void IncreaseMoney(int earnings)

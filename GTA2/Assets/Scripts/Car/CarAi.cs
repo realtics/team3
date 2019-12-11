@@ -272,11 +272,11 @@ public class CarAi : MonoBehaviour
             targetSpeed = Mathf.Clamp(distToObstacle - 1, 0, 1) * carManager.movement.data.maxSpeed * maxSpdMultiplier * carManager.damage.maxSpdMultiplier;
         }
 
-        targetSpeed *= (1 - (Mathf.Abs(h) / 2f));
+        targetSpeed *= (1 - (Mathf.Abs(h) / 3f));
 
         if (targetSpeed < carManager.movement.curSpeed)
         {
-            v = -4;
+            v = -3;
         }
         else if (targetSpeed * 0.9f > carManager.movement.curSpeed)
         {

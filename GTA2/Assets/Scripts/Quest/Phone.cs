@@ -5,45 +5,54 @@ using UnityEngine;
 public class Phone : MonoBehaviour
 {
     // Start is called before the first frame update
-    public string phoneName;
-
-
-    bool isRing;
-    bool prevRing;
+    bool isStart;
+    Quest motherQuest;
     Animator phoneAnimator;
+    Player userPlayer;
 
-    public void OnDrawGizmos()
-    {
-        DrawArrow.ForGizmo(gameObject.transform.position, Vector3.right * 10.0f, Color.red, 0.5f);
-        Gizmos.DrawLine(transform.position, Vector3.zero);
-    }
     void Start()
     {
+        motherQuest = GetComponentInParent<Quest>();
         phoneAnimator = GetComponentInChildren<Animator>();
+        userPlayer = GameObject.FindWithTag("Player").GetComponent<Player>();
         SetRing();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isRing && prevRing != isRing)
+        if (!isStart)
         {
             phoneAnimator.SetBool("IsRinging", true);
-            prevRing = isRing;
         }
-        else if (!isRing && prevRing != isRing)
+        else if (isStart)
         {
             phoneAnimator.SetBool("IsRinging", false);
-            prevRing = isRing;
         }
     }
 
     void SetRing()
     {
-        isRing = true;
+        isStart = false;
     }
     void SetIdle()
     {
-        isRing = false;
+        isStart = true;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject != userPlayer.gameObject)
+        {
+            return;
+        }
+
+        if (isStart)
+        {
+            return;
+        }
+
+        SetIdle();
+        motherQuest.StartQuest();
     }
 }

@@ -7,12 +7,12 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 	public Citizen citizen;
     public Police police;
     public List<GameObject> allNPC;
-    public float despawnInterval = 1.0f;
-    public float spawnInterval = 0.5f;
-    public int spawnCitizenNumInInterval = 4;
-    public int spawnPoliceNumInInterval = 3;
-	public int maximumNPCNum = 10;
-	public int NPCNum = 0;
+	public NPCSpawnData npcSpawnData;
+	float spawnInterval;
+    int spawnCitizenNumInInterval;
+    int spawnPoliceNumInInterval;
+	int maximumNPCNum;
+	public int NPCNum;
 
     void Awake()
 	{
@@ -25,29 +25,48 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 
 	void Start()
 	{
+		MasterDataInit();
 		//코루틴으로 주기적으로 플레이어 근처 소환
-		InvokeRepeating(nameof(SpawnNPC), spawnInterval, spawnInterval);
+		StartCoroutine(SpawnNPC());
+		
 	}
-	
-    void SpawnNPC()
+	public void NPCRespawn()
+	{
+		foreach(GameObject npc in allNPC)
+		{
+			npc.SetActive(false);
+		}
+	}
+    IEnumerator SpawnNPC()
     {
-		//Citizen
-        GameObject closeWayPoint = WaypointManager.instance.FindRandomNPCSpawnPosition();
-		//Debug.DrawLine(GameManager.Instance.player.transform.position, closeWayPoint.transform.position, Color.red, 0.5f);
+		while(true)
+		{
+			yield return new WaitForSeconds(spawnInterval);
 
-		if (closeWayPoint == null || NPCNum >= maximumNPCNum)
-            return;
-		NPCNum++;
+			//Citizen
+			GameObject closeWayPoint = WaypointManager.instance.FindRandomNPCSpawnPosition();
 
-		GameObject insNPC = PoolManager.SpawnObject(citizen.gameObject);
-        insNPC.transform.position = closeWayPoint.transform.position;
+			if (closeWayPoint == null || NPCNum >= maximumNPCNum)
+				continue;
+			NPCNum++;
 
-		//Police
-        closeWayPoint = WaypointManager.instance.FindRandomNPCSpawnPosition();
+			GameObject insNPC = PoolManager.SpawnObject(citizen.gameObject);
+			insNPC.transform.position = closeWayPoint.transform.position;
 
-        if (closeWayPoint == null)
-            return;
-		insNPC = PoolManager.SpawnObject(police.gameObject);
-        insNPC.transform.position = closeWayPoint.transform.position;
+			//Police
+			closeWayPoint = WaypointManager.instance.FindRandomNPCSpawnPosition();
+
+			if (closeWayPoint == null)
+				continue;
+			insNPC = PoolManager.SpawnObject(police.gameObject);
+			insNPC.transform.position = new Vector3(closeWayPoint.transform.position.x + Random.Range(-0.5f, 0.5f), closeWayPoint.transform.position.y, closeWayPoint.transform.position.z + Random.Range(-0.5f, 0.5f));
+		}
     }
+	void MasterDataInit()
+	{
+		spawnInterval = npcSpawnData.spawnInterval;
+		spawnCitizenNumInInterval = npcSpawnData.spawnCitizenNumInInterval;
+		spawnPoliceNumInInterval = npcSpawnData.spawnPoliceNumInInterval;
+		maximumNPCNum = npcSpawnData.maximumNPCNum;
+	}
 }

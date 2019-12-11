@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48f908b8a0ce8fa4cb5c251791a3367f, type: 3}
+  m_Name: NPCSpawnData
+  m_EditorClassIdentifier: 
+  spawnInterval: 0.5
+  spawnCitizenNumInInterval: 4
+  spawnPoliceNumInInterval: 3
+  maximumNPCNum: 10

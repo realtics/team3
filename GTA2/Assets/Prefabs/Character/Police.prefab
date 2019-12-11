@@ -152,7 +152,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &8897160060990038603
 MonoBehaviour:
@@ -166,15 +166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ee92f8c96f96348a1017269d2498f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
-  hp: 100
-  isDestReached: 1
+  hp: 0
   animator: {fileID: 1167477734086649170}
   gunList:
   - {fileID: 8189217532303110051}
   - {fileID: 4757780486654468369}
+  policeData: {fileID: 11400000, guid: 43c2ce960593bb841ba9c2b0ebf38d96, type: 2}
 --- !u!65 &1358635159880621219
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -218,6 +219,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591,
+        type: 3}
+      propertyPath: userObject
+      value: 
+      objectReference: {fileID: 1167477734680987156}
     - target: {fileID: 1374610456668975265, guid: a3b485bcb1b296e498510fe0e59c8591,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -273,11 +279,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -2947891122247323091, guid: a3b485bcb1b296e498510fe0e59c8591,
-        type: 3}
-      propertyPath: userObject
-      value: 
-      objectReference: {fileID: 1167477734680987156}
     - target: {fileID: 4178879768575453749, guid: a3b485bcb1b296e498510fe0e59c8591,
         type: 3}
       propertyPath: m_Layer
@@ -320,6 +321,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -6292103021144967684, guid: 1875a2e7d4badf14294bed56181d7943,
+        type: 3}
+      propertyPath: userObject
+      value: 
+      objectReference: {fileID: 1167477734680987156}
     - target: {fileID: 7829914115591520671, guid: 1875a2e7d4badf14294bed56181d7943,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -375,11 +381,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6292103021144967684, guid: 1875a2e7d4badf14294bed56181d7943,
-        type: 3}
-      propertyPath: userObject
-      value: 
-      objectReference: {fileID: 1167477734680987156}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1875a2e7d4badf14294bed56181d7943, type: 3}
 --- !u!4 &3864498812844792768 stripped

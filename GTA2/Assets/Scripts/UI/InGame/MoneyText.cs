@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class MoneyText : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class MoneyText : MonoBehaviour
 
     public void SetMoney(int Money)
     {
-        text.text = "$" + Money;
+        // StringBuilder 쓰쇼
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append("$");
+        sb.Append(Money);
+
+        text.text = sb.ToString();
     }
 }

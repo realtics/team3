@@ -37,10 +37,16 @@ public class GunGranade : PlayerGun
                 intervalDelta = shootInterval;
             }
 
-            if (player.isWalk)
+            if ((
+                Mathf.Abs(UIManager.Instance.playerMoveJoystick.Horizontal) > .01f &&
+                Mathf.Abs(UIManager.Instance.playerMoveJoystick.Vertical) > .01f) ||
+                (
+                Input.GetAxisRaw("Vertical") != .0f ||
+                Input.GetAxisRaw("Horizontal") != .0f))
             {
                 intervalDelta += moveThrowPower;
             }
+
 
             BombGranade LaunchBullet = (BombGranade)ShootSingleBullet(userObject.transform.position);
             MinusPlayerBulletCount();

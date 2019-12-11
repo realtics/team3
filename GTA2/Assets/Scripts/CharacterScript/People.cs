@@ -11,22 +11,25 @@ public abstract class People : MonoBehaviour
         Citizen,
         Police
     };
+    //Sound
+    [SerializeField]
+    protected AudioClip punchClip;
+    protected SpriteRenderer spriteRenderer;
 	//Timer
-	protected float jumpTime = 1.5f;
-	protected float jumpTimer = 0.0f;
+	protected float jumpTime;
+	protected float jumpTimer;
 	protected float jumpMinTime = 0.5f;
-	protected float downTimer = 0.0f;
-	protected float downTime = 3.0f;
+	protected float downTimer;
+	protected float downTime;
 
 	float runoverTimer = 0.0f;
-	float runoverTime = 0.5f;
+	float runoverTime = 1.0f;
 
 	//Physics
 	protected Rigidbody rigidbody;
 	protected BoxCollider boxCollider;
-	protected float rotateSpeed = 0.1f;
-	protected float moveSpeed = 0.5f;
-	protected float runSpeed = 1.2f;
+	protected float rotateSpeed;
+	protected float moveSpeed;
 
 	protected Vector3 movement;
 	protected Vector3 direction;
@@ -38,8 +41,8 @@ public abstract class People : MonoBehaviour
 	[Header("이 오브젝트와 작동할 Layer")]
 	public LayerMask collisionLayer;
 
-	[SerializeField]
-	protected int hp = 100;
+	[SerializeField]protected int hp;
+	protected int defaultHp;
 	protected float hDir = 0;
 	protected float vDir = 0;
     //State

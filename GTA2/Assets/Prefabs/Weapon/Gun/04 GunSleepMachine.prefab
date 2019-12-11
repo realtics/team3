@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunInfo: {fileID: 11400000, guid: a5f8fc5d0fa14714fa7ed1443b9e9f3c, type: 2}
+  gunSound: {fileID: 8300000, guid: 7a083ad4eee51854ab1d3d2fa25a0a00, type: 3}
   bulletCount: 0
   userObject: {fileID: 0}

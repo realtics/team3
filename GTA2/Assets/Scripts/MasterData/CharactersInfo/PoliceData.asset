@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336538d8453d0dc439fe0e0d0e076afd, type: 3}
+  m_Name: PoliceData
+  m_EditorClassIdentifier: 
+  maxHp: 150
+  moveSpeed: 1
+  runawaySpeed: 2
+  downTime: 3
+  findRange: 10
+  punchRange: 0.08
+  shotRange: 10
+  chaseRange: 7
+  outofRange: 400
+  minIdleTime: 0.3
+  maxIdleTime: 1
+  minWalkTime: 10
+  maxWalkTime: 15
+  carOpenTimer: 0
+  carOpenTime: 0.5
+  money: 100

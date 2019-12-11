@@ -27,7 +27,7 @@ public class BombFireBottle : Bullet
 
     public void SetForce(float forceValue)
     {
-        Vector3 newVec3 = bulletDir * bulletSpeed * forceValue * forceValue;
+        Vector3 newVec3 = bulletDir * bulletSpeed * forceValue;
         newVec3.y = yLaunchPower;
 
         rigidBody.velocity = Vector3.zero;

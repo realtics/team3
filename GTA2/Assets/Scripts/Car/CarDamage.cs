@@ -38,10 +38,10 @@ public class CarDamage : MonoBehaviour
         {
             Bullet HitBullet = other.GetComponentInParent<Bullet>();
             HitBullet.Explosion();
-
             DeductHp(HitBullet.bulletDamage, other.tag != "NPCBullet");
 			
-			if(carManager.movement.curSpeed < 10 && carManager.passengerManager.passengerType != People.PeopleType.Player)
+			if(carManager.movement.curSpeed < 10 && carManager.passengerManager.passengers[0] != People.PeopleType.Player && 
+				carManager.carState != CarManager.CarState.destroied)
 			{
 				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
 			}
@@ -100,7 +100,6 @@ public class CarDamage : MonoBehaviour
         {
             carManager.OnDamageEvent(isDamagedByPlayer);
         }
-
     }
 
     void OnCarDamage(bool isDamagedByPlayer)
@@ -113,7 +112,6 @@ public class CarDamage : MonoBehaviour
         {
             maxSpdMultiplier = 0.8f;
         }
-
         if (isDamagedByPlayer)
         {
 			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.hitCar, transform.position);
@@ -135,7 +133,6 @@ public class CarDamage : MonoBehaviour
         CameraController.Instance.StartShake(0.3f, transform.position);
         StartCoroutine(Explode(isDamagedByPlayer));
     }
-
     IEnumerator Explode(bool isDamagedByPlayer)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 2f);

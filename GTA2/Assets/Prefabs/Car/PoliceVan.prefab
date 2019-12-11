@@ -5155,11 +5155,12 @@ MonoBehaviour:
   doorPositions:
   - {fileID: 4176382790938013067}
   - {fileID: 169410627790170107}
+  - {fileID: 169410627790170107}
   doorAnimator:
   - {fileID: 2628517231066115386}
   - {fileID: 6927961159425904704}
-  passengerType: 3
-  passengers: 0000
+  - {fileID: 6927961159425904704}
+  passengers: 030000000300000000000000
   isRunningOpenTheDoor: 0
   isRunningCloseTheDoor: 0
 --- !u!114 &1535439413788955730
@@ -5206,8 +5207,11 @@ MonoBehaviour:
   trailLeft: {fileID: 1535439414951208914}
   trailRight: {fileID: 1535439415504620469}
   shadow: {fileID: 1535439415409227381}
+  collsionClip: {fileID: 0}
+  explosionClip: {fileID: 8300000, guid: fd3673a057211ee4db181bf5310e6f60, type: 3}
   audioSourceEngine: {fileID: 5331941551170612432}
   audioSourceSkid: {fileID: 3708056799954075641}
+  audioSourceSiren: {fileID: 0}
   fireParticle: {fileID: 1535439415308247664}
   explosionPref: {fileID: 9085315079043664107, guid: 328eceba7c9fce540b82a20ce6be221e,
     type: 3}

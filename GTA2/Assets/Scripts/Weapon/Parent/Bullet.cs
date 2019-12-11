@@ -13,8 +13,9 @@ public class Bullet : MonoBehaviour
 
 
     public BulletInformation bulletInfo;
-    public AudioSource bulletSoundSource;
     public GameObject explosionPref;
+    public AudioClip explosionSound;
+
 
     protected Vector3 bulletStartPos;
     protected Vector3 bulletDir;
@@ -103,10 +104,7 @@ public class Bullet : MonoBehaviour
             explosionEffect.SetExplosion(transform.position);
         }
 
-        if (bulletSoundSource != null)
-        {
-            bulletSoundSource.Play();
-        }
+         SoundManager.Instance.PlayClip(explosionSound, true);
     }
 
     protected void UpdateActive()

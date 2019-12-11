@@ -5,7 +5,6 @@ using UnityEngine;
 public class GunFire : PlayerGun
 {
     // Start is called before the first frame update.
-
     float soundPlayInverval = .3f;
     float soundPlayDelta;
 
@@ -28,7 +27,7 @@ public class GunFire : PlayerGun
     {
         if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
         {
-            SoundManager.Instance.PlayGunShot(shotSFXName);
+            SoundManager.Instance.PlayClip(gunSound, true);
             soundPlayDelta = .0f;
         }
     }

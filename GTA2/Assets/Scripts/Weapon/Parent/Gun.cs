@@ -19,6 +19,7 @@ public enum GunState
 public abstract class Gun : MonoBehaviour
 {
     public GunInformation gunInfo;
+    public AudioClip gunSound;
     
     [HideInInspector]
     public int bulletCount;
@@ -144,9 +145,6 @@ public abstract class Gun : MonoBehaviour
     }
     protected virtual void SFXPlay()
     {
-        if (shotSFXName != null)
-        {
-            SoundManager.Instance.PlayGunShot(shotSFXName);
-        }
+        SoundManager.Instance.PlayClip(gunSound, true);
     }
 }

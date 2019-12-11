@@ -149,8 +149,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5431207dac230484c85129be5c87d9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  isDriver: 0
+  punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  hp: 0
+  playerData: {fileID: 11400000, guid: d7dff860382b47e4db4fc3918bf04ad2, type: 2}
+  runoverMinSpeed: 30
   gunList:
   - {fileID: 0}
   - {fileID: 0}
@@ -163,6 +168,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  playerPhysics: {fileID: 0}
+  playerTimer: {fileID: 0}
 --- !u!54 &6070031318873334062
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -204,9 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c45e72bfefc452488fe196249feabc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &1272307600
 MonoBehaviour:
   m_ObjectHideFlags: 0

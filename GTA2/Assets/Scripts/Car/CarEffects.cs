@@ -19,8 +19,12 @@ public class CarEffects : MonoBehaviour
     public TrailRenderer trailRight;
     public GameObject shadow;
 
+    public AudioClip collsionClip;
+    public AudioClip explosionClip;
+
     public AudioSource audioSourceEngine;
     public AudioSource audioSourceSkid;
+	public AudioSource audioSourceSiren;
 
     public GameObject fireParticle;
     public GameObject explosionPref;
@@ -32,17 +36,21 @@ public class CarEffects : MonoBehaviour
     {
         carManager.OnDestroy += FullyDestroy;
         carManager.OnDestroy += EnableParticle;
+		carManager.OnDestroy += PlayExplosionSound;
         carManager.OnDamage += EnableParticle;
+		carManager.OnDamage += PlayCrashSound;
 
-        Init();
+		Init();
     }
 
     void OnDisable()
     {
         carManager.OnDestroy -= FullyDestroy;
         carManager.OnDestroy -= EnableParticle;
+		carManager.OnDestroy -= PlayExplosionSound;
         carManager.OnDamage -= EnableParticle;
-    }
+		carManager.OnDamage -= PlayCrashSound;
+	}
 
     void Init()
     {
@@ -95,13 +103,17 @@ public class CarEffects : MonoBehaviour
 
         if (sirenL != null && sirenR != null)
         {
-            StartCoroutine(SirenCor());
+			if (audioSourceSiren != null)
+				audioSourceSiren.Play();
+			StartCoroutine(SirenCor());
         }
     }
 
     public void TurnOffSiren()
     {
         StopAllCoroutines();
+		if(audioSourceSiren != null)
+			audioSourceSiren.Stop();
         sirenL.SetActive(false);
         sirenR.SetActive(false);
     }
@@ -233,4 +245,15 @@ public class CarEffects : MonoBehaviour
             fireParticle.SetActive(true);
         }
     }
+
+	void PlayCrashSound(bool sourceIsPlayer)
+	{
+		if(carManager.carState == CarManager.CarState.controlledByPlayer)
+			SoundManager.Instance.PlayClip(collsionClip, true);
+	}
+
+	void PlayExplosionSound(bool sourceIsPlayer)
+	{
+		SoundManager.Instance.PlayClip(explosionClip, true);
+	}
 }

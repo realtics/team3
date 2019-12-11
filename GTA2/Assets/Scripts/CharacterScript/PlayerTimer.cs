@@ -9,8 +9,7 @@ public class PlayerTimer : MonoBehaviour
     float respawnTimer = 0.0f;
     float carOpenTime = 0.5f;
     float carOpenTimer = 0.0f;
-    float bustedCheckTime = 3.0f;
-    float bustedCheckTimer = 3.0f;
+    
     public bool RespawnTimerCheck()
     {
         respawnTimer += Time.deltaTime;
@@ -23,16 +22,7 @@ public class PlayerTimer : MonoBehaviour
         return false;
     }
 
-    public bool BustedTimerCheck()
-    {
-        bustedCheckTimer += Time.deltaTime;
-        if (bustedCheckTimer > bustedCheckTime)
-        {
-            bustedCheckTimer = 0.0f;
-            return true;
-        }
-        return false;
-    }
+   
     
     public bool CarOpenTimerCheck()
     {
