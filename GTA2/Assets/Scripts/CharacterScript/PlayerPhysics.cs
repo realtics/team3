@@ -16,8 +16,8 @@ public class PlayerPhysics : MonoBehaviour
     {
 		//속도 너무 빠르면 Runover
         if (collision.gameObject.CompareTag("Car") && GameManager.Instance.player.isChasingCar &&
-			collision.gameObject.GetComponent<CarManager>().movement.curSpeed < GameManager.Instance.player.runoverMinSpeed &&
-			Vector3.SqrMagnitude(carDoorTransform.position - transform.position) > 0.1f
+			collision.gameObject.GetComponent<CarManager>().movement.curSpeed < GameManager.Instance.player.runoverMinSpeedInChasing 
+			// && Vector3.SqrMagnitude(carDoorTransform.position - transform.position) > 0.1f
 			)
         {
             GameManager.Instance.player.Jump();

@@ -5161,8 +5161,8 @@ MonoBehaviour:
   - {fileID: 6927961159425904704}
   - {fileID: 6927961159425904704}
   passengers: 030000000300000000000000
-  isRunningOpenTheDoor: 0
-  isRunningCloseTheDoor: 0
+  isRunningOpenTheDoor: 0000
+  isRunningCloseTheDoor: 0000
 --- !u!114 &1535439413788955730
 MonoBehaviour:
   m_ObjectHideFlags: 0

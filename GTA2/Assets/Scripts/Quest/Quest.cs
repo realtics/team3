@@ -13,7 +13,7 @@ public enum QuestStatus
 public abstract class Quest : MonoBehaviour
 {
     [SerializeField]
-    protected string name;
+    protected string title;
     [SerializeField]
     protected string infoPath;
     [SerializeField]
@@ -24,6 +24,7 @@ public abstract class Quest : MonoBehaviour
     protected Phone startPhone;
     protected QuestStatus questStatus;
     protected bool isCorrect;
+    protected GameObject questArrow;
 
     protected float correctAndOffTime = 5.0f;
     protected float correctAndOffDel = .0f;

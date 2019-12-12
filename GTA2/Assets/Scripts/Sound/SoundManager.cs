@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoSingleton<SoundManager>
 {
     [SerializeField]
@@ -9,6 +12,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     float oneShotPlayDelta;
 
     AudioSource mainSource;
+    Vector3 soundPos;
 
 
 
@@ -24,6 +28,11 @@ public class SoundManager : MonoSingleton<SoundManager>
     }
 
 
+    public void PlayClipFromPosition(AudioClip clip, bool playOneShot, Vector3 pos)
+    {
+        soundPos = pos;
+        PlayClip(clip, playOneShot);
+    }
 
     public void PlayClip(AudioClip clip, bool playOneShot)
     {
@@ -38,7 +47,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         if (playOneShot && oneShotPlayTime < oneShotPlayDelta)
         {
             oneShotPlayDelta = .0f;
-            mainSource.PlayOneShot(mainSource.clip);
+            AudioSource.PlayClipAtPoint(clip, soundPos);
         }
         else if (!playOneShot && !mainSource.isPlaying)
         {

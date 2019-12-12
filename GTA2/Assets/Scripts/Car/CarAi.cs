@@ -24,6 +24,9 @@ public class CarAi : MonoBehaviour
     RaycastHit hit;
     float distToObstacle = Mathf.Infinity;
 
+	float h = 0;
+	float v = 0;
+
     void Start()
     {
        SetAiMaxSpeedMultiplier();
@@ -108,12 +111,14 @@ public class CarAi : MonoBehaviour
     {
         distToObstacle = Mathf.Infinity;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f, collisionLayer))
+		Vector3 rayDirection = Quaternion.Euler(0, h * 20, 0) * transform.forward;
+
+		if (Physics.Raycast(transform.position, rayDirection, out hit, 1.5f, collisionLayer))
         {
             if (hit.transform.tag == "TrafficLight")
             {
                 if (aiState != AiState.evade &&
-                    Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
+                    Vector3.Dot(transform.forward, hit.transform.forward) < -0.9f)
                 {
                     distToObstacle = hit.distance;
                 }
@@ -124,18 +129,18 @@ public class CarAi : MonoBehaviour
             }
         }
 
-        DrawRaycastDebugLine();
+        DrawRaycastDebugLine(rayDirection);
     }
 
-    void DrawRaycastDebugLine()
+    void DrawRaycastDebugLine(Vector3 rayDirection)
     {
         if (distToObstacle < Mathf.Infinity)
         {
-            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
+            Debug.DrawRay(transform.position, rayDirection * hit.distance, Color.red);
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.forward * 1.5f, Color.blue);
+            Debug.DrawRay(transform.position, rayDirection * 1.5f, Color.blue);
         }
     }
 
@@ -147,12 +152,20 @@ public class CarAi : MonoBehaviour
             return;
         }
 
-        ChaseStateLoop();
+		if(chaseTarget.tag == "Car")
+		{
+			ChaseStateLoopCar();
+		}
+		else
+		{
+			ChaseStateLoopNpc();
+		}
+
         SetAiMaxSpeedMultiplier();
         CarMoveAI();
     }
 
-    void ChaseStateLoop()
+    void ChaseStateLoopCar()
     {
         switch (aiState)
         {
@@ -247,10 +260,30 @@ public class CarAi : MonoBehaviour
         }
     }
 
-    void CarMoveAI()
+	void ChaseStateLoopNpc()
+	{
+		destination = chaseTarget.position;
+
+		Vector3 dir = destination - transform.position;
+		float dist = dir.magnitude;
+
+		if (dist > 16)
+		{
+			StopChase();
+		}
+		else if (dist < 2.5f)
+		{
+			aiState = AiState.normal;
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+			return;
+		}
+	}
+
+	void CarMoveAI()
     {
-        float h = 0;
-        float v = 0;
+        h = 0;
+        v = 0;
 
         Vector3 dir = destination - transform.position;
         dir.y = 0;
@@ -307,10 +340,18 @@ public class CarAi : MonoBehaviour
         if (aiState != AiState.normal)
             return;
 
-        if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) > 10)
+        if ((transform.position - GameManager.Instance.player.transform.position).sqrMagnitude > 100)
             return;
 
-        chaseTarget = GameManager.Instance.player.transform;
+		if(GameManager.Instance.playerCar != null)
+		{
+			chaseTarget = GameManager.Instance.playerCar.transform;
+		}
+		else
+		{
+			chaseTarget = GameManager.Instance.player.transform;
+		}
+
         aiState = AiState.chase;
 
         carManager.effects.TurnOnSiren();

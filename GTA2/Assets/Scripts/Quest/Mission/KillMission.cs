@@ -25,7 +25,16 @@ public class KillMission : Quest
             {
                 gameObject.SetActive(false);
             }
-        }    
+        }
+        else
+        {
+            if (questArrow == null)
+            {
+                return;
+            }
+
+            WorldUIManager.Instance.UpdateArrow(questArrow, killTarget.transform.position);
+        }
     }
 
 
@@ -33,12 +42,18 @@ public class KillMission : Quest
     {
         killTarget.gameObject.SetActive(true);
         QuestManager.Instance.StartQuest(this);
+        QuestUIManager.Instance.ToastStartQuest(title, infoPath);
+
+
+        questArrow = WorldUIManager.Instance.SpwanArrow();
+        questArrow.transform.parent = WorldUIManager.Instance.transform;
     }
 
     public override bool CheckCondition()
     {
         if (killTarget.isDie)
         {
+            WorldUIManager.Instance.despwanArrow(questArrow);
             return true;
         }
         return false;
@@ -46,6 +61,7 @@ public class KillMission : Quest
 
     public override void PushReward()
     {
+        QuestUIManager.Instance.ToastEndQuest(endPath);
         GameManager.Instance.IncreaseMoney(rewardMoney);
         isCorrect = true;
     }

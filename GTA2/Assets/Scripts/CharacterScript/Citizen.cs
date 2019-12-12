@@ -14,15 +14,15 @@ public class Citizen : NPC
     void Start()
     {
 		MasterDataInit();
-    }
+	}
 	private void OnEnable()
 	{
-		base.NPCInit();
+		base.NPCOnEnable();
 		StartCoroutine(ActivityByState());
 	}
 	private void OnDisable()
 	{
-		
+		base.NPCOnDisable();
 	}
 	void Update()
     {

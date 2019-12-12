@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f908b8a0ce8fa4cb5c251791a3367f, type: 3}
   m_Name: NPCSpawnData
   m_EditorClassIdentifier: 
-  spawnInterval: 0.5
-  spawnCitizenNumInInterval: 4
-  spawnPoliceNumInInterval: 3
+  citizenSpawnInterval: 0.5
+  policeSpawnInterval: 10
+  maxSpawnCitizenNumInInterval: 4
+  maxSpawnPoliceNumInInterval: 3
   maximumNPCNum: 10

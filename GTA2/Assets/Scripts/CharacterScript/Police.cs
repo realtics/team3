@@ -16,11 +16,12 @@ public class Police : NPC
 	}
 	private void OnEnable()
 	{
-		base.NPCInit();
+		base.NPCOnEnable();
 		StartCoroutine(ActivityByState());
 	}
 	private void OnDisable()
 	{
+		base.NPCOnDisable();
 	}
 	void Update()
     {
@@ -74,22 +75,23 @@ public class Police : NPC
 			if (GameManager.Instance.player.playerPhysics.targetCar.isDoorOpen[0])
 			{
 				PullOutDriver();
+				isGetOnTheCar = false;
 			}
 			else
 			{
 				OpenTheDoor();
 			}
 		}
-		else if (InShotRange()) //사격
-		{
-			base.LookAtPlayer();
-			base.StartShot();
-		}
-		else //추격
+		else if (InChaseRange()) //추격
 		{
 			isGetOnTheCar = false;
 			base.StopShot();
 			base.ChasePlayer();
+		}
+		else //사격 //inShotRange
+		{
+			base.LookAtPlayer();
+			base.StartShot();
 		}
 	}
 	private void OnCollisionEnter(Collision collision)
@@ -204,8 +206,6 @@ public class Police : NPC
 	}
 	void PullOutDriver()
 	{
-		isGetOnTheCar = false;
-		transform.parent = GameManager.Instance.player.playerPhysics.targetCar.gameObject.transform;
 		GameManager.Instance.player.playerPhysics.targetCar.PullOutDriver();
 	}
 	void OpenTheDoor()
@@ -213,8 +213,9 @@ public class Police : NPC
 		isWalk = false;
 		GameManager.Instance.player.playerPhysics.LookAtCar();
 
-		if (!GameManager.Instance.player.playerPhysics.targetCar.isRunningOpenTheDoor)
+		if (!GameManager.Instance.player.playerPhysics.targetCar.isRunningOpenTheDoor[0])
 		{
+			GameManager.Instance.player.playerPhysics.targetCar.isRunningOpenTheDoor[0] = true;
 			transform.forward = GameManager.Instance.player.playerPhysics.targetCar.transform.forward;
 			StartCoroutine(GameManager.Instance.player.playerPhysics.targetCar.OpenTheDoor(0));
 		}

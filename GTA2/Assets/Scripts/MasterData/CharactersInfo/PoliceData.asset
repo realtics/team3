@@ -19,7 +19,7 @@ MonoBehaviour:
   findRange: 10
   punchRange: 0.08
   shotRange: 10
-  chaseRange: 7
+  chaseRange: 15
   outofRange: 400
   minIdleTime: 0.3
   maxIdleTime: 1

@@ -8,14 +8,10 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public int goalMoney;
     public GameObject goalObject;
-    public GameObject missionArrow;
-    public float arrowToPlayer;
-    public float maxArrowToPlayer;
     //int defaultRemains = 3;
     public int remains = 3;
     public string nextScene;
 
-    UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
     public Player player;
 	
     public List<Transform> playerRespawnPoint;
@@ -36,24 +32,18 @@ public class GameManager : MonoSingleton<GameManager>
         //Screen.SetResolution(720, 1280, true);
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
-
-        Image image = missionArrow.GetComponent<Image>();
-        Material existingGlobalMat = image.materialForRendering;
-        Material updatedMaterial = new Material(existingGlobalMat);
-        updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);
-        image.material = updatedMaterial;
     }
     void Update()
     {
         UpdateGoal();
-        UpdateArrow();
         UpdateTime();
     }
 
     void UpdateGoal()
     {
-        if (money >= goalMoney)
+        if (money >= goalMoney /*&& !isMissionSuccess*/)
         {
+            WorldUIManager.Instance.SuccessMainMission();
             isMissionSuccess = true;
         }
         else
@@ -61,40 +51,6 @@ public class GameManager : MonoSingleton<GameManager>
             isMissionSuccess = false;
         }
     }
-    void UpdateArrow()
-    {
-        if (!isMissionSuccess)
-        {
-            goalObject.SetActive(false);
-            missionArrow.SetActive(false);
-            return;
-        }
-
-        goalObject.SetActive(true);
-        missionArrow.SetActive(true);
-
-        Vector3 playerToGoal = goalObject.transform.position - player.gameObject.transform.position;
-        float playerToGoalDistance = playerToGoal.magnitude;
-        playerToGoal.Normalize();
-
-        if (playerToGoalDistance > maxArrowToPlayer)
-        {
-            missionArrow.transform.position = 
-                player.gameObject.transform.position + playerToGoal * arrowToPlayer;
-        }
-        else
-        {
-            missionArrow.transform.position = Vector3.Lerp(
-                missionArrow.transform.position,
-                player.gameObject.transform.position + playerToGoal * playerToGoalDistance,
-                .3f);
-        }
-
-        missionArrow.transform.LookAt(goalObject.transform.transform, Vector3.up);
-        Vector3 tempVector = missionArrow.transform.eulerAngles;
-        missionArrow.transform.eulerAngles = new Vector3(90.0f, tempVector.y, .0f);
-    }
-
     void UpdateTime()
     {
         gameTime += Time.deltaTime;

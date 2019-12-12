@@ -36,6 +36,7 @@ public abstract class People : MonoBehaviour
 	protected Vector3 targetDirectionVector = Vector3.zero;
 	protected Vector3 runoverVector;
 	protected float runoverSpeed;
+	protected float runoverMinSpeed = 100;
 
 	protected RaycastHit hit;
 	[Header("이 오브젝트와 작동할 Layer")]
@@ -70,6 +71,7 @@ public abstract class People : MonoBehaviour
 	{
 		GetComponent<BoxCollider>().isTrigger = true;
 		GetComponent<Rigidbody>().isKinematic = true;
+		isRunover = false;
 		isDown = true;
 	}
 	public virtual void Rising()
@@ -108,10 +110,9 @@ public abstract class People : MonoBehaviour
 	#region lowlevelCode
 	public virtual void Runover(float runoverSpeed, Vector3 carPosition)
     {
+		if (runoverSpeed < runoverMinSpeed)
+			return;
 		Vector3 runoverVector = transform.position - carPosition;
-
-        if (runoverSpeed < 50)
-            return;
 
         //속도에 비례한 피해 데미지 보정수치
         this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
@@ -121,9 +122,9 @@ public abstract class People : MonoBehaviour
 
         transform.LookAt(carPosition);
 
-        if(isDown && runoverSpeed > 30)
+        if(isDown && runoverSpeed > 10)
         {
-            Hurt((int)(runoverSpeed * 4));
+            Hurt(9999);
         }
 		else if (runoverSpeed > 200)
 		{

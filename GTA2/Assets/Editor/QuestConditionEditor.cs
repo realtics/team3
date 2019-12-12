@@ -6,7 +6,6 @@ using UnityEditor;
 
 public class QuestConditionEditor : EditorWindow
 {
-    public QuestManager questManager;
     public GameObject killPref;
     public GameObject arrivePref;
     public GameObject carryPref;
@@ -22,7 +21,6 @@ public class QuestConditionEditor : EditorWindow
     void OnGUI()
     {
         SerializedObject obj = new SerializedObject(this);
-        EditorGUILayout.PropertyField(obj.FindProperty("questManager"));
         EditorGUILayout.PropertyField(obj.FindProperty("killPref"));
         EditorGUILayout.PropertyField(obj.FindProperty("arrivePref"));
         EditorGUILayout.PropertyField(obj.FindProperty("carryPref"));
@@ -56,6 +54,6 @@ public class QuestConditionEditor : EditorWindow
     void CreateKillMission()
     {
         Quest newQuest = Instantiate(killPref).GetComponent<Quest>();
-        newQuest.transform.parent = questManager.transform;
+        newQuest.transform.parent = QuestManager.Instance.transform;
     }
 }

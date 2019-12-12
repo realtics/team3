@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\CharacterScript\PlayerPhysics.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\PlayerTimer.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Police.cs" />
+    <Compile Include="Assets\Scripts\CharacterScript\QuestNPC.cs" />
     <Compile Include="Assets\Scripts\Debug\DebugPanelUI.cs" />
     <Compile Include="Assets\Scripts\Debug\DebugX.cs" />
     <Compile Include="Assets\Scripts\Debug\DrawArrow.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets\Scripts\Quest\Phone.cs" />
     <Compile Include="Assets\Scripts\Quest\Quest.cs" />
     <Compile Include="Assets\Scripts\Quest\QuestManager.cs" />
+    <Compile Include="Assets\Scripts\Quest\QuestUIManager.cs" />
     <Compile Include="Assets\Scripts\Road\Branch.cs" />
     <Compile Include="Assets\Scripts\Road\CarRoad.cs" />
     <Compile Include="Assets\Scripts\Road\RoadBlock.cs" />

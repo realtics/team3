@@ -249,11 +249,11 @@ public class CarEffects : MonoBehaviour
 	void PlayCrashSound(bool sourceIsPlayer)
 	{
 		if(carManager.carState == CarManager.CarState.controlledByPlayer)
-			SoundManager.Instance.PlayClip(collsionClip, true);
+			SoundManager.Instance.PlayClipFromPosition(collsionClip, true, gameObject.transform.position);
 	}
 
 	void PlayExplosionSound(bool sourceIsPlayer)
 	{
-		SoundManager.Instance.PlayClip(explosionClip, true);
+		SoundManager.Instance.PlayClipFromPosition(explosionClip, true, gameObject.transform.position);
 	}
 }

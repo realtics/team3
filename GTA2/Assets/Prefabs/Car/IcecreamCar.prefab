@@ -454,8 +454,8 @@ MonoBehaviour:
   doorAnimator:
   - {fileID: 4360881073025064410}
   passengers: 02000000
-  isRunningOpenTheDoor: 0
-  isRunningCloseTheDoor: 0
+  isRunningOpenTheDoor: 0000
+  isRunningCloseTheDoor: 0000
 --- !u!114 &3440692971543766678
 MonoBehaviour:
   m_ObjectHideFlags: 0

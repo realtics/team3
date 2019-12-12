@@ -28,6 +28,7 @@ public class CarManager : MonoBehaviour
     public event CarPassengerHandler OnDriverGetOn;
     public event CarPassengerHandler OnDriverGetOff;
     public CarType carType;
+
     public enum CarType
     {
         citizen,

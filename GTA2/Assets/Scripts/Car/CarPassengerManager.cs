@@ -12,11 +12,18 @@ public class CarPassengerManager : MonoBehaviour
     public People.PeopleType[] passengers;
 
 	//나중에 배열로 변경
-	public bool isRunningOpenTheDoor = false;
-	public bool isRunningCloseTheDoor = false;
-	public bool[] isDoorOpen { get; set; } = new bool[3];
-    
-    void OnEnable()
+	public bool[] isRunningOpenTheDoor;
+	public bool[] isRunningCloseTheDoor;
+	public bool[] isDoorOpen { get; set; }
+
+	private void Start()
+	{
+		isRunningOpenTheDoor = new bool[doorPositions.Length];
+		isRunningOpenTheDoor = new bool[doorPositions.Length];
+		isRunningCloseTheDoor = new bool[doorPositions.Length];
+		isDoorOpen = new bool[doorPositions.Length];
+	}
+	void OnEnable()
     {
         carManager.OnDamage += OnDamaged;
         carManager.OnDestroy += OnCarDestroyInPlayer;
@@ -62,20 +69,20 @@ public class CarPassengerManager : MonoBehaviour
 			for (int i = 0; i < doorAnimator.Length; i++)
 			{
 				if (isDoorOpen[i])
-					doorAnimator[i].SetTrigger("Close");
+					StartCoroutine(CloseTheDoor(i));
 			}
 		}
 	}
 	public IEnumerator OpenTheDoor(int idx)
 	{
-		isRunningOpenTheDoor = true;
+		isRunningOpenTheDoor[idx] = true;
 		doorAnimator[idx].SetTrigger("Open");
 		yield return new WaitForSeconds(0.5f);
 		isDoorOpen[idx] = true;
 	}
 	public IEnumerator CloseTheDoor(int idx)
 	{
-		isRunningOpenTheDoor = false;
+		isRunningOpenTheDoor[idx] = false;
 		doorAnimator[idx].SetTrigger("Close");
 		yield return new WaitForSeconds(0.5f);
 		isDoorOpen[idx] = false;
@@ -97,7 +104,7 @@ public class CarPassengerManager : MonoBehaviour
 		carManager.OnDriverGetOnEvent(passengerType, idx);
 	}
 	
-	public IEnumerator GetOffTheCar(int idx)
+	public IEnumerator GetOffTheCar(int idx = 0)
     {
         if (passengers[idx] == People.PeopleType.None)
             yield break;
@@ -136,12 +143,12 @@ public class CarPassengerManager : MonoBehaviour
     {
         if (passengers[idx] == People.PeopleType.Player)
         {
-			//DriverSetting(0, false);
+			GameManager.Instance.player.PlayerDriverSetting(false, idx);
 			CameraController.Instance.ChangeTarget(GameManager.Instance.player.gameObject);
 			CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
-            GameManager.Instance.player.Down();
-			passengers[idx] = People.PeopleType.None;
-			carManager.OnDriverGetOffEvent(passengers[idx], idx);
+			GameManager.Instance.player.transform.position = doorPositions[idx].position;
+			GameManager.Instance.playerCar = null;
+			GameManager.Instance.player.Down();
 		}
         else //시민
         {

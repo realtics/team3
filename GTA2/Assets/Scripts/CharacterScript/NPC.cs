@@ -41,11 +41,7 @@ public abstract class NPC : People
 	public Animator animator;
 	public List<NPCGun> gunList;
 
-	void OnEnable()
-    {
-		StartCoroutine(DisableIfOutOfCamera());
-		SetDefaultHp();
-	}
+	
 	void AnimationInit()
 	{
 		isWalk = false;
@@ -63,19 +59,20 @@ public abstract class NPC : People
 	{
 		hp = defaultHp;
 	}
-    void OnDisable()
-    {
-        //StopAllCoroutines();
-        StopCoroutine(DisableIfOutOfCamera());
-    }
-    protected void NPCInit()
+	protected void NPCOnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		boxCollider = GetComponent<BoxCollider>();
-		hp = defaultHp;
-		patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
 		patternChangeTimer = patternChangeInterval;
+		StartCoroutine(DisableIfOutOfCamera());
+		AnimationInit();
+		SetDefaultHp();
 	}
+	protected void NPCOnDisable()
+	{
+		StopCoroutine(DisableIfOutOfCamera());
+	}
+	
 	protected void NPCUpdate()
 	{
 		AnimateUpdate();
@@ -138,7 +135,7 @@ public abstract class NPC : People
         }
         else if(other.CompareTag("PlayerPunch"))
         {
-            SoundManager.Instance.PlayClip(punchClip, true);
+            SoundManager.Instance.PlayClipFromPosition(punchClip, true, transform.position);
             Down();
         }
     }

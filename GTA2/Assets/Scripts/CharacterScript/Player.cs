@@ -8,12 +8,13 @@ public class Player : People
 {
 	public PlayerData playerData;
 	public bool isChasingCar { get; set; }
-    public bool isBusted { get; set; }
-    public bool isAttack { get; set; }
-    public bool isDriver { get; set; }
+	public bool isBusted { get; set; }
+	public bool isAttack { get; set; }
+	public bool isDriver { get; set; }
 
-	[HideInInspector] public float runoverMinSpeed = 10.0f;
-    public GunState curGunIndex { get; set; }
+	public float runoverMinSpeedInChasing { get; set; } = 130;
+
+	public GunState curGunIndex { get; set; }
 
     public List<PlayerGun> gunList;
 	[HideInInspector]
@@ -65,7 +66,7 @@ public class Player : People
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
         {
-            SoundManager.Instance.PlayClip(punchClip, true);
+            SoundManager.Instance.PlayClipFromPosition(punchClip, true,transform.position);
             int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
 			isBusted = true;
 			Hurt(bulletDamage);
@@ -291,7 +292,7 @@ public class Player : People
 		isWalk = false;
 		playerPhysics.LookAtCar();
 
-		if (!playerPhysics.targetCar.isRunningOpenTheDoor)
+		if (!playerPhysics.targetCar.isRunningOpenTheDoor[0])
 		{
 			transform.forward = playerPhysics.targetCar.transform.forward;
 			StartCoroutine(playerPhysics.targetCar.OpenTheDoor(0));
@@ -317,7 +318,7 @@ public class Player : People
 			return;
 		}
 		//탑승후 문닫기
-		if (!playerPhysics.targetCar.isRunningCloseTheDoor)
+		if (!playerPhysics.targetCar.isRunningCloseTheDoor[0])
 		{
 			StartCloseTheDoor();
 		}
@@ -413,11 +414,35 @@ public class Player : People
             return;
         }
     }
+	public override void Runover(float runoverSpeed, Vector3 carPosition)
+	{
+		if ((runoverSpeed < runoverMinSpeedInChasing && isChasingCar))
+			return;
+		else if (runoverSpeed < runoverMinSpeed)
+			return;
+		Vector3 runoverVector = transform.position - carPosition;
 
+		//속도에 비례한 피해 데미지 보정수치
+		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
+		isRunover = true;
+		hDir = 0; vDir = 0;
 
-    #endregion
-    #region InputLogic
-    bool MoveControlKeyboard()
+		transform.LookAt(carPosition);
+
+		if (isDown && runoverSpeed > 10)
+		{
+			Hurt(9999);
+		}
+		else if (runoverSpeed > 200)
+		{
+			Hurt((int)(runoverSpeed / 4));
+		}
+	}
+
+	#endregion
+	#region InputLogic
+	bool MoveControlKeyboard()
     {
         if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {

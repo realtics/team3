@@ -22,7 +22,6 @@ public class Doctor : NPC
 	void Start()
 	{
 		MasterDataInit();
-		base.NPCInit();
 	}
 
     // Update is called once per frame

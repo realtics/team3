@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NPCSpawnData", menuName = "DB/NPCSpawnData")]
 public class NPCSpawnData : ScriptableObject
 {
-	public float spawnInterval = 0.5f;
-	public int spawnCitizenNumInInterval = 4;
-	public int spawnPoliceNumInInterval = 3;
-	public int maximumNPCNum = 10;
+	public float citizenSpawnInterval = 0.5f;
+	public float policeSpawnInterval = 10.0f;
+	public int maxSpawnCitizenNumInInterval = 4;
+	public int maxSpawnPoliceNumInInterval = 3;
+	public int maximumNPCNum = 30;
 }
