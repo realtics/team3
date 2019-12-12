@@ -1,5 +1,9 @@
 .vs/
+Debug/
 GTA2/Library/
 GTA2/obj/
 GTA2/Logs/
 GTA2/Temp/
+GTA2/Assets/Scenes/Stage1
+GTA2/Assets/Scenes/Stage2
+GTA2/Assets/Scenes/Stage3
