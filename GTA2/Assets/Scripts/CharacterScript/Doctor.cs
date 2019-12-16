@@ -1,19 +1,24 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Doctor : NPC
 {
-	DoctorData doctorData;
+	public DoctorData doctorData;
 	NPC[] healTargets;
-    // Start is called before the first frame update
-    public Animator anim;
-	bool isHeal = false;
-	float HealTime;
+	public List<NPC> DiedNPC;
+	float HealTime = 3.0f;
+	float HealTimer = 0.0f;
+	CarManager embulanceCar; //타고온 차량
 
-	//죽은 사람 목표타겟으로 설정해서 치료
-	//끝나면 다시 자동차 타고 가던길 가기
-
+	enum DoctorState
+	{
+		GoToheal,
+		Healing,
+		GoBackToCar
+	}
+	DoctorState doctorState = DoctorState.GoToheal;
 	void Awake()
 	{
 		gameManager = GameManager.Instance;
@@ -22,32 +27,90 @@ public class Doctor : NPC
 	void Start()
 	{
 		MasterDataInit();
+		StartCoroutine(GetDiedNPC());
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        base.PeopleUpdate();
+	// Update is called once per frame
+	void Update()
+	{
+		base.PeopleUpdate();
 		base.NPCUpdate();
-		if (isDie || isDown)
-			return;
-
-		TimerCheck();
 	}
 	void FixedUpdate()
 	{
 		if (isDie || isDown)
 			return;
-		if (isWalk)
+		ActivityByState();
+	}
+	IEnumerator GetDiedNPC() //OnEnable로 이동
+	{
+		while (true)
 		{
-			base.Move();
+			if(DiedNPC != null)
+				DiedNPC.Clear();
+			foreach (GameObject npcGameObect in NPCSpawnManager.Instance.allNPC)
+			{
+				NPC npc = npcGameObect.GetComponent<NPC>();
+
+				if (npc.isDie)
+				{
+					DiedNPC.Add(npc);
+				}
+			}
+			//거리 순정렬
+			for(int i = 0; i < DiedNPC.Count; i++)
+			{
+				for (int j = i; j < DiedNPC.Count - (i + 1); j++)
+				{
+					if(Vector3.SqrMagnitude(transform.position - DiedNPC[j].transform.position) > Vector3.SqrMagnitude(transform.position - DiedNPC[j + 1].transform.position))
+					{
+						NPC temp = DiedNPC[j];
+						DiedNPC[j] = DiedNPC[j + 1];
+						DiedNPC[j + 1] = temp;
+					}
+				}
+			}
+
+			foreach(NPC npc in DiedNPC)
+			{
+				print(Vector3.SqrMagnitude(transform.position - npc.transform.position));
+			}
+			yield return new WaitForSeconds(5.0f);
+		}
+	}
+	
+	void ActivityByState()
+	{
+		switch (doctorState)
+		{
+			case DoctorState.GoToheal:
+				if(DiedNPC.Count != 0)//테스트 용
+				{
+					//살아난 사람은 제거
+					//if (!DiedNPC[0].isDie)
+					//{
+					//	DiedNPC.RemoveAt(0);
+					//}
+					transform.LookAt(DiedNPC[0].transform.position);
+					Move();
+					if (MathUtil.isArrived(transform.position, DiedNPC[0].transform.position))
+						doctorState = DoctorState.Healing;
+				}
+				break;
+			case DoctorState.Healing:
+				isWalk = false;
+				HealTimerCheck();
+				break;
+			case DoctorState.GoBackToCar:
+				Move();
+				break;
 		}
 	}
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.tag == "Wall" && collision.gameObject.tag == "Car" && isRunaway)
+		if (collision.gameObject.CompareTag("Car") && isWalk)
 		{
-			transform.Rotate(0, Random.Range(90, 270), 0);
+			Jump();
 		}
 	}
 	#region lowlevelCode
@@ -67,9 +130,30 @@ public class Doctor : NPC
 		carOpenTime = doctorData.carOpenTime;
 		money = doctorData.money;
 	}
-	void TimerCheck()
+	override protected void Move()
 	{
-		patternChangeTimer += Time.deltaTime;
+		isWalk = true;
+		transform.Translate(transform.forward * moveSpeed * Time.deltaTime, Space.World);
+	}
+	void HealTimerCheck()
+	{
+		HealTimer += Time.deltaTime;
+
+		if(HealTimer > HealTime)
+		{
+			HealTimer = 0.0f;
+			DiedNPC[0].Respawn();
+			DiedNPC.Remove(DiedNPC[0]);
+
+			if (DiedNPC.Count == 0)
+			{
+				doctorState = DoctorState.GoBackToCar;
+			}
+			else
+			{
+				doctorState = DoctorState.GoToheal;
+			}
+		}
 	}
 	//힐하러 Move
 	//힐

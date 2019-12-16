@@ -15,6 +15,7 @@ public enum GunState
     FireGun,
     FireBottle,
     Granade,
+    GunEnd,
 }
 public abstract class Gun : MonoBehaviour
 {
@@ -42,9 +43,6 @@ public abstract class Gun : MonoBehaviour
     protected Vector3 gunDir;
 
     protected float shootDelta;
-
-    protected GameObject bulletPool;
-
     protected bool isShot;
     protected bool isPrevShot;
     protected string shotSFXName;
@@ -145,6 +143,6 @@ public abstract class Gun : MonoBehaviour
     }
     protected virtual void SFXPlay()
     {
-        SoundManager.Instance.PlayClip(gunSound, true);
+        SoundManager.Instance.PlayClipToPosition(gunSound, SoundPlayMode.WaitOneShotPlay, userObject.transform.position);
     }
 }

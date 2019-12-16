@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RocketBullet
   m_EditorClassIdentifier: 
   bulletDamage: 500
-  bulletLifeTime: 3
+  bulletLifeTime: 1
   bulletSpeed: 7
   explosionArea: 1

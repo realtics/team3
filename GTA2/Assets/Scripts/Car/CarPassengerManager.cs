@@ -104,14 +104,15 @@ public class CarPassengerManager : MonoBehaviour
 		carManager.OnDriverGetOnEvent(passengerType, idx);
 	}
 	
-	public IEnumerator GetOffTheCar(int idx = 0)
+	public IEnumerator GetOffTheCar(int idx = 0, bool isRunaway = false)
     {
         if (passengers[idx] == People.PeopleType.None)
             yield break;
 
         doorAnimator[idx].SetTrigger("Open");
         yield return new WaitForSeconds(0.5f);
-        doorAnimator[idx].SetTrigger("Close");
+		if(!isRunaway)
+			doorAnimator[idx].SetTrigger("Close");
 
         switch (passengers[idx])
         {
@@ -130,7 +131,11 @@ public class CarPassengerManager : MonoBehaviour
                 GameObject policeDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.police.gameObject);
                 policeDriver.transform.position = doorPositions[idx].position;
                 break;
-            default:
+			case People.PeopleType.Doctor:
+				GameObject doctorDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
+				doctorDriver.transform.position = doorPositions[idx].position;
+				break;
+			default:
                 break;
         }
 		
@@ -147,6 +152,8 @@ public class CarPassengerManager : MonoBehaviour
 			CameraController.Instance.ChangeTarget(GameManager.Instance.player.gameObject);
 			CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.human);
 			GameManager.Instance.player.transform.position = doorPositions[idx].position;
+			passengers[idx] = People.PeopleType.None;
+			carManager.OnDriverGetOffEvent(passengers[idx], idx);
 			GameManager.Instance.playerCar = null;
 			GameManager.Instance.player.Down();
 		}

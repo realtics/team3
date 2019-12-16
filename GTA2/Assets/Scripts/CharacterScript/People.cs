@@ -9,14 +9,15 @@ public abstract class People : MonoBehaviour
         None,
         Player,
         Citizen,
-        Police
+        Police,
+		Doctor
     };
     //Sound
     [SerializeField]
     protected AudioClip punchClip;
     protected SpriteRenderer spriteRenderer;
 	//Timer
-	protected float jumpTime;
+	protected float jumpTime = 1.0f;
 	protected float jumpTimer;
 	protected float jumpMinTime = 0.5f;
 	protected float downTimer;
@@ -26,7 +27,7 @@ public abstract class People : MonoBehaviour
 	float runoverTime = 1.0f;
 
 	//Physics
-	protected Rigidbody rigidbody;
+	public Rigidbody rigidbody;
 	protected BoxCollider boxCollider;
 	protected float rotateSpeed;
 	protected float moveSpeed;

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEditor;
+using UnityEditor;
 
 [RequireComponent(typeof(CarManager))]
 public class CarAi : MonoBehaviour
 {
     public CarManager carManager;
+	public CarPathManager carPathManager;
 
     public enum AiState
     {
@@ -38,6 +39,7 @@ public class CarAi : MonoBehaviour
         SetAiMaxSpeedMultiplier();
 
         StartCoroutine(RaycastCor());
+		StartCoroutine(TryDetour());
     }
 
     void OnDisable()
@@ -126,7 +128,7 @@ public class CarAi : MonoBehaviour
             else
             {
                 distToObstacle = hit.distance;
-            }
+			}
         }
 
         DrawRaycastDebugLine(rayDirection);
@@ -144,7 +146,23 @@ public class CarAi : MonoBehaviour
         }
     }
 
-    void CarChaseAI()
+	IEnumerator TryDetour()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(0.25f);
+
+			if (Mathf.Abs(h) > 0.1f)
+				continue;
+
+			if (distToObstacle == Mathf.Infinity)
+				continue;
+
+			carPathManager.ChangeLaneIfPossible();
+		}		
+	}
+
+	void CarChaseAI()
     {
         if (chaseTarget == null)
         {
@@ -154,18 +172,18 @@ public class CarAi : MonoBehaviour
 
 		if(chaseTarget.tag == "Car")
 		{
-			ChaseStateLoopCar();
+			ChaseStateLoopForCarTarget();
 		}
 		else
 		{
-			ChaseStateLoopNpc();
+			ChaseStateLoopForHumanTarget();
 		}
 
         SetAiMaxSpeedMultiplier();
         CarMoveAI();
     }
 
-    void ChaseStateLoopCar()
+    void ChaseStateLoopForCarTarget()
     {
         switch (aiState)
         {
@@ -260,7 +278,7 @@ public class CarAi : MonoBehaviour
         }
     }
 
-	void ChaseStateLoopNpc()
+	void ChaseStateLoopForHumanTarget()
 	{
 		destination = chaseTarget.position;
 
@@ -282,6 +300,14 @@ public class CarAi : MonoBehaviour
 
 	void CarMoveAI()
     {
+		if(carManager.carType == CarManager.CarType.ambulance)
+		{
+			if(Vector3.Distance(GameManager.Instance.ambulanceTarget, transform.position) < 50.0f)
+			{
+				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+				StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+			}
+		}
         h = 0;
         v = 0;
 
@@ -366,8 +392,9 @@ public class CarAi : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(destination, 0.25f);
-        Gizmos.DrawWireSphere(destination, 1);
+		Gizmos.color = Color.red;
+		//Gizmos.DrawWireSphere(destination, 0.25f);
+		Gizmos.DrawWireSphere(destination, 1);
         //Handles.Label(destination, "destination");
         //Handles.Label(transform.position + Vector3.right, "spd: " + curSpeed);
     }

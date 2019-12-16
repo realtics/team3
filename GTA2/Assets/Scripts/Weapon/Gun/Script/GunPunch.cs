@@ -12,8 +12,17 @@ public class GunPunch : PlayerGun
 
     protected override void Update()
     {
+        if (player == null)
+        {
+            InitPlayer();
+        }
         if (player.isDie == true)
         {
+            return;
+        }
+        if (player.curGunIndex != gunType)
+        {
+            gameObject.SetActive(false);
             return;
         }
         base.UpdateDirection();

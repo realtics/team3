@@ -59,7 +59,15 @@ public class GunElectric : PlayerGun
 
     protected override void Update()
     {
+        if (player == null)
+        {
+            InitPlayer();
+        }
         if (player.isDie == true)
+        {
+            return;
+        }
+        if (bulletCount == 0)
         {
             return;
         }
@@ -171,6 +179,10 @@ public class GunElectric : PlayerGun
 
     void StopGun()
     {
+        if (activeElectricList == null)
+        {
+            return;
+        }
         activeElectricList.Clear();
     }
 
@@ -246,7 +258,7 @@ public class GunElectric : PlayerGun
     {
         if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
         {
-            SoundManager.Instance.PlayClip(gunSound, true);
+            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.WaitOneShotPlay);
             soundPlayDelta = .0f;
         }
     }

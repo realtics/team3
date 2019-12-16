@@ -167,11 +167,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
+  rigidbody: {fileID: 1167477734680987161}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
   hp: 0
   animator: {fileID: 1167477734086649170}
+  animator_cloth: {fileID: 0}
   gunList:
   - {fileID: 8189217532303110051}
   - {fileID: 4757780486654468369}
@@ -187,8 +189,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.16986847, y: 0.32845825, z: 0.116737366}
-  m_Center: {x: -0.010332108, y: 0.09440443, z: -0.0014324188}
+  m_Size: {x: 0.16986847, y: 0.26610202, z: 0.116737366}
+  m_Center: {x: -0.010332108, y: 0.12558255, z: -0.0014324188}
 --- !u!114 &2198147270773191501
 MonoBehaviour:
   m_ObjectHideFlags: 0

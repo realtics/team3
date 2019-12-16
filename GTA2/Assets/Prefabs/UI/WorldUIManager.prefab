@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3706876935732894266}
   - component: {fileID: 2210925122688887410}
   - component: {fileID: 6545164913642760933}
+  - component: {fileID: 2314591815992100221}
   m_Layer: 0
   m_Name: MainMissionArrow
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -73,6 +74,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &2314591815992100221
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361149613328850606}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d12b29e6c58c404f97163ea18bdafe6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1888208913270002091
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +168,7 @@ MonoBehaviour:
     type: 3}
   questArrowPref: {fileID: 458885570132520728, guid: e9bf8aeb137519843a8ddafe0e2e4908,
     type: 3}
-  arrowPoolCount: 30
+  arrowPoolCount: 5
   scorePoolCount: 50
   mainMissionArrowPref: {fileID: 361149613328850606}
   arrowToPlayer: 1

@@ -22,13 +22,13 @@ public class CarEffects : MonoBehaviour
     public AudioClip collsionClip;
     public AudioClip explosionClip;
 
+	float engineIdlePitch = 0.5f;
     public AudioSource audioSourceEngine;
     public AudioSource audioSourceSkid;
 	public AudioSource audioSourceSiren;
 
     public GameObject fireParticle;
     public GameObject explosionPref;
-
 
     protected ExplosionEffect explosionParticle;
 
@@ -67,12 +67,13 @@ public class CarEffects : MonoBehaviour
         fireParticle.SetActive(false);
 
         audioSourceEngine.volume = 0.1f;
+		engineIdlePitch = Random.Range(0.4f, 0.6f);
 
         if (explosionPref != null)
         {
             explosionParticle = Instantiate(explosionPref).GetComponent<ExplosionEffect>();
             explosionParticle.gameObject.transform.parent = PoolManager.Instance.transform;
-            explosionParticle.gameObject.name = "Test";
+            explosionParticle.gameObject.name = "CarExplosion";
         }            
     }
 
@@ -216,21 +217,21 @@ public class CarEffects : MonoBehaviour
 
     public void AdjustEngineSound(float curSpeed, CarManager.CarState carState)
     {
-        float temp = 0.5f;
-        temp += Mathf.Clamp(Mathf.Abs(curSpeed) / 300, 0.0f, 2.0f);
+        float engienPitch = engineIdlePitch;
+        engienPitch += Mathf.Clamp(Mathf.Abs(curSpeed) / 300, 0.0f, 2.0f);
         if (curSpeed > 0)
-            temp -= (int)(curSpeed / 150) * 0.3f;
+            engienPitch -= (int)(curSpeed / 150) * 0.3f;
 
-        audioSourceEngine.pitch = temp;
+        audioSourceEngine.pitch = engienPitch;
 
-        if (carState != CarManager.CarState.controlledByPlayer)
+        if (carState == CarManager.CarState.controlledByPlayer)
         {
-            audioSourceEngine.volume = Mathf.Clamp(curSpeed / 100, 0, 0.1f);
+			audioSourceEngine.volume = Mathf.Clamp(Mathf.Abs(curSpeed) / 100, 0.3f, 0.6f);
         }
         else
         {
-            audioSourceEngine.volume = 1;
-        }
+			audioSourceEngine.volume = Mathf.Clamp(curSpeed / 100, 0, 0.1f);
+		}
     }
 
     void EnableParticle(bool sourceIsPlayer)
@@ -249,11 +250,11 @@ public class CarEffects : MonoBehaviour
 	void PlayCrashSound(bool sourceIsPlayer)
 	{
 		if(carManager.carState == CarManager.CarState.controlledByPlayer)
-			SoundManager.Instance.PlayClipFromPosition(collsionClip, true, gameObject.transform.position);
+			SoundManager.Instance.PlayClipToPosition(collsionClip, SoundPlayMode.OneShotPlay, gameObject.transform.position);
 	}
 
 	void PlayExplosionSound(bool sourceIsPlayer)
 	{
-		SoundManager.Instance.PlayClipFromPosition(explosionClip, true, gameObject.transform.position);
+		SoundManager.Instance.PlayClipToPosition(explosionClip, SoundPlayMode.OneShotPlay, gameObject.transform.position);
 	}
 }

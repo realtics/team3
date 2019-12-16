@@ -16,4 +16,4 @@ MonoBehaviour:
   policeSpawnInterval: 10
   maxSpawnCitizenNumInInterval: 4
   maxSpawnPoliceNumInInterval: 3
-  maximumNPCNum: 10
+  maximumNPCNum: 55

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oneShotPlayTime: 0.1
+  respectIs: {fileID: 8300000, guid: aa3554507234cf84f80cac3a87ea3ee8, type: 3}
 --- !u!82 &5954986450962387449
 AudioSource:
   m_ObjectHideFlags: 0

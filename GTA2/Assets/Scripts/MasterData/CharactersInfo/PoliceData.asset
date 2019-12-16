@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 150
   moveSpeed: 1
-  runawaySpeed: 2
+  runawaySpeed: 1.2
   downTime: 3
   findRange: 10
   punchRange: 0.08

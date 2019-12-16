@@ -59,3 +59,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Shadow
+    uniqueID: 4030156457
+    locked: 0
+  - name: CarSkidMark
+    uniqueID: 3679907493
+    locked: 0
+  - name: Car
+    uniqueID: 2080718391
+    locked: 0
+  - name: CarDelta
+    uniqueID: 4235255553
+    locked: 0
+  - name: TrafficLight
+    uniqueID: 1734009163
+    locked: 0

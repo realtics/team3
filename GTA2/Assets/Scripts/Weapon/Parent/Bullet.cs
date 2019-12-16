@@ -104,7 +104,7 @@ public class Bullet : MonoBehaviour
             explosionEffect.SetExplosion(transform.position);
         }
 
-         SoundManager.Instance.PlayClipFromPosition(explosionSound, true, transform.position);
+         SoundManager.Instance.PlayClipToPosition(explosionSound, SoundPlayMode.WaitOneShotPlay, transform.position);
     }
 
     protected void UpdateActive()

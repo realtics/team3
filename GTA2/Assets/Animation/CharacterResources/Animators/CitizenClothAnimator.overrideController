@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CitizenClothAnimator
+  m_Controller: {fileID: 9100000, guid: a68e3a4723a80a04195f9d87413d42ab, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 3e72e97010a333a428cb8a45e33b8aa5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a15a7865bfecb44418129ac61aa0e8e7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5aa048639e776474fb27bd675bd55a6c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d0fa79135f6adcb43bc1d0c4c1be8a0a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 12b0d1e21f6c352439d606cdad8a6732, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1efccf273cad24f488559a792bd37955, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2b3540201e23d97409e8ac2e5cd340df, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f4b92555c3c1006478875a9bcf6cf8a9, type: 2}

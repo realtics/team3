@@ -59,6 +59,19 @@ public class BulletElectric : Bullet
             return;
         }
 
+        NPC npc = startObject.GetComponent<NPC>();
+        if (npc != null && npc.isDie)
+        {
+            Explosion();
+            return;
+        }
+
+        npc = targetObject.GetComponent<NPC>();
+        if (npc != null && npc.isDie)
+        {
+            Explosion();
+            return;
+        }
 
         targetToVector =
             targetObject.transform.position -

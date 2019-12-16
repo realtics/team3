@@ -27,7 +27,7 @@ public class GunFire : PlayerGun
     {
         if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
         {
-            SoundManager.Instance.PlayClip(gunSound, true);
+            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.WaitOneShotPlay);
             soundPlayDelta = .0f;
         }
     }

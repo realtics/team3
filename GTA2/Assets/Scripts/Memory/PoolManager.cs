@@ -105,7 +105,7 @@ public class PoolManager : MonoSingleton<PoolManager>
     GameObject InstantiatePrefab(GameObject prefab)
     {
         var go = GameObject.Instantiate(prefab) as GameObject;
-        if (root != null) go.transform.parent = root;
+        if (root != null) go.transform.SetParent(root);
 
         go.SetActive(false);
         go.transform.position = new Vector3(10000.0f, 10000.0f, 10000.0f);

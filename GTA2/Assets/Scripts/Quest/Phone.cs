@@ -9,12 +9,16 @@ public class Phone : MonoBehaviour
     Quest motherQuest;
     Animator phoneAnimator;
     Player userPlayer;
+    AudioSource phoneSource;
 
     void Start()
     {
         motherQuest = GetComponentInParent<Quest>();
         phoneAnimator = GetComponentInChildren<Animator>();
+        phoneSource = GetComponentInChildren<AudioSource>();
+        phoneSource.loop = true;
         userPlayer = GameObject.FindWithTag("Player").GetComponent<Player>();
+
         SetRing();
     }
 
@@ -33,10 +37,12 @@ public class Phone : MonoBehaviour
 
     void SetRing()
     {
+        phoneSource.Play();
         isStart = false;
     }
     void SetIdle()
     {
+        phoneSource.Stop();
         isStart = true;
     }
 

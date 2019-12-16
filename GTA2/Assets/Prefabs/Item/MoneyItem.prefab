@@ -128,6 +128,7 @@ MonoBehaviour:
   itemType: 2
   itemCount: 10
   RespawnTime: 5
+  soundClip: {fileID: 8300000, guid: 921ae9d641695f243aac97da0da1434f, type: 3}
   spriteAnimation:
   - {fileID: -5349506535411440596, guid: 290e6b59f67e41e4c924e018b95f10a7, type: 3}
   - {fileID: -7182566076407767006, guid: 290e6b59f67e41e4c924e018b95f10a7, type: 3}

@@ -56,7 +56,6 @@ SpriteAtlas:
     - {fileID: 2800000, guid: d79d3228d858b4f48a25889ec52ef191, type: 3}
     - {fileID: 2800000, guid: e8626e40f48e01a47ae3f9221bb76221, type: 3}
     - {fileID: 2800000, guid: 8c76a4be3a802774d8c2d52393fc1285, type: 3}
-    - {fileID: 2800000, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
     - {fileID: 2800000, guid: 0729fa7ea2855cd47b060cb7b631a0d9, type: 3}
     - {fileID: 6718125606147777298, guid: 0729fa7ea2855cd47b060cb7b631a0d9, type: 3}
     - {fileID: 8514672347913266600, guid: 0729fa7ea2855cd47b060cb7b631a0d9, type: 3}
@@ -73,7 +72,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: f06278affae499d4bbdc23ef21020ab1, type: 3}
     - {fileID: 2800000, guid: 6a2289a479939ae4dbb765a8abb92082, type: 3}
     - {fileID: 2800000, guid: f88cd93cd11976748a33e5fc205ff063, type: 3}
-    totalSpriteSurfaceArea: 2425121
+    totalSpriteSurfaceArea: 2422921
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
@@ -83,16 +82,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e8626e40f48e01a47ae3f9221bb76221, type: 3}
   - {fileID: 21300000, guid: 25d1ee80583b98045ac40b6b567b5e05, type: 3}
   - {fileID: 21300000, guid: 30dabe515e6544d4487e406338123273, type: 3}
-  - {fileID: -122227132860655195, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: -8567871307835214070, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: -142452104353260528, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: -4048943495422323894, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: 8132933578349344961, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: -8459838622525470672, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: 7198340238568357895, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: 8357811867463702371, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: 7062084469045085799, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
-  - {fileID: 5257561821601583793, guid: 218dccd1e294a6e43978555efd4c1b01, type: 3}
   - {fileID: 21300000, guid: 0da3aa72bd4d52a43ae5763dc9fc8192, type: 3}
   - {fileID: 21300000, guid: eeac5082d20ee2d469e36fa846926695, type: 3}
   - {fileID: 21300000, guid: bfeda933c7e2fb94ab401cfd0c556ae5, type: 3}
@@ -129,16 +118,6 @@ SpriteAtlas:
   - HeartUI
   - FlameThrower
   - Machine
-  - NumberUI_7
-  - NumberUI_6
-  - NumberUI_5
-  - NumberUI_4
-  - NumberUI_3
-  - NumberUI_2
-  - NumberUI_1
-  - NumberUI_0
-  - NumberUI_9
-  - NumberUI_8
   - Pistol
   - Electric
   - Granade

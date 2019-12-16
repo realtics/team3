@@ -6,7 +6,8 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 {
 	public Citizen citizen;
     public Police police;
-    public List<GameObject> allNPC;
+	public Doctor doctor;
+	public List<GameObject> allNPC;
 	public NPCSpawnData npcSpawnData;
 
 	float citizenSpawnInterval;
@@ -17,15 +18,17 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 	int maximumNPCNum;
 	float commitRadius = 0.3f;
 	public int NPCNum;
+	public int diedNPCNum = 0;
 
     void Awake()
 	{
 		PoolManager.WarmPool(citizen.gameObject, 150);
         PoolManager.WarmPool(police.gameObject, 100);
+		PoolManager.WarmPool(doctor.gameObject, 100);
 
-        allNPC.AddRange(PoolManager.GetAllObject(citizen.gameObject));
+		allNPC.AddRange(PoolManager.GetAllObject(citizen.gameObject));
         allNPC.AddRange(PoolManager.GetAllObject(police.gameObject));
-
+		allNPC.AddRange(PoolManager.GetAllObject(doctor.gameObject));
 		//allCitizen.AddRange(PoolManager.GetAllObject(citizen.gameObject));
 		//allPolice.AddRange(PoolManager.GetAllObject(police.gameObject));
 	}
@@ -88,9 +91,9 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 				GameObject insNPC = PoolManager.SpawnObject(police.gameObject);
 				insNPC.transform.position = new Vector3(closeWayPoint.transform.position.x + Random.Range(-commitRadius, commitRadius), closeWayPoint.transform.position.y, closeWayPoint.transform.position.z + Random.Range(-commitRadius, commitRadius));
 			}
-			
 		}
 	}
+
 	void MasterDataInit()
 	{
 		citizenSpawnInterval = npcSpawnData.citizenSpawnInterval;

@@ -49,8 +49,8 @@ MonoBehaviour:
   bulletSpeed: 0
   explosionArea: 0
   bulletInfo: {fileID: 11400000, guid: 4f69fc71febcf5647b875e7bf3b98321, type: 2}
-  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
+  explosionSound: {fileID: 0}
 --- !u!1 &4200684561279183388
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ Transform:
   m_GameObject: {fileID: 4200684561279183388}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4506803799218540964}
   m_RootOrder: 0
@@ -92,7 +92,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

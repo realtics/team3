@@ -7,8 +7,8 @@ public enum ItemStatus
     // 아이템
     ActiveItemStartIndex,
     Heath,
-    Money,
-    Armor,
+    CopBribe,
+    KillFrenzy,
     ActiveItemEndIndex,
 
     // 총
@@ -28,7 +28,6 @@ public enum ItemStatus
     // TODO: 아래는 차 아이템 구현할 것
 }
 
-
 public class Item : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -37,12 +36,13 @@ public class Item : MonoBehaviour
     public float RespawnTime;
     public AudioClip soundClip;
 
-
     float RespawnDelta;
 
     [SerializeField]
-    Sprite[] spriteAnimation;
-
+    protected Sprite[] spriteAnimation;
+    protected Player userPlayer;
+    
+    
     SpriteRenderer spriteRender;
     SphereCollider sphereCollider;
     float animationTime = .3f;
@@ -50,7 +50,8 @@ public class Item : MonoBehaviour
     int aniIdx = 0;
 
 
-    Player userPlayer;
+
+
     void Start()
     {
         spriteRender = GetComponent<SpriteRenderer>();
@@ -98,14 +99,14 @@ public class Item : MonoBehaviour
         sphereCollider.enabled = true;
     }
 
-    void ActiveOff()
+    protected void ActiveOff()
     {
         RespawnDelta = .0f;
         spriteRender.enabled = false;
         sphereCollider.enabled = false;
     }
 
-    void OnTriggerEnter(Collider collision)
+    protected virtual void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject != userPlayer.gameObject)
         {
@@ -119,11 +120,15 @@ public class Item : MonoBehaviour
             {
                 case ItemStatus.Heath:
                     userPlayer.SetHpDefault();
+                    break;
+                case ItemStatus.CopBribe:
+                    WantedLevel.instance.ResetWantedLevel();
+                    break;
+                case ItemStatus.KillFrenzy:
+                    QuestUIManager.Instance.ToastStartQuest("KILL FRENZY", ""); 
+                    SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.OneShotPlay);
                     ActiveOff();
-                    break;
-                case ItemStatus.Money:
-                    break;
-                case ItemStatus.Armor:
+                    return;
                     break;
                 default:
                     break;
@@ -134,10 +139,10 @@ public class Item : MonoBehaviour
         if (itemType > ItemStatus.GunStartIndex && itemType < ItemStatus.GunEndIndex)
         {
             userPlayer.gunList[(int)itemType - (int)ItemStatus.GunStartIndex].bulletCount += itemCount;
-            ActiveOff();
         }
 
-        SoundManager.Instance.PlayClip(soundClip, true);
+        ActiveOff();
+        SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.OneShotPlay);
         UIManager.Instance.TurnOnItemText(itemType);
     }
 }

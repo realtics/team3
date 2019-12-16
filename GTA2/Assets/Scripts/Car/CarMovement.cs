@@ -139,7 +139,7 @@ public class CarMovement : MonoBehaviour
     {
         if (col.transform.tag == "Wall" && Mathf.Abs(curSpeed) > 50)
         {
-            curSpeed *= 0.9f;           
+            curSpeed *= 0.9f;
         }
     }
 }

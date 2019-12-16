@@ -32,7 +32,8 @@ public class CarManager : MonoBehaviour
     public enum CarType
     {
         citizen,
-        police
+        police,
+		ambulance
     }
 
     public enum CarState
@@ -49,7 +50,7 @@ public class CarManager : MonoBehaviour
         StartCoroutine(DisableIfOutOfCamera());
     }
 
-    public void OnReturnKeyDownEvent()
+	public void OnReturnKeyDownEvent()
     {
         OnReturnKeyDown();
     }

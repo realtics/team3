@@ -16,7 +16,6 @@ public class GunFireBottle : PlayerGun
     {
         base.Init();
         base.InitGun();
-        SetSmoke();
 
         player = userObject.GetComponent<Player>();
         intervalDelta = .0f;
@@ -24,11 +23,6 @@ public class GunFireBottle : PlayerGun
     }
 
 
-
-    void SetSmoke()
-    {
-        
-    }
 
     protected override void UpdateShot()
     {

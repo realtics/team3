@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class TrafficLightController : MonoBehaviour
 {
     public List<TrafficLight> trafficLightList = new List<TrafficLight>();
@@ -31,7 +30,7 @@ public class TrafficLightController : MonoBehaviour
                 light.ToggleSignal();
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(7f);
         }
     }
 }

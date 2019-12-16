@@ -17,9 +17,9 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
 	void Awake()
 	{
-		PoolManager.WarmPool(policeCarPrefab, 7);
-		PoolManager.WarmPool(policeVanPrefab, 2);
-		PoolManager.WarmPool(AmbulancePrefab, 2);
+		PoolManager.WarmPool(policeCarPrefab, 12);
+		PoolManager.WarmPool(policeVanPrefab, 6);
+		//PoolManager.WarmPool(AmbulancePrefab, 2);
 		PoolManager.WarmPool(Car51Prefab, 12);
 		PoolManager.WarmPool(IceCarPrefab, 5);
 		PoolManager.WarmPool(TaxiPrefab, 12);
@@ -27,7 +27,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(policeCarPrefab));
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(policeVanPrefab));
-		allCars.AddRange(PoolManager.GetAllObject<CarManager>(AmbulancePrefab));
+		//allCars.AddRange(PoolManager.GetAllObject<CarManager>(AmbulancePrefab));
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(Car51Prefab));
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(IceCarPrefab));
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(TaxiPrefab));
@@ -52,7 +52,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
 	void Start()
     {
-		InvokeRepeating("RespawnDisabledCar", 0.25f, 0.25f);
+		InvokeRepeating("RespawnDisabledCar", 0.2f, 0.2f);
 	}
 
     void RespawnDisabledCar()
@@ -60,7 +60,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 		int policeCarCount = 0;
 		foreach (var p in allPoliceCar)
 		{
-			if (p.gameObject.activeSelf)
+			if (p.gameObject.activeSelf && p.carState == CarManager.CarState.controlledByAi)
 				policeCarCount++;
 		}
 
@@ -97,12 +97,47 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
     public CarManager SpawnPoliceCar(Vector3 position)
     {
-		GameObject policeCar = PoolManager.SpawnObject(policeCarPrefab, 
-			position, 
+		//GameObject policeCar = PoolManager.SpawnObject(policeCarPrefab, 
+		//	position, 
+		//	Quaternion.identity);
+
+		foreach (var car in allPoliceCar)
+		{
+			if (car.gameObject.activeSelf)
+				continue;
+
+			car.gameObject.transform.position = position;
+			car.gameObject.SetActive(true);
+
+			return car;
+		}
+
+		return null;
+
+		//CarManager cm = policeCar.GetComponent<CarManager>();
+		//if (!allPoliceCar.Contains(cm))
+		//{
+		//	allCars.Add(cm);
+		//	allPoliceCar.Add(cm);
+		//}
+
+		//return cm;
+    }
+	public CarManager SpawnAmbulanceCar(Vector3 position)
+	{
+		GameObject ambulanceCar = PoolManager.SpawnObject(AmbulancePrefab,
+			position,
 			Quaternion.identity);
 
-		return policeCar.GetComponent<CarManager>();
-    }
+		CarManager cm = ambulanceCar.GetComponent<CarManager>();
+
+		if (!allPoliceCar.Contains(cm))
+		{
+			allCars.Add(cm);
+		}
+
+		return cm;
+	}
 
 	public CarManager FindClosestCar(Vector3 position)
 	{

@@ -30,64 +30,17 @@ SpriteAtlas:
       enableTightPacking: 0
     variantMultiplier: 1
     packables:
-    - {fileID: 2800000, guid: f7e8586f08a314149b8642c74d444e9b, type: 3}
-    - {fileID: 2800000, guid: 4bc1666236e75124e893e4d19d38162a, type: 3}
-    - {fileID: 2800000, guid: 7db3531009a908949a9092c06a9804ba, type: 3}
-    - {fileID: 2800000, guid: 5789d305634c8e745b32dbda1f4bcd10, type: 3}
-    - {fileID: 2800000, guid: d83974007e462114095f2f1498139a81, type: 3}
-    - {fileID: 2800000, guid: 5888228cefb7f144da3297fe5222805e, type: 3}
-    - {fileID: 2800000, guid: cb13a47e24e6d454aab6fba8c044c266, type: 3}
-    - {fileID: 2800000, guid: ff4357850078f1241b15e23a4484dd91, type: 3}
-    - {fileID: 2800000, guid: de1ddc0b0b41c7b4fa62b27a6718ee24, type: 3}
-    - {fileID: 2800000, guid: 7279db9de4e3c05429a25abd403283b4, type: 3}
-    - {fileID: 2800000, guid: f976753b31c7e40488f38814bed71461, type: 3}
-    - {fileID: 2800000, guid: 10ef0717bb958d04499a33c7490d94d5, type: 3}
-    - {fileID: 2800000, guid: aefb5114b7c84e04786448eec9e403c2, type: 3}
-    - {fileID: 2800000, guid: c8a2aaf48b8b19c4c9114f5471e9349b, type: 3}
-    - {fileID: 2800000, guid: e28ba70ed50efe149ac0dadf0c08bda9, type: 3}
-    - {fileID: 2800000, guid: 15caff780aa97ec4aaac41b67bc3c4e4, type: 3}
-    - {fileID: 2800000, guid: aa83166dd6727494f84965768f4350da, type: 3}
-    - {fileID: 2800000, guid: 9337a82e79d2f3b44b585dec9a7af1b6, type: 3}
-    - {fileID: 2800000, guid: 5c0c495e79546a94fbae06d6c22ededd, type: 3}
-    - {fileID: 2800000, guid: d5138f4beb64fe04d93852619125a72c, type: 3}
-    - {fileID: 2800000, guid: 0f5f25afcd86cd14cbbd55c7838f12f2, type: 3}
-    - {fileID: 2800000, guid: caf907319dbbabb48a679c795357b130, type: 3}
-    - {fileID: 2800000, guid: a2818dc65b70d9f4c81a71e5931a4317, type: 3}
-    - {fileID: 2800000, guid: 3b01251411cf7c540b1a8838456de985, type: 3}
-    - {fileID: 2800000, guid: 1338346577c204f4bb492d54c74a8cb5, type: 3}
-    - {fileID: 2800000, guid: b6fdbd69289892f4484d3b5e382854d7, type: 3}
-    - {fileID: 2800000, guid: 4cfa4a63d4b03b746aecd038544d7c60, type: 3}
-    - {fileID: 2800000, guid: cd402ca24d7e5ff4d8100e3d8e71a6c4, type: 3}
-    - {fileID: 2800000, guid: b0792b9abec4e9b44af17a14810382e7, type: 3}
-    - {fileID: 2800000, guid: ccbb6a7d0c903b14199ffdb1e3d4bd64, type: 3}
     - {fileID: 2800000, guid: f1d9e0a66cf04ff47bc27ec5d659f82c, type: 3}
     - {fileID: 2800000, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
     - {fileID: 2800000, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
-    totalSpriteSurfaceArea: 57270
+    totalSpriteSurfaceArea: 45314
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
       Hash: 767ecb98689f4e738ad73fbe373b4524
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: d83974007e462114095f2f1498139a81, type: 3}
-  - {fileID: 21300000, guid: 7db3531009a908949a9092c06a9804ba, type: 3}
-  - {fileID: 21300000, guid: caf907319dbbabb48a679c795357b130, type: 3}
-  - {fileID: 21300000, guid: 4bc1666236e75124e893e4d19d38162a, type: 3}
-  - {fileID: 21300000, guid: cd402ca24d7e5ff4d8100e3d8e71a6c4, type: 3}
-  - {fileID: 21300000, guid: 4cfa4a63d4b03b746aecd038544d7c60, type: 3}
-  - {fileID: 21300000, guid: aefb5114b7c84e04786448eec9e403c2, type: 3}
-  - {fileID: 21300000, guid: 3b01251411cf7c540b1a8838456de985, type: 3}
-  - {fileID: 21300000, guid: c8a2aaf48b8b19c4c9114f5471e9349b, type: 3}
-  - {fileID: 21300000, guid: 5789d305634c8e745b32dbda1f4bcd10, type: 3}
-  - {fileID: 21300000, guid: 1338346577c204f4bb492d54c74a8cb5, type: 3}
-  - {fileID: 21300000, guid: ff4357850078f1241b15e23a4484dd91, type: 3}
   - {fileID: -4492884831140083451, guid: f1d9e0a66cf04ff47bc27ec5d659f82c, type: 3}
-  - {fileID: 21300000, guid: a2818dc65b70d9f4c81a71e5931a4317, type: 3}
-  - {fileID: 21300000, guid: 10ef0717bb958d04499a33c7490d94d5, type: 3}
-  - {fileID: 21300000, guid: 15caff780aa97ec4aaac41b67bc3c4e4, type: 3}
-  - {fileID: 21300000, guid: b6fdbd69289892f4484d3b5e382854d7, type: 3}
-  - {fileID: 21300000, guid: b0792b9abec4e9b44af17a14810382e7, type: 3}
   - {fileID: 2876954151469843257, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
   - {fileID: 6044961295497263881, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
   - {fileID: -6978455491281677222, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
@@ -146,14 +99,6 @@ SpriteAtlas:
   - {fileID: -8434965753784240484, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
   - {fileID: -4844168726572069635, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
   - {fileID: 8418022784724838117, guid: 9baea7ca8f11f1a4da1eb6f6038018fb, type: 3}
-  - {fileID: 21300000, guid: de1ddc0b0b41c7b4fa62b27a6718ee24, type: 3}
-  - {fileID: 21300000, guid: f976753b31c7e40488f38814bed71461, type: 3}
-  - {fileID: 21300000, guid: d5138f4beb64fe04d93852619125a72c, type: 3}
-  - {fileID: 21300000, guid: 5888228cefb7f144da3297fe5222805e, type: 3}
-  - {fileID: 21300000, guid: aa83166dd6727494f84965768f4350da, type: 3}
-  - {fileID: 21300000, guid: ccbb6a7d0c903b14199ffdb1e3d4bd64, type: 3}
-  - {fileID: 21300000, guid: 7279db9de4e3c05429a25abd403283b4, type: 3}
-  - {fileID: 21300000, guid: e28ba70ed50efe149ac0dadf0c08bda9, type: 3}
   - {fileID: 4672237039575863357, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
   - {fileID: -3622148829127707845, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
   - {fileID: 3732791179018726511, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
@@ -239,30 +184,8 @@ SpriteAtlas:
   - {fileID: 1469481444221473821, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
   - {fileID: 3208208002265162100, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
   - {fileID: 3354808282676929544, guid: ee9a8d1ea3798074db7766346be04b01, type: 3}
-  - {fileID: 21300000, guid: 9337a82e79d2f3b44b585dec9a7af1b6, type: 3}
-  - {fileID: 21300000, guid: 5c0c495e79546a94fbae06d6c22ededd, type: 3}
-  - {fileID: 21300000, guid: cb13a47e24e6d454aab6fba8c044c266, type: 3}
-  - {fileID: 21300000, guid: f7e8586f08a314149b8642c74d444e9b, type: 3}
-  - {fileID: 21300000, guid: 0f5f25afcd86cd14cbbd55c7838f12f2, type: 3}
   m_PackedSpriteNamesToIndex:
-  - GTA2_PED_80
-  - GTA2_PED_78
-  - GTA2_PED_152
-  - GTA2_PED_77
-  - GTA2_PED_232
-  - GTA2_PED_157
-  - GTA2_PED_143
-  - GTA2_PED_154
-  - GTA2_PED_144
-  - GTA2_PED_79
-  - GTA2_PED_155
-  - GTA2_PED_83
   - PlayerIdleSprite_0
-  - GTA2_PED_153
-  - GTA2_PED_142
-  - GTA2_PED_146
-  - GTA2_PED_156
-  - GTA2_PED_233
   - PlayerSprite_33
   - PlayerSprite_32
   - PlayerSprite_31
@@ -321,14 +244,6 @@ SpriteAtlas:
   - PlayerSprite_5
   - PlayerSprite_8
   - PlayerSprite_9
-  - GTA2_PED_84
-  - GTA2_PED_141
-  - GTA2_PED_150
-  - GTA2_PED_81
-  - GTA2_PED_147
-  - GTA2_PED_234
-  - GTA2_PED_140
-  - GTA2_PED_145
   - Police_71
   - Police_70
   - Police_73
@@ -414,10 +329,5 @@ SpriteAtlas:
   - Police_30
   - Police_33
   - Police_32
-  - GTA2_PED_148
-  - GTA2_PED_149
-  - GTA2_PED_82
-  - GTA2_PED_130
-  - GTA2_PED_151
   m_Tag: Human
   m_IsVariant: 0

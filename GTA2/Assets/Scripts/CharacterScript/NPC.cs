@@ -39,6 +39,7 @@ public abstract class NPC : People
 	protected int money; //사망시 플레이어에게 주는 돈
 	
 	public Animator animator;
+	public Animator animator_cloth;
 	public List<NPCGun> gunList;
 
 	
@@ -63,7 +64,12 @@ public abstract class NPC : People
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		boxCollider = GetComponent<BoxCollider>();
+		boxCollider.enabled = true;
+		boxCollider.isTrigger = false;
+		rigidbody.isKinematic = false;
 		patternChangeTimer = patternChangeInterval;
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		spriteRenderer.enabled = true;
 		StartCoroutine(DisableIfOutOfCamera());
 		AnimationInit();
 		SetDefaultHp();
@@ -116,7 +122,6 @@ public abstract class NPC : People
         transform.position = Pos;
     }
     
-    //TODO : Down에서 isTrigger
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
@@ -130,21 +135,24 @@ public abstract class NPC : People
             if (isDie == true)
             {
                 WorldUIManager.Instance.SetScoreText(transform.position, money);
-                GameManager.Instance.killCount++;
+				GameManager.Instance.IncreaseMoney(money);
+				GameManager.Instance.killCount++;
             }
         }
         else if(other.CompareTag("PlayerPunch"))
         {
-            SoundManager.Instance.PlayClipFromPosition(punchClip, true, transform.position);
+            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.WaitOneShotPlay, transform.position);
             Down();
         }
     }
+
 	protected override void Die()
 	{
 		isDie = true;
-		GameManager.Instance.IncreaseMoney(money);
+		NPCSpawnManager.Instance.diedNPCNum++;
 		rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
+		rigidbody.velocity = Vector3.zero;
 	}
 	#region RefHumanCtr
 	protected override void Move()
@@ -264,6 +272,17 @@ public abstract class NPC : People
 		animator.SetBool("isDown", isDown);
 		animator.SetBool("isRunover", isRunover);
 		animator.SetBool("isGetOnTheCar", isGetOnTheCar);
+
+		if (animator_cloth == null)
+			return;
+		animator_cloth.SetBool("isWalk", isWalk);
+		animator_cloth.SetBool("isShot", isShot);
+		animator_cloth.SetBool("isPunch", isPunch);
+		animator_cloth.SetBool("isJump", isJump);
+		animator_cloth.SetBool("isDie", isDie);
+		animator_cloth.SetBool("isDown", isDown);
+		animator_cloth.SetBool("isRunover", isRunover);
+		animator_cloth.SetBool("isGetOnTheCar", isGetOnTheCar);
 	}
 	IEnumerator DisableIfOutOfCamera()
     {
@@ -279,6 +298,8 @@ public abstract class NPC : People
                 pos.y > 1 + offset)
 			{
 				NPCSpawnManager.Instance.NPCNum--;
+				if (isDie)
+					NPCSpawnManager.Instance.diedNPCNum--;
 				gameObject.SetActive(false);
 			}
                 
@@ -336,5 +357,14 @@ public abstract class NPC : People
 		isPunch = false;
 		gunList[1].GetComponent<NPCGun>().StopShot();
 	}
-   
+    public void Respawn()
+	{
+		rigidbody.isKinematic = false;
+		boxCollider.enabled = true;
+		boxCollider.isTrigger = false;
+		patternChangeTimer = patternChangeInterval;
+		spriteRenderer.enabled = true;
+		AnimationInit();
+		SetDefaultHp();
+	}
 }

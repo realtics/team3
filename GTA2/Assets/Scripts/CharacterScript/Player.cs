@@ -66,7 +66,7 @@ public class Player : People
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
         {
-            SoundManager.Instance.PlayClipFromPosition(punchClip, true,transform.position);
+            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.WaitOneShotPlay, transform.position);
             int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
 			isBusted = true;
 			Hurt(bulletDamage);
@@ -222,45 +222,53 @@ public class Player : People
 	}
 	public void SwapNext()
 	{
-		GunState prevGunIndex;
-
+        GunState tempGunIndex = curGunIndex;
 		for (int i = 0; i < gunList.Count; i++)
 		{
-			prevGunIndex = curGunIndex;
-			curGunIndex++;
-			if ((int)curGunIndex >= gunList.Count)
-			{
-				curGunIndex = GunState.None;
-			}
+            tempGunIndex++;
+            if (tempGunIndex >= GunState.GunEnd)
+            {
+                tempGunIndex = GunState.None;
+            }
 
-			if (gunList[(int)curGunIndex].bulletCount > 0)
-			{
-				gunList[(int)prevGunIndex].gameObject.SetActive(false);
-				gunList[(int)curGunIndex].gameObject.SetActive(true);
-				break;
-			}
-		}
+            if (gunList[(int)tempGunIndex].bulletCount <= 0)
+            {
+                continue;
+            }
+            else if (gunList[(int)tempGunIndex].bulletCount > 0)
+            {
+                gunList[(int)curGunIndex].gameObject.SetActive(false);
+                gunList[(int)tempGunIndex].gameObject.SetActive(true);
+
+                curGunIndex = tempGunIndex;
+                break;
+            }
+        }
 	}
 	public void SwapPrev()
-	{
-		GunState prevGunIndex;
-
-		for (int i = 0; i < gunList.Count; i++)
+    {
+        GunState tempGunIndex = curGunIndex;
+        for (int i = 0; i < gunList.Count; i++)
 		{
-			prevGunIndex = curGunIndex;
-			curGunIndex--;
-			if ((int)curGunIndex < 0)
-			{
-				curGunIndex = GunState.Granade;
-			}
+            tempGunIndex--;
+            if (tempGunIndex < GunState.None)
+            {
+                tempGunIndex = GunState.GunEnd - 1;
+            }
 
-			if (gunList[(int)curGunIndex].bulletCount > 0)
-			{
-				gunList[(int)prevGunIndex].gameObject.SetActive(false);
-				gunList[(int)curGunIndex].gameObject.SetActive(true);
-				break;
-			}
-		}
+            if (gunList[(int)tempGunIndex].bulletCount <= 0)
+            {
+                continue;
+            }
+            else if (gunList[(int)tempGunIndex].bulletCount > 0)
+            {
+                gunList[(int)curGunIndex].gameObject.SetActive(false);
+                gunList[(int)tempGunIndex].gameObject.SetActive(true);
+
+                curGunIndex = tempGunIndex;
+                break;
+            }
+        }
 	}
 	void StartCloseTheDoor()
 	{
@@ -406,7 +414,9 @@ public class Player : People
         if (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
         {
             targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
+
+			if(targetDirectionVector != Vector3.zero)
+				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
         }
         else if (0 != hDir || 0 != vDir || 0 != rotHDir || 0 != rotVDir)
         {
@@ -542,11 +552,11 @@ public class Player : People
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-			SwapPrev();
+            SwapNext();
 		}
         if (Input.GetKeyDown(KeyCode.Z))
         {
-			SwapNext();
+            SwapPrev();
         }
     }
 	#endregion

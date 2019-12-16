@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PistolBullet
   m_EditorClassIdentifier: 
   bulletDamage: 80
-  bulletLifeTime: 2
+  bulletLifeTime: 0.5
   bulletSpeed: 10
   explosionArea: 0

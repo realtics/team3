@@ -22,6 +22,11 @@ public class GameManager : MonoSingleton<GameManager>
     public int killCount { get; set; }
     double gameTime;
 
+
+	public int spawnedAmbulance = 0;
+	public Vector3 ambulanceTarget;
+
+
     void Start()
     {
         gameTime = .0f;
@@ -32,6 +37,7 @@ public class GameManager : MonoSingleton<GameManager>
         //Screen.SetResolution(720, 1280, true);
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+		StartCoroutine(CheckEmbulanceCall());
     }
     void Update()
     {
@@ -129,4 +135,25 @@ public class GameManager : MonoSingleton<GameManager>
         JsonStreamer js = new JsonStreamer();
         js.Save(myObject, "Gta2Data.json");
     }
+	IEnumerator CheckEmbulanceCall()
+	{
+		while(true)
+		{
+			foreach(GameObject npc in NPCSpawnManager.Instance.allNPC)
+			{
+				if(npc.GetComponent<NPC>().isDie)
+				{
+					ambulanceTarget = npc.transform.position;
+					break;
+				}
+			}
+			if (NPCSpawnManager.Instance.diedNPCNum > 5 && spawnedAmbulance < 1)
+			{
+				CarSpawnManager.Instance.SpawnAmbulanceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
+				spawnedAmbulance++;
+			}
+
+			yield return new WaitForSeconds(5.0f);
+		}
+	}
 }

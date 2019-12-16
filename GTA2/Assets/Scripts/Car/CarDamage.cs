@@ -43,7 +43,7 @@ public class CarDamage : MonoBehaviour
 			if(carManager.movement.curSpeed < 10 && carManager.passengerManager.passengers[0] != People.PeopleType.Player && 
 				carManager.carState != CarManager.CarState.destroied)
 			{
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+				StartCoroutine(carManager.passengerManager.GetOffTheCar(0, true));
 			}
         }
     }
@@ -55,13 +55,13 @@ public class CarDamage : MonoBehaviour
 
         int force = (int)col.relativeVelocity.sqrMagnitude / 2;
 
-        if(force > 1)
+        if(force > 3)
         {
             DeductHp(force, false);
 
-            float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
-            EnableDeltaImage(angle);
-        }       
+			float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
+			EnableDeltaImage(angle);
+		}       
     }
 
     void EnableDeltaImage(float angle)

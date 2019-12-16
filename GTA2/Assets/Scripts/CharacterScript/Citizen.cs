@@ -6,6 +6,7 @@ using UnityEngine;
 public class Citizen : NPC
 {
 	public CitizenData citizenData;
+	public SpriteRenderer ClothSpriteRenderer;
     void Awake()
     {
 		gameManager = GameManager.Instance;
@@ -19,7 +20,9 @@ public class Citizen : NPC
 	{
 		base.NPCOnEnable();
 		StartCoroutine(ActivityByState());
+		ClothSpriteRenderer.color = new Color(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
 	}
+	
 	private void OnDisable()
 	{
 		base.NPCOnDisable();
@@ -49,7 +52,7 @@ public class Citizen : NPC
     }
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.tag == "Wall" && collision.gameObject.tag == "Car" && isRunaway)
+		if (collision.gameObject.CompareTag("Wall") && collision.gameObject.CompareTag("Car") && isRunaway)
 		{
 			transform.Rotate(0, Random.Range(90, 270), 0);
 		}

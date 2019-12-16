@@ -42,6 +42,12 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
 
     void InitPref()
     {
+        Image image = questArrowPref.GetComponent<Image>();
+        Material existingGlobalMat = image.materialForRendering;
+        Material updatedMaterial = new Material(existingGlobalMat);
+        updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);
+        image.material = updatedMaterial;
+
         PoolManager.WarmPool(questArrowPref, arrowPoolCount);
         PoolManager.WarmPool(scoreTextPref, scorePoolCount);
     }
@@ -90,30 +96,26 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
     }
 
 
-    public void UpdateArrow(GameObject arrow, Vector3 pos)
+    public void UpdateArrow(GameObject arrow, Vector3 targetPos)
     {
-        Vector3 playerToGoal = pos - userPlayer.gameObject.transform.position;
+        Vector3 playerToGoal = targetPos - userPlayer.gameObject.transform.position;
         float playerToGoalDistance = playerToGoal.magnitude;
         playerToGoal.Normalize();
 
         if (playerToGoalDistance > maxArrowToPlayer)
         {
-            // missionArrowPref.transform.position = Vector3.Lerp(
-            //     missionArrowPref.transform.position,
-            //     userPlayer.gameObject.transform.position + playerToGoal * arrowToPlayer,
-            //     .1f);
             arrow.transform.position = 
                 userPlayer.gameObject.transform.position + playerToGoal * arrowToPlayer;
         }
         else
         {
             arrow.transform.position = Vector3.Lerp(
-                arrow.transform.position,
+                arrow.transform.position - playerToGoal * .25f,
                 userPlayer.gameObject.transform.position + playerToGoal * playerToGoalDistance,
                 .3f);
         }
 
-        arrow.transform.LookAt(pos, Vector3.up);
+        arrow.transform.LookAt(targetPos, Vector3.up);
         Vector3 tempVector = arrow.transform.eulerAngles;
         arrow.transform.eulerAngles = new Vector3(90.0f, tempVector.y, .0f);
     }

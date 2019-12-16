@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7c7cf61cd918f44b9f2506edaf5eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deactiveQuestList: []
+  frenzyFail: {fileID: 8300000, guid: 59b3963a6d234e049b780cae7292a69d, type: 3}
+  frenzyPassed: {fileID: 8300000, guid: 63fcaf66eacd23840a4f8a43bf182c53, type: 3}

@@ -8,6 +8,7 @@ public class WaypointForCar : Waypoint
     public Dictionary<WaypointForCar, CarRoad> carRoadDict = new Dictionary<WaypointForCar, CarRoad>();
     public List<Waypoint> prev = new List<Waypoint>();
     public List<Waypoint> next = new List<Waypoint>();
+	public WaypointForCar mainNext;
 
     public bool canChangeLane;
 

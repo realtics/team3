@@ -4,12 +4,26 @@ using UnityEngine;
 
 public class QuestManager : MonoSingleton<QuestManager>
 {
+    [SerializeField]
+    AudioClip frenzyFail;
+    [SerializeField]
+    AudioClip frenzyPassed;
+
     // Start is called before the first frame update
     Quest[] deactiveQuestList;
     List<Quest> activeQuestList;
 
+
+    GunState frenzyType;
+    int startKillCount;
+    int goalKill;
+    float frenzyDelta;
+    float frenzyMaxTime;
+
+
     void Awake()
     {
+        frenzyType = GunState.None;
         activeQuestList = new List<Quest>();
         deactiveQuestList = GetComponentsInChildren<Quest>();
     }
@@ -27,10 +41,22 @@ public class QuestManager : MonoSingleton<QuestManager>
         }
     }
 
+    public void StartKillFrenzy(GunState gunType, int killCount, float maxTime)
+    {
+        QuestUIManager.Instance.SetKillFrenzy();
+
+        startKillCount = GameManager.Instance.killCount;
+        frenzyType = gunType;
+        goalKill = killCount;
+        frenzyMaxTime = maxTime;
+        frenzyDelta = .0f;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        UpdateCheck();   
+        UpdateCheck();
+        UpdateFrenzy();
     }
 
     void UpdateCheck()
@@ -42,6 +68,35 @@ public class QuestManager : MonoSingleton<QuestManager>
                 item.PushReward();
                 activeQuestList.Remove(item);
                 break;
+            }
+        }
+    }
+
+    void UpdateFrenzy()
+    {
+        if (frenzyType != GunState.None)
+        {
+            frenzyDelta += Time.deltaTime;
+
+            int killCount = GameManager.Instance.killCount - startKillCount;
+            int curGoalKillCount = goalKill - killCount;
+            QuestUIManager.Instance.UpdateFrenzy(curGoalKillCount, frenzyMaxTime - frenzyDelta);
+
+            if (frenzyDelta > frenzyMaxTime)
+            {
+                frenzyType = GunState.None;
+                QuestUIManager.Instance.OutKillFrenzy();
+                QuestUIManager.Instance.ToastStartQuest("Frenzy Fail..", "");
+                SoundManager.Instance.PlayClip(frenzyFail, SoundPlayMode.OneShotPlay);
+            }
+            else if (curGoalKillCount <= 0)
+            {
+                frenzyType = GunState.None;
+                QuestUIManager.Instance.OutKillFrenzy();
+                QuestUIManager.Instance.ToastStartQuest("Frenzy Passed!!", "");
+                SoundManager.Instance.PlayClip(frenzyPassed, SoundPlayMode.OneShotPlay);
+                WantedLevel.instance.ResetWantedLevel();
+                GameManager.Instance.IncreaseMoney(100000);
             }
         }
     }

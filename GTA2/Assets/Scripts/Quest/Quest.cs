@@ -22,9 +22,17 @@ public abstract class Quest : MonoBehaviour
 
     [SerializeField]
     protected Phone startPhone;
+    [SerializeField]
+    protected AudioClip startClip;
+    [SerializeField]
+    protected AudioClip completeClip;
+    [SerializeField]
+    protected GameObject phoneArrowPref;
+
     protected QuestStatus questStatus;
     protected bool isCorrect;
     protected GameObject questArrow;
+    protected GameObject phoneArrow;
 
     protected float correctAndOffTime = 5.0f;
     protected float correctAndOffDel = .0f;

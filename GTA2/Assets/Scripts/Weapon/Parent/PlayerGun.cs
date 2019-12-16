@@ -14,9 +14,7 @@ public class PlayerGun : Gun
     // Start is called before the first frame update
     protected override void InitGun()
     {
-        userObject = GameObject.FindWithTag("Player");
-        player = userObject.GetComponent<Player>();
-
+        InitPlayer();
         base.InitGun();
     }
 
@@ -25,14 +23,24 @@ public class PlayerGun : Gun
         bulletCount = 0;
     }
 
+    protected void InitPlayer()
+    {
+        userObject = GameObject.FindWithTag("Player");
+        player = userObject.GetComponent<Player>();
+    }
+
     protected override void Update()
     {
+        if (player == null)
+        {
+            InitPlayer();
+        }
+
         if (player.isDie == true)
         {
             return;
         }
-
-        if (player.curGunIndex != gunType)
+        if (bulletCount == 0)
         {
             return;
         }

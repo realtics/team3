@@ -150,6 +150,10 @@ MonoBehaviour:
   infoPath: 
   endPath: 
   startPhone: {fileID: 1660102585066947389}
+  startClip: {fileID: 8300000, guid: c630561bdf875884b998e050c044d5eb, type: 3}
+  completeClip: {fileID: 8300000, guid: dd10a62277c88994a92bd6f98611172a, type: 3}
+  phoneArrowPref: {fileID: 458885570132520728, guid: f225350bd5ad2ed44819557e9313c936,
+    type: 3}
   killTarget: {fileID: 2820099778162042842}
   rewardMoney: 0
 --- !u!1 &5077666127379407763
@@ -216,13 +220,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
+  rigidbody: {fileID: 0}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
   hp: 0
   animator: {fileID: 6719746030818589620}
+  animator_cloth: {fileID: 0}
   gunList: []
   citizenData: {fileID: 11400000, guid: feb62588e799dab4b9e27b12c2e6e3a2, type: 2}
+  ClothSpriteRenderer: {fileID: 0}
 --- !u!65 &1943857040746528397
 BoxCollider:
   m_ObjectHideFlags: 0
