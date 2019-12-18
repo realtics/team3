@@ -11,6 +11,9 @@ public class CarPassengerManager : MonoBehaviour
     //public People.PeopleType passengerType = People.PeopleType.Citizen;
     public People.PeopleType[] passengers;
 
+	public AudioClip doorOpenClip;
+	public AudioClip doorCloseClip;
+
 	//나중에 배열로 변경
 	public bool[] isRunningOpenTheDoor;
 	public bool[] isRunningCloseTheDoor;
@@ -77,6 +80,7 @@ public class CarPassengerManager : MonoBehaviour
 	{
 		isRunningOpenTheDoor[idx] = true;
 		doorAnimator[idx].SetTrigger("Open");
+		SoundManager.Instance.PlayClipToPosition(doorOpenClip, SoundPlayMode.OneShotPosPlay, gameObject.transform.position);
 		yield return new WaitForSeconds(0.5f);
 		isDoorOpen[idx] = true;
 	}
@@ -84,6 +88,7 @@ public class CarPassengerManager : MonoBehaviour
 	{
 		isRunningOpenTheDoor[idx] = false;
 		doorAnimator[idx].SetTrigger("Close");
+		SoundManager.Instance.PlayClipToPosition(doorCloseClip, SoundPlayMode.OneShotPosPlay, gameObject.transform.position);
 		yield return new WaitForSeconds(0.5f);
 		isDoorOpen[idx] = false;
 	}
@@ -109,10 +114,15 @@ public class CarPassengerManager : MonoBehaviour
         if (passengers[idx] == People.PeopleType.None)
             yield break;
 
-        doorAnimator[idx].SetTrigger("Open");
+		StartCoroutine(OpenTheDoor(idx));
+
         yield return new WaitForSeconds(0.5f);
-		if(!isRunaway)
-			doorAnimator[idx].SetTrigger("Close");
+
+		if (carManager.carState == CarManager.CarState.destroied)
+			yield break;
+
+		if (!isRunaway)
+			StartCoroutine(CloseTheDoor(idx));
 
         switch (passengers[idx])
         {
@@ -133,6 +143,8 @@ public class CarPassengerManager : MonoBehaviour
                 break;
 			case People.PeopleType.Doctor:
 				GameObject doctorDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
+				doctorDriver.GetComponent<Doctor>().ambulanceCar = carManager;
+				doctorDriver.GetComponent<Doctor>().idx = idx;
 				doctorDriver.transform.position = doorPositions[idx].position;
 				break;
 			default:
@@ -156,6 +168,17 @@ public class CarPassengerManager : MonoBehaviour
 			carManager.OnDriverGetOffEvent(passengers[idx], idx);
 			GameManager.Instance.playerCar = null;
 			GameManager.Instance.player.Down();
+		}
+		else if(passengers[idx] == People.PeopleType.Doctor)
+		{
+			GameObject doctorDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
+
+			passengers[idx] = People.PeopleType.None;
+			doctorDriver.transform.position = doorPositions[idx].position;
+			doctorDriver.GetComponent<Doctor>().Down();
+
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.stealCar, transform.position);
+			DebugX.Log("차뺏기");
 		}
         else //시민
         {
@@ -198,7 +221,6 @@ public class CarPassengerManager : MonoBehaviour
 
     void OnDamaged(bool sourceIsPlayer)
     {
-        
     }
     public void passengersInit()
     {
@@ -211,7 +233,11 @@ public class CarPassengerManager : MonoBehaviour
                 passengers[0] = People.PeopleType.Police;
                 passengers[1] = People.PeopleType.Police;
                 break;
-            default:
+			case CarManager.CarType.ambulance:
+				passengers[0] = People.PeopleType.Doctor;
+				passengers[1] = People.PeopleType.Doctor;
+				break;
+			default:
                 passengers[0] = People.PeopleType.Citizen;
                 break;
         }

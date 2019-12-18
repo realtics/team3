@@ -49,7 +49,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &-3621325394877705112
 BoxCollider:
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
   rigidbody: {fileID: 2688421882594076742}
+  boxCollider: {fileID: -3621325394877705112}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -85,8 +86,22 @@ MonoBehaviour:
   animator: {fileID: 1020086614340368900}
   animator_cloth: {fileID: 3183330439516303165}
   gunList: []
+  runAwayClip: []
+  dieClip:
+  - {fileID: 8300000, guid: ca05803542317634088e3e28d87d204f, type: 3}
+  - {fileID: 8300000, guid: dc44f1dcad652a34fa6f4f0633aaf2e1, type: 3}
+  - {fileID: 8300000, guid: 41f026f655636fb49914c43ccc67d9f3, type: 3}
+  - {fileID: 8300000, guid: 33f83b42ab00b144995472f8ef6ad13d, type: 3}
+  - {fileID: 8300000, guid: 91b2761a5cfaa1b49a341f931e3bd098, type: 3}
+  - {fileID: 8300000, guid: dced131b10690af4f8e5b67926e526a9, type: 3}
+  - {fileID: 8300000, guid: bde4992c9f828b14c93576caba60dfd8, type: 3}
+  - {fileID: 8300000, guid: 5185efce1a5402f4b8bd709ad00c8929, type: 3}
+  - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
+  - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
+  - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
   doctorData: {fileID: 11400000, guid: b9c6f1afbfdf6784b85adbe6bb4beccf, type: 2}
-  DiedNPC: []
+  targetNPC: {fileID: 0}
+  doctorState: 0
 --- !u!1 &6193245880112247456
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,8 +169,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1024696773
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -9194723345426570509, guid: b4a38bb7059024a499f38492e351fd2f,
     type: 3}
@@ -255,9 +270,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1024696773
+  m_SortingLayer: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -5556592062399725003, guid: 871985fa11e12c843a9742914015dc84,
     type: 3}
   m_Color: {r: 0.22863364, g: 1, b: 0, a: 1}

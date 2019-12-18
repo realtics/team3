@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2080718391
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -5556592062399725003, guid: 871985fa11e12c843a9742914015dc84,
     type: 3}
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
   rigidbody: {fileID: 2688421882594076742}
+  boxCollider: {fileID: -3621325394877705112}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 4352
@@ -174,8 +175,32 @@ MonoBehaviour:
   animator: {fileID: 1020086614340368900}
   animator_cloth: {fileID: 3390465139220904577}
   gunList: []
+  runAwayClip:
+  - {fileID: 8300000, guid: 9651f6d5250000a4d8d64f2c2156801a, type: 3}
+  - {fileID: 8300000, guid: 7f34b24dd00acc2468b0a51eb20937de, type: 3}
+  - {fileID: 8300000, guid: 196a3d4d7927e014391ff225372ae98b, type: 3}
+  - {fileID: 8300000, guid: 9adaeda7a53716140ae2cc0a2fb140ed, type: 3}
+  - {fileID: 8300000, guid: 090e3c9ed1e9b114db42213db31ec4c9, type: 3}
+  dieClip:
+  - {fileID: 8300000, guid: ca05803542317634088e3e28d87d204f, type: 3}
+  - {fileID: 8300000, guid: dc44f1dcad652a34fa6f4f0633aaf2e1, type: 3}
+  - {fileID: 8300000, guid: 41f026f655636fb49914c43ccc67d9f3, type: 3}
+  - {fileID: 8300000, guid: 33f83b42ab00b144995472f8ef6ad13d, type: 3}
+  - {fileID: 8300000, guid: 91b2761a5cfaa1b49a341f931e3bd098, type: 3}
+  - {fileID: 8300000, guid: dced131b10690af4f8e5b67926e526a9, type: 3}
+  - {fileID: 8300000, guid: bde4992c9f828b14c93576caba60dfd8, type: 3}
+  - {fileID: 8300000, guid: 5185efce1a5402f4b8bd709ad00c8929, type: 3}
+  - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
+  - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
+  - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
   citizenData: {fileID: 11400000, guid: feb62588e799dab4b9e27b12c2e6e3a2, type: 2}
   ClothSpriteRenderer: {fileID: 1206106357788588712}
+  downClip:
+  - {fileID: 8300000, guid: aba324e82ccfacd4aa5e2e9ef40b1a63, type: 3}
+  - {fileID: 8300000, guid: 074fef71a3f2a874c8d61c067439bdcd, type: 3}
+  - {fileID: 8300000, guid: f858df90786b0c14193dc011ab4354be, type: 3}
+  - {fileID: 8300000, guid: b3006e004bd65fc479e0246b0c8db441, type: 3}
+  - {fileID: 8300000, guid: d56d0fe5d354d474e8596f7f162db388, type: 3}
 --- !u!65 &-3621325394877705112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -187,8 +212,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2316873, y: 0.3372845, z: 0.22954834}
-  m_Center: {x: 0, y: 0.08557287, z: 0}
+  m_Size: {x: 0.2316873, y: 0.38208985, z: 0.22954834}
+  m_Center: {x: 0, y: 0.118095756, z: 0}
 --- !u!114 &4949722845638621977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,8 +294,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2080718391
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -9194723345426570509, guid: b4a38bb7059024a499f38492e351fd2f,
     type: 3}

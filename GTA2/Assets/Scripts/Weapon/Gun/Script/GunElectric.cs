@@ -57,7 +57,7 @@ public class GunElectric : PlayerGun
     }
 
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
         if (player == null)
         {
@@ -102,7 +102,7 @@ public class GunElectric : PlayerGun
     void FireGun()
     {
         List<BulletElectric> activeBulletList = new List<BulletElectric>();
-        List<GameObject> targetObjects = GetObjectsInAttackRange(userObject.transform.position, objectList);
+        List<GameObject> targetObjects = GetObjectsInAttackCondition(userObject.transform.position, objectList);
 
         activeElectricList.Clear();
         noneTargetObjectList.Clear();
@@ -158,11 +158,16 @@ public class GunElectric : PlayerGun
 
         foreach (var bulletObj in prevBulletList)
         {
+            if (bulletObj.TargetObject() == null)
+            {
+                return;
+            }
+
             Vector3 triggerPos = bulletObj.gameObject.transform.position;
             Vector3 rightVector = 
                 bulletObj.gameObject.transform.right * bulletObj.gameObject.transform.localScale.x * 4.0f;
             triggerPos += rightVector;
-            List<GameObject> targetObjects = GetObjectsInAttackRange(bulletObj.TargetObject().transform.position, objectList);
+            List<GameObject> targetObjects = GetObjectsInAttackCondition(bulletObj.TargetObject().transform.position, objectList);
 
             foreach (var target in targetObjects)
             {
@@ -186,12 +191,12 @@ public class GunElectric : PlayerGun
         activeElectricList.Clear();
     }
 
-    List<GameObject> GetObjectsInAttackRange(Vector3 centerPos, List<GameObject> targetList)
+    List<GameObject> GetObjectsInAttackCondition(Vector3 centerPos, List<GameObject> targetList)
     {
         List<GameObject> returnList = new List<GameObject>();
         foreach (var item in targetList)
         {
-            if (CheckAttackRange(centerPos, item))
+            if (CheckAttackRange(centerPos, item) && item.activeInHierarchy)
             {
                 returnList.Add(item);
             }
@@ -258,7 +263,7 @@ public class GunElectric : PlayerGun
     {
         if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
         {
-            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.WaitOneShotPlay);
+            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.OneShotPosPlay);
             soundPlayDelta = .0f;
         }
     }

@@ -24,8 +24,25 @@ public class CarPathManager : MonoBehaviour
 
     void Update()
     {
-        Move();
-    }
+		Vector3 dir = (curDestPos - transform.position);
+		dir.y = 0;
+		float dist = dir.sqrMagnitude;
+
+		if (dist < 0.5f * 0.5f)
+		{
+			if (curDestPos == finalDestPos)
+			{
+				curWaypoint = destWaypoint;
+				SetRandomDestWaypoint();
+			}
+			else
+			{
+				CalcSubDestPosition();
+			}
+
+			carAi.SetDestination(curDestPos);
+		}
+	}
 
     public void Init()
     {
@@ -142,28 +159,6 @@ public class CarPathManager : MonoBehaviour
 			carAi.SetDestination(curDestPos);
 		}
 	}
-
-    void Move()
-    {
-        Vector3 dir = (curDestPos - transform.position);
-        dir.y = 0;
-        float dist = dir.sqrMagnitude;
-
-		if(dist < 0.5f * 0.5f)
-		{
-			if (curDestPos == finalDestPos)
-			{
-				curWaypoint = destWaypoint;
-				SetRandomDestWaypoint();
-			}
-			else
-			{
-				CalcSubDestPosition();
-			}
-
-			carAi.SetDestination(curDestPos);
-		}
-    }
 
     void OnDrawGizmosSelected()
     {

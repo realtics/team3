@@ -89,10 +89,10 @@ public class CarAi : MonoBehaviour
                 maxSpdMultiplier = 1.8f;
                 break;
             case AiState.chaseBlock:
-                maxSpdMultiplier = 1.0f;
+                maxSpdMultiplier = 1.2f;
                 break;
             case AiState.evade:
-                maxSpdMultiplier = 1.0f;
+                maxSpdMultiplier = 1.2f;
                 break;
             default:
                 maxSpdMultiplier = 1.0f;
@@ -151,6 +151,9 @@ public class CarAi : MonoBehaviour
 		while (true)
 		{
 			yield return new WaitForSeconds(0.25f);
+
+			if (aiState != AiState.normal)
+				continue;
 
 			if (Mathf.Abs(h) > 0.1f)
 				continue;
@@ -302,12 +305,14 @@ public class CarAi : MonoBehaviour
     {
 		if(carManager.carType == CarManager.CarType.ambulance)
 		{
-			if(Vector3.Distance(GameManager.Instance.ambulanceTarget, transform.position) < 50.0f)
+			Vector3 dist = (GameManager.Instance.ambulanceTarget - transform.position);
+			if (Mathf.Abs(dist.x) < 0.1f || Mathf.Abs(dist.z) < 0.1f)
 			{
 				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
 				StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
 			}
 		}
+
         h = 0;
         v = 0;
 

@@ -57,11 +57,20 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
     void RespawnDisabledCar()
     {
-		int policeCarCount = 0;
+		float policeCarCount = 0;
 		foreach (var p in allPoliceCar)
 		{
-			if (p.gameObject.activeSelf && p.carState == CarManager.CarState.controlledByAi)
-				policeCarCount++;
+			if (p.gameObject.activeSelf)
+			{
+				if(p.carState == CarManager.CarState.controlledByAi)
+				{
+					policeCarCount += 1.0f;
+				}
+				else
+				{
+					policeCarCount += 0.33f;
+				}				
+			}				
 		}
 
 		foreach (var car in allCars)
@@ -150,6 +159,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 				continue;
 
 			float dist = (car.transform.position - position).sqrMagnitude;
+
 			if (dist < min)
 			{
 				if (car.carState == CarManager.CarState.destroied)

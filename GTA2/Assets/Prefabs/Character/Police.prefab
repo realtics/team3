@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1024696773
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -2214034502796586735, guid: ee9a8d1ea3798074db7766346be04b01,
     type: 3}
@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
   rigidbody: {fileID: 1167477734680987161}
+  boxCollider: {fileID: 1358635159880621219}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -177,6 +178,19 @@ MonoBehaviour:
   gunList:
   - {fileID: 8189217532303110051}
   - {fileID: 4757780486654468369}
+  runAwayClip: []
+  dieClip:
+  - {fileID: 8300000, guid: ca05803542317634088e3e28d87d204f, type: 3}
+  - {fileID: 8300000, guid: dc44f1dcad652a34fa6f4f0633aaf2e1, type: 3}
+  - {fileID: 8300000, guid: 41f026f655636fb49914c43ccc67d9f3, type: 3}
+  - {fileID: 8300000, guid: 33f83b42ab00b144995472f8ef6ad13d, type: 3}
+  - {fileID: 8300000, guid: 91b2761a5cfaa1b49a341f931e3bd098, type: 3}
+  - {fileID: 8300000, guid: dced131b10690af4f8e5b67926e526a9, type: 3}
+  - {fileID: 8300000, guid: bde4992c9f828b14c93576caba60dfd8, type: 3}
+  - {fileID: 8300000, guid: 5185efce1a5402f4b8bd709ad00c8929, type: 3}
+  - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
+  - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
+  - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
   policeData: {fileID: 11400000, guid: 43c2ce960593bb841ba9c2b0ebf38d96, type: 2}
 --- !u!65 &1358635159880621219
 BoxCollider:
@@ -189,8 +203,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.16986847, y: 0.26610202, z: 0.116737366}
-  m_Center: {x: -0.010332108, y: 0.12558255, z: -0.0014324188}
+  m_Size: {x: 0.21127534, y: 0.3, z: 0.14893103}
+  m_Center: {x: 0, y: 0.12, z: 0}
 --- !u!114 &2198147270773191501
 MonoBehaviour:
   m_ObjectHideFlags: 0

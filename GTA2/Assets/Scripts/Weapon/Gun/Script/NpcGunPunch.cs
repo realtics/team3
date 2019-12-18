@@ -10,7 +10,7 @@ public class NpcGunPunch : NPCGun
         base.InitGun();
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
         base.UpdateDirection();
         UpdateDelta();

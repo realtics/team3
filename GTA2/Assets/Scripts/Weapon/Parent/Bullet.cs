@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour
     }
 
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         UpdateBullet();
         UpdateActive();
@@ -104,7 +104,7 @@ public class Bullet : MonoBehaviour
             explosionEffect.SetExplosion(transform.position);
         }
 
-         SoundManager.Instance.PlayClipToPosition(explosionSound, SoundPlayMode.WaitOneShotPlay, transform.position);
+         SoundManager.Instance.PlayClipToPosition(explosionSound, SoundPlayMode.OneShotPosPlay, transform.position);
     }
 
     protected void UpdateActive()

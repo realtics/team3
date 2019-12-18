@@ -42,7 +42,8 @@ public abstract class NPC : People
 	public Animator animator_cloth;
 	public List<NPCGun> gunList;
 
-	
+	public AudioClip[] runAwayClip;
+	public AudioClip[] dieClip;
 	void AnimationInit()
 	{
 		isWalk = false;
@@ -88,6 +89,8 @@ public abstract class NPC : People
 		patternChangeTimer = 0.0f;
 		patternChangeInterval = runawayTime;
 		Vector3 playerPosition = GameManager.Instance.player.transform.position;
+		
+		SoundManager.Instance.PlayClipToPosition(runAwayClip[Random.Range(0, runAwayClip.Length)], SoundPlayMode.Play, gameObject.transform.position);
 		RunawayVector = new Vector3(playerPosition.x, transform.position.y, playerPosition.z);
 		transform.LookAt(RunawayVector);
 		transform.Rotate(0, 180, 0);
@@ -102,7 +105,31 @@ public abstract class NPC : People
         else
             return false;
     }
-    protected virtual void RunAway()
+	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
+	{
+		if (runoverSpeed < runoverMinSpeed)
+			return;
+		Vector3 runoverVector = transform.position - carPosition;
+
+		//속도에 비례한 피해 데미지 보정수치
+		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+		this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
+		isRunover = true;
+		hDir = 0; vDir = 0;
+
+		transform.LookAt(carPosition);
+
+		if (runoverSpeed > runoverHurtMinSpeed)
+		{
+			Hurt((int)(runoverSpeed / 2));
+		}
+		if(isRunoverByPlayer && isDie)
+		{
+			GameManager.Instance.IncreaseMoney(money);
+			WorldUIManager.Instance.SetScoreText(transform.position, money);
+		}
+	}
+	protected virtual void RunAway()
     {
         Vector3 Pos = transform.position;
 
@@ -141,18 +168,23 @@ public abstract class NPC : People
         }
         else if(other.CompareTag("PlayerPunch"))
         {
-            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.WaitOneShotPlay, transform.position);
+            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.OneShotPosPlay, transform.position);
             Down();
         }
     }
 
 	protected override void Die()
 	{
+		if (isDie)
+			return;
+		if (isJump)
+			Land();
 		isDie = true;
-		NPCSpawnManager.Instance.diedNPCNum++;
+		rigidbody.velocity = Vector3.zero;
 		rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
-		rigidbody.velocity = Vector3.zero;
+		NPCSpawnManager.Instance.DiedNPC.Add(this);
+		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.OneShotPlay, gameObject.transform.position);
 	}
 	#region RefHumanCtr
 	protected override void Move()
@@ -175,20 +207,22 @@ public abstract class NPC : People
     {
         if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f, collisionLayer))
         {
-            if (hit.transform.tag == "TrafficLight")
+            if (hit.transform.tag == "TrafficLight" || hit.transform.tag == "Car")
             {
                 if (Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
                 {
                     distToObstacle = hit.distance;
-                }
+					isWalk = false;
+				}
                 else
                 {
                     distToObstacle = Mathf.Infinity;
-                }
+					isWalk = true;
+				}
             }
             else
             {
-                distToObstacle = hit.distance;
+				distToObstacle = hit.distance;
             }
         }
         else
@@ -232,7 +266,11 @@ public abstract class NPC : People
     protected bool InPunchRange()
     {
         if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < punchRange)
-            return true;
+		{
+			if(isJump)
+				Land();
+			return true;
+		}
         else
             return false;
     }
@@ -299,7 +337,7 @@ public abstract class NPC : People
 			{
 				NPCSpawnManager.Instance.NPCNum--;
 				if (isDie)
-					NPCSpawnManager.Instance.diedNPCNum--;
+					NPCSpawnManager.Instance.DiedNPC.Remove(this);
 				gameObject.SetActive(false);
 			}
                 
@@ -363,8 +401,19 @@ public abstract class NPC : People
 		boxCollider.enabled = true;
 		boxCollider.isTrigger = false;
 		patternChangeTimer = patternChangeInterval;
-		spriteRenderer.enabled = true;
+        if (spriteRenderer != null)
+        {
+		    spriteRenderer.enabled = true;
+        }
+		NPCSpawnManager.Instance.DiedNPC.Remove(this);
 		AnimationInit();
 		SetDefaultHp();
+	}
+	protected override void LandCheck()
+	{
+		if (JumpTimerCheck())
+		{
+			Land();
+		}
 	}
 }

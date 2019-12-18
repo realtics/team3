@@ -54,28 +54,15 @@ public class BulletElectric : Bullet
             targetObject = obj;
         }
 
-        if (targetObject == null || startObject == null)
+        if (!CheckStartTarget())
         {
+            isLife = false;
+            PoolManager.ReleaseObject(gameObject);
             return;
         }
-
-        NPC npc = startObject.GetComponent<NPC>();
-        if (npc != null && npc.isDie)
-        {
-            Explosion();
-            return;
-        }
-
-        npc = targetObject.GetComponent<NPC>();
-        if (npc != null && npc.isDie)
-        {
-            Explosion();
-            return;
-        }
-
+        
         targetToVector =
             targetObject.transform.position -
-            // gameObject.transform.position;
             startObject.transform.position;
 
         SetScale(targetToVector);
@@ -90,11 +77,42 @@ public class BulletElectric : Bullet
 
 
 
-
-
-    protected override void Update()
+    bool CheckStartTarget()
     {
-        base.Update();
+        if (targetObject == null || startObject == null)
+        {
+            return false;
+        }
+
+        if (!startObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        if (!targetObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        NPC npc = startObject.GetComponent<NPC>();
+        if (npc != null && npc.isDie)
+        {
+            return false;
+        }
+
+        npc = targetObject.GetComponent<NPC>();
+        if (npc != null && npc.isDie)
+        {
+            return false;
+        }
+
+
+        return true;
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
 

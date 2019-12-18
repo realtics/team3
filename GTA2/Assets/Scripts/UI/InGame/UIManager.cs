@@ -14,8 +14,6 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     WeaponImage weaponUI;
     [SerializeField]
-    GameEndUI gameEndUI;
-    [SerializeField]
     LifeCount lifeCountUI;
     [SerializeField]
     GetItemText weaponTextUI;
@@ -33,6 +31,13 @@ public class UIManager : MonoSingleton<UIManager>
     //private bl_Joystick playerJoystick;
     public bl_Joystick playerMoveJoystick;
     public bl_Joystick playerWeaponJoystick;
+
+    [SerializeField]
+    AudioClip wastedClip;
+    [SerializeField]
+    AudioClip bustedClip;
+    [SerializeField]
+    AudioClip gameOverClip;
 
 
 
@@ -175,21 +180,20 @@ public class UIManager : MonoSingleton<UIManager>
 
 
 
-    public void TurnOnWastedSprite()
+    public void TurnOnWasted()
     {
-        gameEndUI.TurnOnWastedSprite();
+        SoundManager.Instance.PlayClip(wastedClip, SoundPlayMode.UISFX);
+        QuestUIManager.Instance.ToastTitle("WASTED");
     }
-    public void TurnOnBustedSprite()
+    public void TurnOnBusted()
     {
-        gameEndUI.TurnOnBustedSprite();
+        SoundManager.Instance.PlayClip(bustedClip, SoundPlayMode.UISFX);
+        QuestUIManager.Instance.ToastTitle("BUSTED");
     }
-    public void TurnOnGameOverSprite()
+    public void TurnOnGameOver()
     {
-        gameEndUI.TurnOnGameOverSprite();
-    }
-    public void TurnOffEndUI()
-    {
-        gameEndUI.TurnOffEndUI();
+        SoundManager.Instance.PlayClip(gameOverClip, SoundPlayMode.UISFX);
+        QuestUIManager.Instance.ToastTitle("GAME OVER");
     }
 
     public void TurnOnItemText(ItemStatus itemState)

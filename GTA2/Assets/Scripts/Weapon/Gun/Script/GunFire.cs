@@ -17,9 +17,9 @@ public class GunFire : PlayerGun
         soundPlayDelta = .0f;
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
         soundPlayDelta += Time.deltaTime;
     }
 
@@ -27,7 +27,7 @@ public class GunFire : PlayerGun
     {
         if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
         {
-            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.WaitOneShotPlay);
+            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.OneShotPosPlay);
             soundPlayDelta = .0f;
         }
     }

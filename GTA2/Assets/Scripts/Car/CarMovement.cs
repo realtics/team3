@@ -112,7 +112,7 @@ public class CarMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.transform.tag == "Wall")
+        if (col.transform.CompareTag("Wall"))
         {
             curSpeed *= 0.25f;
             Vector3 inDirection = transform.forward;
@@ -124,20 +124,41 @@ public class CarMovement : MonoBehaviour
 			Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
             Debug.DrawLine(transform.position, transform.position + reboundForce, Color.red, 1f);
         }
-        else if (col.transform.tag == "Car")
+        else if (col.transform.CompareTag("Car"))
         {
             curSpeed *= 0.25f;
         }
 
-        if(col.transform.tag == "NPC" || col.transform.tag == "Player")
-        {
-			col.gameObject.GetComponent<People>().Runover(curSpeed, transform.position);
-        }
+		if (col.transform.CompareTag("NPC") || col.transform.CompareTag("Player"))
+		{
+			if (carManager.carState == CarManager.CarState.controlledByPlayer)
+			{
+				col.gameObject.GetComponent<People>().Runover(curSpeed, transform.position, true);
+			}
+			else
+			{
+				col.gameObject.GetComponent<People>().Runover(curSpeed, transform.position);
+			}
+		}
+		
     }
-
-    void OnCollisionStay(Collision col)
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.transform.CompareTag("NPC") || other.transform.CompareTag("Player"))
+		{
+			if (carManager.carState == CarManager.CarState.controlledByPlayer)
+			{
+				other.gameObject.GetComponent<People>().Runover(curSpeed * 10, transform.position, true);
+			}
+			else
+			{
+				other.gameObject.GetComponent<People>().Runover(curSpeed * 10, transform.position);
+			}
+		}
+	}
+	void OnCollisionStay(Collision col)
     {
-        if (col.transform.tag == "Wall" && Mathf.Abs(curSpeed) > 50)
+        if (col.transform.CompareTag("Wall") && Mathf.Abs(curSpeed) > 50)
         {
             curSpeed *= 0.9f;
         }

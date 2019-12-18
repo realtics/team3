@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class WaypointForCar : Waypoint
 {
     [HideInInspector]
@@ -47,9 +48,10 @@ public class WaypointForCar : Waypoint
     {
         base.OnObjectMoved();
 
-        foreach (var road in carRoadDict)
+		foreach (var road in carRoadDict)
         {
             road.Value.transform.position = transform.position;
+			road.Value.CalcLanePos();
         }
 
         foreach (WaypointForCar wp in prev)

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
+//[ExecuteAlways]
+[ExecuteInEditMode]
 public class Waypoint : MonoBehaviour
 {
     public Color gizmoColor = Color.yellow;
@@ -20,8 +21,8 @@ public class Waypoint : MonoBehaviour
     }
 
     protected virtual void Awake()
-    { 
-
+    {
+		oldPos = transform.position;
     }
 
     protected virtual void Update()
@@ -35,6 +36,6 @@ public class Waypoint : MonoBehaviour
 
     protected virtual void OnObjectMoved()
     {
-        
+		
     }
 }

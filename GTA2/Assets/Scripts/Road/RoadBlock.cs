@@ -28,6 +28,12 @@ public class RoadBlock : MonoBehaviour
 
 			CarManager cm = CarSpawnManager.Instance.SpawnPoliceCar(policeCarPositions[i].position);
 
+			if(cm == null)
+			{
+				gameObject.SetActive(false);
+				return;
+			}
+
 			cm.carState = CarManager.CarState.idle;
 			for (int j = 0; j < cm.passengerManager.passengers.Length; j++)
 			{

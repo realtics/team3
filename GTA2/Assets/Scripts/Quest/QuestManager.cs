@@ -27,7 +27,7 @@ public class QuestManager : MonoSingleton<QuestManager>
         activeQuestList = new List<Quest>();
         deactiveQuestList = GetComponentsInChildren<Quest>();
     }
-    
+
 
     public void StartQuest(Quest quest)
     {
@@ -51,6 +51,19 @@ public class QuestManager : MonoSingleton<QuestManager>
         frenzyMaxTime = maxTime;
         frenzyDelta = .0f;
     }
+
+    public void ResetQuest()
+    {
+        foreach (var item in activeQuestList)
+        {
+            item.DeleteQuest();
+        }
+        activeQuestList.Clear();
+
+        frenzyType = GunState.None;
+        QuestUIManager.Instance.OutKillFrenzy();
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -87,16 +100,16 @@ public class QuestManager : MonoSingleton<QuestManager>
                 frenzyType = GunState.None;
                 QuestUIManager.Instance.OutKillFrenzy();
                 QuestUIManager.Instance.ToastStartQuest("Frenzy Fail..", "");
-                SoundManager.Instance.PlayClip(frenzyFail, SoundPlayMode.OneShotPlay);
+                SoundManager.Instance.PlayClip(frenzyFail, SoundPlayMode.UISFX);
             }
             else if (curGoalKillCount <= 0)
             {
                 frenzyType = GunState.None;
                 QuestUIManager.Instance.OutKillFrenzy();
                 QuestUIManager.Instance.ToastStartQuest("Frenzy Passed!!", "");
-                SoundManager.Instance.PlayClip(frenzyPassed, SoundPlayMode.OneShotPlay);
+                SoundManager.Instance.PlayClip(frenzyPassed, SoundPlayMode.UISFX);
                 WantedLevel.instance.ResetWantedLevel();
-                GameManager.Instance.IncreaseMoney(100000);
+                GameManager.Instance.IncreaseMoney(50000);
             }
         }
     }

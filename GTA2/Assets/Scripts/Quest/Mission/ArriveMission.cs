@@ -10,8 +10,15 @@ public class ArriveMission : Quest
     public GameObject arrivePosTarget;
     void Start()
     {
-        questStatus = QuestStatus.Arrive;
+        questType = QuestType.Arrive;
     }
+
+
+    public override void DeleteQuest()
+    {
+    }
+
+
     public override void StartQuest()
     {
 

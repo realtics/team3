@@ -299,11 +299,10 @@ namespace DigitalRuby.LightningBolt
 
         public void Updated()
         {
-            if (gameObject.activeInHierarchy == false)
-            {
-                return;
-            }
-
+            //if (gameObject.activeInHierarchy == false)
+            //{
+            //    return;
+            //}
             orthographic = (Camera.main != null && Camera.main.orthographic);
             if (timer <= 0.0f)
             {

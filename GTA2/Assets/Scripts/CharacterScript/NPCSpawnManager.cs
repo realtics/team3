@@ -18,19 +18,24 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 	int maximumNPCNum;
 	float commitRadius = 0.3f;
 	public int NPCNum;
-	public int diedNPCNum = 0;
 
-    void Awake()
+	public List<NPC> DiedNPC;
+
+	public GameObject BloodAnim;
+	public List<GameObject> BloodAnimList;
+
+	void Awake()
 	{
 		PoolManager.WarmPool(citizen.gameObject, 150);
         PoolManager.WarmPool(police.gameObject, 100);
-		PoolManager.WarmPool(doctor.gameObject, 100);
+		PoolManager.WarmPool(doctor.gameObject, 10);
 
 		allNPC.AddRange(PoolManager.GetAllObject(citizen.gameObject));
         allNPC.AddRange(PoolManager.GetAllObject(police.gameObject));
 		allNPC.AddRange(PoolManager.GetAllObject(doctor.gameObject));
-		//allCitizen.AddRange(PoolManager.GetAllObject(citizen.gameObject));
-		//allPolice.AddRange(PoolManager.GetAllObject(police.gameObject));
+
+		PoolManager.WarmPool(BloodAnim.gameObject, 10);
+		BloodAnimList.AddRange(PoolManager.GetAllObject(BloodAnim.gameObject));
 	}
 	void Start()
 	{
@@ -39,13 +44,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 		StartCoroutine(SpawnCitizen());
 		StartCoroutine(SpawnPolice());
 	}
-	public void NPCRespawn()
-	{
-		foreach(GameObject npc in allNPC)
-		{
-			npc.SetActive(false);
-		}
-	}
+	
     IEnumerator SpawnCitizen()
     {
 		while(true)
@@ -53,6 +52,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 			yield return new WaitForSeconds(citizenSpawnInterval);
 
 			int spawnNum = Random.Range(0, maxSpawnCitizenNumInInterval);
+
 			for (int i = 0; i < spawnNum; i++)
 			{
 				GameObject closeWayPoint = WaypointManager.instance.FindRandomNPCSpawnPosition();
@@ -64,7 +64,6 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 				GameObject insNPC = PoolManager.SpawnObject(citizen.gameObject);
 				insNPC.transform.position = new Vector3(closeWayPoint.transform.position.x + Random.Range(-commitRadius, commitRadius), closeWayPoint.transform.position.y, closeWayPoint.transform.position.z + Random.Range(-commitRadius, commitRadius));
 			}
-			
 		}
     }
 	IEnumerator SpawnPolice()
@@ -93,7 +92,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 			}
 		}
 	}
-
+	
 	void MasterDataInit()
 	{
 		citizenSpawnInterval = npcSpawnData.citizenSpawnInterval;

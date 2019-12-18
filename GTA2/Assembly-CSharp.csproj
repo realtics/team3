@@ -96,12 +96,15 @@
     <Compile Include="Assets\Scripts\Game\Gta2Data.cs" />
     <Compile Include="Assets\Scripts\Game\WantedLevel.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
-    <Compile Include="Assets\Scripts\Item\KillFrenzy.cs" />
+    <Compile Include="Assets\Scripts\Item\ItemKillFrenzy.cs" />
+    <Compile Include="Assets\Scripts\Legacy\Branch.cs" />
     <Compile Include="Assets\Scripts\Legacy\CarDrive.cs" />
     <Compile Include="Assets\Scripts\Legacy\PathManager.cs" />
     <Compile Include="Assets\Scripts\Legacy\SetPool.cs" />
+    <Compile Include="Assets\Scripts\Legacy\WaypointEditor.cs" />
     <Compile Include="Assets\Scripts\MasterData\BulletInfo\BulletInformation.cs" />
     <Compile Include="Assets\Scripts\MasterData\CarInfo\CarData.cs" />
+    <Compile Include="Assets\Scripts\MasterData\CharactersInfo\Scripts\BloodEffect.cs" />
     <Compile Include="Assets\Scripts\MasterData\CharactersInfo\Scripts\CitizenData.cs" />
     <Compile Include="Assets\Scripts\MasterData\CharactersInfo\Scripts\DoctorData.cs" />
     <Compile Include="Assets\Scripts\MasterData\CharactersInfo\Scripts\NPCSpawnData.cs" />
@@ -119,7 +122,6 @@
     <Compile Include="Assets\Scripts\Quest\Phone.cs" />
     <Compile Include="Assets\Scripts\Quest\Quest.cs" />
     <Compile Include="Assets\Scripts\Quest\QuestManager.cs" />
-    <Compile Include="Assets\Scripts\Road\Branch.cs" />
     <Compile Include="Assets\Scripts\Road\CarRoad.cs" />
     <Compile Include="Assets\Scripts\Road\RoadBlock.cs" />
     <Compile Include="Assets\Scripts\Road\RoadBlockFence.cs" />
@@ -131,7 +133,6 @@
     <Compile Include="Assets\Scripts\Singleton\Singleton.cs" />
     <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\ButtonLongPress.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\GameEndUI.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\GetItemText.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\HeartImageList.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\LifeCount.cs" />

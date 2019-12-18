@@ -42,12 +42,7 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
 
     void InitPref()
     {
-        Image image = questArrowPref.GetComponent<Image>();
-        Material existingGlobalMat = image.materialForRendering;
-        Material updatedMaterial = new Material(existingGlobalMat);
-        updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);
-        image.material = updatedMaterial;
-
+        SetZUPMode(questArrowPref);
         PoolManager.WarmPool(questArrowPref, arrowPoolCount);
         PoolManager.WarmPool(scoreTextPref, scorePoolCount);
     }
@@ -55,8 +50,12 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
     void InitMainArrow()
     {
         goalPos = GameManager.Instance.goalObject.transform.position;
+        SetZUPMode(mainMissionArrowPref);
+    }
 
-        Image image = mainMissionArrowPref.GetComponent<Image>();
+    public void SetZUPMode(GameObject targetUI)
+    {
+        Image image = targetUI.GetComponent<Image>();
         Material existingGlobalMat = image.materialForRendering;
         Material updatedMaterial = new Material(existingGlobalMat);
         updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);

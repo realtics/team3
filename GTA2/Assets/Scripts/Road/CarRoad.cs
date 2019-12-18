@@ -20,6 +20,10 @@ public class CarRoad : MonoBehaviour
     {
         for (int i = 0; i < numOfLane; i++)
         {
+			if (laneStartPosition.Count < numOfLane ||
+				laneEndPosition.Count < numOfLane)
+				return;
+
             Gizmos.DrawSphere(laneStartPosition[i], 0.1f);
             Gizmos.DrawSphere(laneEndPosition[i], 0.1f);
 
@@ -40,8 +44,6 @@ public class CarRoad : MonoBehaviour
 
         parentWaypoint = parent;
         endWaypoint = end;
-
-        CalcLanePos();
     }
 
     void Update()
@@ -49,13 +51,8 @@ public class CarRoad : MonoBehaviour
         if(transform.position != oldPosition)
         {
             oldPosition = transform.position;
-            OnObjectMoved();
-        }
-    }
-
-    void OnObjectMoved()
-    {
-        CalcLanePos();
+			transform.position = transform.parent.position;
+		}
     }
 
     public void CalcLanePos()
@@ -64,8 +61,6 @@ public class CarRoad : MonoBehaviour
 
 		if (parentWaypoint.prev.Count > 0)
 		{
-			//Vector3 averageForward = (parentWaypoint.prev[0].transform.forward + endWaypoint.transform.forward).normalized;
-
 			Vector3 avgDir = (endWaypoint.transform.position - parentWaypoint.prev[0].transform.position).normalized;
 			Vector3 avgLeft = Vector3.Cross(avgDir, Vector3.up);
 
@@ -73,12 +68,8 @@ public class CarRoad : MonoBehaviour
 		}
 		else
 		{
-			print("asfd");
 			parentWaypoint.transform.LookAt(endWaypoint.transform.position, Vector3.up);
 		}
-
-		//parentWaypoint.transform.LookAt(endWaypoint.transform.position, Vector3.up);
-		//endWaypoint.transform.rotation = parentWaypoint.transform.rotation;
 
 		Vector3 startLeft = parentWaypoint.transform.right * -1;
 		Vector3 endLeft = endWaypoint.transform.right * -1;

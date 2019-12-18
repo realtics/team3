@@ -18,7 +18,7 @@ public class PlayerGun : Gun
         base.InitGun();
     }
 
-    public void ResetBulletCount()
+    public virtual void ResetBulletCount()
     {
         bulletCount = 0;
     }
@@ -29,7 +29,7 @@ public class PlayerGun : Gun
         player = userObject.GetComponent<Player>();
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
         if (player == null)
         {

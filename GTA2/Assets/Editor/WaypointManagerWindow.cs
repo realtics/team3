@@ -14,8 +14,6 @@ public class WaypointManagerWindow : EditorWindow
 
     public Transform waypointCarRoot;
     public Transform waypointHumanRoot;
-    public GameObject roadPrefab;
-    public Transform roadObjRoot;
 
     GameObject wpConnectPosA = null;
 
@@ -24,8 +22,6 @@ public class WaypointManagerWindow : EditorWindow
         SerializedObject obj = new SerializedObject(this);
         EditorGUILayout.PropertyField(obj.FindProperty("waypointCarRoot"));
         EditorGUILayout.PropertyField(obj.FindProperty("waypointHumanRoot"));
-        EditorGUILayout.PropertyField(obj.FindProperty("roadPrefab"));
-        EditorGUILayout.PropertyField(obj.FindProperty("roadObjRoot"));
 
         EditorGUILayout.BeginVertical("box");
         DrawButtons();
@@ -64,24 +60,27 @@ public class WaypointManagerWindow : EditorWindow
             }
         }
 
-        GUILayout.Space(10);
-
-        if(roadPrefab != null)
-        {
-            if (GUILayout.Button("도로 자동 생성", GUILayout.Height(40)))
-            {
-                GenerateRoadObject();
-            }
-        }
-        else
-        {
-            EditorGUILayout.HelpBox("roadPrefab 이 없음", MessageType.Warning);
-        }
+		if(GUILayout.Button("차선 위치 재계산", GUILayout.Height(40)))
+		{
+			RecalcAllLanePositions();
+		}
     }
+
+	void FindWaypointCarRoot()
+	{
+		waypointCarRoot = GameObject.Find("[WaypointforCar]").transform;
+	}
+	void FindWaypointHumanRoot()
+	{
+		waypointHumanRoot = GameObject.Find("[WaypointforHuman]").transform;
+	}
 
     void CreateCarWaypoint()
     {
-        GameObject waypointObj = new GameObject("WP " + waypointCarRoot.childCount, typeof(WaypointForCar));
+		if (waypointCarRoot == null)
+			FindWaypointCarRoot();
+
+        GameObject waypointObj = new GameObject("WPC " + waypointCarRoot.childCount, typeof(WaypointForCar));
         waypointObj.tag = "waypoint";
         waypointObj.transform.SetParent(waypointCarRoot, false);
 
@@ -103,7 +102,10 @@ public class WaypointManagerWindow : EditorWindow
     }
     void CreateHumanWaypoint()
     {
-        GameObject waypointObj = new GameObject("WaypointForHuman " + waypointHumanRoot.childCount, typeof(WaypointForHuman));
+		if (waypointHumanRoot == null)
+			FindWaypointHumanRoot();
+
+		GameObject waypointObj = new GameObject("WPH " + waypointHumanRoot.childCount, typeof(WaypointForHuman));
         waypointObj.tag = "waypointForHuman";
         waypointObj.transform.SetParent(waypointHumanRoot, false);
         WaypointForHuman newWaypoint = waypointObj.GetComponent<WaypointForHuman>();
@@ -161,7 +163,7 @@ public class WaypointManagerWindow : EditorWindow
         if(selected.GetComponent<Waypoint>() != null)
         {
             wpConnectPosA = selected;
-            Debug.Log("선택됨");
+            Debug.Log("웨이포인트 연결: 시작 지점 선택됨");
         }        
     }
 
@@ -215,35 +217,13 @@ public class WaypointManagerWindow : EditorWindow
         }
     }
 
-    void GenerateRoadObject()
-    {
-        //// 기존의 도로를 다 지움
-        //while (roadObjRoot.childCount != 0)
-        //{
-        //    DestroyImmediate(roadObjRoot.GetChild(0).gameObject);
-        //}
+	void RecalcAllLanePositions()
+	{
+		CarRoad[] allRoads = GameObject.FindObjectsOfType<CarRoad>();
 
-        //// 새로 만들기.
-        //List<Vector3> roadSegment = new List<Vector3>();
-        //foreach (var waypoint in GameObject.FindGameObjectsWithTag("waypoint"))
-        //{
-        //    foreach (var b in waypoint.GetComponent<Waypoint>().branchDict)
-        //    {
-        //        Vector3 dir = (b.Value.transform.position - waypoint.transform.position);
-        //        Vector3 pos = waypoint.transform.position + (dir / 2);
-
-        //        if (roadSegment.Contains(pos))
-        //            continue;
-
-        //        GameObject go = Instantiate(roadPrefab, roadObjRoot);
-
-        //        go.transform.right = dir.normalized;
-        //        go.transform.Rotate(90, 0, 0);
-        //        go.transform.position = pos;
-        //        go.transform.localScale = new Vector3(dir.magnitude,1,1);
-
-        //        roadSegment.Add(go.transform.position);
-        //    }            
-        //}
-    }
+		foreach (var r in allRoads)
+		{
+			r.CalcLanePos();
+		}
+	}
 }

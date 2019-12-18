@@ -9,9 +9,6 @@ public class Police : NPC
 	void Awake()
 	{
 		gameManager = GameManager.Instance;
-	}
-	void Start()
-	{
 		MasterDataInit();
 	}
 	private void OnEnable()
@@ -239,17 +236,52 @@ public class Police : NPC
 
     public override void Rising()
     {
-        //경찰은 맞아도 일어 나기만 함
-        isDown = false;
+		boxCollider.isTrigger = false;
+		rigidbody.isKinematic = false;
+		//경찰은 맞아도 일어 나기만 함
+		isDown = false;
     }
 	protected override void Die() //리스폰 필요
 	{
+		if (isDie)
+			return;
 		isDie = true;
 		gunList[0].GetComponent<NPCGun>().StopShot();
 		gunList[1].GetComponent<NPCGun>().StopShot();
 		GameManager.Instance.IncreaseMoney(money);
 		rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
+		NPCSpawnManager.Instance.DiedNPC.Add(this);
+		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.OneShotPlay, gameObject.transform.position);
+	}
+	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
+	{
+		if (runoverSpeed < runoverMinSpeed)
+			return;
+		Vector3 runoverVector = transform.position - carPosition;
+
+		//속도에 비례한 피해 데미지 보정수치
+		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+		this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
+		isRunover = true;
+		hDir = 0; vDir = 0;
+
+		transform.LookAt(carPosition);
+		
+		if (isRunoverByPlayer)
+		{
+			print("보정전 수치 : " + runoverSpeed);
+		}
+		if (runoverSpeed > runoverHurtMinSpeed)
+		{
+			Hurt((int)(runoverSpeed / 3));
+		}
+		if (isRunoverByPlayer && isDie)
+		{
+			GameManager.Instance.IncreaseMoney(money);
+			WorldUIManager.Instance.SetScoreText(transform.position, money);
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
+		}
 	}
 	#endregion
 }

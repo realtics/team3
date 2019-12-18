@@ -60,7 +60,7 @@ public class CarManager : MonoBehaviour
         if (carState == CarState.destroied)
             return;
 
-        OnDestroy(isDamagedByPlayer);
+        OnDestroy?.Invoke(isDamagedByPlayer);
         carState = CarState.destroied;
     }
 
@@ -142,7 +142,12 @@ public class CarManager : MonoBehaviour
                 pos.x > 1 + offset ||
                 pos.y < 0 - offset ||
                 pos.y > 1 + offset)
-                gameObject.SetActive(false);
+			{
+				gameObject.SetActive(false);
+				if (carType == CarType.ambulance)
+					GameManager.Instance.spawnedAmbulanceNum--;
+			}
+                
 
             yield return new WaitForSeconds(1.0f);
         }

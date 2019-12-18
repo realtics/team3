@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punchClip: {fileID: 8300000, guid: e82ddb4a270ef534d98e622fb70a5c3c, type: 3}
   rigidbody: {fileID: 0}
+  boxCollider: {fileID: 0}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -228,8 +229,27 @@ MonoBehaviour:
   animator: {fileID: 6719746030818589620}
   animator_cloth: {fileID: 0}
   gunList: []
+  runAwayClip: []
+  dieClip:
+  - {fileID: 8300000, guid: ca05803542317634088e3e28d87d204f, type: 3}
+  - {fileID: 8300000, guid: dc44f1dcad652a34fa6f4f0633aaf2e1, type: 3}
+  - {fileID: 8300000, guid: 41f026f655636fb49914c43ccc67d9f3, type: 3}
+  - {fileID: 8300000, guid: 33f83b42ab00b144995472f8ef6ad13d, type: 3}
+  - {fileID: 8300000, guid: 91b2761a5cfaa1b49a341f931e3bd098, type: 3}
+  - {fileID: 8300000, guid: dced131b10690af4f8e5b67926e526a9, type: 3}
+  - {fileID: 8300000, guid: bde4992c9f828b14c93576caba60dfd8, type: 3}
+  - {fileID: 8300000, guid: 5185efce1a5402f4b8bd709ad00c8929, type: 3}
+  - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
+  - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
+  - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
   citizenData: {fileID: 11400000, guid: feb62588e799dab4b9e27b12c2e6e3a2, type: 2}
   ClothSpriteRenderer: {fileID: 0}
+  downClip:
+  - {fileID: 8300000, guid: aba324e82ccfacd4aa5e2e9ef40b1a63, type: 3}
+  - {fileID: 8300000, guid: 074fef71a3f2a874c8d61c067439bdcd, type: 3}
+  - {fileID: 8300000, guid: f858df90786b0c14193dc011ab4354be, type: 3}
+  - {fileID: 8300000, guid: b3006e004bd65fc479e0246b0c8db441, type: 3}
+  - {fileID: 8300000, guid: d56d0fe5d354d474e8596f7f162db388, type: 3}
 --- !u!65 &1943857040746528397
 BoxCollider:
   m_ObjectHideFlags: 0

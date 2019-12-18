@@ -120,8 +120,7 @@ public class CarDamage : MonoBehaviour
 
     void OnCarDestroy(bool isDamagedByPlayer)
     {
-        maxSpdMultiplier = 0.0f;
-
+		maxSpdMultiplier = 0.0f;
         GameManager.Instance.IncreaseMoney(data.score);
         WorldUIManager.Instance.SetScoreText(transform.position, data.score);
 

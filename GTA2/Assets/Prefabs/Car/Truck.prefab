@@ -40,7 +40,8 @@ AudioSource:
   m_GameObject: {fileID: 655202210745652134}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9051957212427097370, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: bed2a077ef626aa4aa26546dc192f9f5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -375,6 +376,8 @@ MonoBehaviour:
   doorAnimator:
   - {fileID: 4449719813990466610}
   passengers: 02000000
+  doorOpenClip: {fileID: 8300000, guid: 942964f0c7efb62488976c8c9f5d91ef, type: 3}
+  doorCloseClip: {fileID: 8300000, guid: 5ad168267f1ca644b999b5f7b16a9e88, type: 3}
   isRunningOpenTheDoor: 0000
   isRunningCloseTheDoor: 0000
 --- !u!114 &2650051141572261153
@@ -24672,8 +24675,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1291112879
+  m_SortingLayer: 7
   m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 0
@@ -39261,8 +39264,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1291112879
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -44153,7 +44156,8 @@ AudioSource:
   m_GameObject: {fileID: 4185038299712157355}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9051957212427097370, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 820dd6f0955989241bdd3a6e0c8c7872, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7

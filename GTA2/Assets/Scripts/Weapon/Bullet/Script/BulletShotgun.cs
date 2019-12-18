@@ -13,8 +13,8 @@ public class BulletShotgun : Bullet
 
 
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
     }
 }

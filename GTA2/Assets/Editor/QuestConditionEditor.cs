@@ -7,8 +7,6 @@ using UnityEditor;
 public class QuestConditionEditor : EditorWindow
 {
     public GameObject killPref;
-    public GameObject arrivePref;
-    public GameObject carryPref;
 
 
 
@@ -22,8 +20,6 @@ public class QuestConditionEditor : EditorWindow
     {
         SerializedObject obj = new SerializedObject(this);
         EditorGUILayout.PropertyField(obj.FindProperty("killPref"));
-        EditorGUILayout.PropertyField(obj.FindProperty("arrivePref"));
-        EditorGUILayout.PropertyField(obj.FindProperty("carryPref"));
 
         EditorGUILayout.BeginVertical("box");
         DrawButtons();
@@ -37,17 +33,7 @@ public class QuestConditionEditor : EditorWindow
         if (GUILayout.Button("Create Kill Mission", GUILayout.Height(40)))
         {
             CreateKillMission();
-        }
-        if (GUILayout.Button("Create Arrive Mission", GUILayout.Height(40)))
-        {
-            // CreateHumanWaypoint();
-        }
-        if (GUILayout.Button("Create Carry Mission", GUILayout.Height(40)))
-        {
-            // RemoveWaypoint();
-        }
-
-       
+        }       
         GUILayout.Space(10);
 
     }

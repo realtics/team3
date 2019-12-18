@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillFrenzy : Item
+public class ItemKillFrenzy : Item
 {
     [SerializeField]
     GunState frenzyGun;

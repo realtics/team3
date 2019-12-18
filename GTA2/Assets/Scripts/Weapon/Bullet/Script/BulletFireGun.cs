@@ -12,9 +12,9 @@ public class BulletFireGun : Bullet
 
 
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
     }
 
     protected void OnCollisionEnter(Collision collision)

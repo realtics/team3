@@ -48,7 +48,6 @@ public class BulletEffect : MonoBehaviour
         {
             return;
         }
-        
 
         releaseDelta += Time.deltaTime;
         if (releaseDelta > stopTime)

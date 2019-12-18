@@ -105,7 +105,7 @@ public abstract class Gun : MonoBehaviour
 
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         UpdateDirection();
         UpdateDelta();
@@ -143,6 +143,6 @@ public abstract class Gun : MonoBehaviour
     }
     protected virtual void SFXPlay()
     {
-        SoundManager.Instance.PlayClipToPosition(gunSound, SoundPlayMode.WaitOneShotPlay, userObject.transform.position);
+        SoundManager.Instance.PlayClipToPosition(gunSound, SoundPlayMode.OneShotPosPlay, userObject.transform.position);
     }
 }

@@ -71,6 +71,15 @@ TagManager:
   - name: CarDelta
     uniqueID: 4235255553
     locked: 0
+  - name: Human
+    uniqueID: 1024696773
+    locked: 0
   - name: TrafficLight
     uniqueID: 1734009163
+    locked: 0
+  - name: Effect
+    uniqueID: 1291112879
+    locked: 0
+  - name: WorldUI
+    uniqueID: 2400794299
     locked: 0

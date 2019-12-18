@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum QuestStatus
+{
+    Ready,
+    Complete,
+    Perform,
+    Failed,
+    GiveUp,
+    End,
+}
+
+public enum QuestType
 {
     Kill,
     Arrive,
@@ -30,13 +41,14 @@ public abstract class Quest : MonoBehaviour
     protected GameObject phoneArrowPref;
 
     protected QuestStatus questStatus;
-    protected bool isCorrect;
+    protected QuestType questType;
     protected GameObject questArrow;
     protected GameObject phoneArrow;
 
     protected float correctAndOffTime = 5.0f;
     protected float correctAndOffDel = .0f;
 
+    public abstract void DeleteQuest();
     public abstract void StartQuest();
     public abstract bool CheckCondition();
     public abstract void PushReward();

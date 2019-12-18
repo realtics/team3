@@ -23,11 +23,10 @@ public class GameManager : MonoSingleton<GameManager>
     double gameTime;
 
 
-	public int spawnedAmbulance = 0;
+	public int spawnedAmbulanceNum { get; set; } = 0;
 	public Vector3 ambulanceTarget;
 
-
-    void Start()
+    void Awake()
     {
         gameTime = .0f;
         killCount = 0;
@@ -36,6 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
         Application.targetFrameRate = 60;
         //Screen.SetResolution(720, 1280, true);
 
+        goalObject.SetActive(false);
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 		StartCoroutine(CheckEmbulanceCall());
     }
@@ -49,6 +49,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (money >= goalMoney /*&& !isMissionSuccess*/)
         {
+            goalObject.SetActive(true);
             WorldUIManager.Instance.SuccessMainMission();
             isMissionSuccess = true;
         }
@@ -64,7 +65,6 @@ public class GameManager : MonoSingleton<GameManager>
 
 	public void RespawnSetting()
 	{
-		NPCSpawnManager.Instance.NPCRespawn();
 		if (remains == 0)//RIP
 		{
 			SaveGta2Data();
@@ -147,10 +147,11 @@ public class GameManager : MonoSingleton<GameManager>
 					break;
 				}
 			}
-			if (NPCSpawnManager.Instance.diedNPCNum > 5 && spawnedAmbulance < 1)
+			if (NPCSpawnManager.Instance.DiedNPC.Count > 1 &&
+				spawnedAmbulanceNum < 1)
 			{
-				CarSpawnManager.Instance.SpawnAmbulanceCar(WaypointManager.instance.FindRandomWaypointOutOfCameraView(WaypointManager.WaypointType.car).transform.position);
-				spawnedAmbulance++;
+				CarSpawnManager.Instance.SpawnAmbulanceCar(WaypointManager.instance.FindRandomCarSpawnPosition().transform.position);
+				spawnedAmbulanceNum++;
 			}
 
 			yield return new WaitForSeconds(5.0f);

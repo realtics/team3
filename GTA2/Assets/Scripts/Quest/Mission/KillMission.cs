@@ -12,56 +12,62 @@ public class KillMission : Quest
     int rewardMoney;
 
 
-    UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
-
     void Awake()
     {
-        isCorrect = false;
-        questStatus = QuestStatus.Kill;
+        questStatus = QuestStatus.Ready;
+        questType = QuestType.Kill;
         killTarget.gameObject.SetActive(false);
 
         phoneArrow = Instantiate(phoneArrowPref);
         phoneArrow.transform.parent = WorldUIManager.Instance.transform;
-
-        Image image = phoneArrow.GetComponent<Image>();
-        Material existingGlobalMat = image.materialForRendering;
-        Material updatedMaterial = new Material(existingGlobalMat);
-        updatedMaterial.SetInt("unity_GUIZTestMode", (int)comparison);
-        image.material = updatedMaterial;
+        WorldUIManager.Instance.SetZUPMode(phoneArrow);
     }
 
     void Update()
     {
-        if (isCorrect)
+        switch (questStatus)
         {
-            correctAndOffDel += Time.deltaTime;
-            if (correctAndOffTime < correctAndOffDel)
-            {
-                gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            if (questArrow == null)
-            {
+            case QuestStatus.Ready:                
                 WorldUIManager.Instance.UpdateArrow(phoneArrow, startPhone.transform.position);
-                return;
-            }
-
-            WorldUIManager.Instance.UpdateArrow(questArrow, killTarget.transform.position);
+                break;
+            case QuestStatus.Complete:
+                correctAndOffDel += Time.deltaTime;
+                if (correctAndOffTime < correctAndOffDel)
+                {
+                    gameObject.SetActive(false);
+                }
+                break;
+            case QuestStatus.Perform:
+                WorldUIManager.Instance.UpdateArrow(questArrow, killTarget.transform.position);
+                break;
+            case QuestStatus.Failed:
+                break;
+            case QuestStatus.GiveUp:
+                break;
+            case QuestStatus.End:
+            default:
+                break;
         }
     }
 
 
+    public override void DeleteQuest()
+    {
+        questStatus = QuestStatus.Failed;
+        killTarget.gameObject.SetActive(false);
+        phoneArrow.gameObject.SetActive(false);
+        WorldUIManager.Instance.despwanArrow(questArrow);
+    }
     public override void StartQuest()
     {
+        questStatus = QuestStatus.Perform;
         killTarget.gameObject.SetActive(true);
         phoneArrow.gameObject.SetActive(false);
         QuestManager.Instance.StartQuest(this);
         QuestUIManager.Instance.ToastStartQuest(title, infoPath);
 
 
-        SoundManager.Instance.PlayClip(startClip, SoundPlayMode.OneShotPlay);
+        SoundManager.Instance.PlayClip(startClip, SoundPlayMode.UISFX);
         questArrow = WorldUIManager.Instance.SpwanArrow();
         questArrow.transform.parent = WorldUIManager.Instance.transform;
     }
@@ -70,9 +76,6 @@ public class KillMission : Quest
     {
         if (killTarget.isDie)
         {
-            WorldUIManager.Instance.despwanArrow(questArrow);
-            WantedLevel.instance.ResetWantedLevel();
-            SoundManager.Instance.PlayClip(completeClip, SoundPlayMode.OneShotPlay);
             return true;
         }
         return false;
@@ -80,9 +83,12 @@ public class KillMission : Quest
 
     public override void PushReward()
     {
+        questStatus = QuestStatus.Complete;
+        WorldUIManager.Instance.despwanArrow(questArrow);
+        SoundManager.Instance.PlayClip(completeClip, SoundPlayMode.UISFX);
+        WantedLevel.instance.ResetWantedLevel();
         QuestUIManager.Instance.ToastEndQuest(endPath);
         GameManager.Instance.IncreaseMoney(rewardMoney);
-        isCorrect = true;
     }
 
     void OnDrawGizmos()

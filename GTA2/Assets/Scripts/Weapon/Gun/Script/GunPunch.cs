@@ -9,8 +9,11 @@ public class GunPunch : PlayerGun
         base.Init();
         base.InitGun();
     }
-
-    protected override void Update()
+    public override void ResetBulletCount()
+    {
+        bulletCount = 1;
+    }
+    protected override void FixedUpdate()
     {
         if (player == null)
         {

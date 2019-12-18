@@ -22,7 +22,7 @@ public class QuestUIManager : MonoSingleton<QuestUIManager>
     [SerializeField]
     GameObject frenzyAlarm;
 
-    float toastTime = 5.0f;
+    float toastTime = 3.0f;
     float toastDel;
 
 
@@ -35,7 +35,12 @@ public class QuestUIManager : MonoSingleton<QuestUIManager>
         ToastStartQuest("START!!", "");
         killFrenzyBoard.SetActive(false);
     }
-
+    public void ToastTitle(string title)
+    {
+        toastDel = .0f;
+        this.title.text = title;
+        this.info.text = "";
+    }
     public void ToastStartQuest(string title, string info)
     {
         toastDel = .0f;

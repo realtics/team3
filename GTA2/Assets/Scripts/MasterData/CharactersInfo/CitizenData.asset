@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f0fd7590248dc4dae8a98a89649b3d, type: 3}
   m_Name: CitizenData
   m_EditorClassIdentifier: 
-  maxHp: 50
+  maxHp: 100
   moveSpeed: 1
   runawaySpeed: 1.3
   downTime: 3

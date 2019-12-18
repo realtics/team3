@@ -66,7 +66,7 @@ public class Player : People
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
         {
-            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.WaitOneShotPlay, transform.position);
+            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.OneShotPosPlay, transform.position);
             int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
 			isBusted = true;
 			Hurt(bulletDamage);
@@ -140,8 +140,6 @@ public class Player : People
 	}
     public void Respawn()
     {
-		UIManager.Instance.TurnOffEndUI();
-		
         if (isBusted)
         {
 			//Invoke("Down", 0.2f);
@@ -365,6 +363,7 @@ public class Player : People
 		defaultHp = playerData.maxHp;
 		hp = playerData.maxHp;
 		moveSpeed = playerData.moveSpeed;
+		runoverTime = 0.5f;
 	}
 	#endregion
 	#region overrideMethod
@@ -396,13 +395,15 @@ public class Player : People
 		if (isDie)
 			return;
 		isDie = true;
-		rigidbody.isKinematic = true;
+        
+        rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
 		hDir = 0; vDir = 0;
 
 		GameOverUISetting();
 		WantedLevel.instance.ResetWantedLevel();
 		CameraController.Instance.ZoomIn();
+        QuestManager.Instance.ResetQuest();
 	}
 
     protected override void UpdateTargetRotation()
@@ -424,7 +425,7 @@ public class Player : People
             return;
         }
     }
-	public override void Runover(float runoverSpeed, Vector3 carPosition)
+	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isPlayer = false) //마지막 매개변수 사용하지 않음
 	{
 		if ((runoverSpeed < runoverMinSpeedInChasing && isChasingCar))
 			return;
@@ -581,15 +582,15 @@ public class Player : People
 		if (--GameManager.Instance.remains == 0)
 		{
 			//GameOver;
-			UIManager.Instance.TurnOnGameOverSprite();
+			UIManager.Instance.TurnOnGameOver();
 		}
 		else if (isBusted)
 		{
-			UIManager.Instance.TurnOnBustedSprite();
+			UIManager.Instance.TurnOnBusted();
 		}
 		else //isWasted
 		{
-			UIManager.Instance.TurnOnWastedSprite();
+			UIManager.Instance.TurnOnWasted();
 		}
 	}
 	void ShotAnimation()

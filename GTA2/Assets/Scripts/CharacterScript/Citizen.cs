@@ -7,19 +7,19 @@ public class Citizen : NPC
 {
 	public CitizenData citizenData;
 	public SpriteRenderer ClothSpriteRenderer;
+	public AudioClip[] downClip;
+
     void Awake()
     {
 		gameManager = GameManager.Instance;
+		jumpTime = 0.5f;
+		MasterDataInit();
+		
 	}
 
-    void Start()
-    {
-		MasterDataInit();
-	}
 	private void OnEnable()
 	{
 		base.NPCOnEnable();
-		StartCoroutine(ActivityByState());
 		ClothSpriteRenderer.color = new Color(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
 	}
 	
@@ -29,12 +29,13 @@ public class Citizen : NPC
 	}
 	void Update()
     {
-        base.PeopleUpdate();
 		base.NPCUpdate();
+		base.PeopleUpdate();
+
 		if (isDie || isDown)
             return;
-
-        TimerCheck();
+		
+		TimerCheck();
     }
 	
 	void FixedUpdate()
@@ -47,9 +48,12 @@ public class Citizen : NPC
         }
         else if (isWalk)
         {
-            base.Move();
-        }
-    }
+			base.Raycast();
+			base.Move();
+		}
+		else
+			base.Raycast();
+	}
 	void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.CompareTag("Wall") && collision.gameObject.CompareTag("Car") && isRunaway)
@@ -58,21 +62,7 @@ public class Citizen : NPC
 		}
 	}
 	#region lowlevelCode
-	IEnumerator ActivityByState()
-    {
-        while(true)
-        {
-            if (isDie || isDown)
-                yield break;
-            
-            else if (isWalk)
-            {
-                base.Raycast();
-            }
 
-            yield return new WaitForSeconds(0.3f);
-        }
-    }
     void TimerCheck()
     {
         patternChangeTimer += Time.deltaTime;
@@ -109,6 +99,7 @@ public class Citizen : NPC
 	#region override_method
 	public override void Down()
     {
+		SoundManager.Instance.PlayClipToPosition(downClip[Random.Range(0, downClip.Length)], SoundPlayMode.OneShotPosPlay, gameObject.transform.position);
 		boxCollider.isTrigger = true;
 		rigidbody.isKinematic = true;
 		isDown = true;
@@ -117,35 +108,44 @@ public class Citizen : NPC
 
     public override void Rising()
     {
-        transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
+		boxCollider.isTrigger = false;
+		rigidbody.isKinematic = false;
+		isDown = false;
+		transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
         transform.Rotate(0, 180, 0);
         isRunaway = true;
         patternChangeTimer = 0.0f;
     }
-	public override void Runover(float runoverSpeed, Vector3 carPosition)
+	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
 	{
-		Vector3 runoverVector = transform.position - carPosition;
-
-		if (runoverSpeed < 50)
+		if (runoverSpeed < runoverMinSpeed)
 			return;
+		Vector3 runoverVector = transform.position - carPosition;
 
 		//속도에 비례한 피해 데미지 보정수치
 		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
+		this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
 		isRunover = true;
 		hDir = 0; vDir = 0;
-
+		
 		transform.LookAt(carPosition);
-
-		if (isDown && runoverSpeed > 30)
-		{
-			Hurt((int)(runoverSpeed * 4));
-		}
-		else if (runoverSpeed > 200)
-		{
-			Hurt((int)(runoverSpeed / 4));
-		}
 		SetRunaway();
+		if(isRunoverByPlayer)
+		{
+			print("보정전 수치 : " + runoverSpeed);
+		}
+		if (runoverSpeed > runoverHurtMinSpeed)
+		{
+			Hurt((int)(runoverSpeed / 3));
+		}
+		if (isRunoverByPlayer && isDie)
+		{
+			GameManager.Instance.IncreaseMoney(money);
+			WorldUIManager.Instance.SetScoreText(transform.position, money);
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
+		}
 	}
+
+
 	#endregion
 }

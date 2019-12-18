@@ -10,6 +10,7 @@ public class CarEffects : MonoBehaviour
     public GameObject sirenL;
     public GameObject sirenR;
     public float sirenSpeed;
+	bool isSirenOn = false;
 
     public GameObject lightFL, lightFR, lightRL, lightRR;
     public GameObject deltaFL, deltaFR, deltaRL, deltaRR;
@@ -74,8 +75,10 @@ public class CarEffects : MonoBehaviour
             explosionParticle = Instantiate(explosionPref).GetComponent<ExplosionEffect>();
             explosionParticle.gameObject.transform.parent = PoolManager.Instance.transform;
             explosionParticle.gameObject.name = "CarExplosion";
-        }            
-    }
+        }
+
+		TurnOffSiren();
+	}
 
     void Update()
     {
@@ -100,19 +103,30 @@ public class CarEffects : MonoBehaviour
 
     public void TurnOnSiren()
     {
+		if (isSirenOn)
+			return;
+
         StopAllCoroutines();
 
         if (sirenL != null && sirenR != null)
         {
 			if (audioSourceSiren != null)
 				audioSourceSiren.Play();
+
+			isSirenOn = true;
+
 			StartCoroutine(SirenCor());
         }
     }
 
     public void TurnOffSiren()
     {
-        StopAllCoroutines();
+		if (sirenL == null)
+			return;
+
+		isSirenOn = false;
+
+		StopAllCoroutines();
 		if(audioSourceSiren != null)
 			audioSourceSiren.Stop();
         sirenL.SetActive(false);

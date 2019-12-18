@@ -24,11 +24,11 @@ public abstract class People : MonoBehaviour
 	protected float downTime;
 
 	float runoverTimer = 0.0f;
-	float runoverTime = 1.0f;
-
+	protected float runoverTime = 1.0f;
+	
 	//Physics
 	public Rigidbody rigidbody;
-	protected BoxCollider boxCollider;
+	public BoxCollider boxCollider;
 	protected float rotateSpeed;
 	protected float moveSpeed;
 
@@ -37,8 +37,8 @@ public abstract class People : MonoBehaviour
 	protected Vector3 targetDirectionVector = Vector3.zero;
 	protected Vector3 runoverVector;
 	protected float runoverSpeed;
-	protected float runoverMinSpeed = 100;
-
+	protected float runoverMinSpeed = 80;
+	protected float runoverHurtMinSpeed = 100;
 	protected RaycastHit hit;
 	[Header("이 오브젝트와 작동할 Layer")]
 	public LayerMask collisionLayer;
@@ -57,8 +57,10 @@ public abstract class People : MonoBehaviour
 	public bool isRunover { get; set; }
 	public bool isGetOnTheCar { get; set; }//문여는 모션
 
+	BulletEffect bloodEffect;
+
 	//abstract
-    protected abstract void Die();
+	protected abstract void Die();
 
     protected virtual void Move()
     {
@@ -84,8 +86,11 @@ public abstract class People : MonoBehaviour
 	public void Hurt(int damage)
     {
         hp -= damage;
+		GameObject bloodGameObject = PoolManager.SpawnObject(NPCSpawnManager.Instance.BloodAnim);
+		bloodGameObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+		bloodGameObject.transform.Rotate(90, 0, 0);
 
-        if (hp <= 0)
+		if (hp <= 0)
         {
             Die();
             isDie = true;
@@ -93,6 +98,8 @@ public abstract class People : MonoBehaviour
     }
     public void PeopleUpdate()
     {
+		if (isDie)
+			return;
         if (isDown)
             DownCheck();
         else if(isRunover)
@@ -109,7 +116,7 @@ public abstract class People : MonoBehaviour
 			return false;
 	}
 	#region lowlevelCode
-	public virtual void Runover(float runoverSpeed, Vector3 carPosition)
+	public virtual void Runover(float runoverSpeed, Vector3 carPosition, bool Player = false)
     {
 		if (runoverSpeed < runoverMinSpeed)
 			return;
@@ -123,13 +130,9 @@ public abstract class People : MonoBehaviour
 
         transform.LookAt(carPosition);
 
-        if(isDown && runoverSpeed > 10)
-        {
-            Hurt(9999);
-        }
-		else if (runoverSpeed > 200)
+        if (runoverSpeed > runoverHurtMinSpeed)
 		{
-			Hurt((int)(runoverSpeed / 4));
+			Hurt((int)(runoverSpeed / 2));
 		}
     }
 	public void Jump()

@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\QuestConditionEditor.cs" />
-    <Compile Include="Assets\Editor\WaypointEditor.cs" />
     <Compile Include="Assets\Editor\WaypointManagerWindow.cs" />
     <Compile Include="Assets\SubAsset\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
     <Compile Include="Assets\SubAsset\JMO Assets\WarFX\Editor\CFX_SpawnSystemEditor.cs" />

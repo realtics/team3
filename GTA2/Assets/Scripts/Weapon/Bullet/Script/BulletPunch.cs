@@ -13,9 +13,9 @@ public class BulletPunch : Bullet
         base.Awake();
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
         UpdatePunchPos();
     }
 

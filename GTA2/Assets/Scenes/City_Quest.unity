@@ -27898,9 +27898,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   citizen: {fileID: 4854462067376813249, guid: d3dcf17b1dc39f945a7d4b4ac377027e, type: 3}
   police: {fileID: 8897160060990038603, guid: d5dcadd957bf55e4eba70902d22a3c01, type: 3}
+  doctor: {fileID: -8903785580352105579, guid: 7b5a8d914856ce3438f29da35e1c742e, type: 3}
   allNPC: []
   npcSpawnData: {fileID: 11400000, guid: 251a3936dd849cf499b1408e240358a9, type: 2}
   NPCNum: 0
+  diedNPCNum: 0
 --- !u!1 &1713826151
 GameObject:
   m_ObjectHideFlags: 0

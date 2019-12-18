@@ -6,30 +6,31 @@ using UnityEngine;
 public class Doctor : NPC
 {
 	public DoctorData doctorData;
-	NPC[] healTargets;
-	public List<NPC> DiedNPC;
+	public NPC targetNPC;
 	float HealTime = 3.0f;
 	float HealTimer = 0.0f;
-	CarManager embulanceCar; //타고온 차량
-
-	enum DoctorState
+	public CarManager ambulanceCar;
+	public int idx = 0;
+	
+	public enum DoctorState
 	{
 		GoToheal,
 		Healing,
 		GoBackToCar
 	}
-	DoctorState doctorState = DoctorState.GoToheal;
+	public DoctorState doctorState = DoctorState.GoToheal;
 	void Awake()
 	{
 		gameManager = GameManager.Instance;
-	}
-
-	void Start()
-	{
 		MasterDataInit();
-		StartCoroutine(GetDiedNPC());
 	}
-
+	private void OnEnable()
+	{
+		GetDiedNPC();
+	}
+	private void OnDisable()
+	{
+	}
 	// Update is called once per frame
 	void Update()
 	{
@@ -42,41 +43,16 @@ public class Doctor : NPC
 			return;
 		ActivityByState();
 	}
-	IEnumerator GetDiedNPC() //OnEnable로 이동
+	bool GetDiedNPC() //OnEnable로 이동
 	{
-		while (true)
+		if (NPCSpawnManager.Instance.DiedNPC.Count != 0)
 		{
-			if(DiedNPC != null)
-				DiedNPC.Clear();
-			foreach (GameObject npcGameObect in NPCSpawnManager.Instance.allNPC)
-			{
-				NPC npc = npcGameObect.GetComponent<NPC>();
-
-				if (npc.isDie)
-				{
-					DiedNPC.Add(npc);
-				}
-			}
-			//거리 순정렬
-			for(int i = 0; i < DiedNPC.Count; i++)
-			{
-				for (int j = i; j < DiedNPC.Count - (i + 1); j++)
-				{
-					if(Vector3.SqrMagnitude(transform.position - DiedNPC[j].transform.position) > Vector3.SqrMagnitude(transform.position - DiedNPC[j + 1].transform.position))
-					{
-						NPC temp = DiedNPC[j];
-						DiedNPC[j] = DiedNPC[j + 1];
-						DiedNPC[j + 1] = temp;
-					}
-				}
-			}
-
-			foreach(NPC npc in DiedNPC)
-			{
-				print(Vector3.SqrMagnitude(transform.position - npc.transform.position));
-			}
-			yield return new WaitForSeconds(5.0f);
+			targetNPC = NPCSpawnManager.Instance.DiedNPC[0];
+			NPCSpawnManager.Instance.DiedNPC.Remove(targetNPC);
+			return true;
 		}
+		else
+			return false;
 	}
 	
 	void ActivityByState()
@@ -84,26 +60,59 @@ public class Doctor : NPC
 		switch (doctorState)
 		{
 			case DoctorState.GoToheal:
-				if(DiedNPC.Count != 0)//테스트 용
+				if (targetNPC == null)
 				{
-					//살아난 사람은 제거
-					//if (!DiedNPC[0].isDie)
-					//{
-					//	DiedNPC.RemoveAt(0);
-					//}
-					transform.LookAt(DiedNPC[0].transform.position);
-					Move();
-					if (MathUtil.isArrived(transform.position, DiedNPC[0].transform.position))
-						doctorState = DoctorState.Healing;
+					doctorState = DoctorState.GoBackToCar;
+					return;
 				}
+				transform.LookAt(new Vector3(targetNPC.transform.position.x, transform.position.y, targetNPC.transform.position.z));
+				
+				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
+				{
+					if(isJump)
+						Land();
+					doctorState = DoctorState.Healing;
+				}
+				else
+					Move();
 				break;
 			case DoctorState.Healing:
 				isWalk = false;
 				HealTimerCheck();
 				break;
 			case DoctorState.GoBackToCar:
-				Move();
+				
+				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
+				{
+					isWalk = false;
+					if (isJump)
+						Land();
+					OpenTheDoor(idx);
+				}
+				else
+				{
+					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doorPositions[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doorPositions[idx].transform.position.z));
+					Move();
+				}
 				break;
+		}
+	}
+	void OpenTheDoor(int idx = 0)
+	{
+		if (!ambulanceCar.passengerManager.isRunningOpenTheDoor[idx])//문열기 셋팅
+		{
+			transform.forward = ambulanceCar.transform.forward;
+			ambulanceCar.passengerManager.isRunningOpenTheDoor[idx] = true;
+			isGetOnTheCar = true;
+			StartCoroutine(ambulanceCar.passengerManager.OpenTheDoor(idx));
+		}
+		else//문열기
+		{
+			if (ambulanceCar.passengerManager.isDoorOpen[idx])//탑승
+			{
+				ambulanceCar.passengerManager.GetOnTheCar(PeopleType.Doctor, idx);
+				gameObject.SetActive(false);
+			}
 		}
 	}
 	void OnCollisionEnter(Collision collision)
@@ -142,22 +151,54 @@ public class Doctor : NPC
 		if(HealTimer > HealTime)
 		{
 			HealTimer = 0.0f;
-			DiedNPC[0].Respawn();
-			DiedNPC.Remove(DiedNPC[0]);
+			targetNPC.Respawn();
+			targetNPC = null;
 
-			if (DiedNPC.Count == 0)
-			{
-				doctorState = DoctorState.GoBackToCar;
-			}
-			else
+			if (GetDiedNPC())
 			{
 				doctorState = DoctorState.GoToheal;
 			}
+			else
+			{
+				doctorState = DoctorState.GoBackToCar;
+			}
 		}
 	}
-	//힐하러 Move
-	//힐
-	//끝나면 차타기
-
+	
+	//void SortByDistance(bool isAsc = true)
+	//{
+	//	if (isAsc)
+	//	{
+	//		for (int i = 0; i < DiedNPC.Count; i++)
+	//		{
+	//			for (int j = i; j < DiedNPC.Count - (i + 1); j++)
+	//			{
+	//				if (Vector3.SqrMagnitude(transform.position - DiedNPC[j].transform.position) > 
+	//					Vector3.SqrMagnitude(transform.position - DiedNPC[j + 1].transform.position))
+	//				{
+	//					NPC temp = DiedNPC[j];
+	//					DiedNPC[j] = DiedNPC[j + 1];
+	//					DiedNPC[j + 1] = temp;
+	//				}
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		for (int i = 0; i < DiedNPC.Count; i++)
+	//		{
+	//			for (int j = i; j < DiedNPC.Count - (i + 1); j++)
+	//			{
+	//				if (Vector3.SqrMagnitude(transform.position - DiedNPC[j].transform.position) < 
+	//					Vector3.SqrMagnitude(transform.position - DiedNPC[j + 1].transform.position))
+	//				{
+	//					NPC temp = DiedNPC[j];
+	//					DiedNPC[j] = DiedNPC[j + 1];
+	//					DiedNPC[j + 1] = temp;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 	#endregion
 }

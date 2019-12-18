@@ -11,9 +11,12 @@ public class CarryCargoMission : Quest
     public GameObject cargoTarget;
     void Start()
     {
-        questStatus = QuestStatus.CarryCargo;
+        questType = QuestType.CarryCargo;
     }
 
+    public override void DeleteQuest()
+    {
+    }
 
     public override void StartQuest()
     {

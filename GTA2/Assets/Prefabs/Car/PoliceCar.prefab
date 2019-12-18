@@ -70,7 +70,8 @@ AudioSource:
   m_GameObject: {fileID: 2418563164623686505}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9051957212427097370, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 820dd6f0955989241bdd3a6e0c8c7872, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7
@@ -340,7 +341,8 @@ AudioSource:
   m_GameObject: {fileID: 7171949929947423414}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9051957212427097370, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 481d7b7bfd8d2f94fb5fa5e95bdc7955, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7
@@ -5342,8 +5344,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1291112879
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -9916,8 +9918,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1291112879
+  m_SortingLayer: 7
   m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 0
@@ -44077,6 +44079,8 @@ MonoBehaviour:
   - {fileID: 1061419724111696948}
   - {fileID: 1061419724111696948}
   passengers: 030000000300000000000000
+  doorOpenClip: {fileID: 8300000, guid: 942964f0c7efb62488976c8c9f5d91ef, type: 3}
+  doorCloseClip: {fileID: 8300000, guid: 5ad168267f1ca644b999b5f7b16a9e88, type: 3}
   isRunningOpenTheDoor: 0000
   isRunningCloseTheDoor: 0000
 --- !u!114 &8328780488297814984
@@ -44514,7 +44518,8 @@ AudioSource:
   m_GameObject: {fileID: 8453457869585278734}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9051957212427097370, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 3e0fa122aa49aad419950d2eb6c0b221, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1

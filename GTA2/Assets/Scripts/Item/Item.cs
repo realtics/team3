@@ -43,11 +43,11 @@ public class Item : MonoBehaviour
     protected Player userPlayer;
     
     
-    SpriteRenderer spriteRender;
-    SphereCollider sphereCollider;
-    float animationTime = .3f;
-    float animationDelta = .0f;
-    int aniIdx = 0;
+    protected SpriteRenderer spriteRender;
+    protected SphereCollider sphereCollider;
+    protected float animationTime = .3f;
+    protected float animationDelta = .0f;
+    protected int aniIdx = 0;
 
 
 
@@ -126,10 +126,9 @@ public class Item : MonoBehaviour
                     break;
                 case ItemStatus.KillFrenzy:
                     QuestUIManager.Instance.ToastStartQuest("KILL FRENZY", ""); 
-                    SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.OneShotPlay);
+                    SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.UISFX);
                     ActiveOff();
                     return;
-                    break;
                 default:
                     break;
             }
@@ -142,7 +141,7 @@ public class Item : MonoBehaviour
         }
 
         ActiveOff();
-        SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.OneShotPlay);
+        SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.UISFX);
         UIManager.Instance.TurnOnItemText(itemType);
     }
 }

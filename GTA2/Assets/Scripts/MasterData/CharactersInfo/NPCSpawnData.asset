@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   citizenSpawnInterval: 0.5
   policeSpawnInterval: 10
-  maxSpawnCitizenNumInInterval: 4
+  maxSpawnCitizenNumInInterval: 5
   maxSpawnPoliceNumInInterval: 3
-  maximumNPCNum: 55
+  maximumNPCNum: 70
