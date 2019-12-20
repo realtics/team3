@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    [Header("UI Component")]
     [SerializeField]
     HeartImageList heartListUI;
     [SerializeField]
@@ -24,14 +25,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     GameObject pauseUI;
 
-    /// <summary>
-    /// 플레이어에서 직접 참조하기 위해 public으로 품.
-    /// </summary>
-    /// //[SerializeField]
-    //private bl_Joystick playerJoystick;
-    public bl_Joystick playerMoveJoystick;
-    public bl_Joystick playerWeaponJoystick;
 
+    [Header("UI Sound")]
     [SerializeField]
     AudioClip wastedClip;
     [SerializeField]
@@ -40,6 +35,12 @@ public class UIManager : MonoSingleton<UIManager>
     AudioClip gameOverClip;
 
 
+    /// <summary>
+    /// 플레이어에서 직접 참조하기 위해 public으로 품.
+    /// </summary>
+    [Header("UI JoyStick")]
+    public bl_Joystick playerMoveJoystick;
+    public bl_Joystick playerWeaponJoystick;
 
     [SerializeField]
     GameObject humanJoystick;
@@ -109,7 +110,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         // 차에 탄 사람이 타겟팅중인 차가 없으면
-        if (targetCar.passengerManager.passengers[0] != People.PeopleType.Player)
+        if (targetCar.passengerManager.doors[0].passenger != People.PeopleType.Player)
         {
             HumanUIMode();
             targetCar = null;

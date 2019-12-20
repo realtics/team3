@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class HeartImageList : MonoBehaviour
 {
-    [SerializeField]
-    Sprite heartSprite;
     Image[] heartImgList;
-
-
     int maxPlayerHp;
 
 

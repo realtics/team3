@@ -19,7 +19,10 @@ public enum GunState
 }
 public abstract class Gun : MonoBehaviour
 {
+    [Header("GunInfo")]
     public GunInformation gunInfo;
+
+    [Header("Gun Sound")]
     public AudioClip gunSound;
     
     [HideInInspector]

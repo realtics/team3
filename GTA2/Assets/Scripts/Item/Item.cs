@@ -30,10 +30,14 @@ public enum ItemStatus
 
 public class Item : MonoBehaviour
 {
+    [Header("Value")]
     // Start is called before the first frame update
     public ItemStatus itemType;
     public int itemCount;
     public float RespawnTime;
+
+
+    [Header("Sound")]
     public AudioClip soundClip;
 
     float RespawnDelta;

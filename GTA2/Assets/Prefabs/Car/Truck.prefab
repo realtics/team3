@@ -371,15 +371,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 183170674201592952}
-  doorPositions:
-  - {fileID: 1457536365877815259}
-  doorAnimator:
-  - {fileID: 4449719813990466610}
-  passengers: 02000000
-  doorOpenClip: {fileID: 8300000, guid: 942964f0c7efb62488976c8c9f5d91ef, type: 3}
-  doorCloseClip: {fileID: 8300000, guid: 5ad168267f1ca644b999b5f7b16a9e88, type: 3}
-  isRunningOpenTheDoor: 0000
-  isRunningCloseTheDoor: 0000
+  doors:
+  - transform: {fileID: 1457536365877815259}
+    animator: {fileID: 4449719813990466610}
+    passenger: 0
+    doorState: 0
 --- !u!114 &2650051141572261153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +422,8 @@ MonoBehaviour:
   shadow: {fileID: 2650051142655842823}
   collsionClip: {fileID: 8300000, guid: b8bd34f4e018de542acdb4a5f0ceff2b, type: 3}
   explosionClip: {fileID: 8300000, guid: fd3673a057211ee4db181bf5310e6f60, type: 3}
+  doorOpenClip: {fileID: 8300000, guid: 942964f0c7efb62488976c8c9f5d91ef, type: 3}
+  doorCloseClip: {fileID: 8300000, guid: 5ad168267f1ca644b999b5f7b16a9e88, type: 3}
   audioSourceEngine: {fileID: 2643810159113601734}
   audioSourceSkid: {fileID: 8076766135676979845}
   audioSourceSiren: {fileID: 0}
@@ -44110,7 +44108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3941165717685794774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.291, y: 0, z: 0.115}
+  m_LocalPosition: {x: -0.313, y: 0, z: 0.115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2650051141572261158}

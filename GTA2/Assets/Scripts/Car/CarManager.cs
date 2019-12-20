@@ -20,6 +20,10 @@ public class CarManager : MonoBehaviour
     public delegate void CarHandler();
     public event CarHandler OnReturnKeyDown;
 
+	public delegate void CarDoorHandler(int idx);
+	public event CarDoorHandler OnDoorOpen;
+	public event CarDoorHandler OnDoorClose;
+
     public delegate void CarDamageHandler(bool sourceIsPlayer);
     public event CarDamageHandler OnDamage;
     public event CarDamageHandler OnDestroy;
@@ -27,6 +31,7 @@ public class CarManager : MonoBehaviour
     public delegate void CarPassengerHandler(People.PeopleType peopleType, int idx);
     public event CarPassengerHandler OnDriverGetOn;
     public event CarPassengerHandler OnDriverGetOff;
+
     public CarType carType;
 
     public enum CarType
@@ -45,15 +50,25 @@ public class CarManager : MonoBehaviour
     void OnEnable()
     {
         carState = CarState.controlledByAi;
-        passengerManager.passengersInit();
+
         StopAllCoroutines();
         StartCoroutine(DisableIfOutOfCamera());
     }
 
 	public void OnReturnKeyDownEvent()
     {
-        OnReturnKeyDown();
+        OnReturnKeyDown?.Invoke();
     }
+
+	public void OnDoorOpenEvent(int idx)
+	{
+		OnDoorOpen?.Invoke(idx);
+	}
+
+	public void OnDoorCloseEvent(int idx)
+	{
+		OnDoorClose?.Invoke(idx);
+	}
 
     public void OnDestroyEvent(bool isDamagedByPlayer)
     {
@@ -108,7 +123,6 @@ public class CarManager : MonoBehaviour
                 break;
             case CarState.controlledByAi:
                 {
-                    // 코루틴으로 변경할것.
                     ai.ChasePlayer();
                 }
                 break;

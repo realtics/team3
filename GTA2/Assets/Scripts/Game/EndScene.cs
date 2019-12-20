@@ -8,6 +8,7 @@ using System;
 
 public class EndScene : MonoBehaviour
 {
+    [Header("Data UI")]
     [SerializeField]
     Text saveHighscoreText;
     [SerializeField]

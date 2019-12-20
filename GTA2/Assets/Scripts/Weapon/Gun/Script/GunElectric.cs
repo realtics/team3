@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GunElectric : PlayerGun
 {
+    [Header("Electric Value")]
     public int electricWaveMaxIndex;
     public float electricWaveArea;
     public float electricWaveAngle;

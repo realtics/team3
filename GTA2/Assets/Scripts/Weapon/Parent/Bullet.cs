@@ -5,14 +5,17 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
+    [Header("Bullet Value")]
     public int bulletDamage;
 
     public float bulletLifeTime;
     public float bulletSpeed;
     public float explosionArea;
 
-
+    [Header("Bullet Info")]
     public BulletInformation bulletInfo;
+
+    [Header("Bullet Explosion")]
     public GameObject explosionPref;
     public AudioClip explosionSound;
 

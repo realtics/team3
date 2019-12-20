@@ -16,16 +16,23 @@ public enum SoundPlayMode
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoSingleton<SoundManager>
 {
+    [Header("Sound Value")]
     [SerializeField]
     float posPlayVolume;
     [SerializeField]
     float oneShotPlayTime;
     [SerializeField]
     float oneShotOBJPlayTime;
-
     [SerializeField]
-    AudioClip respectIs;
+    float poolResetValue;
 
+    [Header("Pool")]
+    [SerializeField]
+    int poolCount;
+    [SerializeField]
+    GameObject sourcePref;
+    
+    [Header("Mixer")]
     [SerializeField]
     AudioMixerGroup uiSFXmixer;
     [SerializeField]
@@ -37,6 +44,10 @@ public class SoundManager : MonoSingleton<SoundManager>
     [SerializeField]
     AudioMixerGroup explosionSFXmixer;
 
+    [Header("Start")]
+    [SerializeField]
+    AudioClip respectIs;
+
 
     float uiPlayDelta;
     float humanPlayDelta;
@@ -45,17 +56,45 @@ public class SoundManager : MonoSingleton<SoundManager>
     float carPlayDelta;
     float explosionPlayDelta;
 
-    AudioSource SFXSource;
+    List<AudioSource> audioSources;
+    AudioSource ActiveSource;
 
     void Awake()
     {
         uiPlayDelta = 1.0f;
-        SFXSource = GetComponent<AudioSource>();
+        PoolManager.WarmPool(sourcePref, poolCount);
+        audioSources = PoolManager.GetAllObject<AudioSource>(sourcePref);
+
+        foreach (var item in audioSources)
+            item.gameObject.transform.parent = transform;
 
         PlayClip(respectIs, SoundPlayMode.UISFX);
+
+        StartCoroutine(UpdateSource());
     }
 
     void Update()
+    {
+        UpdateDelta();
+    }
+
+
+    IEnumerator UpdateSource()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(poolResetValue);
+            foreach (var item in audioSources)
+            {
+                if (!item.isPlaying)
+                {
+                    PoolManager.ReleaseObject(item.gameObject);
+                }
+            }
+        }
+    }
+
+    void UpdateDelta()
     {
         uiPlayDelta += Time.deltaTime;
         humanPlayDelta += Time.deltaTime;
@@ -66,6 +105,11 @@ public class SoundManager : MonoSingleton<SoundManager>
     }
 
 
+    void FindSource()
+    {
+        ActiveSource = PoolManager.SpawnObject(sourcePref).GetComponent<AudioSource>();
+    }
+
     bool SetMode(AudioClip clip, SoundPlayMode mode)
     {
         if (clip == null)
@@ -73,26 +117,26 @@ public class SoundManager : MonoSingleton<SoundManager>
             return false;
         }
 
-        SFXSource.clip = clip;
+        ActiveSource.clip = clip;
         switch (mode)
         {
             case SoundPlayMode.UISFX:
-                SFXSource.outputAudioMixerGroup = uiSFXmixer;
+                ActiveSource.outputAudioMixerGroup = uiSFXmixer;
                 break;
             case SoundPlayMode.HumanSFX:
-                SFXSource.outputAudioMixerGroup = humanSFXmixer;
+                ActiveSource.outputAudioMixerGroup = humanSFXmixer;
                 break;
             case SoundPlayMode.ObjectSFX:
-                SFXSource.outputAudioMixerGroup = objSFXmixer;
+                ActiveSource.outputAudioMixerGroup = objSFXmixer;
                 break;
             case SoundPlayMode.GunSFX:
-                SFXSource.outputAudioMixerGroup = objSFXmixer;
+                ActiveSource.outputAudioMixerGroup = objSFXmixer;
                 break;
             case SoundPlayMode.CarSFX:
-                SFXSource.outputAudioMixerGroup = carSFXmixer;
+                ActiveSource.outputAudioMixerGroup = carSFXmixer;
                 break;
             case SoundPlayMode.ExplosionSFX:
-                SFXSource.outputAudioMixerGroup = explosionSFXmixer;
+                ActiveSource.outputAudioMixerGroup = explosionSFXmixer;
                 break;
             default:
                 break;
@@ -156,6 +200,7 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     public void PlayClip(AudioClip clip, SoundPlayMode mode)
     {
+        FindSource();
         if (!SetMode(clip, mode))
         {
             return;
@@ -166,12 +211,15 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        SFXSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        SFXSource.PlayOneShot(SFXSource.clip);        
+        ActiveSource.volume = 1.0f;
+        ActiveSource.spatialBlend = .0f;
+        ActiveSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        ActiveSource.Play();        
     }
 
     public void PlayClipToPosition(AudioClip clip, SoundPlayMode mode, Vector3 pos)
     {
+        FindSource();
         if (!SetMode(clip, mode))
         {
             return;
@@ -182,7 +230,10 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        SFXSource.rolloffMode = AudioRolloffMode.Linear;
-        AudioSource.PlayClipAtPoint(clip, pos, posPlayVolume);
+        ActiveSource.volume = posPlayVolume;
+        ActiveSource.spatialBlend = 1.0f;
+        ActiveSource.rolloffMode = AudioRolloffMode.Linear;
+        ActiveSource.gameObject.transform.position = pos;
+        ActiveSource.Play();
     }
 }

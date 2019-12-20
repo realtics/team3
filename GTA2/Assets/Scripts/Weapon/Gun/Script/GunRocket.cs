@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunRocket : PlayerGun
 {
     // Start is called before the first frame update
+    [Header("Smoke Prefab")]
     public GameObject smokePref;
 
     public override void Init()

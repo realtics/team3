@@ -6,18 +6,19 @@ using UnityEngine.UI;
 
 public class WorldUIManager : MonoSingleton<WorldUIManager>
 {
+    [Header("UI Prefab")]
     [SerializeField]
     GameObject scoreTextPref;
     [SerializeField]
     GameObject questArrowPref;
+    public GameObject mainMissionArrowPref;
+
+    [Header("UI Value")]
     [SerializeField]
     int arrowPoolCount;
     [SerializeField]
     int scorePoolCount;
-
-
-
-    public GameObject mainMissionArrowPref;
+    
     public float arrowToPlayer;
     public float maxArrowToPlayer;
 

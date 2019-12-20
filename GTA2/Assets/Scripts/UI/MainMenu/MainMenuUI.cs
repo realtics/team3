@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
+    [Header("UI Canvas")]
     [SerializeField]
     Canvas startCanvas;
     [SerializeField]
     Canvas selectCanvas;
 
-
+    [Header("UI Component")]
     [SerializeField]
     Image activeStageImage;
     [SerializeField]

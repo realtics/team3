@@ -6,19 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    [Header("Goal")]
     public int goalMoney;
     public GameObject goalObject;
     //int defaultRemains = 3;
+
+    [Header("Life")]
     public int remains = 3;
+
+    [Header("Scene")]
     public string nextScene;
 
+    [Header("Player")]
     public Player player;
-	
     public List<Transform> playerRespawnPoint;
-    bool isMissionSuccess = false;
-	//GameManager ReFactoring field
 	public CarPassengerManager playerCar;
-	public int money{ get; set; }
+	
+    
+    public int money{ get; set; }
     public int killCount { get; set; }
     double gameTime;
 
@@ -47,15 +52,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     void UpdateGoal()
     {
-        if (money >= goalMoney /*&& !isMissionSuccess*/)
+        if (money >= goalMoney)
         {
             goalObject.SetActive(true);
             WorldUIManager.Instance.SuccessMainMission();
-            isMissionSuccess = true;
-        }
-        else
-        {
-            isMissionSuccess = false;
         }
     }
     void UpdateTime()

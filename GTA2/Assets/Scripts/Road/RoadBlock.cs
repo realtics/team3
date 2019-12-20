@@ -35,9 +35,9 @@ public class RoadBlock : MonoBehaviour
 			}
 
 			cm.carState = CarManager.CarState.idle;
-			for (int j = 0; j < cm.passengerManager.passengers.Length; j++)
+			for (int j = 0; j < cm.passengerManager.doors.Length; j++)
 			{
-				cm.passengerManager.passengers[j] = People.PeopleType.None;
+				cm.passengerManager.doors[j].passenger = People.PeopleType.None;
 			}
 			cm.transform.position = policeCarPositions[i].position;
 			cm.transform.forward = policeCarPositions[i].transform.forward;

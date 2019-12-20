@@ -6,11 +6,13 @@ using UnityEngine.UI;
 
 public class GetItemText : MonoBehaviour
 {
+    [Header("Value")]
     [SerializeField]
     float heightSize;
     [SerializeField]
     float turnOnTime;
 
+    [Header("UI Component")]
     [SerializeField]
     Sprite[] activeItemTexts;
     [SerializeField]

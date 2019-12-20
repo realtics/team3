@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponImage : MonoBehaviour
 {
+    [Header("UI Component")]
     [SerializeField]
     Sprite[] gunSpriteList;
     [SerializeField]

@@ -81,7 +81,6 @@
     <Compile Include="Assets\Scripts\CharacterScript\People.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Player.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\PlayerPhysics.cs" />
-    <Compile Include="Assets\Scripts\CharacterScript\PlayerTimer.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Police.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\QuestNPC.cs" />
     <Compile Include="Assets\Scripts\Debug\DebugPanelUI.cs" />
@@ -116,8 +115,6 @@
     <Compile Include="Assets\Scripts\Memory\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Memory\ObjectPoolContainer.cs" />
     <Compile Include="Assets\Scripts\Memory\PoolManager.cs" />
-    <Compile Include="Assets\Scripts\Quest\Mission\ArriveMission.cs" />
-    <Compile Include="Assets\Scripts\Quest\Mission\CarryCargoMission.cs" />
     <Compile Include="Assets\Scripts\Quest\Mission\KillMission.cs" />
     <Compile Include="Assets\Scripts\Quest\Phone.cs" />
     <Compile Include="Assets\Scripts\Quest\Quest.cs" />
@@ -132,7 +129,6 @@
     <Compile Include="Assets\Scripts\Singleton\MonoSingleton.cs" />
     <Compile Include="Assets\Scripts\Singleton\Singleton.cs" />
     <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\ButtonLongPress.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\GetItemText.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\HeartImageList.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\LifeCount.cs" />
@@ -141,7 +137,6 @@
     <Compile Include="Assets\Scripts\UI\InGame\PoliceLevelImage.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\QuestUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\ScoreUI\FloatingScoreText.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\ScoreUI\TextOutline.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\WeaponImage.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\WorldUIManager.cs" />

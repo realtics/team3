@@ -16,24 +16,19 @@ public class Player : People
 	public GunState curGunIndex { get; set; }
 
     public List<PlayerGun> gunList;
+	
 	[HideInInspector]
 	public PlayerPhysics playerPhysics;
+	Animator animator;
 
-    Animator animator;
-    
-    float rotHDir;
+	float rotHDir;
     float rotVDir;
 
     void Awake()
     {
-        playerPhysics = GetComponent<PlayerPhysics>();
-        animator = GetComponentInChildren<Animator>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-		rigidbody = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
+		ComponentInit();
 		base.TimerInit();
 		MasterDataInit();
-		
 	}
     void Start()
     {
@@ -43,10 +38,10 @@ public class Player : People
     void Update()
     {
         DebugX.DrawRay(transform.position, transform.forward);
-
         base.PeopleUpdate();
         AnimateUpdate();
-        if (IsStuckedAnimation() || isDriver)
+
+		if (IsStuckedAnimation() || isDriver)
             return;
         UpdateInput();
     }
@@ -67,21 +62,14 @@ public class Player : People
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
-        {
-            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.ObjectSFX, transform.position);
-            int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
-			isBusted = true;
-			Hurt(bulletDamage);
-		}
+			HurtByNPC(true, other.gameObject.GetComponentInParent<Bullet>().bulletDamage);
 		else if (other.gameObject.CompareTag("NPCBullet"))
 		{
-			int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
 			other.gameObject.GetComponentInParent<Bullet>().Explosion();
-			isBusted = false;
-
-			Hurt(bulletDamage);
+			HurtByNPC(false, other.gameObject.GetComponentInParent<Bullet>().bulletDamage);
 		}
 	}
+	
 	void UpdateInput()
     {
         if (isDie)
@@ -96,7 +84,7 @@ public class Player : People
     {
         if (isDie)
             return;
-        if (playerPhysics.targetCar.isDoorOpen[0]) //문이열려있는 경우 탑승
+        if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.open) //문이열려있는 경우 탑승
         {
 			GetOntheCar();
         }
@@ -105,7 +93,6 @@ public class Player : People
 			OpenTheDoor();
         }
     }
-	
 	public void SetChaseTargetCar()
 	{
 		CarManager car = CarSpawnManager.Instance.FindClosestCar(transform.position);
@@ -113,7 +100,7 @@ public class Player : People
 			return;
 
 		playerPhysics.targetCar = car.passengerManager;
-		playerPhysics.SetCarDoorTransform(playerPhysics.targetCar.doorPositions[0]);
+		playerPhysics.SetCarDoorTransform(playerPhysics.targetCar.doors[0].transform);
 
 		if ((transform.position - playerPhysics.targetCar.transform.position).magnitude < 5)
 		{
@@ -140,20 +127,22 @@ public class Player : People
 			playerPhysics.ChaseTheCar(moveSpeed);
 		}
 	}
-    public void Respawn()
+   
+    #region lowlevelCode
+    public int GetHp()
     {
-        if (isBusted)
-        {
-			//Invoke("Down", 0.2f);
-		}
-        else
-        {
+        return hp;
+    }
+	public void Respawn()
+	{
+		if (!isBusted)
+		{
 			UIManager.Instance.HumanUIMode();
-			
+
 			if (GameManager.Instance.playerCar != null)
 			{
 				PlayerDriverSetting(false);
-				
+
 				isDriver = false;
 			}
 			else
@@ -164,19 +153,10 @@ public class Player : People
 			}
 		}
 		SetHpDefault();
-		isDown = false;
-		isWalk = false;
-		isDie = false;
+		InitAnimation();
 		GameManager.Instance.RespawnSetting();
-		
 		DebugX.Log("Player Respawn");
-    }
-    #region lowlevelCode
-    public int GetHp()
-    {
-        return hp;
-    }
-	
+	}
 	void StartShot()
 	{
 		gunList[(int)curGunIndex].UpdateButtonDown();
@@ -292,7 +272,7 @@ public class Player : People
 		isWalk = false;
 		playerPhysics.LookAtCar();
 
-		if (!playerPhysics.targetCar.isRunningOpenTheDoor[0])
+		if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.close)
 		{
 			transform.forward = playerPhysics.targetCar.transform.forward;
 			StartCoroutine(playerPhysics.targetCar.OpenTheDoor(0));
@@ -312,13 +292,13 @@ public class Player : People
 		isGetOnTheCar = false;
 
 		//경찰차면 못타고 문닫기
-		if (playerPhysics.targetCar.carManager.ai.isPolice && playerPhysics.targetCar.passengers[0] != PeopleType.None)
+		if (playerPhysics.targetCar.carManager.ai.isPolice && playerPhysics.targetCar.doors[0].passenger != PeopleType.None)
 		{
 			StartCloseTheDoor();
 			return;
 		}
 		//탑승후 문닫기
-		if (!playerPhysics.targetCar.isRunningCloseTheDoor[0])
+		if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.open)
 		{
 			StartCloseTheDoor();
 		}
@@ -328,7 +308,21 @@ public class Player : People
 
         UIManager.Instance.CarUIMode(playerPhysics.targetCar.carManager);
 	}
-    public void PlayerDriverSetting(bool GetOn, int idx = 0)
+	void HurtByNPC(bool isPunch, int damage)
+	{
+		if (isPunch)
+		{
+			SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.ObjectSFX, transform.position);
+			isBusted = true;
+			Hurt(damage);
+		}
+		else
+		{
+			isBusted = false;
+			Hurt(damage);
+		}
+	}
+	public void PlayerDriverSetting(bool GetOn, int idx = 0)
     {
         //플레이어 드라이버 셋팅
         if (GetOn)
@@ -337,7 +331,7 @@ public class Player : People
             boxCollider.enabled = false;
             spriteRenderer.enabled = false;
             isDriver = true;
-            transform.position = GameManager.Instance.playerCar.doorPositions[idx].transform.position;
+            transform.position = GameManager.Instance.playerCar.doors[idx].transform.position;
             transform.SetParent(GameManager.Instance.playerCar.transform);
         }
         else
@@ -346,7 +340,7 @@ public class Player : People
             boxCollider.enabled = true;
             spriteRenderer.enabled = true;
             isDriver = false;
-			transform.position = GameManager.Instance.playerCar.doorPositions[idx].transform.position;
+			transform.position = GameManager.Instance.playerCar.doors[idx].transform.position;
 			transform.SetParent(null);
 		}
     }
@@ -355,7 +349,11 @@ public class Player : People
 		base.checkingTimes[(int)TimerType.Down] = playerData.downTime;
         base.checkingTimes[(int)TimerType.Jump] = playerData.jumpTime;
         base.checkingTimes[(int)TimerType.Runover] = playerData.runoverTime;
-        defaultHp = playerData.maxHp;
+		base.checkingTimes[(int)TimerType.Respawn] = playerData.respawnTime;
+		base.checkingTimes[(int)TimerType.AutoLand] = playerData.autoLandTime;
+		base.checkingTimes[(int)TimerType.JumpMin] = 0.1f;
+
+		defaultHp = playerData.maxHp;
 		hp = playerData.maxHp;
 		moveSpeed = playerData.moveSpeed;
 	}
@@ -376,24 +374,18 @@ public class Player : People
 	}
 	protected override void LandCheck()
 	{
-		if (TimerCheck((int)TimerType.Jump))
-		{
-			if (!IsCarExistBelow())
-				Land();
-		}
-		else if (isChasingCar && MathUtil.isArrivedIn2D(transform.position, playerPhysics.targetCar.transform.position)) //JumpMinTimeCheck()
-            Land();
+		base.LandCheck();
+		
+		if (isChasingCar && MathUtil.isArrivedIn2D(transform.position, playerPhysics.targetCar.transform.position) && 
+			!IsCarExistBelow() &&
+			TimerCheck(TimerType.JumpMin))
+			Land();
 	}
 	protected override void Die()
 	{
-		if (isDie)
-			return;
-		isDie = true;
-        
-        rigidbody.isKinematic = true;
-		boxCollider.enabled = false;
-		hDir = 0; vDir = 0;
+		base.Die();
 
+		StopShot();
 		GameOverUISetting();
 		WantedLevel.instance.ResetWantedLevel();
 		CameraController.Instance.ZoomIn();
@@ -419,61 +411,6 @@ public class Player : People
             return;
         }
     }
-	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isPlayer = false) //마지막 매개변수 사용하지 않음
-	{
-		if ((runoverSpeed < runoverMinSpeedInChasing && isChasingCar))
-			return;
-		else if (runoverSpeed < runoverMinSpeed)
-			return;
-		Vector3 runoverVector = transform.position - carPosition;
-
-		//속도에 비례한 피해 데미지 보정수치
-		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
-		isRunover = true;
-		hDir = 0; vDir = 0;
-
-		transform.LookAt(carPosition);
-
-		if (isDown && runoverSpeed > 10)
-		{
-			Hurt(9999);
-		}
-		else if (runoverSpeed > 200)
-		{
-			Hurt((int)(runoverSpeed / 4));
-		}
-
-		//if (runoverSpeed < runoverMinSpeed)
-		//	return;
-		//Vector3 runoverVector = transform.position - carPosition;
-
-		////속도에 비례한 피해 데미지 보정수치
-		//this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-		//this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
-		//isRunover = true;
-		//hDir = 0; vDir = 0;
-
-		//transform.LookAt(carPosition);
-		//SetRunaway();
-		//if (isRunoverByPlayer)
-		//{
-		//	print("보정전 수치 : " + runoverSpeed);
-		//}
-		//if (runoverSpeed > runoverHurtMinSpeed)
-		//{
-		//	Hurt((int)(runoverSpeed / 3));
-		//}
-		//if (isRunoverByPlayer && isDie)
-		//{
-		//	GameManager.Instance.IncreaseMoney(money);
-		//	WorldUIManager.Instance.SetScoreText(transform.position, money);
-		//	WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
-		//}
-
-	}
-
-
 
 	#endregion
 	#region InputLogic
@@ -644,10 +581,31 @@ public class Player : People
                 break;
         }
     }
+	protected override void InitAnimation()
+	{
+		base.InitAnimation();
+		isChasingCar = false;
+		isAttack = false;
+	}
+	void OnCollisionStay(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Car") && isChasingCar && !isGetOnTheCar)
+		{
+			Jump();
+		}
+	}
 	public void ShotButtonUp()
 	{
 		gunList[(int)curGunIndex].UpdateButtonUp();
 		StopShot();
+	}
+	void ComponentInit()
+	{
+		playerPhysics = GetComponent<PlayerPhysics>();
+		animator = GetComponentInChildren<Animator>();
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		rigidbody = GetComponent<Rigidbody>();
+		boxCollider = GetComponent<BoxCollider>();
 	}
 	#endregion
 }

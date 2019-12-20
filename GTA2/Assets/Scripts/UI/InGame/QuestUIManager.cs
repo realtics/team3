@@ -7,6 +7,7 @@ using System;
 
 public class QuestUIManager : MonoSingleton<QuestUIManager>
 {
+    [Header("UI Component")]
     [SerializeField]
     Text title;
     [SerializeField]

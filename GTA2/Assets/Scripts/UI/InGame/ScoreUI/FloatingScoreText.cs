@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FloatingScoreText : MonoBehaviour
 {
+    [Header("Value")]
     [SerializeField]
     float floatSpeed;
     [SerializeField]
@@ -13,6 +14,8 @@ public class FloatingScoreText : MonoBehaviour
 
     [SerializeField]
     float activeTime;
+
+    [Header("UI Component")]
     [SerializeField]
     TextMesh textMesh;
 

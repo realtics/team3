@@ -44233,17 +44233,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carManager: {fileID: 178703844134331502}
-  doorPositions:
-  - {fileID: 4892016458960053090}
-  - {fileID: 7956567104700749146}
-  doorAnimator:
-  - {fileID: 6730530210032726613}
-  - {fileID: 7558982224722324409}
-  passengers: 0400000004000000
-  doorOpenClip: {fileID: 8300000, guid: 942964f0c7efb62488976c8c9f5d91ef, type: 3}
-  doorCloseClip: {fileID: 8300000, guid: 5ad168267f1ca644b999b5f7b16a9e88, type: 3}
-  isRunningOpenTheDoor: 0000
-  isRunningCloseTheDoor: 0000
+  doors:
+  - transform: {fileID: 4892016458960053090}
+    animator: {fileID: 6730530210032726613}
+    passenger: 0
+    doorState: 0
+  - transform: {fileID: 7956567104700749146}
+    animator: {fileID: 7558982224722324409}
+    passenger: 0
+    doorState: 0
 --- !u!114 &7028039128798893206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44290,6 +44288,8 @@ MonoBehaviour:
   shadow: {fileID: 7028039127036057394}
   collsionClip: {fileID: 8300000, guid: b8bd34f4e018de542acdb4a5f0ceff2b, type: 3}
   explosionClip: {fileID: 8300000, guid: fd3673a057211ee4db181bf5310e6f60, type: 3}
+  doorOpenClip: {fileID: 8300000, guid: 942964f0c7efb62488976c8c9f5d91ef, type: 3}
+  doorCloseClip: {fileID: 8300000, guid: 5ad168267f1ca644b999b5f7b16a9e88, type: 3}
   audioSourceEngine: {fileID: 5240615182983465757}
   audioSourceSkid: {fileID: 898738788375139938}
   audioSourceSiren: {fileID: 0}

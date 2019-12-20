@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEditor;
 
 public class Citizen : NPC
 {
@@ -10,9 +9,9 @@ public class Citizen : NPC
 	public AudioClip[] downClip;
 	static float shoutTime = 10.0f;
 	static float shoutTimer = 0.0f;
+
 	void Awake()
     {
-		gameManager = GameManager.Instance;
 		base.TimerInit();
 		MasterDataInit();
 	}
@@ -20,7 +19,7 @@ public class Citizen : NPC
 	private void OnEnable()
 	{
 		base.NPCOnEnable();
-		ClothSpriteRenderer.color = new Color(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
+		ClothesColorRandomSetting();
 	}
 	
 	private void OnDisable()
@@ -29,19 +28,30 @@ public class Citizen : NPC
 	}
 	void Update()
     {
-		base.NPCUpdate();
 		base.PeopleUpdate();
+		base.NPCUpdate();
 
 		if (isDie || isDown)
             return;
-		ShoutTimerCheck();
-		TimerCheck();
-    }
+		
+		if (DetectedPlayerAttack())
+		{
+			//if(ShoutTimerCheck() && Random.Range(0, 3) < 1)
+			//{
+			//	SoundManager.Instance.PlayClipToPosition(runAwayClip[Random.Range(0, runAwayClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
+			//	shoutTimer = 0.0f;
+			//}
+			base.SetRunaway();
+		}
+		else
+			PatternChangeTimerCheck();
+	}
 	
 	void FixedUpdate()
     {
         if (isDie || isDown)
             return;
+
         if (isRunaway)
         {
             base.RunAway();
@@ -50,15 +60,13 @@ public class Citizen : NPC
         {
 			base.Raycast();
 			base.Move();
-            TimerCheck(TimerType.PatternChange);
-        }
+		}
 		else
         {
             base.Raycast();
-            TimerCheck(TimerType.PatternChange);
-        }
+		}
 	}
-	void OnCollisionEnter(Collision collision)
+	void OnCollisionStay(Collision collision)
 	{
 		if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car") && isRunaway)
 		{
@@ -66,34 +74,20 @@ public class Citizen : NPC
 		}
 	}
 	#region lowlevelCode
+	//bool ShoutTimerCheck()
+	//{
+	//	shoutTimer += Time.deltaTime;
 
-    void TimerCheck()
-    {
-        
-
-        if (DetectedPlayerAttack())
-        {
-			//if(ShoutTimerCheck() && Random.Range(0, 3) < 1)
-			//{
-			//	SoundManager.Instance.PlayClipToPosition(runAwayClip[Random.Range(0, runAwayClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
-			//	shoutTimer = 0.0f;
-			//}
-
-			base.SetRunaway();
-        }
-        else
-            PatternChange();
-    }
-	bool ShoutTimerCheck()
+	//	if (shoutTimer > shoutTime)
+	//	{
+	//		return true;
+	//	}
+	//	else
+	//		return false;
+	//}
+	void ClothesColorRandomSetting()
 	{
-		shoutTimer += Time.deltaTime;
-
-		if (shoutTimer > shoutTime)
-		{
-			return true;
-		}
-		else
-			return false;
+		ClothSpriteRenderer.color = new Color(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
 	}
 	void MasterDataInit()
 	{
@@ -113,8 +107,9 @@ public class Citizen : NPC
         checkingTimes[(int)TimerType.Down] = citizenData.downTime;
         checkingTimes[(int)TimerType.CarOpen] = citizenData.carOpenTime;
         checkingTimes[(int)TimerType.RunAway] = citizenData.runawayTime;
+		base.Timers[(int)TimerType.JumpMin] = 1.0f;
 
-        minIdleTime =citizenData.minIdleTime;
+		minIdleTime =citizenData.minIdleTime;
 		maxIdleTime=citizenData.maxIdleTime;
 		minWalkTime=citizenData.minWalkTime;
 		maxWalkTime=citizenData.maxWalkTime;
@@ -124,52 +119,24 @@ public class Citizen : NPC
 	#region override_method
 	public override void Down()
     {
-		SoundManager.Instance.PlayClipToPosition(downClip[Random.Range(0, downClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
-		boxCollider.isTrigger = true;
-		rigidbody.isKinematic = true;
-		isDown = true;
+		base.Down();
         base.SetRunaway();
-    }
+		SoundManager.Instance.PlayClipToPosition(downClip[Random.Range(0, downClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
+	}
 
     public override void Rising()
     {
-		boxCollider.isTrigger = false;
-		rigidbody.isKinematic = false;
-		isDown = false;
+		base.Rising();
+
 		transform.LookAt(new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, GameManager.Instance.player.transform.position.z));
         transform.Rotate(0, 180, 0);
         isRunaway = true;
-        //patternChangeTimer = 0.0f;
+
     }
 	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
 	{
-		if (runoverSpeed < runoverMinSpeed)
-			return;
-		Vector3 runoverVector = transform.position - carPosition;
-
-		//속도에 비례한 피해 데미지 보정수치
-		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-		this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
-		isRunover = true;
-		hDir = 0; vDir = 0;
-		
-		transform.LookAt(carPosition);
+		base.Runover(runoverSpeed, carPosition, isRunoverByPlayer);
 		SetRunaway();
-		if(isRunoverByPlayer)
-		{
-			print("보정전 수치 : " + runoverSpeed);
-		}
-		if (runoverSpeed > runoverHurtMinSpeed)
-		{
-			Hurt((int)(runoverSpeed / 3));
-		}
-		if (isRunoverByPlayer && isDie)
-		{
-			GameManager.Instance.IncreaseMoney(money);
-			GameManager.Instance.killCount++;
-			WorldUIManager.Instance.SetScoreText(transform.position, money);
-			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
-		}
 	}
 	#endregion
 }

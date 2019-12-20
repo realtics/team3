@@ -5,7 +5,10 @@ using UnityEngine;
 public class GunFireBottle : PlayerGun
 {
     // Start is called before the first frame update
+    [Header("Smoke Prefab")]
     public GameObject smokePref;
+
+    [Header("Throw Power")]
     public float moveThrowPower;
 
 

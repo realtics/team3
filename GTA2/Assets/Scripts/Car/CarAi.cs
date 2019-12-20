@@ -28,11 +28,6 @@ public class CarAi : MonoBehaviour
 	float h = 0;
 	float v = 0;
 
-    void Start()
-    {
-       SetAiMaxSpeedMultiplier();
-    }
-
     void OnEnable()
     {
         aiState = AiState.normal;
@@ -138,11 +133,11 @@ public class CarAi : MonoBehaviour
     {
         if (distToObstacle < Mathf.Infinity)
         {
-            Debug.DrawRay(transform.position, rayDirection * hit.distance, Color.red);
+            DebugX.DrawRay(transform.position, rayDirection * hit.distance, Color.red);
         }
         else
         {
-            Debug.DrawRay(transform.position, rayDirection * 1.5f, Color.blue);
+			DebugX.DrawRay(transform.position, rayDirection * 1.5f, Color.blue);
         }
     }
 
@@ -223,11 +218,11 @@ public class CarAi : MonoBehaviour
         }
 		else if(dist < 2f && carManager.movement.curSpeed < 10)
 		{
-			aiState = AiState.normal;
-			if(!carManager.passengerManager.isRunningOpenTheDoor[0])
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
-			if (!carManager.passengerManager.isRunningOpenTheDoor[1])
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+			StopChase();
+
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+
 			return;
 		}
 
@@ -297,11 +292,10 @@ public class CarAi : MonoBehaviour
 		}
 		else if (dist < 2.5f)
 		{
-			aiState = AiState.normal;
-			if (!carManager.passengerManager.isRunningOpenTheDoor[0])
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
-			if (!carManager.passengerManager.isRunningOpenTheDoor[1])
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+			StopChase();
+
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
+			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
 
 			return;
 		}
@@ -309,21 +303,16 @@ public class CarAi : MonoBehaviour
 
 	void CarMoveAI()
     {
-		if(carManager.carType == CarManager.CarType.ambulance && GameManager.Instance.ambulanceTargetNPC != null)
+		if(carManager.carType == CarManager.CarType.ambulance && 
+			GameManager.Instance.ambulanceTargetNPC != null)
 		{
 			Vector3 dist = (GameManager.Instance.ambulanceTargetNPC.transform.position - transform.position);
 			if (Mathf.Abs(dist.x) < 0.1f || Mathf.Abs(dist.z) < 0.1f)
 			{
+				carManager.carState = CarManager.CarState.idle;
 				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
 				StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
-			}
-		}
-		if (carManager.carType == CarManager.CarType.ambulance)
-		{
-			foreach(People.PeopleType passenger in carManager.passengerManager.passengers)
-			{
-				if (passenger == People.PeopleType.None)
-					return;
+				return;
 			}
 		}
 			

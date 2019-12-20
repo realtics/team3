@@ -6,18 +6,14 @@ using UnityEngine.UI;
 
 public class PoliceLevelImage : MonoBehaviour
 {
+    [Header("UI Component")]
     [SerializeField]
     Sprite[] sprites;
     [SerializeField]
     Image image;
     [SerializeField]
     RectTransform rectTransform;
-
-
-    float moveHeightMaxSize = 25.0f;
-    float originYPos;
-    bool trueIsUp;
-
+    
     float spriteChangeTime = .05f;
     float spriteChangeDelta;
     int spriteChangeIndex;
@@ -26,8 +22,6 @@ public class PoliceLevelImage : MonoBehaviour
     void Awake()
     {
         spriteChangeIndex = 0;
-        originYPos = rectTransform.rect.y;
-        trueIsUp = true;
     }
 
     // Update is called once per frame
@@ -51,13 +45,5 @@ public class PoliceLevelImage : MonoBehaviour
         }
 
         image.sprite = sprites[spriteChangeIndex];
-    }
-
-    void SetLevel(bool value)
-    {
-        if (!value)
-        {
-            image.sprite = null;
-        }
     }
 }

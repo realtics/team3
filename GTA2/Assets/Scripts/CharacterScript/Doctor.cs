@@ -7,8 +7,6 @@ public class Doctor : NPC
 {
 	public DoctorData doctorData;
 	public NPC targetNPC;
-	float HealTime = 3.0f;
-	float HealTimer = 0.0f;
 	public CarManager ambulanceCar;
 	public int idx = 0;
 	
@@ -22,7 +20,7 @@ public class Doctor : NPC
 	public DoctorState doctorState = DoctorState.GoToheal;
 	void Awake()
 	{
-		gameManager = GameManager.Instance;
+		//gameManager = GameManager.Instance;
 		base.TimerInit();
 		MasterDataInit();
 	}
@@ -69,7 +67,7 @@ public class Doctor : NPC
 				}
 				transform.LookAt(new Vector3(targetNPC.transform.position.x, transform.position.y, targetNPC.transform.position.z));
 				
-				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), targetNPC.transform.position))
+				if (MathUtil.isArrivedIn2D(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), targetNPC.transform.position))
 				{
 					if(isJump)
 						Land();
@@ -83,9 +81,9 @@ public class Doctor : NPC
 				HealTimerCheck();
 				break;
 			case DoctorState.GoBackToCar:
-				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
+				if (MathUtil.isArrivedIn2D(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
 				{
-					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doorPositions[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doorPositions[idx].transform.position.z));
+					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doors[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doors[idx].transform.position.z));
 					isWalk = false;
 					if (isJump)
 						Land();
@@ -94,7 +92,7 @@ public class Doctor : NPC
 				}
 				else
 				{
-					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doorPositions[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doorPositions[idx].transform.position.z));
+					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doors[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doors[idx].transform.position.z));
 					Move();
 				}
 				break;
@@ -106,16 +104,16 @@ public class Doctor : NPC
 	}
 	void OpenTheDoor(int idx = 0)
 	{
-		if (!ambulanceCar.passengerManager.isRunningOpenTheDoor[idx])//문열기 셋팅
+		if (ambulanceCar.passengerManager.doors[idx].doorState == CarPassengerManager.DoorState.close)//문열기 셋팅
 		{
 			transform.forward = ambulanceCar.transform.forward;
-			ambulanceCar.passengerManager.isRunningOpenTheDoor[idx] = true;
+			ambulanceCar.passengerManager.doors[idx].doorState = CarPassengerManager.DoorState.opening;
 			isGetOnTheCar = true;
 			StartCoroutine(ambulanceCar.passengerManager.OpenTheDoor(idx));
 		}
 		else//문열기
 		{
-			if (ambulanceCar.passengerManager.isDoorOpen[idx])//탑승
+			if (ambulanceCar.passengerManager.doors[idx].doorState == CarPassengerManager.DoorState.open)//탑승
 			{
 				ambulanceCar.passengerManager.GetOnTheCar(PeopleType.Doctor, idx);
 				isGetOnTheCar = false;
@@ -124,7 +122,7 @@ public class Doctor : NPC
 			}
 		}
 	}
-	void OnCollisionEnter(Collision collision)
+	void OnCollisionStay(Collision collision)
 	{
 		if (collision.gameObject.CompareTag("Car") && isWalk)
 		{
@@ -144,9 +142,10 @@ public class Doctor : NPC
         checkingTimes[(int)TimerType.Jump] = doctorData.jumpTime;
         checkingTimes[(int)TimerType.Down] = doctorData.downTime;
         checkingTimes[(int)TimerType.CarOpen] = doctorData.carOpenTime;
-        //checkingTimes[(int)TimerType.RunAway] = doctorData.runawayTime;
+		checkingTimes[(int)TimerType.Heal] = doctorData.healTime;
+		base.Timers[(int)TimerType.JumpMin] = 1.0f;
 
-        minIdleTime = doctorData.minIdleTime;
+		minIdleTime = doctorData.minIdleTime;
 		maxIdleTime = doctorData.maxIdleTime;
 		minWalkTime = doctorData.minWalkTime;
 		maxWalkTime = doctorData.maxWalkTime;
@@ -160,24 +159,16 @@ public class Doctor : NPC
 	}
 	void HealTimerCheck()
 	{
-		HealTimer += Time.deltaTime;
-
-		if(HealTimer > HealTime)
+		if(TimerCheck(TimerType.Heal))
 		{
-			HealTimer = 0.0f;
 			targetNPC.Respawn();
 			targetNPC = null;
 
 			if (GetDiedNPC())
-			{
 				doctorState = DoctorState.GoToheal;
-			}
 			else
-			{
 				doctorState = DoctorState.GoBackToCar;
-			}
 		}
 	}
-	
 	#endregion
 }

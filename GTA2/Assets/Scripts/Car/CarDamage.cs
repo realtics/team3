@@ -40,8 +40,8 @@ public class CarDamage : MonoBehaviour
             HitBullet.Explosion();
             DeductHp(HitBullet.bulletDamage, other.tag != "NPCBullet");
 			
-			if(carManager.movement.curSpeed < 10 && carManager.passengerManager.passengers[0] != People.PeopleType.Player && 
-				carManager.carState != CarManager.CarState.destroied)
+			if(carManager.movement.curSpeed < 10 && 
+				carManager.carState == CarManager.CarState.controlledByAi)
 			{
 				StartCoroutine(carManager.passengerManager.GetOffTheCar(0, true));
 			}

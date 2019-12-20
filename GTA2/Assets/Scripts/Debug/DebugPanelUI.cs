@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DebugPanelUI : MonoBehaviour
 {
+    [Header("Debug")]
     public GameObject debugPanel;
     public Reporter debugReporter;
 

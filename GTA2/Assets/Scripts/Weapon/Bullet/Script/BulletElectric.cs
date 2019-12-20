@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletElectric : Bullet
 {
     // Start is called before the first frame update
-
+    [Header("Renderer")]
     [SerializeField]
     DigitalRuby.LightningBolt.LightningBoltScript lightning;
     

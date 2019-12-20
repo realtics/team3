@@ -39,7 +39,7 @@ public class JsonStreamer : MonoBehaviour
         file.Close();
     }
 
-    public string pathForDocumentsFile(string filename)
+    string pathForDocumentsFile(string filename)
     {
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {

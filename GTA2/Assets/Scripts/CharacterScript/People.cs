@@ -16,9 +16,10 @@ public abstract class People : MonoBehaviour
     [SerializeField]
     protected AudioClip punchClip;
     protected SpriteRenderer spriteRenderer;
-    //Timer
-    public float[] checkingTimes;
-    public float[] Timers = { 0.0f };
+	
+	//Timer
+	public float[] checkingTimes { get; set; }
+	public float[] Timers { get;set; } = { 0.0f };
     public enum TimerType
     {
         Jump,
@@ -26,19 +27,13 @@ public abstract class People : MonoBehaviour
         Down,
         Runover,
         CarOpen,
+		AutoLand,
         Respawn, //player only
         PatternChange, //NPC only
-        RunAway //Citizen only
+		Heal,
+        RunAway //Citizen only RunAway는 항상 마지막에
     }
-    //protected float jumpTime = 1.0f;
-    //protected float jumpMinTime = 0.5f;
-    //protected float downTime;
-    //   protected float jumpTime = 1.0f;
-    //   protected float jumpMinTime = 1.0f;
-    //   protected float downTime = 1.0f;
-	//protected float runoverTime = 1.0f;
-    
-	
+    	
 	//Physics
 	public Rigidbody rigidbody;
 	public BoxCollider boxCollider;
@@ -52,6 +47,7 @@ public abstract class People : MonoBehaviour
 	protected float runoverSpeed;
 	protected float runoverMinSpeed = 80;
 	protected float runoverHurtMinSpeed = 100;
+
 	protected RaycastHit hit;
 	[Header("이 오브젝트와 작동할 Layer")]
 	public LayerMask collisionLayer;
@@ -62,6 +58,7 @@ public abstract class People : MonoBehaviour
 	protected int defaultHp;
 	protected float hDir = 0;
 	protected float vDir = 0;
+
     //State
     public bool isWalk { get; set; }
 	public bool isShot { get; set; }
@@ -70,12 +67,24 @@ public abstract class People : MonoBehaviour
 	public bool isDown { get; set; }
 	public bool isDie { get; set; }
 	public bool isRunover { get; set; }
-	public bool isGetOnTheCar { get; set; }//문여는 모션
+	public bool isGetOnTheCar { get; set; } //문여는 모션
 
 	BulletEffect bloodEffect;
 
 	//abstract
-	protected abstract void Die();
+	protected virtual void Die()
+	{
+		if (isDie)
+			return;
+		if (isJump)
+			Land();
+		isDie = true;
+
+		rigidbody.velocity = Vector3.zero;
+		rigidbody.isKinematic = true;
+		boxCollider.enabled = false;
+		hDir = 0; vDir = 0;
+	}
 
     protected virtual void Move()
     {
@@ -87,15 +96,15 @@ public abstract class People : MonoBehaviour
     }
 	public virtual void Down()
 	{
-		GetComponent<BoxCollider>().isTrigger = true;
-		GetComponent<Rigidbody>().isKinematic = true;
+		boxCollider.isTrigger = true;
+		rigidbody.isKinematic = true;
 		isRunover = false;
 		isDown = true;
 	}
 	public virtual void Rising()
 	{
-		GetComponent<BoxCollider>().isTrigger = false;
-		GetComponent<Rigidbody>().isKinematic = false;
+		boxCollider.isTrigger = false;
+		rigidbody.isKinematic = false;
 		isDown = false;
 	}
 	public void Hurt(int damage)
@@ -116,7 +125,10 @@ public abstract class People : MonoBehaviour
 		if (isDie)
 			return;
         else if (isDown)
-            TimerCheck(TimerType.Down);
+		{
+			if(TimerCheck(TimerType.Down))
+				Rising();
+		}
         else if(isRunover)
 		{
 			if(TimerCheck(TimerType.Runover))
@@ -125,7 +137,17 @@ public abstract class People : MonoBehaviour
         else if (isJump)
 			LandCheck();
     }
-	
+	protected virtual void InitAnimation()
+	{
+		isWalk = false;
+		isShot = false;
+		isPunch = false;
+	 	isJump = false;
+		isDown = false;
+		isDie = false;
+		isRunover = false;
+		isGetOnTheCar = false;
+	}
 	protected bool IsStuckedAnimation()
 	{
 		if (isDie || isDown || isGetOnTheCar || isRunover)
@@ -164,7 +186,6 @@ public abstract class People : MonoBehaviour
 	protected void Land()
 	{
 		isJump = false;
-
         //jumpTimer = 0.0f;
         Timers[(int)TimerType.Jump] = 0.0f;
 
@@ -187,7 +208,7 @@ public abstract class People : MonoBehaviour
     }
 	protected void TimerInit()
 	{
-		Timers = new float[(int)TimerType.RunAway];
+		Timers = new float[(int)TimerType.RunAway + 1];
 		checkingTimes = new float[(int)TimerType.RunAway + 1];
 	}
 
@@ -195,18 +216,34 @@ public abstract class People : MonoBehaviour
     {
         Timers[(int)timerType] += Time.deltaTime;
 
-        if (Timers[(int)timerType] > checkingTimes[(int)timerType])
+		if (Timers[(int)timerType] > checkingTimes[(int)timerType])
         {
-            Timers[(int)timerType] = 0.0f;
+			SetTimerDefault(timerType);
             return true;
         }
         return false;
     }
-    protected void SetTimerDefault(TimerType timerType)
+	protected bool DelayTimerCheck(TimerType timerType)
+	{
+		Timers[(int)timerType] -= Time.deltaTime;
+
+		if (Timers[(int)timerType] < 0.0f)
+		{
+			SetTimerTocheckingTimes(timerType);
+			return true;
+		}
+		return false;
+	}
+	protected void SetTimerDefault(TimerType timerType)
     {
         Timers[(int)timerType] = 0.0f;
     }
-    protected virtual void LandCheck()
+	protected void SetTimerTocheckingTimes(TimerType timerType)
+	{
+		Timers[(int)timerType] = checkingTimes[(int)timerType];
+	}
+	
+	protected virtual void LandCheck()
 	{
         if(TimerCheck(TimerType.Jump))
 		{

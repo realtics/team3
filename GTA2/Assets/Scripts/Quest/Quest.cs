@@ -16,13 +16,12 @@ public enum QuestStatus
 public enum QuestType
 {
     Kill,
-    Arrive,
-    CarryCargo,
 }
 
 
 public abstract class Quest : MonoBehaviour
 {
+    [Header("Quest Information")]
     [SerializeField]
     protected string title;
     [SerializeField]
@@ -31,14 +30,17 @@ public abstract class Quest : MonoBehaviour
     protected string endPath;
 
 
+    [Header("Quest Object")]
     [SerializeField]
     protected Phone startPhone;
+    [SerializeField]
+    protected GameObject phoneArrowPref;
+
+    [Header("Quest Sound")]
     [SerializeField]
     protected AudioClip startClip;
     [SerializeField]
     protected AudioClip completeClip;
-    [SerializeField]
-    protected GameObject phoneArrowPref;
 
     protected QuestStatus questStatus;
     protected QuestType questType;

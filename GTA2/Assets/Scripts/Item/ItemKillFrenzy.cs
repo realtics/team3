@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemKillFrenzy : Item
 {
+    [Header("Frenzy Value")]
     [SerializeField]
     GunState frenzyGun;
     [SerializeField]

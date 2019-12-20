@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PoliceLevel : MonoBehaviour
 {
     // Start is called before the first frame update\
+    [Header("Police Value")]
     [SerializeField]
     int policeLevelIdx;
 

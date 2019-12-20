@@ -16,7 +16,6 @@ public abstract class NPC : People
     protected float shotRange;
     protected float chaseRange;
     protected float outofRange;
-	protected GameManager gameManager;
 
 	public bool isRunaway { get; set; }
 	protected Vector3 RunawayVector;
@@ -71,7 +70,6 @@ public abstract class NPC : People
 		StartCoroutine(DisableIfOutOfCamera());
 		AnimationInit();
 		SetDefaultHp();
-		base.TimerInit();
 	}
 	protected void NPCOnDisable()
 	{
@@ -103,26 +101,14 @@ public abstract class NPC : People
     }
 	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
 	{
-		if (runoverSpeed < runoverMinSpeed)
-			return;
-		Vector3 runoverVector = transform.position - carPosition;
+		base.Runover(runoverSpeed, carPosition, isRunoverByPlayer);
 
-		//속도에 비례한 피해 데미지 보정수치
-		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
-		this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
-		isRunover = true;
-		hDir = 0; vDir = 0;
-
-		transform.LookAt(carPosition);
-
-		if (runoverSpeed > runoverHurtMinSpeed)
-		{
-			Hurt((int)(runoverSpeed / 2));
-		}
-		if(isRunoverByPlayer && isDie)
+		if (isRunoverByPlayer && isDie)
 		{
 			GameManager.Instance.IncreaseMoney(money);
+			GameManager.Instance.killCount++;
 			WorldUIManager.Instance.SetScoreText(transform.position, money);
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
 		}
 	}
 	protected virtual void RunAway()
@@ -155,7 +141,7 @@ public abstract class NPC : People
             Hurt(HitBullet.bulletDamage);
             HitBullet.Explosion();
 
-            if (isDie == true)
+            if (isDie)
             {
                 WorldUIManager.Instance.SetScoreText(transform.position, money);
 				GameManager.Instance.IncreaseMoney(money);
@@ -171,14 +157,8 @@ public abstract class NPC : People
 
 	protected override void Die()
 	{
-		if (isDie)
-			return;
-		if (isJump)
-			Land();
-		isDie = true;
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.isKinematic = true;
-		boxCollider.enabled = false;
+		base.Die();
+		GameManager.Instance.IncreaseMoney(money);
 		NPCSpawnManager.Instance.DiedNPC.Add(this);
 		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
 	}
@@ -186,13 +166,9 @@ public abstract class NPC : People
 	protected override void Move()
     {
         if (isDestReached)
-        {
             return;
-        }
-		
 		Vector3 dir = new Vector3(destination.x, transform.position.y, destination.z) - transform.position;
-
-        transform.rotation = Quaternion.LookRotation(dir);//Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.4f);
+        transform.rotation = Quaternion.LookRotation(dir);
 
         if (distToObstacle != Mathf.Infinity)
             return;
@@ -225,7 +201,6 @@ public abstract class NPC : People
         {
             distToObstacle = Mathf.Infinity;
         }
-        //DrawRaycastDebugLine();
     }
        
     void DrawRaycastDebugLine()
@@ -244,7 +219,6 @@ public abstract class NPC : People
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(destination, 0.25f);
         Gizmos.DrawWireSphere(destination, 1);
-        //Handles.Label(destination, "destination");
     }
     public void SetDestination(Vector3 pos)
     {
@@ -338,21 +312,19 @@ public abstract class NPC : People
 			}
                 
         }
-		
-
 	}
-	protected void PatternChange()
+	protected void PatternChangeTimerCheck()
 	{
 		if (TimerCheck(TimerType.PatternChange))
 		{
 			if (isWalk)
 			{
-                Timers[(int)TimerType.PatternChange] = Random.Range(minIdleTime, maxIdleTime);
+				checkingTimes[(int)TimerType.PatternChange] = Random.Range(minIdleTime, maxIdleTime);
 				isWalk = false;
 			}
 			else
 			{
-                Timers[(int)TimerType.PatternChange] = Random.Range(minWalkTime, maxWalkTime);
+				checkingTimes[(int)TimerType.PatternChange] = Random.Range(minWalkTime, maxWalkTime);
 				isWalk = true;
 			}
 		}

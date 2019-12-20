@@ -22,13 +22,15 @@ public class CarEffects : MonoBehaviour
 
     public AudioClip collsionClip;
     public AudioClip explosionClip;
+	public AudioClip doorOpenClip;
+	public AudioClip doorCloseClip;
 
 	float engineIdlePitch = 0.5f;
     public AudioSource audioSourceEngine;
     public AudioSource audioSourceSkid;
 	public AudioSource audioSourceSiren;
 
-    public GameObject fireParticle;
+	public GameObject fireParticle;
     public GameObject explosionPref;
 
     protected ExplosionEffect explosionParticle;
@@ -41,6 +43,8 @@ public class CarEffects : MonoBehaviour
         carManager.OnDamage += EnableParticle;
 		carManager.OnDamage += PlayCrashSound;
 		carManager.OnDriverGetOff += TurnOffSiren;
+		carManager.OnDoorOpen += OnDoorOpen;
+		carManager.OnDoorClose += OnDoorClose;
 
 		Init();
     }
@@ -53,6 +57,8 @@ public class CarEffects : MonoBehaviour
         carManager.OnDamage -= EnableParticle;
 		carManager.OnDamage -= PlayCrashSound;
 		carManager.OnDriverGetOff -= TurnOffSiren;
+		carManager.OnDoorOpen -= OnDoorOpen;
+		carManager.OnDoorClose -= OnDoorClose;
 
 		trailLeft.Clear();
 		trailRight.Clear();
@@ -280,5 +286,15 @@ public class CarEffects : MonoBehaviour
 	void PlayExplosionSound(bool sourceIsPlayer)
 	{
 		SoundManager.Instance.PlayClipToPosition(explosionClip, SoundPlayMode.ExplosionSFX, gameObject.transform.position);
+	}
+
+	void OnDoorOpen(int idx)
+	{
+		SoundManager.Instance.PlayClipToPosition(doorOpenClip, SoundPlayMode.ExplosionSFX, gameObject.transform.position);
+	}
+
+	void OnDoorClose(int idx)
+	{
+		SoundManager.Instance.PlayClipToPosition(doorCloseClip, SoundPlayMode.ExplosionSFX, gameObject.transform.position);
 	}
 }

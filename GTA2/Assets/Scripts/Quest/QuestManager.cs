@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QuestManager : MonoSingleton<QuestManager>
 {
+    [Header("Sound")]
     [SerializeField]
     AudioClip frenzyFail;
     [SerializeField]

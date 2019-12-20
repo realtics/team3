@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunGranade : PlayerGun
 {
-
+    [Header("Throw Power")]
     public float moveThrowPower;
 
 

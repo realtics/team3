@@ -99,12 +99,6 @@ public class CarMovement : MonoBehaviour
 		curSpeed = 0;
 	}
 
-    void OnDrawGizmos()
-    {
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawWireSphere(destination, 0.25f);
-    }
-
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -121,8 +115,8 @@ public class CarMovement : MonoBehaviour
 			float rotAmount = Vector3.SignedAngle(inDirection, reboundForce, Vector3.up);
 			transform.Rotate(0, rotAmount / 5, 0);
 
-			Debug.DrawLine(transform.position, transform.position - inDirection, Color.blue, 1f);
-            Debug.DrawLine(transform.position, transform.position + reboundForce, Color.red, 1f);
+			DebugX.DrawRay(transform.position, transform.position - inDirection, Color.blue, 1f);
+			DebugX.DrawRay(transform.position, transform.position + reboundForce, Color.red, 1f);
         }
         else if (col.transform.CompareTag("Car"))
         {
@@ -131,31 +125,12 @@ public class CarMovement : MonoBehaviour
 
 		if (col.transform.CompareTag("NPC") || col.transform.CompareTag("Player"))
 		{
-			if (carManager.carState == CarManager.CarState.controlledByPlayer)
-			{
-				col.gameObject.GetComponent<People>().Runover(curSpeed, transform.position, true);
-			}
-			else
-			{
-				col.gameObject.GetComponent<People>().Runover(curSpeed, transform.position);
-			}
+			col.gameObject.GetComponent<People>().Runover(
+					curSpeed, transform.position, carManager.carState == CarManager.CarState.controlledByPlayer);
 		}
 		
     }
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.transform.CompareTag("NPC") || other.transform.CompareTag("Player"))
-		{
-			if (carManager.carState == CarManager.CarState.controlledByPlayer)
-			{
-				other.gameObject.GetComponent<People>().Runover(curSpeed * 10, transform.position, true);
-			}
-			else
-			{
-				other.gameObject.GetComponent<People>().Runover(curSpeed * 10, transform.position);
-			}
-		}
-	}
+
 	void OnCollisionStay(Collision col)
     {
         if (col.transform.CompareTag("Wall") && Mathf.Abs(curSpeed) > 50)
