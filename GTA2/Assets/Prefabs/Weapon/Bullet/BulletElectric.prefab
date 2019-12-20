@@ -216,8 +216,8 @@ MonoBehaviour:
   bulletSpeed: 0
   explosionArea: 0
   bulletInfo: {fileID: 11400000, guid: d779e7a02f6401f4ebe24a92d82a2cf5, type: 2}
-  bulletSoundSource: {fileID: 0}
   explosionPref: {fileID: 0}
+  explosionSound: {fileID: 0}
   lightning: {fileID: -8364699842060992214}
 --- !u!114 &-8364699842060992214
 MonoBehaviour:

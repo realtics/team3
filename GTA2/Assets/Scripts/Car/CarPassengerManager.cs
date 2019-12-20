@@ -80,7 +80,7 @@ public class CarPassengerManager : MonoBehaviour
 	{
 		isRunningOpenTheDoor[idx] = true;
 		doorAnimator[idx].SetTrigger("Open");
-		SoundManager.Instance.PlayClipToPosition(doorOpenClip, SoundPlayMode.OneShotPosPlay, gameObject.transform.position);
+		SoundManager.Instance.PlayClipToPosition(doorOpenClip, SoundPlayMode.ObjectSFX, gameObject.transform.position);
 		yield return new WaitForSeconds(0.5f);
 		isDoorOpen[idx] = true;
 	}
@@ -88,7 +88,7 @@ public class CarPassengerManager : MonoBehaviour
 	{
 		isRunningOpenTheDoor[idx] = false;
 		doorAnimator[idx].SetTrigger("Close");
-		SoundManager.Instance.PlayClipToPosition(doorCloseClip, SoundPlayMode.OneShotPosPlay, gameObject.transform.position);
+		SoundManager.Instance.PlayClipToPosition(doorCloseClip, SoundPlayMode.CarSFX, gameObject.transform.position);
 		yield return new WaitForSeconds(0.5f);
 		isDoorOpen[idx] = false;
 	}
@@ -106,6 +106,7 @@ public class CarPassengerManager : MonoBehaviour
 			CameraController.Instance.ChangeTarget(gameObject);
 			CameraController.Instance.SetTrackingMode(CameraController.TrackingMode.car);
 		}
+
 		carManager.OnDriverGetOnEvent(passengerType, idx);
 	}
 	
@@ -172,10 +173,13 @@ public class CarPassengerManager : MonoBehaviour
 		else if(passengers[idx] == People.PeopleType.Doctor)
 		{
 			GameObject doctorDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
+			doctorDriver.GetComponent<Doctor>().ambulanceCar = carManager;
+			doctorDriver.GetComponent<Doctor>().idx = 0;
 
 			passengers[idx] = People.PeopleType.None;
 			doctorDriver.transform.position = doorPositions[idx].position;
 			doctorDriver.GetComponent<Doctor>().Down();
+			
 
 			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.stealCar, transform.position);
 			DebugX.Log("차뺏기");
@@ -195,6 +199,10 @@ public class CarPassengerManager : MonoBehaviour
                 DebugX.Log("차뺏기");
             }
         }
+		for(int i = 1; i < passengers.Length; i++)
+		{
+			StartCoroutine(GetOffTheCar(i));
+		}
     }
 	bool IsPassengerAllEmpty()
 	{

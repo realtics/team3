@@ -25,10 +25,6 @@ public class GunFire : PlayerGun
 
     protected override void SFXPlay()
     {
-        if (shotSFXName != null && soundPlayDelta > soundPlayInverval)
-        {
-            SoundManager.Instance.PlayClip(gunSound, SoundPlayMode.OneShotPosPlay);
-            soundPlayDelta = .0f;
-        }
+        SoundManager.Instance.PlayClipToPosition(gunSound, SoundPlayMode.ObjectSFX, userObject.transform.position);
     }
 }

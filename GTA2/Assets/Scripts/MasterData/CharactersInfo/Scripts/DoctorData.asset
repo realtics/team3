@@ -24,4 +24,4 @@ MonoBehaviour:
   maxWalkTime: 15
   carOpenTimer: 0
   carOpenTime: 0.5
-  money: 0
+  money: 400

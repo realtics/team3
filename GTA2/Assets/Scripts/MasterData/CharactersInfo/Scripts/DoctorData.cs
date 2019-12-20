@@ -9,6 +9,8 @@ public class DoctorData : ScriptableObject
 	public float moveSpeed = 2.0f;
 	//public float jumpTime = 1.0f;
 	public float downTime = 3.0f;
+    public float jumpTime = 0.5f;
+    public float carOpenTime = 0.5f;
 	public float findRange = 10.0f;
 	public float punchRange = 0.08f;
 	public float shotRange = 10.0f;
@@ -18,8 +20,6 @@ public class DoctorData : ScriptableObject
 	public float minWalkTime = 10.0f;
 	public float maxWalkTime = 15.0f;
 
-	public float carOpenTimer = 0.0f;
-	public float carOpenTime = 0.5f;
 
-	public int money;
+    public int money;
 }

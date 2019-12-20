@@ -44,11 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d871776cda63e4a9ebb04a68fb7f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneShotPlayTime: 0.1
+  posPlayVolume: 0.5
+  oneShotPlayTime: 0.05
+  oneShotOBJPlayTime: 0.25
   respectIs: {fileID: 8300000, guid: aa3554507234cf84f80cac3a87ea3ee8, type: 3}
   uiSFXmixer: {fileID: -5266146172629462962, guid: 25997eeb91741dc4e98f1e4bb52c2966,
     type: 2}
-  SFXmixer: {fileID: -5115955278521376148, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+  humanSFXmixer: {fileID: -8103561069397750089, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
+  objSFXmixer: {fileID: -5115955278521376148, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
+  carSFXmixer: {fileID: -9051957212427097370, guid: 25997eeb91741dc4e98f1e4bb52c2966,
+    type: 2}
+  explosionSFXmixer: {fileID: -7591177847457505403, guid: 25997eeb91741dc4e98f1e4bb52c2966,
     type: 2}
 --- !u!82 &6643156902260395730
 AudioSource:

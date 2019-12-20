@@ -17,7 +17,7 @@ public class RoadBlockManager : MonoBehaviour
 		{
 			yield return new WaitForSeconds(3f);
 
-			if (WantedLevel.instance.level < 1)
+			if (WantedLevel.instance.level <= 1)
 				continue;
 
 			GameObject go = FindClosetRoadBlock(GameManager.Instance.player.transform.position);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPhysics))]
-[RequireComponent(typeof(PlayerTimer))]
 public class Player : People
 {
 	public PlayerData playerData;
@@ -19,8 +18,6 @@ public class Player : People
     public List<PlayerGun> gunList;
 	[HideInInspector]
 	public PlayerPhysics playerPhysics;
-	[HideInInspector]
-	public PlayerTimer playerTimer;
 
     Animator animator;
     
@@ -30,15 +27,16 @@ public class Player : People
     void Awake()
     {
         playerPhysics = GetComponent<PlayerPhysics>();
-        playerTimer = GetComponent<PlayerTimer>();
         animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		rigidbody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+		base.TimerInit();
+		MasterDataInit();
+		
 	}
     void Start()
     {
-		MasterDataInit();
 		GunListInit();
         UIManager.Instance.HumanUIMode();
     }
@@ -54,7 +52,11 @@ public class Player : People
     }
     void FixedUpdate()
     {
-        TimerCheck();
+        if (isDie)
+        {
+            if (TimerCheck(TimerType.Respawn))
+                Respawn();
+        }
         UpdateTargetRotation();
         UpdateSlerpedRotation();
 
@@ -66,7 +68,7 @@ public class Player : People
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
         {
-            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.OneShotPosPlay, transform.position);
+            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.ObjectSFX, transform.position);
             int bulletDamage = other.gameObject.GetComponentInParent<Bullet>().bulletDamage;
 			isBusted = true;
 			Hurt(bulletDamage);
@@ -277,15 +279,7 @@ public class Player : People
 	{
 		hp = defaultHp;
 	}
-	void TimerCheck()
-	{
-		if (isDie)
-		{
-			if (playerTimer.RespawnTimerCheck())
-				Respawn();
-		}
-	}
-
+	
 	public void ResetAllGunBullet()
 	{
 		foreach (var item in gunList)
@@ -358,12 +352,12 @@ public class Player : People
     }
 	void MasterDataInit()
 	{
-		base.downTime = playerData.downTime;
-		base.jumpTime = playerData.jumpTime;
-		defaultHp = playerData.maxHp;
+		base.checkingTimes[(int)TimerType.Down] = playerData.downTime;
+        base.checkingTimes[(int)TimerType.Jump] = playerData.jumpTime;
+        base.checkingTimes[(int)TimerType.Runover] = playerData.runoverTime;
+        defaultHp = playerData.maxHp;
 		hp = playerData.maxHp;
 		moveSpeed = playerData.moveSpeed;
-		runoverTime = 0.5f;
 	}
 	#endregion
 	#region overrideMethod
@@ -382,13 +376,13 @@ public class Player : People
 	}
 	protected override void LandCheck()
 	{
-		if (JumpTimerCheck())
+		if (TimerCheck((int)TimerType.Jump))
 		{
 			if (!IsCarExistBelow())
 				Land();
 		}
-		else if (isChasingCar && JumpMinTimeCheck())
-			Land();
+		else if (isChasingCar && MathUtil.isArrivedIn2D(transform.position, playerPhysics.targetCar.transform.position)) //JumpMinTimeCheck()
+            Land();
 	}
 	protected override void Die()
 	{
@@ -449,7 +443,37 @@ public class Player : People
 		{
 			Hurt((int)(runoverSpeed / 4));
 		}
+
+		//if (runoverSpeed < runoverMinSpeed)
+		//	return;
+		//Vector3 runoverVector = transform.position - carPosition;
+
+		////속도에 비례한 피해 데미지 보정수치
+		//this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+		//this.runoverVector = runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right));
+		//isRunover = true;
+		//hDir = 0; vDir = 0;
+
+		//transform.LookAt(carPosition);
+		//SetRunaway();
+		//if (isRunoverByPlayer)
+		//{
+		//	print("보정전 수치 : " + runoverSpeed);
+		//}
+		//if (runoverSpeed > runoverHurtMinSpeed)
+		//{
+		//	Hurt((int)(runoverSpeed / 3));
+		//}
+		//if (isRunoverByPlayer && isDie)
+		//{
+		//	GameManager.Instance.IncreaseMoney(money);
+		//	WorldUIManager.Instance.SetScoreText(transform.position, money);
+		//	WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
+		//}
+
 	}
+
+
 
 	#endregion
 	#region InputLogic

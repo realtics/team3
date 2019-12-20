@@ -92,7 +92,6 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 			}
 		}
 	}
-	
 	void MasterDataInit()
 	{
 		citizenSpawnInterval = npcSpawnData.citizenSpawnInterval;

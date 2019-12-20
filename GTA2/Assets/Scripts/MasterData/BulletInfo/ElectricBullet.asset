@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ElectricBullet
   m_EditorClassIdentifier: 
   bulletDamage: 50
-  bulletLifeTime: 1
+  bulletLifeTime: 0.01
   bulletSpeed: 0
   explosionArea: 0

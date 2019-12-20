@@ -24,7 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 
 	public int spawnedAmbulanceNum { get; set; } = 0;
-	public Vector3 ambulanceTarget;
+	public NPC ambulanceTargetNPC;
 
     void Awake()
     {
@@ -143,18 +143,18 @@ public class GameManager : MonoSingleton<GameManager>
 			{
 				if(npc.GetComponent<NPC>().isDie)
 				{
-					ambulanceTarget = npc.transform.position;
+					ambulanceTargetNPC = npc.GetComponent<NPC>();
 					break;
 				}
 			}
 			if (NPCSpawnManager.Instance.DiedNPC.Count > 1 &&
-				spawnedAmbulanceNum < 1)
+				spawnedAmbulanceNum < 3)
 			{
-				CarSpawnManager.Instance.SpawnAmbulanceCar(WaypointManager.instance.FindRandomCarSpawnPosition().transform.position);
 				spawnedAmbulanceNum++;
+				CarSpawnManager.Instance.SpawnAmbulanceCar(WaypointManager.instance.FindRandomCarSpawnPosition().transform.position);
 			}
-
-			yield return new WaitForSeconds(5.0f);
+			
+			yield return new WaitForSeconds(15.0f);
 		}
 	}
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   runawaySpeed: 1.2
   downTime: 3
   findRange: 10
-  punchRange: 0.08
+  punchRange: 0.1
   shotRange: 10
   chaseRange: 15
   outofRange: 400

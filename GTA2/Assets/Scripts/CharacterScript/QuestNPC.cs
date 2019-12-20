@@ -9,7 +9,7 @@ public class QuestNPC : Citizen
     {
         rigidbody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        patternChangeTimer = patternChangeInterval;
+        //patternChangeTimer = patternChangeTime;
         AnimationInit();
         SetDefaultHp();
         StartCoroutine(ActivityByState());

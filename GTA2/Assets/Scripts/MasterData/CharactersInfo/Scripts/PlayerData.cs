@@ -9,4 +9,5 @@ public class PlayerData : ScriptableObject
 	public float moveSpeed = 2.0f;
 	public float jumpTime = 1.5f;
 	public float downTime = 2.0f;
+    public float runoverTime = 0.5f;
 }

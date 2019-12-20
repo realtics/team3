@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugPanel: {fileID: 3138881929409326170}
+  debugReporter: {fileID: 0}
 --- !u!1 &3138881927949795531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,8 +1160,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ShowReporter
+      - m_Target: {fileID: 3138881927785099488}
+        m_MethodName: PopUPRepoter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

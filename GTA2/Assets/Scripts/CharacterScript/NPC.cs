@@ -28,14 +28,11 @@ public abstract class NPC : People
 	protected float maxIdleTime;
     protected float minWalkTime;
     protected float maxWalkTime;
-	protected float carOpenTimer;
-	protected float carOpenTime;
-	protected float runawayTime;
 	GameObject targetCar;
 	public GunState curGunIndex { get; set; }
 	
-	protected float patternChangeTimer;
-	protected float patternChangeInterval;
+	//protected float patternChangeTimer;
+	//protected float patternChangeTime;
 	protected int money; //사망시 플레이어에게 주는 돈
 	
 	public Animator animator;
@@ -68,12 +65,13 @@ public abstract class NPC : People
 		boxCollider.enabled = true;
 		boxCollider.isTrigger = false;
 		rigidbody.isKinematic = false;
-		patternChangeTimer = patternChangeInterval;
+		//patternChangeTimer = patternChangeTime;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		spriteRenderer.enabled = true;
 		StartCoroutine(DisableIfOutOfCamera());
 		AnimationInit();
 		SetDefaultHp();
+		base.TimerInit();
 	}
 	protected void NPCOnDisable()
 	{
@@ -86,12 +84,10 @@ public abstract class NPC : People
 	}
 	protected void SetRunaway()
 	{
-		patternChangeTimer = 0.0f;
-		patternChangeInterval = runawayTime;
+        SetTimerDefault(TimerType.PatternChange);
 		Vector3 playerPosition = GameManager.Instance.player.transform.position;
-		
-		SoundManager.Instance.PlayClipToPosition(runAwayClip[Random.Range(0, runAwayClip.Length)], SoundPlayMode.Play, gameObject.transform.position);
-		RunawayVector = new Vector3(playerPosition.x, transform.position.y, playerPosition.z);
+        
+        RunawayVector = new Vector3(playerPosition.x, transform.position.y, playerPosition.z);
 		transform.LookAt(RunawayVector);
 		transform.Rotate(0, 180, 0);
 		isRunaway = true;
@@ -168,7 +164,7 @@ public abstract class NPC : People
         }
         else if(other.CompareTag("PlayerPunch"))
         {
-            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.OneShotPosPlay, transform.position);
+            SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.ObjectSFX, transform.position);
             Down();
         }
     }
@@ -184,7 +180,7 @@ public abstract class NPC : People
 		rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
 		NPCSpawnManager.Instance.DiedNPC.Add(this);
-		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.OneShotPlay, gameObject.transform.position);
+		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
 	}
 	#region RefHumanCtr
 	protected override void Move()
@@ -347,18 +343,16 @@ public abstract class NPC : People
 	}
 	protected void PatternChange()
 	{
-		if (patternChangeTimer > patternChangeInterval)
+		if (TimerCheck(TimerType.PatternChange))
 		{
-			patternChangeTimer = 0.0f;
-
 			if (isWalk)
 			{
-				patternChangeInterval = Random.Range(minIdleTime, maxIdleTime);
+                Timers[(int)TimerType.PatternChange] = Random.Range(minIdleTime, maxIdleTime);
 				isWalk = false;
 			}
 			else
 			{
-				patternChangeInterval = Random.Range(minWalkTime, maxWalkTime);
+                Timers[(int)TimerType.PatternChange] = Random.Range(minWalkTime, maxWalkTime);
 				isWalk = true;
 			}
 		}
@@ -400,7 +394,7 @@ public abstract class NPC : People
 		rigidbody.isKinematic = false;
 		boxCollider.enabled = true;
 		boxCollider.isTrigger = false;
-		patternChangeTimer = patternChangeInterval;
+		//patternChangeTimer = patternChangeTime;
         if (spriteRenderer != null)
         {
 		    spriteRenderer.enabled = true;
@@ -411,7 +405,7 @@ public abstract class NPC : People
 	}
 	protected override void LandCheck()
 	{
-		if (JumpTimerCheck())
+		if (TimerCheck(TimerType.Jump))
 		{
 			Land();
 		}

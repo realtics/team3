@@ -137,7 +137,7 @@ public class CarManager : MonoBehaviour
         while (true)
         {
             Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-            float offset = 3f;
+            float offset = 2.5f;
             if (pos.x < 0 - offset ||
                 pos.x > 1 + offset ||
                 pos.y < 0 - offset ||

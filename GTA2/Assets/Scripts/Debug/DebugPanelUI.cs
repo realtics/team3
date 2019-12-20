@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DebugPanelUI : MonoBehaviour
 {
     public GameObject debugPanel;
+    public Reporter debugReporter;
 
     public void ToggleDebugPanel()
     {
@@ -37,9 +39,9 @@ public class DebugPanelUI : MonoBehaviour
         GameManager.Instance.player.Hurt(-9999);
     }
 
-    public void TPplayer()
+    public void PopUPRepoter()
     {
-        GameManager.Instance.player.transform.position = new Vector3(-14.8f, 0, -21);
+        debugReporter.ShowReporter();
     }
 
     public void GiveWeapon()

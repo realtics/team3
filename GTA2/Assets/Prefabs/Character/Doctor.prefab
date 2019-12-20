@@ -62,8 +62,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2316873, y: 0.38843024, z: 0.22954834}
-  m_Center: {x: 0, y: 0.06, z: 0}
+  m_Size: {x: 0.2316873, y: 0.2338587, z: 0.15071642}
+  m_Center: {x: 0, y: -0.017285764, z: 0.0041620135}
 --- !u!114 &-8903785580352105579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +82,9 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 4096
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   hp: 0
   animator: {fileID: 1020086614340368900}
   animator_cloth: {fileID: 3183330439516303165}
@@ -101,6 +104,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
   doctorData: {fileID: 11400000, guid: b9c6f1afbfdf6784b85adbe6bb4beccf, type: 2}
   targetNPC: {fileID: 0}
+  ambulanceCar: {fileID: 0}
+  idx: 0
   doctorState: 0
 --- !u!1 &6193245880112247456
 GameObject:

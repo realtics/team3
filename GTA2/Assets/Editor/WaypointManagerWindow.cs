@@ -64,7 +64,14 @@ public class WaypointManagerWindow : EditorWindow
 		{
 			RecalcAllLanePositions();
 		}
-    }
+
+		GUILayout.Space(20);
+
+		if (GUILayout.Button("정렬", GUILayout.Height(40)))
+		{
+			//Align();
+		}
+	}
 
 	void FindWaypointCarRoot()
 	{
@@ -225,5 +232,11 @@ public class WaypointManagerWindow : EditorWindow
 		{
 			r.CalcLanePos();
 		}
+	}
+
+	void AlignX()
+	{
+		GameObject[] goArray = Selection.gameObjects;
+
 	}
 }

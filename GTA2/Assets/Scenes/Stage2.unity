@@ -390,7 +390,7 @@ MonoBehaviour:
   next:
   - {fileID: 1623107793}
   - {fileID: 1721287702}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1623107793}
   canChangeLane: 0
 --- !u!4 &14408324
 Transform:
@@ -3336,8 +3336,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123893320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -144.96, y: 0, z: -140.03}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalPosition: {x: -144.98, y: 0, z: -140.03}
+  m_LocalScale: {x: 0.75236565, y: 0.75236565, z: 0.75236565}
   m_Children: []
   m_Father: {fileID: 1733520}
   m_RootOrder: 75
@@ -6658,7 +6658,7 @@ MonoBehaviour:
   next:
   - {fileID: 1472264805}
   - {fileID: 736877505}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 736877505}
   canChangeLane: 0
 --- !u!4 &247424957
 Transform:
@@ -7057,7 +7057,7 @@ MonoBehaviour:
   next:
   - {fileID: 455420761}
   - {fileID: 122275843}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 455420761}
   canChangeLane: 0
 --- !u!4 &265443243
 Transform:
@@ -11489,7 +11489,7 @@ MonoBehaviour:
   next:
   - {fileID: 190215970}
   - {fileID: 1032705518}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 190215970}
   canChangeLane: 0
 --- !u!4 &480506188
 Transform:
@@ -17528,7 +17528,7 @@ MonoBehaviour:
   next:
   - {fileID: 553939353}
   - {fileID: 1613722581}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 553939353}
   canChangeLane: 0
 --- !u!4 &732522625
 Transform:
@@ -19658,6 +19658,7 @@ MonoBehaviour:
     type: 3}
   allCars: []
   allPoliceCar: []
+  allAmbulanceCar: []
 --- !u!1 &847728022
 GameObject:
   m_ObjectHideFlags: 0
@@ -21437,7 +21438,7 @@ MonoBehaviour:
   next:
   - {fileID: 726176525}
   - {fileID: 700616618}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 726176525}
   canChangeLane: 0
 --- !u!4 &903155102
 Transform:
@@ -24541,6 +24542,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -84.6001
       objectReference: {fileID: 0}
+    - target: {fileID: 3138881927785099488, guid: 9d52e05a5c05d2d48939ae8b7146eefe,
+        type: 3}
+      propertyPath: debugReporter
+      value: 
+      objectReference: {fileID: 181228526}
     - target: {fileID: 3138881929409326170, guid: 9d52e05a5c05d2d48939ae8b7146eefe,
         type: 3}
       propertyPath: m_IsActive
@@ -25040,7 +25046,7 @@ MonoBehaviour:
   next:
   - {fileID: 1989145398}
   - {fileID: 218794348}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1989145398}
   canChangeLane: 0
 --- !u!4 &1039002310
 Transform:
@@ -27183,7 +27189,7 @@ MonoBehaviour:
   next:
   - {fileID: 1685812568}
   - {fileID: 1993323795}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1685812568}
   canChangeLane: 0
 --- !u!4 &1171307565
 Transform:
@@ -34181,7 +34187,7 @@ MonoBehaviour:
   next:
   - {fileID: 1583811815}
   - {fileID: 1963572433}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1583811815}
   canChangeLane: 0
 --- !u!4 &1428337876
 Transform:
@@ -35561,7 +35567,7 @@ MonoBehaviour:
   next:
   - {fileID: 2109277520}
   - {fileID: 980256161}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 980256161}
   canChangeLane: 0
 --- !u!4 &1513912351
 Transform:
@@ -36129,7 +36135,7 @@ MonoBehaviour:
   next:
   - {fileID: 1003687767}
   - {fileID: 912390659}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1003687767}
   canChangeLane: 0
 --- !u!4 &1537515828
 Transform:
@@ -36652,7 +36658,7 @@ MonoBehaviour:
   next:
   - {fileID: 1660864870}
   - {fileID: 1304899303}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1660864870}
   canChangeLane: 0
 --- !u!4 &1564453168
 Transform:
@@ -39162,7 +39168,7 @@ MonoBehaviour:
   next:
   - {fileID: 1442147465}
   - {fileID: 820425518}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1442147465}
   canChangeLane: 0
 --- !u!4 &1655174498
 Transform:
@@ -39319,7 +39325,7 @@ MonoBehaviour:
   next:
   - {fileID: 258658695}
   - {fileID: 569436429}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 258658695}
   canChangeLane: 0
 --- !u!4 &1659670281
 Transform:
@@ -41265,7 +41271,7 @@ MonoBehaviour:
   next:
   - {fileID: 141944650}
   - {fileID: 908387482}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 141944650}
   canChangeLane: 0
 --- !u!4 &1773432565
 Transform:
@@ -45332,7 +45338,7 @@ MonoBehaviour:
   next:
   - {fileID: 255684133}
   - {fileID: 1756950114}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 255684133}
   canChangeLane: 0
 --- !u!4 &1945090238
 Transform:
@@ -45385,7 +45391,7 @@ MonoBehaviour:
   next:
   - {fileID: 1844173563}
   - {fileID: 582432418}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1844173563}
   canChangeLane: 0
 --- !u!4 &1948942784
 Transform:
@@ -46320,7 +46326,7 @@ MonoBehaviour:
   next:
   - {fileID: 1959505526}
   - {fileID: 1578431236}
-  mainNext: {fileID: 0}
+  mainNext: {fileID: 1959505526}
   canChangeLane: 0
 --- !u!4 &1969543082
 Transform:
@@ -50990,7 +50996,7 @@ GameObject:
   - component: {fileID: 2141021162}
   - component: {fileID: 2141021161}
   - component: {fileID: 2141021160}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}

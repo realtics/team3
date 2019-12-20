@@ -6,36 +6,50 @@ using UnityEngine.Audio;
 public enum SoundPlayMode
 {
     UISFX,
-    Play,
-    OneShotPlay,
-    OneShotPosPlay,
+    HumanSFX,
+    ObjectSFX,
+    GunSFX,
+    CarSFX,
+    ExplosionSFX,
 }
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoSingleton<SoundManager>
 {
     [SerializeField]
+    float posPlayVolume;
+    [SerializeField]
     float oneShotPlayTime;
-	
+    [SerializeField]
+    float oneShotOBJPlayTime;
+
     [SerializeField]
     AudioClip respectIs;
 
     [SerializeField]
     AudioMixerGroup uiSFXmixer;
     [SerializeField]
-    AudioMixerGroup SFXmixer;
+    AudioMixerGroup humanSFXmixer;
+    [SerializeField]
+    AudioMixerGroup objSFXmixer;
+    [SerializeField]
+    AudioMixerGroup carSFXmixer;
+    [SerializeField]
+    AudioMixerGroup explosionSFXmixer;
 
 
-    float oneShotPlayDelta;
+    float uiPlayDelta;
+    float humanPlayDelta;
+    float objPlayDelta;
+    float gunPlayDelta;
+    float carPlayDelta;
+    float explosionPlayDelta;
 
     AudioSource SFXSource;
-    Vector3 soundPos;
-
-
 
     void Awake()
     {
-        oneShotPlayDelta = .0f;
+        uiPlayDelta = 1.0f;
         SFXSource = GetComponent<AudioSource>();
 
         PlayClip(respectIs, SoundPlayMode.UISFX);
@@ -43,56 +57,132 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     void Update()
     {
-        oneShotPlayDelta += Time.deltaTime;
+        uiPlayDelta += Time.deltaTime;
+        humanPlayDelta += Time.deltaTime;
+        objPlayDelta += Time.deltaTime;
+        gunPlayDelta += Time.deltaTime;
+        carPlayDelta += Time.deltaTime;
+        explosionPlayDelta += Time.deltaTime;
     }
 
 
-    public void PlayClipToPosition(AudioClip clip, SoundPlayMode mode, Vector3 pos)
-    {
-        soundPos = pos;
-        PlayClip(clip, mode);
-    }
-
-    public void PlayClip(AudioClip clip, SoundPlayMode mode)
+    bool SetMode(AudioClip clip, SoundPlayMode mode)
     {
         if (clip == null)
         {
-            return;
+            return false;
         }
 
-
         SFXSource.clip = clip;
-
-
         switch (mode)
         {
             case SoundPlayMode.UISFX:
                 SFXSource.outputAudioMixerGroup = uiSFXmixer;
-                SFXSource.PlayOneShot(SFXSource.clip);
                 break;
-            case SoundPlayMode.Play:
-                if (!SFXSource.isPlaying)
+            case SoundPlayMode.HumanSFX:
+                SFXSource.outputAudioMixerGroup = humanSFXmixer;
+                break;
+            case SoundPlayMode.ObjectSFX:
+                SFXSource.outputAudioMixerGroup = objSFXmixer;
+                break;
+            case SoundPlayMode.GunSFX:
+                SFXSource.outputAudioMixerGroup = objSFXmixer;
+                break;
+            case SoundPlayMode.CarSFX:
+                SFXSource.outputAudioMixerGroup = carSFXmixer;
+                break;
+            case SoundPlayMode.ExplosionSFX:
+                SFXSource.outputAudioMixerGroup = explosionSFXmixer;
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    bool CheckDelta(SoundPlayMode mode)
+    {
+        switch (mode)
+        {
+            case SoundPlayMode.UISFX:
+                if (uiPlayDelta >= oneShotPlayTime)
                 {
-                    SFXSource.Play();
+                    uiPlayDelta = .0f;
+                    return true;
                 }
                 break;
-            case SoundPlayMode.OneShotPlay:
-                if (oneShotPlayDelta >= oneShotPlayTime)
+            case SoundPlayMode.HumanSFX:
+                if (humanPlayDelta >= oneShotPlayTime)
                 {
-                    SFXSource.outputAudioMixerGroup = SFXmixer;
-                    SFXSource.PlayOneShot(SFXSource.clip);
-                    oneShotPlayDelta = .0f;
+                    humanPlayDelta = .0f;
+                    return true;
                 }
                 break;
-            case SoundPlayMode.OneShotPosPlay:
-                if (oneShotPlayDelta >= oneShotPlayTime)
+            case SoundPlayMode.ObjectSFX:
+                if (objPlayDelta >= /*oneShotPlayTime*/oneShotOBJPlayTime)
                 {
-                    AudioSource.PlayClipAtPoint(clip, soundPos);
-                    oneShotPlayDelta = .0f;
+                    objPlayDelta = .0f;
+                    return true;
+                }
+                break;
+            case SoundPlayMode.GunSFX:
+                if (gunPlayDelta >= oneShotPlayTime)
+                {
+                    gunPlayDelta = .0f;
+                    return true;
+                }
+                break;
+            case SoundPlayMode.CarSFX:
+                if (carPlayDelta >= oneShotPlayTime)
+                {
+                    carPlayDelta = .0f;
+                    return true;
+                }
+                break;
+            case SoundPlayMode.ExplosionSFX:
+                if (explosionPlayDelta >= oneShotPlayTime)
+                {
+                    explosionPlayDelta = .0f;
+                    return true;
                 }
                 break;
             default:
                 break;
         }
+
+        return false;
+    }
+
+    public void PlayClip(AudioClip clip, SoundPlayMode mode)
+    {
+        if (!SetMode(clip, mode))
+        {
+            return;
+        }
+
+        if (!CheckDelta(mode))
+        {
+            return;
+        }
+
+        SFXSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        SFXSource.PlayOneShot(SFXSource.clip);        
+    }
+
+    public void PlayClipToPosition(AudioClip clip, SoundPlayMode mode, Vector3 pos)
+    {
+        if (!SetMode(clip, mode))
+        {
+            return;
+        }
+
+        if (!CheckDelta(mode))
+        {
+            return;
+        }
+
+        SFXSource.rolloffMode = AudioRolloffMode.Linear;
+        AudioSource.PlayClipAtPoint(clip, pos, posPlayVolume);
     }
 }

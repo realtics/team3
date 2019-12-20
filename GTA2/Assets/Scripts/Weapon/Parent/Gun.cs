@@ -143,6 +143,6 @@ public abstract class Gun : MonoBehaviour
     }
     protected virtual void SFXPlay()
     {
-        SoundManager.Instance.PlayClipToPosition(gunSound, SoundPlayMode.OneShotPosPlay, userObject.transform.position);
+        SoundManager.Instance.PlayClipToPosition(gunSound, SoundPlayMode.GunSFX, userObject.transform.position);
     }
 }

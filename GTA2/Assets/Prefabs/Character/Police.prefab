@@ -172,6 +172,9 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   hp: 0
   animator: {fileID: 1167477734086649170}
   animator_cloth: {fileID: 0}

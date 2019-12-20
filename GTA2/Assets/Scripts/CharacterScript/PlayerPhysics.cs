@@ -27,6 +27,7 @@ public class PlayerPhysics : MonoBehaviour
     public void ChaseTheCar(float moveSpeed)
     {
 		LookAtCarDoor();
+
 		if (Vector3.SqrMagnitude(carDoorTransform.position - transform.position) < 0.05f)
 		{
 			return;

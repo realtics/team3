@@ -126,7 +126,9 @@ public class BulletElectric : Bullet
     void SetScale(Vector3 targetToVector)
     {
         Vector3 localScale = transform.localScale;
-        float targetToVecSize = (targetToVector).magnitude;
+        float targetToVecSize = (
+            new Vector2(startObject.transform.position.x, startObject.transform.position.z) -
+            new Vector2(targetObject.transform.position.x, targetObject.transform.position.z)).magnitude;
 
         transform.localScale = new Vector3(
             targetToVecSize * .11f,
@@ -135,13 +137,13 @@ public class BulletElectric : Bullet
     }
     void SetRotate()
     {
-        gameObject.transform.LookAt(targetObject.transform, Vector3.up);
+        gameObject.transform.LookAt(targetObject.transform);
         gameObject.transform.localEulerAngles += Vector3.up * 270.0f;
     }
     void SetPosition(Vector3 targetToVector)
     {
         Vector3 setVector = targetToVector * .5f;
-        setVector.y = targetToVector.y;
+        // setVector.y = targetToVector.y;
 
         transform.position = setVector + startObject.transform.position;
     }

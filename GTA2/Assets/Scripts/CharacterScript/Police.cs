@@ -9,6 +9,7 @@ public class Police : NPC
 	void Awake()
 	{
 		gameManager = GameManager.Instance;
+		base.TimerInit();
 		MasterDataInit();
 	}
 	private void OnEnable()
@@ -29,7 +30,16 @@ public class Police : NPC
             StopPunch();
             return;
         }
-        TimerCheck();
+        //TimerCheck(); //Police에 있던 기존TimerCheck
+        if (!isChasePlayer)
+        {
+            PatternChange();
+        }
+        if (DetectedPlayerAttack() && !isChasePlayer)
+        {
+            WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, gameManager.player.transform.position);
+        }
+
         ActivityByState();
         PlayerStateCheck();
     }
@@ -91,9 +101,9 @@ public class Police : NPC
 			base.StartShot();
 		}
 	}
-	private void OnCollisionEnter(Collision collision)
+	private void OnCollisionStay(Collision collision)
 	{
-		if (collision.gameObject.CompareTag("Car") && isChasePlayer)
+		if(collision.gameObject.CompareTag("Car") && isChasePlayer && !isJump)
 		{
 			Jump();
 		}
@@ -104,19 +114,23 @@ public class Police : NPC
 	{
 		defaultHp = policeData.maxHp;
 		moveSpeed = policeData.moveSpeed;
-		downTime = policeData.downTime;
 		runSpeed = policeData.runawaySpeed;
+
 		findRange = policeData.findRange;
 		punchRange = policeData.punchRange;
 		shotRange = policeData.shotRange;
 		chaseRange = policeData.chaseRange;
 		outofRange = policeData.outofRange;
+
 		minIdleTime = policeData.minIdleTime;
 		maxIdleTime = policeData.maxIdleTime;
 		minWalkTime = policeData.minWalkTime;
 		maxWalkTime = policeData.maxWalkTime;
-		carOpenTimer = policeData.carOpenTimer;
-		carOpenTime = policeData.carOpenTime;
+
+        checkingTimes[(int)TimerType.Jump] = policeData.jumpTime;
+        checkingTimes[(int)TimerType.Down] = policeData.downTime;
+        checkingTimes[(int)TimerType.CarOpen] = policeData.carOpenTime;
+
 		money = policeData.money;
 	}
 	IEnumerator ActivityByState()
@@ -177,30 +191,30 @@ public class Police : NPC
         gunList[1].GetComponent<NPCGun>().StopShot();
 		isPunch = false;
 	}
-	public bool CarOpenTimerCheck()
-	{
-		carOpenTimer += Time.deltaTime;
+	//public bool CarOpenTimerCheck()
+	//{
+	//	carOpenTimer += Time.deltaTime;
 
-		if (carOpenTimer > carOpenTime)
-		{
-			carOpenTimer = 0.0f;
-			return true;
-		}
-		return false;
-	}
-	void TimerCheck()
-	{
-		patternChangeTimer += Time.deltaTime;
+	//	if (carOpenTimer > carOpenTime)
+	//	{
+	//		carOpenTimer = 0.0f;
+	//		return true;
+	//	}
+	//	return false;
+	//}
+	//void TimerCheck()
+	//{
+	//	patternChangeTimer += Time.deltaTime;
 
-		if (!isChasePlayer)
-		{
-			PatternChange();
-		}
-		if (DetectedPlayerAttack() && !isChasePlayer)
-		{
-			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, gameManager.player.transform.position);
-		}
-	}
+	//	if (!isChasePlayer)
+	//	{
+	//		PatternChange();
+	//	}
+	//	if (DetectedPlayerAttack() && !isChasePlayer)
+	//	{
+	//		WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, gameManager.player.transform.position);
+	//	}
+	//}
 	void PullOutDriver()
 	{
 		GameManager.Instance.player.playerPhysics.targetCar.PullOutDriver();
@@ -245,6 +259,7 @@ public class Police : NPC
 	{
 		if (isDie)
 			return;
+		
 		isDie = true;
 		gunList[0].GetComponent<NPCGun>().StopShot();
 		gunList[1].GetComponent<NPCGun>().StopShot();
@@ -252,7 +267,9 @@ public class Police : NPC
 		rigidbody.isKinematic = true;
 		boxCollider.enabled = false;
 		NPCSpawnManager.Instance.DiedNPC.Add(this);
-		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.OneShotPlay, gameObject.transform.position);
+		if (isJump)
+			Land();
+		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
 	}
 	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
 	{
@@ -279,6 +296,7 @@ public class Police : NPC
 		if (isRunoverByPlayer && isDie)
 		{
 			GameManager.Instance.IncreaseMoney(money);
+			GameManager.Instance.killCount++;
 			WorldUIManager.Instance.SetScoreText(transform.position, money);
 			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
 		}

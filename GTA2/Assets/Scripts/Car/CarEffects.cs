@@ -40,6 +40,7 @@ public class CarEffects : MonoBehaviour
 		carManager.OnDestroy += PlayExplosionSound;
         carManager.OnDamage += EnableParticle;
 		carManager.OnDamage += PlayCrashSound;
+		carManager.OnDriverGetOff += TurnOffSiren;
 
 		Init();
     }
@@ -51,10 +52,19 @@ public class CarEffects : MonoBehaviour
 		carManager.OnDestroy -= PlayExplosionSound;
         carManager.OnDamage -= EnableParticle;
 		carManager.OnDamage -= PlayCrashSound;
+		carManager.OnDriverGetOff -= TurnOffSiren;
+
+		trailLeft.Clear();
+		trailRight.Clear();
 	}
 
     void Init()
     {
+		trailLeft.emitting = false;
+		trailRight.emitting = false;
+		trailLeft.Clear();
+		trailRight.Clear();
+
         lightFL.SetActive(false);
         lightFR.SetActive(false);
         lightRL.SetActive(false);
@@ -77,7 +87,7 @@ public class CarEffects : MonoBehaviour
             explosionParticle.gameObject.name = "CarExplosion";
         }
 
-		TurnOffSiren();
+		TurnOffSiren(People.PeopleType.None, 0);
 	}
 
     void Update()
@@ -119,7 +129,7 @@ public class CarEffects : MonoBehaviour
         }
     }
 
-    public void TurnOffSiren()
+    public void TurnOffSiren(People.PeopleType peopleType, int idx)
     {
 		if (sirenL == null)
 			return;
@@ -193,7 +203,7 @@ public class CarEffects : MonoBehaviour
     void FullyDestroy(bool sourceIsPlayer)
     {
         if(sirenL != null)
-            TurnOffSiren();
+            TurnOffSiren(People.PeopleType.None, 0);
 
         lightFL.SetActive(false);
         lightFR.SetActive(false);
@@ -209,7 +219,7 @@ public class CarEffects : MonoBehaviour
 
     public void DrawSkidMark(float inputH, float curSpeed)
     {
-        if (Mathf.Abs(inputH) > 0.3f && curSpeed > 150)
+        if (Mathf.Abs(inputH) > 0.5f && curSpeed > 160)
         {
             trailLeft.emitting = true;
             trailRight.emitting = true;
@@ -264,11 +274,11 @@ public class CarEffects : MonoBehaviour
 	void PlayCrashSound(bool sourceIsPlayer)
 	{
 		if(carManager.carState == CarManager.CarState.controlledByPlayer)
-			SoundManager.Instance.PlayClipToPosition(collsionClip, SoundPlayMode.OneShotPlay, gameObject.transform.position);
+			SoundManager.Instance.PlayClipToPosition(collsionClip, SoundPlayMode.ObjectSFX, gameObject.transform.position);
 	}
 
 	void PlayExplosionSound(bool sourceIsPlayer)
 	{
-		SoundManager.Instance.PlayClipToPosition(explosionClip, SoundPlayMode.OneShotPlay, gameObject.transform.position);
+		SoundManager.Instance.PlayClipToPosition(explosionClip, SoundPlayMode.ExplosionSFX, gameObject.transform.position);
 	}
 }

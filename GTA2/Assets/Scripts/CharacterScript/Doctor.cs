@@ -16,19 +16,21 @@ public class Doctor : NPC
 	{
 		GoToheal,
 		Healing,
-		GoBackToCar
+		GoBackToCar,
+		GetOnTheCar,
 	}
 	public DoctorState doctorState = DoctorState.GoToheal;
 	void Awake()
 	{
 		gameManager = GameManager.Instance;
+		base.TimerInit();
 		MasterDataInit();
 	}
-	private void OnEnable()
+	void OnEnable()
 	{
 		GetDiedNPC();
 	}
-	private void OnDisable()
+	void OnDisable()
 	{
 	}
 	// Update is called once per frame
@@ -67,7 +69,7 @@ public class Doctor : NPC
 				}
 				transform.LookAt(new Vector3(targetNPC.transform.position.x, transform.position.y, targetNPC.transform.position.z));
 				
-				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
+				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), targetNPC.transform.position))
 				{
 					if(isJump)
 						Land();
@@ -81,12 +83,13 @@ public class Doctor : NPC
 				HealTimerCheck();
 				break;
 			case DoctorState.GoBackToCar:
-				
 				if (MathUtil.isArrived(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
 				{
+					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doorPositions[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doorPositions[idx].transform.position.z));
 					isWalk = false;
 					if (isJump)
 						Land();
+					doctorState = DoctorState.GetOnTheCar;
 					OpenTheDoor(idx);
 				}
 				else
@@ -94,6 +97,10 @@ public class Doctor : NPC
 					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doorPositions[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doorPositions[idx].transform.position.z));
 					Move();
 				}
+				break;
+			case DoctorState.GetOnTheCar:
+				transform.LookAt(ambulanceCar.transform.position);
+				OpenTheDoor(idx);
 				break;
 		}
 	}
@@ -111,6 +118,8 @@ public class Doctor : NPC
 			if (ambulanceCar.passengerManager.isDoorOpen[idx])//탑승
 			{
 				ambulanceCar.passengerManager.GetOnTheCar(PeopleType.Doctor, idx);
+				isGetOnTheCar = false;
+				GameManager.Instance.ambulanceTargetNPC = null;
 				gameObject.SetActive(false);
 			}
 		}
@@ -127,16 +136,21 @@ public class Doctor : NPC
 	{
 		defaultHp = doctorData.maxHp;
 		moveSpeed = doctorData.moveSpeed;
-		downTime = doctorData.downTime;
+		
 		findRange = doctorData.findRange;
 		punchRange = doctorData.punchRange;
 		shotRange = doctorData.shotRange;
-		minIdleTime = doctorData.minIdleTime;
+
+        checkingTimes[(int)TimerType.Jump] = doctorData.jumpTime;
+        checkingTimes[(int)TimerType.Down] = doctorData.downTime;
+        checkingTimes[(int)TimerType.CarOpen] = doctorData.carOpenTime;
+        //checkingTimes[(int)TimerType.RunAway] = doctorData.runawayTime;
+
+        minIdleTime = doctorData.minIdleTime;
 		maxIdleTime = doctorData.maxIdleTime;
 		minWalkTime = doctorData.minWalkTime;
 		maxWalkTime = doctorData.maxWalkTime;
-		carOpenTimer = doctorData.carOpenTimer;
-		carOpenTime = doctorData.carOpenTime;
+
 		money = doctorData.money;
 	}
 	override protected void Move()
@@ -165,40 +179,5 @@ public class Doctor : NPC
 		}
 	}
 	
-	//void SortByDistance(bool isAsc = true)
-	//{
-	//	if (isAsc)
-	//	{
-	//		for (int i = 0; i < DiedNPC.Count; i++)
-	//		{
-	//			for (int j = i; j < DiedNPC.Count - (i + 1); j++)
-	//			{
-	//				if (Vector3.SqrMagnitude(transform.position - DiedNPC[j].transform.position) > 
-	//					Vector3.SqrMagnitude(transform.position - DiedNPC[j + 1].transform.position))
-	//				{
-	//					NPC temp = DiedNPC[j];
-	//					DiedNPC[j] = DiedNPC[j + 1];
-	//					DiedNPC[j + 1] = temp;
-	//				}
-	//			}
-	//		}
-	//	}
-	//	else
-	//	{
-	//		for (int i = 0; i < DiedNPC.Count; i++)
-	//		{
-	//			for (int j = i; j < DiedNPC.Count - (i + 1); j++)
-	//			{
-	//				if (Vector3.SqrMagnitude(transform.position - DiedNPC[j].transform.position) < 
-	//					Vector3.SqrMagnitude(transform.position - DiedNPC[j + 1].transform.position))
-	//				{
-	//					NPC temp = DiedNPC[j];
-	//					DiedNPC[j] = DiedNPC[j + 1];
-	//					DiedNPC[j + 1] = temp;
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
 	#endregion
 }

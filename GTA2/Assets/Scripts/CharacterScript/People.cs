@@ -10,21 +10,34 @@ public abstract class People : MonoBehaviour
         Player,
         Citizen,
         Police,
-		Doctor
+        Doctor
     };
     //Sound
     [SerializeField]
     protected AudioClip punchClip;
     protected SpriteRenderer spriteRenderer;
-	//Timer
-	protected float jumpTime = 1.0f;
-	protected float jumpTimer;
-	protected float jumpMinTime = 0.5f;
-	protected float downTimer;
-	protected float downTime;
-
-	float runoverTimer = 0.0f;
-	protected float runoverTime = 1.0f;
+    //Timer
+    public float[] checkingTimes;
+    public float[] Timers = { 0.0f };
+    public enum TimerType
+    {
+        Jump,
+        JumpMin,
+        Down,
+        Runover,
+        CarOpen,
+        Respawn, //player only
+        PatternChange, //NPC only
+        RunAway //Citizen only
+    }
+    //protected float jumpTime = 1.0f;
+    //protected float jumpMinTime = 0.5f;
+    //protected float downTime;
+    //   protected float jumpTime = 1.0f;
+    //   protected float jumpMinTime = 1.0f;
+    //   protected float downTime = 1.0f;
+	//protected float runoverTime = 1.0f;
+    
 	
 	//Physics
 	public Rigidbody rigidbody;
@@ -42,6 +55,8 @@ public abstract class People : MonoBehaviour
 	protected RaycastHit hit;
 	[Header("이 오브젝트와 작동할 Layer")]
 	public LayerMask collisionLayer;
+	public LayerMask groundLayer;
+
 
 	[SerializeField]protected int hp;
 	protected int defaultHp;
@@ -100,11 +115,14 @@ public abstract class People : MonoBehaviour
     {
 		if (isDie)
 			return;
-        if (isDown)
-            DownCheck();
+        else if (isDown)
+            TimerCheck(TimerType.Down);
         else if(isRunover)
-            RunoverCheck();
-		else if (isJump)
+		{
+			if(TimerCheck(TimerType.Runover))
+				isRunover = false;
+		}
+        else if (isJump)
 			LandCheck();
     }
 	
@@ -146,8 +164,14 @@ public abstract class People : MonoBehaviour
 	protected void Land()
 	{
 		isJump = false;
-		jumpTimer = 0.0f;
-		transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+
+        //jumpTimer = 0.0f;
+        Timers[(int)TimerType.Jump] = 0.0f;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 5f, groundLayer))
+		{
+			transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+		}
 		GetComponent<Rigidbody>().useGravity = true;
 	}
     protected virtual void UpdateTargetRotation()
@@ -161,61 +185,30 @@ public abstract class People : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
         }
     }
-    public bool JumpTimerCheck()
+	protected void TimerInit()
 	{
-		jumpTimer += Time.deltaTime;
-		DebugX.DrawRay(transform.position, transform.up * -1, Color.magenta);
+		Timers = new float[(int)TimerType.RunAway];
+		checkingTimes = new float[(int)TimerType.RunAway + 1];
+	}
 
-		if (jumpTimer > jumpTime)
-		{
-			jumpTimer = 0.0f;
-			return true;
-		}
-		return false;
-	}
-	public bool JumpMinTimeCheck()
-	{
-		if (jumpTimer > jumpMinTime)
-			return true;
-		else
-			return false;
-	}
-    void DownCheck()
+	protected bool TimerCheck(TimerType timerType)
     {
-        downTimer += Time.deltaTime;
+        Timers[(int)timerType] += Time.deltaTime;
 
-        if (downTimer > downTime)
+        if (Timers[(int)timerType] > checkingTimes[(int)timerType])
         {
-            downTimer = 0;
-            isDown = false;
-            Rising();
+            Timers[(int)timerType] = 0.0f;
+            return true;
         }
+        return false;
     }
-    
-    void RunoverCheck()
+    protected void SetTimerDefault(TimerType timerType)
     {
-        runoverTimer += Time.deltaTime;
-
-        //충돌된 방향으로 날아가기
-        transform.position += runoverVector;
-
-        if (runoverTimer > runoverTime)
-        {
-            runoverTimer = 0.0f;
-            isRunover = false;
-
-            //보정 수치
-            if (runoverSpeed > 150.0f)
-            {
-                hDir = 0; vDir = 0;
-
-                Down();
-            }
-        }
+        Timers[(int)timerType] = 0.0f;
     }
     protected virtual void LandCheck()
 	{
-		if (JumpTimerCheck())
+        if(TimerCheck(TimerType.Jump))
 		{
 			if (!IsCarExistBelow())
 				Land();

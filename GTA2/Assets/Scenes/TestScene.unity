@@ -151,6 +151,59 @@ Transform:
   m_Father: {fileID: 223386273}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &103339984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103339985}
+  - component: {fileID: 103339986}
+  m_Layer: 0
+  m_Name: CarRoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &103339985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103339984}
+  m_LocalRotation: {x: -0, y: -0.77185184, z: -0, w: 0.6358025}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_Children: []
+  m_Father: {fileID: 1158867179}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &103339986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103339984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5732ca0f4ca61e149a859fc7635be24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfLane: 2
+  laneWidth: 0.9
+  laneStartPosition:
+  - {x: 8.84, y: 0, z: 11.99}
+  - {x: 9.607988, y: 0, z: 12.459248}
+  laneEndPosition:
+  - {x: 8.86, y: 0, z: 7.1}
+  - {x: 9.682009, y: 0, z: 6.7335286}
+  parentWaypoint: {fileID: 1158867180}
+  endWaypoint: {fileID: 668823657}
 --- !u!1 &223386271
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +251,373 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &276498426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276498428}
+  - component: {fileID: 276498427}
+  m_Layer: 0
+  m_Name: WPC 5
+  m_TagString: waypoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &276498427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276498426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e19959b690b44d9a4c60047f8e5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  prev:
+  - {fileID: 715882362}
+  next:
+  - {fileID: 1158867180}
+  mainNext: {fileID: 0}
+  canChangeLane: 0
+--- !u!4 &276498428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276498426}
+  m_LocalRotation: {x: -0, y: 0.5546246, z: -0, w: 0.8321007}
+  m_LocalPosition: {x: 5.53, y: 0, z: 12.55}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 809408524}
+  m_Father: {fileID: 2000904896}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &668823655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 668823656}
+  - component: {fileID: 668823657}
+  m_Layer: 0
+  m_Name: WPC 7
+  m_TagString: waypoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &668823656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668823655}
+  m_LocalRotation: {x: -0, y: 0.97809595, z: -0, w: -0.20815456}
+  m_LocalPosition: {x: 8.86, y: 0, z: 7.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 957255293}
+  m_Father: {fileID: 2000904896}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &668823657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668823655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e19959b690b44d9a4c60047f8e5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  prev:
+  - {fileID: 1158867180}
+  next:
+  - {fileID: 1491920131}
+  mainNext: {fileID: 0}
+  canChangeLane: 0
+--- !u!1 &715882360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 715882361}
+  - component: {fileID: 715882362}
+  m_Layer: 0
+  m_Name: WPC 4
+  m_TagString: waypoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &715882361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715882360}
+  m_LocalRotation: {x: -0, y: 0.28359953, z: -0, w: 0.95894283}
+  m_LocalPosition: {x: 1.02, y: 0, z: 8.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1060597770}
+  m_Father: {fileID: 2000904896}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &715882362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715882360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e19959b690b44d9a4c60047f8e5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  prev:
+  - {fileID: 1429979595}
+  next:
+  - {fileID: 276498427}
+  mainNext: {fileID: 0}
+  canChangeLane: 0
+--- !u!1 &809408523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809408524}
+  - component: {fileID: 809408525}
+  m_Layer: 0
+  m_Name: CarRoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809408524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809408523}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 276498428}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809408525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809408523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5732ca0f4ca61e149a859fc7635be24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfLane: 3
+  laneWidth: 0.9
+  laneStartPosition:
+  - {x: 5.53, y: 0, z: 12.55}
+  - {x: 5.1836953, y: 0, z: 13.380707}
+  - {x: 4.837391, y: 0, z: 14.211412}
+  laneEndPosition:
+  - {x: 8.84, y: 0, z: 11.99}
+  - {x: 9.607988, y: 0, z: 12.459248}
+  - {x: 10.3759775, y: 0, z: 12.928495}
+  parentWaypoint: {fileID: 276498427}
+  endWaypoint: {fileID: 1158867180}
+--- !u!1 &957255292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 957255293}
+  - component: {fileID: 957255294}
+  m_Layer: 0
+  m_Name: CarRoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &957255293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957255292}
+  m_LocalRotation: {x: -0, y: -0.9989006, z: -0, w: 0.046879582}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_Children: []
+  m_Father: {fileID: 668823656}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &957255294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957255292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5732ca0f4ca61e149a859fc7635be24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfLane: 2
+  laneWidth: 0.9
+  laneStartPosition:
+  - {x: 8.86, y: 0, z: 7.1}
+  - {x: 9.682009, y: 0, z: 6.7335286}
+  laneEndPosition:
+  - {x: 4.45, y: 0, z: 3.13}
+  - {x: 5.052152, y: 0, z: 2.4611106}
+  parentWaypoint: {fileID: 668823657}
+  endWaypoint: {fileID: 1491920131}
+--- !u!1 &1060597769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1060597770}
+  - component: {fileID: 1060597771}
+  m_Layer: 0
+  m_Name: CarRoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1060597770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060597769}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 715882361}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1060597771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060597769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5732ca0f4ca61e149a859fc7635be24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfLane: 3
+  laneWidth: 0.9
+  laneStartPosition:
+  - {x: 1.02, y: 0, z: 8.73}
+  - {x: 0.26477164, y: 0, z: 9.21952}
+  - {x: -0.4904567, y: 0, z: 9.70904}
+  laneEndPosition:
+  - {x: 5.53, y: 0, z: 12.55}
+  - {x: 5.1663394, y: 0, z: 13.373257}
+  - {x: 4.802679, y: 0, z: 14.196513}
+  parentWaypoint: {fileID: 715882362}
+  endWaypoint: {fileID: 276498427}
+--- !u!1 &1158867178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158867179}
+  - component: {fileID: 1158867180}
+  m_Layer: 0
+  m_Name: WPC 6
+  m_TagString: waypoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158867179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158867178}
+  m_LocalRotation: {x: -0, y: 0.962632, z: -0, w: 0.27081305}
+  m_LocalPosition: {x: 8.84, y: 0, z: 11.99}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 103339985}
+  m_Father: {fileID: 2000904896}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158867180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158867178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e19959b690b44d9a4c60047f8e5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  prev:
+  - {fileID: 276498427}
+  next:
+  - {fileID: 668823657}
+  mainNext: {fileID: 0}
+  canChangeLane: 0
 --- !u!1 &1407059750
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +668,7 @@ MonoBehaviour:
   - {x: -0.89991826, y: 0, z: -0.01212656}
   laneEndPosition:
   - {x: -0.019, y: 0, z: 1.41}
-  - {x: -0.9152693, y: 0, z: 1.4918606}
+  - {x: -0.87332815, y: 0, z: 1.6930605}
   parentWaypoint: {fileID: 1419147156}
   endWaypoint: {fileID: 1959324957}
 --- !u!1 &1419147154
@@ -325,10 +745,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429979593}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.579, y: 0, z: 5.574}
+  m_LocalRotation: {x: -0, y: -0.0073931133, z: -0, w: 0.9999727}
+  m_LocalPosition: {x: 1.09, y: 0, z: 5.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1981783376}
   m_Father: {fileID: 2000904896}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -347,6 +768,56 @@ MonoBehaviour:
   gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   prev:
   - {fileID: 1616418138}
+  next:
+  - {fileID: 715882362}
+  mainNext: {fileID: 0}
+  canChangeLane: 0
+--- !u!1 &1491920129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1491920130}
+  - component: {fileID: 1491920131}
+  m_Layer: 0
+  m_Name: WPC 8
+  m_TagString: waypoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1491920130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491920129}
+  m_LocalRotation: {x: -0, y: 0.9135256, z: -0, w: -0.4067814}
+  m_LocalPosition: {x: 4.45, y: 0, z: 3.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2000904896}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1491920131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491920129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e19959b690b44d9a4c60047f8e5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  prev:
+  - {fileID: 668823657}
   next: []
   mainNext: {fileID: 0}
   canChangeLane: 0
@@ -393,14 +864,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5732ca0f4ca61e149a859fc7635be24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfLane: 2
+  numOfLane: 3
   laneWidth: 0.9
   laneStartPosition:
-  - {x: 0.39, y: 0, z: 4.27}
-  - {x: -0.45025003, y: 0, z: 4.592459}
+  - {x: 1.1, y: 0, z: 3.32}
+  - {x: 0.22864407, y: 0, z: 3.5452526}
+  - {x: -0.6427119, y: 0, z: 3.7705052}
   laneEndPosition:
-  - {x: 1.579, y: 0, z: 5.574}
-  - {x: 0.679, y: 0, z: 5.574}
+  - {x: 1.09, y: 0, z: 5.7}
+  - {x: 0.19009846, y: 0, z: 5.6866927}
+  - {x: -0.7098031, y: 0, z: 5.673385}
   parentWaypoint: {fileID: 1616418138}
   endWaypoint: {fileID: 1429979595}
 --- !u!1 &1589638070
@@ -450,10 +923,10 @@ MonoBehaviour:
   laneWidth: 0.9
   laneStartPosition:
   - {x: -0.019, y: 0, z: 1.41}
-  - {x: -0.9152693, y: 0, z: 1.4918606}
+  - {x: -0.87332815, y: 0, z: 1.6930605}
   laneEndPosition:
-  - {x: 0.39, y: 0, z: 4.27}
-  - {x: -0.45025003, y: 0, z: 4.592459}
+  - {x: 1.1, y: 0, z: 3.32}
+  - {x: 0.22864407, y: 0, z: 3.5452526}
   parentWaypoint: {fileID: 1959324957}
   endWaypoint: {fileID: 1616418138}
 --- !u!1 &1616418136
@@ -480,8 +953,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616418136}
-  m_LocalRotation: {x: -0, y: 0.18219335, z: -0, w: 0.9832627}
-  m_LocalPosition: {x: 0.39, y: 0, z: 4.27}
+  m_LocalRotation: {x: -0, y: 0.12614812, z: -0, w: 0.9920114}
+  m_LocalPosition: {x: 1.1, y: 0, z: 3.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1499847972}
@@ -625,7 +1098,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959324956}
-  m_LocalRotation: {x: -0, y: 0.045525353, z: -0, w: 0.9989632}
+  m_LocalRotation: {x: -0, y: 0.15928972, z: -0, w: 0.9872319}
   m_LocalPosition: {x: -0.019, y: 0, z: 1.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -633,6 +1106,61 @@ Transform:
   m_Father: {fileID: 2000904896}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1981783375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1981783376}
+  - component: {fileID: 1981783377}
+  m_Layer: 0
+  m_Name: CarRoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1981783376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981783375}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1429979594}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1981783377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981783375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5732ca0f4ca61e149a859fc7635be24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfLane: 3
+  laneWidth: 0.9
+  laneStartPosition:
+  - {x: 1.09, y: 0, z: 5.7}
+  - {x: 0.19009846, y: 0, z: 5.6866927}
+  - {x: -0.7098031, y: 0, z: 5.673385}
+  laneEndPosition:
+  - {x: 1.02, y: 0, z: 8.73}
+  - {x: 0.26477164, y: 0, z: 9.21952}
+  - {x: -0.4904567, y: 0, z: 9.70904}
+  parentWaypoint: {fileID: 1429979595}
+  endWaypoint: {fileID: 715882362}
 --- !u!1 &2000904895
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +1192,11 @@ Transform:
   - {fileID: 1959324958}
   - {fileID: 1616418137}
   - {fileID: 1429979594}
+  - {fileID: 715882361}
+  - {fileID: 276498428}
+  - {fileID: 1158867179}
+  - {fileID: 668823656}
+  - {fileID: 1491920130}
   m_Father: {fileID: 223386273}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

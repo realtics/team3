@@ -48,6 +48,9 @@ public class WaypointForCar : Waypoint
     {
         base.OnObjectMoved();
 
+		if (prev != null)
+			transform.forward = transform.position - prev[0].transform.position;
+
 		foreach (var road in carRoadDict)
         {
             road.Value.transform.position = transform.position;
@@ -69,6 +72,9 @@ public class WaypointForCar : Waypoint
         go.transform.SetParent(transform);
         CarRoad carRoad = go.GetComponent<CarRoad>();
         carRoad.Init(this, targetWaypoint);
+
+		if (prev != null)
+			carRoad.numOfLane = (prev[0] as WaypointForCar).carRoadDict[this].numOfLane;
 
         carRoadDict.Add(targetWaypoint, carRoad);
         next.Add(targetWaypoint);

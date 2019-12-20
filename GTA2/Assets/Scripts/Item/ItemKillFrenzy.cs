@@ -20,7 +20,7 @@ public class ItemKillFrenzy : Item
 
         
         ActiveOff();
-        SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.OneShotPlay);
+        SoundManager.Instance.PlayClip(soundClip, SoundPlayMode.ObjectSFX);
         QuestManager.Instance.StartKillFrenzy(frenzyGun, killCount, maxTime);
     }
 }
