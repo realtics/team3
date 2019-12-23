@@ -19,7 +19,7 @@ public class KillMission : Quest
         killTarget.gameObject.SetActive(false);
 
         phoneArrow = Instantiate(phoneArrowPref);
-        phoneArrow.transform.parent = WorldUIManager.Instance.transform;
+        phoneArrow.transform.SetParent(WorldUIManager.Instance.transform);
         WorldUIManager.Instance.SetZUPMode(phoneArrow);
         NPCSpawnManager.Instance.allNPC.Add(killTarget.gameObject);
     }
@@ -70,7 +70,7 @@ public class KillMission : Quest
 
         SoundManager.Instance.PlayClip(startClip, SoundPlayMode.UISFX);
         questArrow = WorldUIManager.Instance.SpwanArrow();
-        questArrow.transform.parent = WorldUIManager.Instance.transform;
+        questArrow.transform.SetParent(WorldUIManager.Instance.transform);
     }
 
     public override bool CheckCondition()

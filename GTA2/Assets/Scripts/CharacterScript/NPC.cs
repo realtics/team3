@@ -41,6 +41,9 @@ public abstract class NPC : People
 
 	public AudioClip[] runAwayClip;
 	public AudioClip[] dieClip;
+
+	bool isRayCastCoroutineRunning = false;
+
 	void AnimationInit()
 	{
 		isWalk = false;
@@ -176,43 +179,59 @@ public abstract class NPC : People
 
         transform.Translate(transform.forward * moveSpeed * Time.deltaTime, Space.World);
     }
-    protected void Raycast()
+    protected IEnumerator Raycast()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f, collisionLayer))
-        {
-            if (hit.transform.tag == "TrafficLight" || hit.transform.tag == "Car")
-            {
-                if (Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
-                {
-                    distToObstacle = hit.distance;
-					isWalk = false;
+		if (isRayCastCoroutineRunning)
+			yield break;
+		isRayCastCoroutineRunning = true;
+		while (true)
+		{
+			if (isChasePlayer)
+				continue;
+			if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f))
+			{
+				if (hit.transform.tag == "TrafficLight" || hit.transform.tag == "Car")
+				{
+					if (Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
+					{
+						distToObstacle = hit.distance;
+						isWalk = false;
+					}
+					else
+					{
+						distToObstacle = Mathf.Infinity;
+						isWalk = true;
+					}
 				}
-                else
-                {
-                    distToObstacle = Mathf.Infinity;
-					isWalk = true;
+				else
+				{
+					distToObstacle = hit.distance;
 				}
-            }
-            else
-            {
-				distToObstacle = hit.distance;
-            }
-        }
-        else
-        {
-            distToObstacle = Mathf.Infinity;
-        }
-    }
+
+				if (distToObstacle < 1f && hit.transform.tag != "Ground" && hit.transform.tag != "Wall")
+				{
+					transform.position += transform.right * Time.deltaTime;
+				}
+			}
+			else
+			{
+				distToObstacle = Mathf.Infinity;
+			}
+
+			DrawRaycastDebugLine();
+			yield return new WaitForSeconds(0.3f);
+		}
+	}
        
     void DrawRaycastDebugLine()
     {
         if (distToObstacle < Mathf.Infinity)
         {
-            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
+            DebugX.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
+			DebugX.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
         }
     }
     void OnDrawGizmosSelected()

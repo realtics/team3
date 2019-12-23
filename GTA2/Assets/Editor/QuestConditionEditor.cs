@@ -7,9 +7,7 @@ using UnityEditor;
 public class QuestConditionEditor : EditorWindow
 {
     public GameObject killPref;
-
-
-
+	   
     [MenuItem("Tools/Quest")]
     public static void Open()
     {

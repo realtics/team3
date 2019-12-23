@@ -14,10 +14,14 @@ public class Police : NPC
 	private void OnEnable()
 	{
 		base.NPCOnEnable();
+		StartCoroutine(Raycast());
+		StartCoroutine(PlayerStateCheck());
 	}
 	private void OnDisable()
 	{
 		base.NPCOnDisable();
+		StopCoroutine(Raycast());
+		StopCoroutine(PlayerStateCheck());
 	}
 	void Update()
     {
@@ -38,7 +42,7 @@ public class Police : NPC
             WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, GameManager.Instance.player.transform.position);
         }
 
-		PlayerStateCheck();
+
     }
 	void FixedUpdate()
 	{
@@ -59,11 +63,8 @@ public class Police : NPC
 		}
 		else if (isWalk)
 		{
-			base.Raycast();
 			base.Move();
 		}
-		else
-			base.Raycast();
 	}
 	void ChasePlayerCharacterInCar()
 	{
@@ -160,14 +161,27 @@ public class Police : NPC
 			base.ChasePlayer();
         }
     }
-	void PlayerStateCheck()
+	IEnumerator PlayerStateCheck()
 	{
-		if (GameManager.Instance.player.isDie)
-			SetDefault();
-		else if (!PlayerOutofRange() && WantedLevel.instance.level >= 1)
-			isChasePlayer = true;
-		else
-			isChasePlayer = false;
+		while (true)
+		{
+			if (GameManager.Instance.player.isDie)
+				SetDefault();
+			else if (!PlayerOutofRange() && WantedLevel.instance.level >= 1)
+			{
+				StopCoroutine(Raycast());
+				isChasePlayer = true;
+			}
+			else
+			{
+				StartCoroutine(Raycast());
+				isChasePlayer = false;
+			}
+
+			yield return new WaitForSeconds(0.5f);
+		}
+		
+			
 	}
 	void SetDefault()
 	{
@@ -183,7 +197,7 @@ public class Police : NPC
 	
 	void PullOutDriver()
 	{
-		GameManager.Instance.player.playerPhysics.targetCar.PullOutDriver();
+		GameManager.Instance.player.playerPhysics.targetCar.GetOffTheCar(0, false, true);
 	}
 	void OpenTheDoor(CarPassengerManager pm)
 	{

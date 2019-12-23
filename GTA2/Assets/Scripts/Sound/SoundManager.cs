@@ -18,13 +18,11 @@ public class SoundManager : MonoSingleton<SoundManager>
 {
     [Header("Sound Value")]
     [SerializeField]
-    float posPlayVolume;
-    [SerializeField]
     float oneShotPlayTime;
     [SerializeField]
     float oneShotOBJPlayTime;
     [SerializeField]
-    float poolResetValue;
+    public float poolResetValue;
 
     [Header("Pool")]
     [SerializeField]
@@ -220,10 +218,9 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        activeSource.volume = 1.0f;
         activeSource.spatialBlend = .0f;
         activeSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        activeSource.Play();        
+        activeSource.Play();
     }
 
     public void PlayClipToPosition(AudioClip clip, SoundPlayMode mode, Vector3 pos)
@@ -239,9 +236,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        activeSource.volume = posPlayVolume;
         activeSource.spatialBlend = 1.0f;
-        activeSource.rolloffMode = AudioRolloffMode.Linear;
         activeSource.gameObject.transform.position = pos;
         activeSource.Play();
     }

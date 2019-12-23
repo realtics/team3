@@ -43,7 +43,7 @@ public class CarDamage : MonoBehaviour
 			if(carManager.movement.curSpeed < 10 && 
 				carManager.carState == CarManager.CarState.controlledByAi)
 			{
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(0, true));
+				carManager.passengerManager.GetOffTheCar(0, true);
 			}
         }
     }
@@ -83,6 +83,10 @@ public class CarDamage : MonoBehaviour
             carManager.effects.Damage(DamageDirection.rearRight);
         }
     }
+	public void AddCheatHp()
+	{
+		curHp += 9999;
+	}
 
     public void DeductHp(int amount, bool isDamagedByPlayer)
     {
@@ -90,7 +94,7 @@ public class CarDamage : MonoBehaviour
             return;
 
         curHp -= amount;
-        curHp = Mathf.Clamp(curHp, 0, data.maxHp);
+        //curHp = Mathf.Clamp(curHp, 0, data.maxHp);
 
         if(curHp <= 0)
         {

@@ -195,6 +195,11 @@
     <Compile Include="Assets\SubAsset\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs" />
     <Compile Include="Assets\SubAsset\JMO Assets\WarFX\Spawn System\CFX_SpawnSystem.cs" />
     <Compile Include="Assets\SubAsset\LightningBolt\LightningBoltScript.cs" />
+    <Compile Include="Assets\SubAsset\PaletteFX\Demo\Scripts\Demo32bit.cs" />
+    <Compile Include="Assets\SubAsset\PaletteFX\Demo\Scripts\Demo8bit.cs" />
+    <Compile Include="Assets\SubAsset\PaletteFX\Demo\Scripts\DemoAlphaDither.cs" />
+    <Compile Include="Assets\SubAsset\PaletteFX\Scripts\ColorTable.cs" />
+    <Compile Include="Assets\SubAsset\PaletteFX\Scripts\Dither.cs" />
     <Compile Include="Assets\SubAsset\UJoystick\Content\Script\Core\bl_Joystick.cs" />
     <Compile Include="Assets\SubAsset\UJoystick\Content\Script\Internal\bl_JoystickUtils.cs" />
     <Compile Include="Assets\SubAsset\UJoystick\Example\Scrips\bl_ControllerExample.cs" />
@@ -206,12 +211,14 @@
     <Compile Include="Assets\SubAsset\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend Scroll.shader" />
     <None Include="Assets\Font\Gta2BIGFont.fnt" />
+    <None Include="Assets\SubAsset\PaletteFX\Shaders\paletteFX_32bit.shader" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Particle AddSoft A8.shader" />
     <None Include="Assets\SubAsset\UJoystick\ReadMe.txt" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Alpha-Specular TintColor.shader" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend NoSoftParticles.shader" />
     <None Include="Assets\SubAsset\LightningBolt\Readme.txt" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\_Effects\MuzzleFlashes\!MuzzleFlash Differences.txt" />
+    <None Include="Assets\SubAsset\PaletteFX\Shaders\paletteFX_8bit.shader" />
     <None Include="Assets\Font\GTA2STREETFONT.fnt" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Smoke Scroll.shader" />
     <None Include="Assets\SubAsset\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
@@ -223,6 +230,8 @@
     <None Include="Assets\SubAsset\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\_Effects (Mobile)\MuzzleFlashes\!MuzzleFlash Differences.txt" />
     <None Include="Assets\Font\GTA2NORMALFONT.fnt" />
+    <None Include="Assets\SubAsset\PaletteFX\Shaders\paletteFX_32bit_dithered.shader" />
+    <None Include="Assets\SubAsset\PaletteFX\Shaders\Dither.cginc" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Multiply Soft Scroll.shader" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Particle Multiply A8.shader" />
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Multiply Soft.shader" />
@@ -230,6 +239,7 @@
     <None Include="Assets\SubAsset\JMO Assets\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
     <None Include="Assets\Font\GTA2FRENZY.fnt" />
     <None Include="Assets\SubAsset\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
+    <None Include="Assets\SubAsset\PaletteFX\Shaders\paletteFX_8bit_dithered.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/team3/GTA2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -13,8 +13,7 @@ public class QuestManager : MonoSingleton<QuestManager>
     // Start is called before the first frame update
     Quest[] deactiveQuestList;
     List<Quest> activeQuestList;
-
-
+	
     GunState frenzyType;
     int startKillCount;
     int goalKill;

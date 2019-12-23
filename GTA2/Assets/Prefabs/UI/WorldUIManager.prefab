@@ -168,8 +168,8 @@ MonoBehaviour:
     type: 3}
   questArrowPref: {fileID: 458885570132520728, guid: e9bf8aeb137519843a8ddafe0e2e4908,
     type: 3}
+  mainMissionArrowPref: {fileID: 361149613328850606}
   arrowPoolCount: 5
   scorePoolCount: 50
-  mainMissionArrowPref: {fileID: 361149613328850606}
   arrowToPlayer: 1
   maxArrowToPlayer: 3

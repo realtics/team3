@@ -17,7 +17,7 @@ public class BulletFireGun : Bullet
         base.FixedUpdate();
     }
 
-    protected void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {

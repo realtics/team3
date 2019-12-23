@@ -39,7 +39,7 @@ public class BombFireBottle : Bullet
 
 
 
-    protected void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (
             other.gameObject.CompareTag("Ground") ||

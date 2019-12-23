@@ -31,6 +31,8 @@ public class CarAi : MonoBehaviour
     void OnEnable()
     {
         aiState = AiState.normal;
+		chaseTarget = null;
+
         SetAiMaxSpeedMultiplier();
 
 		StopAllCoroutines();
@@ -159,7 +161,6 @@ public class CarAi : MonoBehaviour
             if(aiState == AiState.normal && chaseTarget == null)
             {
                 SetChaseTarget();
-                continue;
             }                
 
             if (chaseTarget == null)
@@ -212,7 +213,7 @@ public class CarAi : MonoBehaviour
         Vector3 dir = destination - transform.position;
         float dist = dir.magnitude;
 
-        if (dist > 12)
+        if (dist > 15)
         {
 			StopChase();
 
@@ -220,8 +221,8 @@ public class CarAi : MonoBehaviour
         }
 		else if(dist < 4f && carManager.movement.curSpeed < 15)
 		{
-			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
-			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+			carManager.passengerManager.GetOffTheCar(0);
+			carManager.passengerManager.GetOffTheCar(1);
 
 			return;
 		}
@@ -290,11 +291,11 @@ public class CarAi : MonoBehaviour
 		{
 			StopChase();
 		}
-		else if (dist < 2.5f)
+		else if (dist < 2.5f && carManager.movement.curSpeed < 15)
 		{
-			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
-			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
-        }
+			carManager.passengerManager.GetOffTheCar(0);
+			carManager.passengerManager.GetOffTheCar(1);
+		}
 	}
 
 	void CarMoveAI()
@@ -306,8 +307,8 @@ public class CarAi : MonoBehaviour
 			if (Mathf.Abs(dist.x) < 0.1f || Mathf.Abs(dist.z) < 0.1f)
 			{
 				carManager.carState = CarManager.CarState.idle;
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
-				StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
+				carManager.passengerManager.GetOffTheCar(0);
+				carManager.passengerManager.GetOffTheCar(1);
 				return;
 			}
 		}
@@ -383,7 +384,7 @@ public class CarAi : MonoBehaviour
 
 	public void StopChase()
 	{
-        if (aiState == AiState.normal)
+        if (aiState == AiState.normal && chaseTarget == null)
             return;
 
         carManager.effects.TurnOffSiren(People.PeopleType.None, 0);

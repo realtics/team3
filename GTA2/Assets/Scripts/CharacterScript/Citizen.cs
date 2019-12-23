@@ -7,8 +7,8 @@ public class Citizen : NPC
 	public CitizenData citizenData;
 	public SpriteRenderer ClothSpriteRenderer;
 	public AudioClip[] downClip;
-	static float shoutTime = 10.0f;
-	static float shoutTimer = 0.0f;
+	//static float shoutTime = 10.0f;
+	//static float shoutTimer = 0.0f;
 
 	void Awake()
     {
@@ -20,11 +20,13 @@ public class Citizen : NPC
 	{
 		base.NPCOnEnable();
 		ClothesColorRandomSetting();
+		StartCoroutine(Raycast());
 	}
 	
 	private void OnDisable()
 	{
 		base.NPCOnDisable();
+		StopCoroutine(Raycast());
 	}
 	void Update()
     {
@@ -58,14 +60,12 @@ public class Citizen : NPC
         }
         else if (isWalk)
         {
-			base.Raycast();
+
 			base.Move();
 		}
-		else
-        {
-            base.Raycast();
-		}
+
 	}
+	
 	void OnCollisionStay(Collision collision)
 	{
 		if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car") && isRunaway)

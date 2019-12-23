@@ -10703,7 +10703,22 @@ PrefabInstance:
     - target: {fileID: 5080991119180564458, guid: 15cd5231171a9aa4d84b93493d6f048d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 25
+      value: 25.000244
+      objectReference: {fileID: 0}
+    - target: {fileID: 788223563993998265, guid: 15cd5231171a9aa4d84b93493d6f048d,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642898815876519447, guid: 15cd5231171a9aa4d84b93493d6f048d,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554627209833608612, guid: 15cd5231171a9aa4d84b93493d6f048d,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15cd5231171a9aa4d84b93493d6f048d, type: 3}
@@ -20689,7 +20704,7 @@ PrefabInstance:
     - target: {fileID: 7351076520829710453, guid: 1373b99d42ffc2f42b2d4b5c239fb687,
         type: 3}
       propertyPath: remains
-      value: 999
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7351076520829710453, guid: 1373b99d42ffc2f42b2d4b5c239fb687,
         type: 3}
@@ -22109,7 +22124,8 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1272307600, guid: 740c8a84361c42843ba449ebd833683b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 740c8a84361c42843ba449ebd833683b, type: 3}
 --- !u!1 &924246535 stripped
 GameObject:
@@ -50976,7 +50992,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141021158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -131.5, y: -2.69, z: -129.2}
+  m_LocalPosition: {x: -131.5, y: -2.5, z: -129.2}
   m_LocalScale: {x: 200, y: 5, z: 200}
   m_Children: []
   m_Father: {fileID: 1012656053}

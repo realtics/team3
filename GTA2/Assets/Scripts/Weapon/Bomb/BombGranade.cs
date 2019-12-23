@@ -19,14 +19,14 @@ public class BombGranade : Bullet
     {
         base.Awake();
         bulletDeActiveTime = .1f;
-        collider.isTrigger = false;
+        bulletcollider.isTrigger = false;
     }
 
 
     // Update is called once per frame
     public override void SetBullet(GunState type, Vector3 pos, Vector3 dir, float bullettoSize)
     {
-        collider.isTrigger = false;
+        bulletcollider.isTrigger = false;
         base.SetBullet(type, pos, dir, bullettoSize);
         transform.position += Vector3.up * yLaunchPos;
     }
@@ -42,7 +42,7 @@ public class BombGranade : Bullet
 
     public override void Explosion()
     {
-        collider.isTrigger = true;
+        bulletcollider.isTrigger = true;
         base.Explosion();
         CameraController.Instance.StartShake(explosionPower, transform.position);
     }

@@ -130,7 +130,14 @@ public class CarMovement : MonoBehaviour
 		}
 		
     }
-
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.transform.CompareTag("NPC") || other.transform.CompareTag("Player"))
+		{
+			other.gameObject.GetComponent<People>().Runover(
+					curSpeed, transform.position, carManager.carState == CarManager.CarState.controlledByPlayer);
+		}
+	}
 	void OnCollisionStay(Collision col)
     {
         if (col.transform.CompareTag("Wall") && Mathf.Abs(curSpeed) > 50)

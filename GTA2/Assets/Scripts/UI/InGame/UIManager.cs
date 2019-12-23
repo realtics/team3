@@ -80,13 +80,6 @@ public class UIManager : MonoSingleton<UIManager>
     void Update()
     {
         moneyTextUI.SetMoney(GameManager.Instance.money);
-        if ((int)player.curGunIndex < 0 || (int)player.curGunIndex > (int)GunState.Granade)
-        {
-            return;
-        }
-
-        weaponUI.SetSpriteSizePos(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
-        
         heartListUI.SetHealthPoint(player.GetHp());
         lifeCountUI.UpdateLifeCount(GameManager.Instance.remains);
 
@@ -94,6 +87,13 @@ public class UIManager : MonoSingleton<UIManager>
         UpdateGetOffCar();
         UpdateButton();
         UpdatePause();
+
+
+        if ((int)player.curGunIndex < 0 || (int)player.curGunIndex > (int)GunState.Granade)
+        {
+            return;
+        }
+        weaponUI.SetSpriteSizePos(player.curGunIndex, player.gunList[(int)player.curGunIndex].bulletCount);
     }
 
     // 컴퓨터용 체인저
@@ -205,6 +205,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void CarUIMode(CarManager targetCar)
     {
+        AllCarButtonUp();
         this.targetCar = targetCar;
         humanJoystick.SetActive(false);
         carJoystick.SetActive(true);
@@ -217,6 +218,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             player.ShotButtonUp();
         }
+        AllCarButtonUp();
         carNumberUI.gameObject.SetActive(false);
         humanJoystick.SetActive(true);
         carJoystick.SetActive(false);
@@ -290,6 +292,14 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void LeftButtonUp()
     {
+        isLeftDown = false;
+    }
+
+    void AllCarButtonUp()
+    {
+        isExcelDown = false;
+        isBreakDown = false;
+        isRightDown = false;
         isLeftDown = false;
     }
 

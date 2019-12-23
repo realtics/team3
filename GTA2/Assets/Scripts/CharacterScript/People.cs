@@ -12,6 +12,7 @@ public abstract class People : MonoBehaviour
         Police,
         Doctor
     };
+
     //Sound
     [SerializeField]
     protected AudioClip punchClip;
@@ -160,6 +161,11 @@ public abstract class People : MonoBehaviour
     {
 		if (runoverSpeed < runoverMinSpeed)
 			return;
+		else if(isDown)
+		{
+			Hurt((int)(runoverSpeed * 5));
+		}
+
 		Vector3 runoverVector = transform.position - carPosition;
 
         //속도에 비례한 피해 데미지 보정수치
@@ -172,8 +178,9 @@ public abstract class People : MonoBehaviour
 
         if (runoverSpeed > runoverHurtMinSpeed)
 		{
-			Hurt((int)(runoverSpeed / 2));
+			Hurt((int)(runoverSpeed / 3));
 		}
+		
     }
 	public void Jump()
 	{

@@ -49,10 +49,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     void LoadData()
     {
-        JsonStreamer js = new JsonStreamer();
+        JsonStreamer js = gameObject.AddComponent<JsonStreamer>();
         Gta2Data gta2GetData = js.Load<Gta2Data>("Gta2Data.json");
 
-        if (gta2GetData != null && SceneManager.GetActiveScene().name != "Stage1")
+        if (gta2GetData != null &&
+            SceneManager.GetActiveScene().name != "Stage1" &&
+            gta2GetData.life > 0)
         {
             remains = gta2GetData.life;
         }
@@ -86,7 +88,9 @@ public class GameManager : MonoSingleton<GameManager>
 			return;
 		}
 
-		if (player.isBusted)
+        
+
+        if (player.isBusted)
 		{
 			StartCoroutine(GetOffFromCopCarCor());
 			UIManager.Instance.CarUIMode(playerCar.carManager);
@@ -105,6 +109,7 @@ public class GameManager : MonoSingleton<GameManager>
 		//카메라 위치 조정
 		CameraController.Instance.ZoomOut();
 		WantedLevel.instance.ResetWantedLevel();
+        player.RespawnGunList();
 	}
 
 	IEnumerator GetOffFromCopCarCor()
@@ -115,10 +120,9 @@ public class GameManager : MonoSingleton<GameManager>
 
 		copCar.gameObject.SetActive(false);
 		copCar.gameObject.SetActive(true);
-		//copCar.passengerManager.GetOnTheCar(People.PeopleType.Player, 2, true);
-        player.playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player, 2, true);
+        player.playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player, 2);
         yield return new WaitForSeconds(3.0f);
-		StartCoroutine(copCar.passengerManager.GetOffTheCar(2));
+		copCar.passengerManager.GetOffTheCar(2);
 		player.isBusted = false;
 		yield return new WaitForSeconds(0.5f);
         player.Down();

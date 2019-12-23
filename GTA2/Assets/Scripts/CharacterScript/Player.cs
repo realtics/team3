@@ -192,6 +192,19 @@ public class Player : People
 		gunList[(int)GunState.None].bulletCount = 1;
 		gunList[(int)GunState.None].gameObject.SetActive(true);
 	}
+
+    public void RespawnGunList()
+    {
+        foreach (var item in gunList)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+
+        gunList[(int)GunState.None].bulletCount = 1;
+        gunList[(int)GunState.None].gameObject.SetActive(true);
+    }
+
 	//Update
 	void AnimateUpdate()
 	{
@@ -306,7 +319,7 @@ public class Player : People
 			StartCloseTheDoor();
 		}
 		//사람 끌어내리고 타기
-		playerPhysics.targetCar.PullOutDriver();
+		GameManager.Instance.player.playerPhysics.targetCar.GetOffTheCar(0, false, true);
 		playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player);
 
         UIManager.Instance.CarUIMode(playerPhysics.targetCar.carManager);

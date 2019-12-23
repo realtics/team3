@@ -26,7 +26,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 
 	void Awake()
 	{
-		PoolManager.WarmPool(citizen.gameObject, 150);
+		PoolManager.WarmPool(citizen.gameObject, 300);
         PoolManager.WarmPool(police.gameObject, 100);
 		PoolManager.WarmPool(doctor.gameObject, 10);
 

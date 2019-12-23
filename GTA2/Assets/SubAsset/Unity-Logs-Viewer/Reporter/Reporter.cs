@@ -349,9 +349,6 @@ public class Reporter : MonoBehaviour
 	public bool Initialized = false;
 	public void Initialize()
 	{
-        showBtnDown = false;
-
-
         if (!created) {
 			try {
 				gameObject.SendMessage("OnPreStart");

@@ -24,7 +24,7 @@ public class QuestNPC : Citizen
 
             else if (isWalk)
             {
-                base.Raycast();
+                StartCoroutine(base.Raycast());
             }
 
             yield return new WaitForSeconds(0.3f);

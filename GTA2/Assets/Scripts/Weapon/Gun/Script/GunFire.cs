@@ -5,7 +5,6 @@ using UnityEngine;
 public class GunFire : PlayerGun
 {
     // Start is called before the first frame update.
-    float soundPlayInverval = .3f;
     float soundPlayDelta;
 
 

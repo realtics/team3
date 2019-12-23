@@ -12,7 +12,7 @@ public class ItemKillFrenzy : Item
     [SerializeField]
     float maxTime;
 
-    protected virtual void OnTriggerEnter(Collider collision)
+    protected override void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject != userPlayer.gameObject)
         {
