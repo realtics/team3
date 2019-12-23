@@ -53,7 +53,7 @@ public class PlayerPhysics : MonoBehaviour
 	public void LookAtCar()
 	{
 		transform.LookAt(new Vector3(targetCar.transform.position.x, transform.position.y, targetCar.transform.position.z));
-		DebugX.DrawRay(transform.position, (targetCar.transform.position - transform.position).normalized);
+		DebugX.DrawRay(transform.position, (targetCar.transform.position - transform.position), Color.blue);
 	}
 
 	public bool InStealingDistance()

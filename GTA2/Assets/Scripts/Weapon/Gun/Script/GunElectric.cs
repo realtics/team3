@@ -13,13 +13,7 @@ public class GunElectric : PlayerGun
 
     List<GameObject> objectList;
     List<GameObject> noneTargetObjectList;
-
     List<BulletElectric> activeElectricList;
-
-
-
-    float soundPlayInverval = .3f;
-    float soundPlayDelta;
 
 
     public override void Init()
@@ -76,12 +70,15 @@ public class GunElectric : PlayerGun
         UpdateDelta();
         UpdateKeyInput();
         UpdateShot();
-
-
-        soundPlayDelta += Time.deltaTime;
     }
     protected override void UpdateShot()
     {
+        if (GameManager.Instance.playerCar != null)
+        {
+            return;
+        }
+
+
         if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)

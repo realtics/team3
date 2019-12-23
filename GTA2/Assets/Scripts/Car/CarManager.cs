@@ -121,11 +121,6 @@ public class CarManager : MonoBehaviour
                     input.PlayerInput();
                 }
                 break;
-            case CarState.controlledByAi:
-                {
-                    ai.ChasePlayer();
-                }
-                break;
         }
     }
 

@@ -57,10 +57,13 @@ public class SoundManager : MonoSingleton<SoundManager>
     float explosionPlayDelta;
 
     List<AudioSource> audioSources;
-    AudioSource ActiveSource;
+    List<AudioSource> activeAudioSources;
+    AudioSource activeSource;
 
     void Awake()
     {
+        activeAudioSources = new List<AudioSource>();
+
         uiPlayDelta = 1.0f;
         PoolManager.WarmPool(sourcePref, poolCount);
         audioSources = PoolManager.GetAllObject<AudioSource>(sourcePref);
@@ -84,11 +87,16 @@ public class SoundManager : MonoSingleton<SoundManager>
         while (true)
         {
             yield return new WaitForSeconds(poolResetValue);
-            foreach (var item in audioSources)
+
+            for (int i = 0; i < activeAudioSources.Count; i++)
             {
-                if (!item.isPlaying)
+                if (!activeAudioSources[i].isPlaying)
                 {
-                    PoolManager.ReleaseObject(item.gameObject);
+                    activeAudioSources[i].clip = null;
+                    activeAudioSources[i].outputAudioMixerGroup = null;
+
+                    PoolManager.ReleaseObject(activeAudioSources[i].gameObject);
+                    activeAudioSources.Remove(activeAudioSources[i]);
                 }
             }
         }
@@ -107,7 +115,8 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     void FindSource()
     {
-        ActiveSource = PoolManager.SpawnObject(sourcePref).GetComponent<AudioSource>();
+        activeSource = PoolManager.SpawnObject(sourcePref).GetComponent<AudioSource>();
+        activeAudioSources.Add(activeSource);
     }
 
     bool SetMode(AudioClip clip, SoundPlayMode mode)
@@ -117,26 +126,26 @@ public class SoundManager : MonoSingleton<SoundManager>
             return false;
         }
 
-        ActiveSource.clip = clip;
+        activeSource.clip = clip;
         switch (mode)
         {
             case SoundPlayMode.UISFX:
-                ActiveSource.outputAudioMixerGroup = uiSFXmixer;
+                activeSource.outputAudioMixerGroup = uiSFXmixer;
                 break;
             case SoundPlayMode.HumanSFX:
-                ActiveSource.outputAudioMixerGroup = humanSFXmixer;
+                activeSource.outputAudioMixerGroup = humanSFXmixer;
                 break;
             case SoundPlayMode.ObjectSFX:
-                ActiveSource.outputAudioMixerGroup = objSFXmixer;
+                activeSource.outputAudioMixerGroup = objSFXmixer;
                 break;
             case SoundPlayMode.GunSFX:
-                ActiveSource.outputAudioMixerGroup = objSFXmixer;
+                activeSource.outputAudioMixerGroup = objSFXmixer;
                 break;
             case SoundPlayMode.CarSFX:
-                ActiveSource.outputAudioMixerGroup = carSFXmixer;
+                activeSource.outputAudioMixerGroup = carSFXmixer;
                 break;
             case SoundPlayMode.ExplosionSFX:
-                ActiveSource.outputAudioMixerGroup = explosionSFXmixer;
+                activeSource.outputAudioMixerGroup = explosionSFXmixer;
                 break;
             default:
                 break;
@@ -211,10 +220,10 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        ActiveSource.volume = 1.0f;
-        ActiveSource.spatialBlend = .0f;
-        ActiveSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        ActiveSource.Play();        
+        activeSource.volume = 1.0f;
+        activeSource.spatialBlend = .0f;
+        activeSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        activeSource.Play();        
     }
 
     public void PlayClipToPosition(AudioClip clip, SoundPlayMode mode, Vector3 pos)
@@ -230,10 +239,10 @@ public class SoundManager : MonoSingleton<SoundManager>
             return;
         }
 
-        ActiveSource.volume = posPlayVolume;
-        ActiveSource.spatialBlend = 1.0f;
-        ActiveSource.rolloffMode = AudioRolloffMode.Linear;
-        ActiveSource.gameObject.transform.position = pos;
-        ActiveSource.Play();
+        activeSource.volume = posPlayVolume;
+        activeSource.spatialBlend = 1.0f;
+        activeSource.rolloffMode = AudioRolloffMode.Linear;
+        activeSource.gameObject.transform.position = pos;
+        activeSource.Play();
     }
 }

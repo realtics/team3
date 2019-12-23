@@ -19,6 +19,11 @@ public class NpcGunPunch : NPCGun
 
     protected override void UpdateShot()
     {
+        if (GameManager.Instance.playerCar != null)
+        {
+            return;
+        }
+
         if (isShot)
         {
             if (shootInterval < shootDelta)

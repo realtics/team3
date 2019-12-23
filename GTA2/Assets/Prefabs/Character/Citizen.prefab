@@ -171,7 +171,11 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 4352
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   hp: 0
+  targetCar: {fileID: 0}
   animator: {fileID: 1020086614340368900}
   animator_cloth: {fileID: 3390465139220904577}
   gunList: []

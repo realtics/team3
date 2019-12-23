@@ -84,6 +84,11 @@ public class PlayerGun : Gun
 
     protected override void UpdateShot()
     {
+        if (GameManager.Instance.playerCar != null)
+        {
+            return;
+        }
+
         if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta && bulletCount > 0)

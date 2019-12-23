@@ -14,13 +14,12 @@ public class Player : People
 	public float runoverMinSpeedInChasing { get; set; } = 130;
 
 	public GunState curGunIndex { get; set; }
-
     public List<PlayerGun> gunList;
 	
 	[HideInInspector]
 	public PlayerPhysics playerPhysics;
+	
 	Animator animator;
-
 	float rotHDir;
     float rotVDir;
 
@@ -42,7 +41,11 @@ public class Player : People
         AnimateUpdate();
 
 		if (IsStuckedAnimation() || isDriver)
-            return;
+		{
+			StopShot();
+			return;
+		}
+            
         UpdateInput();
     }
     void FixedUpdate()
@@ -84,7 +87,9 @@ public class Player : People
     {
         if (isDie)
             return;
-        if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.open) //문이열려있는 경우 탑승
+		playerPhysics.LookAtCar();
+
+		if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.open) //문이열려있는 경우 탑승
         {
 			GetOntheCar();
         }
@@ -120,7 +125,6 @@ public class Player : People
 		else if (playerPhysics.InStealingDistance())
 		{
 			isGetOnTheCar = true;
-			playerPhysics.ChaseTheCar(moveSpeed);
 		}
 		else//차 쫓아가기
 		{
@@ -270,7 +274,6 @@ public class Player : People
 	void OpenTheDoor()
 	{
 		isWalk = false;
-		playerPhysics.LookAtCar();
 
 		if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.close)
 		{

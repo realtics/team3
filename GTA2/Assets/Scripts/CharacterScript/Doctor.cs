@@ -7,7 +7,6 @@ public class Doctor : NPC
 {
 	public DoctorData doctorData;
 	public NPC targetNPC;
-	public CarManager ambulanceCar;
 	public int idx = 0;
 	
 	public enum DoctorState
@@ -67,7 +66,7 @@ public class Doctor : NPC
 				}
 				transform.LookAt(new Vector3(targetNPC.transform.position.x, transform.position.y, targetNPC.transform.position.z));
 				
-				if (MathUtil.isArrivedIn2D(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), targetNPC.transform.position))
+				if (MathUtil.isArrivedIn2D(new Vector3(transform.position.x, targetCar.transform.position.y, transform.position.z), targetNPC.transform.position))
 				{
 					if(isJump)
 						Land();
@@ -81,9 +80,9 @@ public class Doctor : NPC
 				HealTimerCheck();
 				break;
 			case DoctorState.GoBackToCar:
-				if (MathUtil.isArrivedIn2D(new Vector3(transform.position.x, ambulanceCar.transform.position.y, transform.position.z), ambulanceCar.transform.position))
+				if (MathUtil.isArrivedIn2D(new Vector3(transform.position.x, targetCar.transform.position.y, transform.position.z), targetCar.transform.position))
 				{
-					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doors[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doors[idx].transform.position.z));
+					transform.LookAt(new Vector3(targetCar.passengerManager.doors[idx].transform.position.x, transform.position.y, targetCar.passengerManager.doors[idx].transform.position.z));
 					isWalk = false;
 					if (isJump)
 						Land();
@@ -92,34 +91,30 @@ public class Doctor : NPC
 				}
 				else
 				{
-					transform.LookAt(new Vector3(ambulanceCar.passengerManager.doors[idx].transform.position.x, transform.position.y, ambulanceCar.passengerManager.doors[idx].transform.position.z));
+					transform.LookAt(new Vector3(targetCar.passengerManager.doors[idx].transform.position.x, transform.position.y, targetCar.passengerManager.doors[idx].transform.position.z));
 					Move();
 				}
 				break;
 			case DoctorState.GetOnTheCar:
-				transform.LookAt(ambulanceCar.transform.position);
+				transform.LookAt(targetCar.transform.position);
 				OpenTheDoor(idx);
 				break;
 		}
 	}
 	void OpenTheDoor(int idx = 0)
 	{
-		if (ambulanceCar.passengerManager.doors[idx].doorState == CarPassengerManager.DoorState.close)//문열기 셋팅
+		if (targetCar.passengerManager.doors[idx].doorState == CarPassengerManager.DoorState.close)//문열기 셋팅
 		{
-			transform.forward = ambulanceCar.transform.forward;
-			ambulanceCar.passengerManager.doors[idx].doorState = CarPassengerManager.DoorState.opening;
+			transform.forward = targetCar.transform.forward;
 			isGetOnTheCar = true;
-			StartCoroutine(ambulanceCar.passengerManager.OpenTheDoor(idx));
+			StartCoroutine(targetCar.passengerManager.OpenTheDoor(idx));
 		}
-		else//문열기
+		else if (targetCar.passengerManager.doors[idx].doorState == CarPassengerManager.DoorState.open)//탑승//문열기
 		{
-			if (ambulanceCar.passengerManager.doors[idx].doorState == CarPassengerManager.DoorState.open)//탑승
-			{
-				ambulanceCar.passengerManager.GetOnTheCar(PeopleType.Doctor, idx);
-				isGetOnTheCar = false;
-				GameManager.Instance.ambulanceTargetNPC = null;
-				gameObject.SetActive(false);
-			}
+			targetCar.passengerManager.GetOnTheCar(PeopleType.Doctor, idx);
+			isGetOnTheCar = false;
+			GameManager.Instance.ambulanceTargetNPC = null;
+			gameObject.SetActive(false);
 		}
 	}
 	void OnCollisionStay(Collision collision)

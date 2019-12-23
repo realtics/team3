@@ -11,6 +11,11 @@ public class GunDoublePistol : PlayerGun
     }
     protected override void UpdateShot()
     {
+        if (GameManager.Instance.playerCar != null)
+        {
+            return;
+        }
+
         shootDelta += Time.deltaTime;
         if (isKeyShot || isButtonShot)
         {

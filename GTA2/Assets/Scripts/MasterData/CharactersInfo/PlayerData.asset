@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52faad52aa142e741bf02681ed885bca, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  maxHp: 200
+  maxHp: 500
   moveSpeed: 2
-  jumpTime: 1.5
+  jumpTime: 0.6
   downTime: 2
+  runoverTime: 0.5
+  respawnTime: 2
+  autoLandTime: 0.5

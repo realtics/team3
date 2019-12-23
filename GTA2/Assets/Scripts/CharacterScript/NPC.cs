@@ -27,7 +27,8 @@ public abstract class NPC : People
 	protected float maxIdleTime;
     protected float minWalkTime;
     protected float maxWalkTime;
-	GameObject targetCar;
+
+	public CarManager targetCar;
 	public GunState curGunIndex { get; set; }
 	
 	//protected float patternChangeTimer;
@@ -235,7 +236,7 @@ public abstract class NPC : People
     #region RangeCheck
     protected bool InPunchRange()
     {
-        if (Vector3.SqrMagnitude(GameManager.Instance.player.transform.position - transform.position) < punchRange)
+        if (MathUtil.isArrivedIn2D(GameManager.Instance.player.transform.position, transform.position, punchRange))
 		{
 			if(isJump)
 				Land();

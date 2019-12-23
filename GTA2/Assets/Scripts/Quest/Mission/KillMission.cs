@@ -21,6 +21,7 @@ public class KillMission : Quest
         phoneArrow = Instantiate(phoneArrowPref);
         phoneArrow.transform.parent = WorldUIManager.Instance.transform;
         WorldUIManager.Instance.SetZUPMode(phoneArrow);
+        NPCSpawnManager.Instance.allNPC.Add(killTarget.gameObject);
     }
 
     void Update()

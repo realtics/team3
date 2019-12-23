@@ -43,7 +43,21 @@ public class GameManager : MonoSingleton<GameManager>
         goalObject.SetActive(false);
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 		StartCoroutine(CheckEmbulanceCall());
+
+        LoadData();
     }
+
+    void LoadData()
+    {
+        JsonStreamer js = new JsonStreamer();
+        Gta2Data gta2GetData = js.Load<Gta2Data>("Gta2Data.json");
+
+        if (gta2GetData != null && SceneManager.GetActiveScene().name != "Stage1")
+        {
+            remains = gta2GetData.life;
+        }
+    }
+
     void Update()
     {
         UpdateGoal();
@@ -65,7 +79,7 @@ public class GameManager : MonoSingleton<GameManager>
 
 	public void RespawnSetting()
 	{
-		if (remains == 0)//RIP
+		if (remains <= 0)//RIP
 		{
 			SaveGta2Data();
 			SceneManager.LoadScene("Rip");
@@ -126,6 +140,7 @@ public class GameManager : MonoSingleton<GameManager>
     void SaveGta2Data()
     {
         Gta2Data myObject = new Gta2Data();
+        myObject.life = remains;
         myObject.money = money;
         myObject.gameTime = gameTime;
         myObject.kills = killCount;

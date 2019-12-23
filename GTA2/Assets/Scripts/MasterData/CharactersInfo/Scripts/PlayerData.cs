@@ -7,7 +7,7 @@ public class PlayerData : ScriptableObject
 {
 	public int maxHp = 200;
 	public float moveSpeed = 2.0f;
-	public float jumpTime = 1.5f;
+	public float jumpTime = 1.0f;
 	public float downTime = 2.0f;
     public float runoverTime = 0.5f;
 	public float respawnTime = 2.5f;

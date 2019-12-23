@@ -96,7 +96,7 @@ public class EndScene : MonoBehaviour
 
     public void OnClickRePlayButton()
     {
-        SceneManager.LoadScene(gta2GetData.curScene);
+		SceneManager.LoadScene("LoadingScene");
     }
 
     public void OnClickExitButton()
@@ -105,6 +105,15 @@ public class EndScene : MonoBehaviour
     }
     public void OnClickNextButton()
     {
-        SceneManager.LoadScene(gta2GetData.nextScene);
+		int targetSceneIdx = PlayerPrefs.GetInt("TargetSceneIdx");
+		if (targetSceneIdx == 3)
+		{
+			SceneManager.LoadScene("MainMenu");
+		}
+		else
+		{
+			PlayerPrefs.SetInt("TargetSceneIdx", targetSceneIdx + 1);
+			SceneManager.LoadScene("LoadingScene");
+		}
     }
 }

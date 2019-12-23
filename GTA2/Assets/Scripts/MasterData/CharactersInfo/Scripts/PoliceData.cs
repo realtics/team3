@@ -7,7 +7,7 @@ public class PoliceData : ScriptableObject
 {
 	public int maxHp = 150;
 	public float moveSpeed = 1.0f;
-	public float runawaySpeed = 2.0f;
+	public float runSpeed = 2.0f;
 
 	public float findRange = 10.0f;
 	public float punchRange = 0.08f;

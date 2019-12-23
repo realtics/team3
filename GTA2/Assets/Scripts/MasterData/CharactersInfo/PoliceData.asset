@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: PoliceData
   m_EditorClassIdentifier: 
   maxHp: 150
-  moveSpeed: 1
-  runawaySpeed: 1.2
-  downTime: 3
+  moveSpeed: 1.2
+  runSpeed: 1.6
   findRange: 10
-  punchRange: 0.1
+  punchRange: 0.3
   shotRange: 10
   chaseRange: 15
   outofRange: 400
@@ -25,6 +24,7 @@ MonoBehaviour:
   maxIdleTime: 1
   minWalkTime: 10
   maxWalkTime: 15
-  carOpenTimer: 0
   carOpenTime: 0.5
+  jumpTime: 0.5
+  downTime: 3
   money: 200

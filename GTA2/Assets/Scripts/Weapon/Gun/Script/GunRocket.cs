@@ -19,6 +19,11 @@ public class GunRocket : PlayerGun
 
     protected override void UpdateShot()
     {
+        if (GameManager.Instance.playerCar != null)
+        {
+            return;
+        }
+
         if (isKeyShot || isButtonShot)
         {
             if (shootInterval < shootDelta)

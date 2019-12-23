@@ -33,8 +33,12 @@ public class CarAi : MonoBehaviour
         aiState = AiState.normal;
         SetAiMaxSpeedMultiplier();
 
-        StartCoroutine(RaycastCor());
+		StopAllCoroutines();
+		StartCoroutine(RaycastCor());
 		StartCoroutine(TryDetour());
+
+		if(isPolice)
+			StartCoroutine(CarChaseAI());
     }
 
     void OnDisable()
@@ -46,25 +50,8 @@ public class CarAi : MonoBehaviour
     {
         Raycast();
 
-        switch (aiState)
-        {
-            case AiState.normal:
-            case AiState.evade:
-                {
-                    CarMoveAI();
-                }
-                break;
-            case AiState.chase:
-            case AiState.chaseR:
-            case AiState.chaseL:
-            case AiState.chaseF:
-            case AiState.chaseBlock:
-                {
-                    CarChaseAI();
-                }
-                break;
-        }
-    }
+		CarMoveAI();
+	}
 
     void SetAiMaxSpeedMultiplier()
     {
@@ -81,10 +68,10 @@ public class CarAi : MonoBehaviour
                 maxSpdMultiplier = 1.6f;
                 break;
             case AiState.chaseF:
-                maxSpdMultiplier = 1.8f;
+                maxSpdMultiplier = 1.6f;
                 break;
             case AiState.chaseBlock:
-                maxSpdMultiplier = 1.2f;
+                maxSpdMultiplier = 1.0f;
                 break;
             case AiState.evade:
                 maxSpdMultiplier = 1.2f;
@@ -160,26 +147,39 @@ public class CarAi : MonoBehaviour
 		}		
 	}
 
-	void CarChaseAI()
+	IEnumerator CarChaseAI()
     {
-        if (chaseTarget == null)
-        {
-			StopChase();
-            return;
+		while (true)
+		{
+			yield return new WaitForSeconds(0.1f);
+
+            if (carManager.carState != CarManager.CarState.controlledByAi)
+                continue;
+
+            if(aiState == AiState.normal && chaseTarget == null)
+            {
+                SetChaseTarget();
+                continue;
+            }                
+
+            if (chaseTarget == null)
+            {
+                StopChase();
+            }
+            else if(aiState != AiState.normal)
+            {
+                if (chaseTarget.tag == "Car")
+                {
+                    ChaseStateLoopForCarTarget();
+                }
+                else
+                {
+                    ChaseStateLoopForHumanTarget();
+                }
+
+                SetAiMaxSpeedMultiplier();
+            }
         }
-
-		if(chaseTarget.tag == "Car")
-		{
-			ChaseStateLoopForCarTarget();
-		}
-		else
-		{
-			ChaseStateLoopForHumanTarget();
-		}
-
-        SetAiMaxSpeedMultiplier();
-
-        CarMoveAI();
     }
 
     void ChaseStateLoopForCarTarget()
@@ -212,14 +212,14 @@ public class CarAi : MonoBehaviour
         Vector3 dir = destination - transform.position;
         float dist = dir.magnitude;
 
-        if (dist > 16)
+        if (dist > 12)
         {
 			StopChase();
-        }
-		else if(dist < 2f && carManager.movement.curSpeed < 10)
-		{
-			StopChase();
 
+            return;
+        }
+		else if(dist < 4f && carManager.movement.curSpeed < 15)
+		{
 			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
 			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
 
@@ -250,7 +250,7 @@ public class CarAi : MonoBehaviour
                     {
                         aiState = AiState.chaseF;
                     }
-                    else if (dist > 3.5f)
+                    else if (dist > 4)
                     {
                         aiState = AiState.chase;
                     }
@@ -292,13 +292,9 @@ public class CarAi : MonoBehaviour
 		}
 		else if (dist < 2.5f)
 		{
-			StopChase();
-
 			StartCoroutine(carManager.passengerManager.GetOffTheCar(0));
 			StartCoroutine(carManager.passengerManager.GetOffTheCar(1));
-
-			return;
-		}
+        }
 	}
 
 	void CarMoveAI()
@@ -363,39 +359,37 @@ public class CarAi : MonoBehaviour
         destination = pos;
     }
 
-    public void ChasePlayer()
+    void SetChaseTarget()
     {
-        if (!isPolice)
+        if (WantedLevel.instance.level < 1 ||
+            (transform.position - GameManager.Instance.player.transform.position).sqrMagnitude > 100)
+        {
+            chaseTarget = null;
             return;
+        }
 
-        if (WantedLevel.instance.level < 1)
-            return;
-
-        if (aiState != AiState.normal)
-            return;
-
-        if ((transform.position - GameManager.Instance.player.transform.position).sqrMagnitude > 100)
-            return;
-
-		if(GameManager.Instance.playerCar != null)
+        if (GameManager.Instance.playerCar != null)
 		{
 			chaseTarget = GameManager.Instance.playerCar.transform;
 		}
 		else
 		{
-			chaseTarget = GameManager.Instance.player.transform;
+            chaseTarget = GameManager.Instance.player.transform;
 		}
 
         aiState = AiState.chase;
-
         carManager.effects.TurnOnSiren();
     }
 
 	public void StopChase()
 	{
+        if (aiState == AiState.normal)
+            return;
+
+        carManager.effects.TurnOffSiren(People.PeopleType.None, 0);
+
 		chaseTarget = null;
 		aiState = AiState.normal;
-		carManager.effects.TurnOffSiren(People.PeopleType.None, 0);
 	}
 
     void OnDrawGizmosSelected()

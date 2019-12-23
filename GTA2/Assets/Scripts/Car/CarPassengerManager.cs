@@ -105,6 +105,10 @@ public class CarPassengerManager : MonoBehaviour
 
 	public IEnumerator OpenTheDoor(int idx)
 	{
+        if (doors[idx].doorState == DoorState.open ||
+            doors[idx].doorState == DoorState.opening)
+            yield break;
+
 		carManager.OnDoorOpenEvent(idx);
 
 		doors[idx].doorState = DoorState.opening;
@@ -117,7 +121,11 @@ public class CarPassengerManager : MonoBehaviour
 
 	public IEnumerator CloseTheDoor(int idx)
 	{
-		carManager.OnDoorCloseEvent(idx);
+        if (doors[idx].doorState == DoorState.close ||
+            doors[idx].doorState == DoorState.closing)
+            yield break;
+
+        carManager.OnDoorCloseEvent(idx);
 
 		doors[idx].doorState = DoorState.closing;
 		doors[idx].animator.SetTrigger("Close");
@@ -126,6 +134,20 @@ public class CarPassengerManager : MonoBehaviour
 
 		doors[idx].doorState = DoorState.close;
 	}
+	void OnDriverGetOn(People.PeopleType peopleType, int idx)
+	{
+	}
+
+	void OnDriverGetOff(People.PeopleType peopleType, int idx)
+	{
+	}
+
+	void OnDamaged(bool sourceIsPlayer)
+	{
+	}
+
+	/// FIX ME-------------------------------
+	/// 문제가 많음 event로 쓸수 있게 변경하기
 
 	public void GetOnTheCar(People.PeopleType passengerType, int idx = 0, bool isBustedCar = false)
 	{
@@ -151,7 +173,9 @@ public class CarPassengerManager : MonoBehaviour
         if (doors[idx].passenger == People.PeopleType.None)
             yield break;
 
-		StartCoroutine(OpenTheDoor(idx));
+        carManager.OnDriverGetOffEvent(doors[idx].passenger, idx);
+
+        StartCoroutine(OpenTheDoor(idx));
 
         yield return new WaitForSeconds(0.5f);
 
@@ -180,7 +204,7 @@ public class CarPassengerManager : MonoBehaviour
                 break;
 			case People.PeopleType.Doctor:
 				GameObject doctorDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
-				doctorDriver.GetComponent<Doctor>().ambulanceCar = carManager;
+				doctorDriver.GetComponent<Doctor>().targetCar = carManager;
 				doctorDriver.GetComponent<Doctor>().idx = idx;
 				doctorDriver.transform.position = doors[idx].transform.position;
 				break;
@@ -189,7 +213,7 @@ public class CarPassengerManager : MonoBehaviour
         }
 		
         doors[idx].passenger = People.PeopleType.None;
-        carManager.OnDriverGetOffEvent(doors[idx].passenger, idx);
+        
     }
     
 	//OpenTheDoor(0) 먼저 호출후 확인하고 운전자 끌어내리기
@@ -209,7 +233,7 @@ public class CarPassengerManager : MonoBehaviour
 		else if(doors[idx].passenger == People.PeopleType.Doctor)
 		{
 			GameObject doctorDriver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
-			doctorDriver.GetComponent<Doctor>().ambulanceCar = carManager;
+			doctorDriver.GetComponent<Doctor>().targetCar = carManager;
 			doctorDriver.GetComponent<Doctor>().idx = 0;
 
 			doors[idx].passenger = People.PeopleType.None;
@@ -241,17 +265,5 @@ public class CarPassengerManager : MonoBehaviour
 		}
     }
 
-    void OnDriverGetOn(People.PeopleType peopleType, int idx)
-    {
-
-    }
-
-    void OnDriverGetOff(People.PeopleType peopleType, int idx)
-    {
-
-    }
-
-    void OnDamaged(bool sourceIsPlayer)
-    {
-    }
+   
 }

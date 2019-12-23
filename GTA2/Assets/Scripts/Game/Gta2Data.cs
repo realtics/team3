@@ -5,6 +5,7 @@ using UnityEngine;
 [SerializeField]
 public class Gta2Data
 {
+    public int life;
     public int money;
     public double gameTime;
     public int kills;

@@ -75,6 +75,7 @@ public class Police : NPC
 		//끌어내리는 범위
 		if (InPunchRange())//InPullOutRange()
 		{
+			LookAtPlayerCar();
 			isGetOnTheCar = true;
 			isWalk = false;
 
@@ -86,12 +87,16 @@ public class Police : NPC
 			}
 			else
 			{
-				OpenTheDoor();
+				OpenTheDoor(GameManager.Instance.player.playerPhysics.targetCar);
 			}
 		}
 		else if (InChaseRange()) //추격
 		{
-			isGetOnTheCar = false;
+			if(isGetOnTheCar) //문여는 중 놓칠경우
+			{
+				Down();
+				isGetOnTheCar = false;
+			}
 			base.StopShot();
 			base.ChasePlayer();
 		}
@@ -114,7 +119,7 @@ public class Police : NPC
 	{
 		defaultHp = policeData.maxHp;
 		moveSpeed = policeData.moveSpeed;
-		runSpeed = policeData.runawaySpeed;
+		runSpeed = policeData.runSpeed;
 
 		findRange = policeData.findRange;
 		punchRange = policeData.punchRange;
@@ -133,7 +138,11 @@ public class Police : NPC
 		base.Timers[(int)TimerType.JumpMin] = 1.0f;
 		money = policeData.money;
 	}
-	
+	public void LookAtPlayerCar()
+	{
+		transform.LookAt(new Vector3(GameManager.Instance.player.playerPhysics.targetCar.transform.position.x, transform.position.y, GameManager.Instance.player.playerPhysics.targetCar.transform.position.z));
+		DebugX.DrawRay(transform.position, (GameManager.Instance.player.playerPhysics.targetCar.transform.position - transform.position), Color.blue);
+	}
 	void ChasePlayerCharacter()
     {
         if (PlayerOutofRange())
@@ -176,26 +185,12 @@ public class Police : NPC
 	{
 		GameManager.Instance.player.playerPhysics.targetCar.PullOutDriver();
 	}
-	void OpenTheDoor()
+	void OpenTheDoor(CarPassengerManager pm)
 	{
 		isWalk = false;
-		GameManager.Instance.player.playerPhysics.LookAtCar();
-
-		if (GameManager.Instance.player.playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.close)
-		{
-			GameManager.Instance.player.playerPhysics.targetCar.doors[0].doorState = CarPassengerManager.DoorState.opening;
-			transform.forward = GameManager.Instance.player.playerPhysics.targetCar.transform.forward;
-			StartCoroutine(GameManager.Instance.player.playerPhysics.targetCar.OpenTheDoor(0));
-		}
-
-		//거리 멀어지면 실패
-		if (Vector3.SqrMagnitude(transform.position - GameManager.Instance.player.playerPhysics.targetCar.transform.position) < 0.1f)
-		{
-			Down();
-			isGetOnTheCar = false;
-			return;
-		}
-	}
+        transform.forward = pm.transform.forward;
+        StartCoroutine(pm.OpenTheDoor(0));
+    }
 	#endregion
 	#region override method
 	protected override void Die() //리스폰 필요

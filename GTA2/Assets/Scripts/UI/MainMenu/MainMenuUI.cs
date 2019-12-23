@@ -45,7 +45,6 @@ public class MainMenuUI : MonoBehaviour
         HighScoreData highData = js.Load<HighScoreData>("HighScoreData.json");
         highscoreText.text = "HIGH SCORE: ";
 
-
         if (highData != null)
         {
             highscoreText.text += highData.highScore.ToString();
@@ -88,7 +87,9 @@ public class MainMenuUI : MonoBehaviour
 
     public void StartGameBtn()
     {
-        SceneManager.LoadScene("Stage" + stageIndex.ToString());
+		PlayerPrefs.SetInt("TargetSceneIdx", stageIndex);
+		SceneManager.LoadScene("LoadingScene");
+        //SceneManager.LoadScene("Stage" + stageIndex.ToString());
     }
 
 

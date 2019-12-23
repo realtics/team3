@@ -29,6 +29,11 @@ public class GunFireBottle : PlayerGun
 
     protected override void UpdateShot()
     {
+        if (GameManager.Instance.playerCar != null)
+        {
+            return;
+        }
+
         if (isKeyShot || isButtonShot)
         {
             intervalDelta += Time.deltaTime;
