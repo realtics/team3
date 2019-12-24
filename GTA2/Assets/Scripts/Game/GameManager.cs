@@ -123,10 +123,8 @@ public class GameManager : MonoSingleton<GameManager>
         player.playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player, 2);
         yield return new WaitForSeconds(3.0f);
 		copCar.passengerManager.GetOffTheCar(2);
+		player.Down();
 		player.isBusted = false;
-		yield return new WaitForSeconds(0.5f);
-        player.Down();
-
         CameraController.Instance.ChangeTarget(player.gameObject);
 	}
 

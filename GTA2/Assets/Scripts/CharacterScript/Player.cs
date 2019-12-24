@@ -347,7 +347,6 @@ public class Player : People
             boxCollider.enabled = false;
             spriteRenderer.enabled = false;
             isDriver = true;
-            transform.position = GameManager.Instance.playerCar.doors[idx].transform.position;
             transform.SetParent(GameManager.Instance.playerCar.transform);
         }
         else
@@ -356,7 +355,6 @@ public class Player : People
             boxCollider.enabled = true;
             spriteRenderer.enabled = true;
             isDriver = false;
-			transform.position = GameManager.Instance.playerCar.doors[idx].transform.position;
 			transform.SetParent(null);
 		}
     }
@@ -375,7 +373,12 @@ public class Player : People
 	}
 	#endregion
 	#region overrideMethod
-
+	
+	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isPlayerCar = true)
+	{
+		base.Runover(runoverSpeed, carPosition, isPlayerCar);
+		isBusted = false;
+	}
 	protected override void Move()
 	{
 		if (isChasingCar)

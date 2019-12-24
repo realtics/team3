@@ -176,6 +176,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   hp: 0
+  targetCar: {fileID: 0}
   animator: {fileID: 1167477734086649170}
   animator_cloth: {fileID: 0}
   gunList:
@@ -194,6 +195,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
   - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
   - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
+  squashClip: {fileID: 8300000, guid: c5cc42381b3def44997b14ba57b745cf, type: 3}
   policeData: {fileID: 11400000, guid: 43c2ce960593bb841ba9c2b0ebf38d96, type: 2}
 --- !u!65 &1358635159880621219
 BoxCollider:

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50a40b91ac163b4b905b68b3ba12b9f, type: 3}
   m_Name: DoctorData
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 250
   moveSpeed: 2
   downTime: 3
+  jumpTime: 0.5
+  carOpenTime: 0.5
   findRange: 10
   punchRange: 0.08
   shotRange: 10
@@ -22,6 +24,5 @@ MonoBehaviour:
   maxIdleTime: 1
   minWalkTime: 10
   maxWalkTime: 15
-  carOpenTimer: 0
-  carOpenTime: 0.5
+  healTime: 3
   money: 400

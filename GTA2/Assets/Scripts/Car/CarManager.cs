@@ -141,6 +141,7 @@ public class CarManager : MonoBehaviour
         }
     }
 
+
     IEnumerator DisableIfOutOfCamera()
     {
         while (true)

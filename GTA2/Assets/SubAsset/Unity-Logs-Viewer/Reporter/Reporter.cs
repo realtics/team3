@@ -229,7 +229,7 @@ public class Reporter : MonoBehaviour
 
 	//used to check if you have In Game Logs multiple time in different scene
 	//only one should work and other should be deleted
-	static bool created = false;
+	/*static */bool created = false;
 	//public delegate void OnLogHandler( string condition, string stack-trace, LogType type );
 	//public event OnLogHandler OnLog ;
 
@@ -302,8 +302,8 @@ public class Reporter : MonoBehaviour
     bool showBtnDown = false;
 
 	void Awake()
-	{
-		if (!Initialized)
+    {
+        if (!Initialized)
 			Initialize();
 
 #if UNITY_CHANGE3
@@ -326,7 +326,6 @@ public class Reporter : MonoBehaviour
 
 	void OnDisable()
 	{
-
 	}
 
 	void addSample()
@@ -363,7 +362,7 @@ public class Reporter : MonoBehaviour
 			scenes = new string[Application.levelCount];
 			currentScene = Application.loadedLevelName;
 #endif
-			DontDestroyOnLoad(gameObject);
+			// DontDestroyOnLoad(gameObject);
 #if UNITY_CHANGE1
 			Application.RegisterLogCallback (new Application.LogCallback (CaptureLog));
 			Application.RegisterLogCallbackThreaded (new Application.LogCallback (CaptureLogThread));
@@ -376,7 +375,7 @@ public class Reporter : MonoBehaviour
 		}
 		else {
 			Debug.LogWarning("tow manager is exists delete the second");
-			DestroyImmediate(gameObject, true);
+			// DestroyImmediate(gameObject, true);
 			return;
 		}
 

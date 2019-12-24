@@ -19,7 +19,6 @@ public class Doctor : NPC
 	public DoctorState doctorState = DoctorState.GoToheal;
 	void Awake()
 	{
-		//gameManager = GameManager.Instance;
 		base.TimerInit();
 		MasterDataInit();
 	}

@@ -25,13 +25,17 @@ public class MainMenuUI : MonoBehaviour
     GameObject exitUI;
 
 
+    [Header("UI Component")]
+    [SerializeField]
+    AudioClip okClip;
+    //
 
     int stageIndex = 1;
     int maxStageIndex = 3;
     int minStageIndex = 1;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         CloseExitWindow();
         GotoStart();
@@ -59,12 +63,14 @@ public class MainMenuUI : MonoBehaviour
     {
         startCanvas.gameObject.SetActive(true);
         selectCanvas.gameObject.SetActive(false);
+        SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
     }
 
     public void GotoSelect()
     {
         startCanvas.gameObject.SetActive(false);
         selectCanvas.gameObject.SetActive(true);
+        SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
     }
 
 
@@ -75,6 +81,8 @@ public class MainMenuUI : MonoBehaviour
         {
             stageIndex = maxStageIndex;
         }
+
+        SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
     }
     public void PrevStageBtn()
     {
@@ -83,6 +91,8 @@ public class MainMenuUI : MonoBehaviour
         {
             stageIndex = minStageIndex;
         }
+
+        SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
     }
 
     public void StartGameBtn()
@@ -112,10 +122,11 @@ public class MainMenuUI : MonoBehaviour
         {
             if (startCanvas.gameObject.activeInHierarchy)
             {
-
+                return;
             }
             else if (selectCanvas.gameObject.activeInHierarchy)
             {
+                SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
                 GotoStart();
             }
         }
@@ -130,6 +141,7 @@ public class MainMenuUI : MonoBehaviour
             }
             else if (!exitUI.activeInHierarchy)
             {
+                SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
                 exitUI.SetActive(true);
             }
         }
@@ -138,6 +150,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void CloseExitWindow()
     {
+        SoundManager.Instance.PlayClip(okClip, SoundPlayMode.UISFX);
         exitUI.SetActive(false);
     }
     public void ExitGame()

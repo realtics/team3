@@ -24,30 +24,42 @@ public class GunElectric : PlayerGun
         noneTargetObjectList = new List<GameObject>();
         activeElectricList = new List<BulletElectric>();
 
-        foreach (var npc in NPCSpawnManager.Instance.allNPC)
-        {
-            if (npc == null)
-            {
-                continue;
-            }
-            objectList.Add(npc.gameObject);
-        }
-		foreach (var car in CarSpawnManager.Instance.allCars)
-        {
-            if (car == null)
-            {
-                continue;
-            }
-            objectList.Add(car.gameObject);
-        }
 
         InitGun();
-
-
         List<BulletElectric> bulletList = PoolManager.GetAllObject<BulletElectric>(bulletPref);
         foreach (var item in bulletList)
         {
             item.SetAreaAndMaxCount(electricWaveArea, electricWaveMaxIndex);
+        }
+
+        gameObject.SetActive(true);
+        StartCoroutine(UpdateTarget());
+    }
+
+    IEnumerator UpdateTarget()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(.1f);
+
+            objectList.Clear();
+
+            foreach (var npc in NPCSpawnManager.Instance.allNPC)
+            {
+                if (npc == null)
+                {
+                    continue;
+                }
+                objectList.Add(npc.gameObject);
+            }
+            foreach (var car in CarSpawnManager.Instance.allCars)
+            {
+                if (car == null)
+                {
+                    continue;
+                }
+                objectList.Add(car.gameObject);
+            }
         }
     }
 

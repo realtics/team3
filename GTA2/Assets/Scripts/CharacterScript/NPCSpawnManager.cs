@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 {
-	public Citizen citizen;
-    public Police police;
-	public Doctor doctor;
+	public Citizen citizenPrefab;
+    public Police policePrefab;
+	public Doctor doctorPrefab;
 	public List<GameObject> allNPC;
 	public NPCSpawnData npcSpawnData;
 
@@ -20,19 +20,18 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 	public int NPCNum;
 
 	public List<NPC> DiedNPC;
-
 	public GameObject BloodAnim;
 	public List<GameObject> BloodAnimList;
 
 	void Awake()
 	{
-		PoolManager.WarmPool(citizen.gameObject, 300);
-        PoolManager.WarmPool(police.gameObject, 100);
-		PoolManager.WarmPool(doctor.gameObject, 10);
+		PoolManager.WarmPool(citizenPrefab.gameObject, 100);
+        PoolManager.WarmPool(policePrefab.gameObject, 100);
+		PoolManager.WarmPool(doctorPrefab.gameObject, 10);
 
-		allNPC.AddRange(PoolManager.GetAllObject(citizen.gameObject));
-        allNPC.AddRange(PoolManager.GetAllObject(police.gameObject));
-		allNPC.AddRange(PoolManager.GetAllObject(doctor.gameObject));
+		allNPC.AddRange(PoolManager.GetAllObject(citizenPrefab.gameObject));
+        allNPC.AddRange(PoolManager.GetAllObject(policePrefab.gameObject));
+		allNPC.AddRange(PoolManager.GetAllObject(doctorPrefab.gameObject));
 
 		PoolManager.WarmPool(BloodAnim.gameObject, 10);
 		BloodAnimList.AddRange(PoolManager.GetAllObject(BloodAnim.gameObject));
@@ -61,8 +60,14 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 					continue;
 				NPCNum++;
 
-				GameObject insNPC = PoolManager.SpawnObject(citizen.gameObject);
+				GameObject insNPC = PoolManager.SpawnObject(citizenPrefab.gameObject);
+
 				insNPC.transform.position = new Vector3(closeWayPoint.transform.position.x + Random.Range(-commitRadius, commitRadius), closeWayPoint.transform.position.y, closeWayPoint.transform.position.z + Random.Range(-commitRadius, commitRadius));
+
+				if (!allNPC.Contains(insNPC))
+				{
+					allNPC.Add(insNPC);
+				}
 			}
 		}
     }
@@ -87,8 +92,13 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 
 				if (closeWayPoint == null)
 					continue;
-				GameObject insNPC = PoolManager.SpawnObject(police.gameObject);
+				GameObject insNPC = PoolManager.SpawnObject(policePrefab.gameObject);
 				insNPC.transform.position = new Vector3(closeWayPoint.transform.position.x + Random.Range(-commitRadius, commitRadius), closeWayPoint.transform.position.y, closeWayPoint.transform.position.z + Random.Range(-commitRadius, commitRadius));
+
+				if (!allNPC.Contains(insNPC))
+				{
+					allNPC.Add(insNPC);
+				}
 			}
 		}
 	}

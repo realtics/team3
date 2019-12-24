@@ -197,6 +197,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
   - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
   - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
+  squashClip: {fileID: 8300000, guid: c5cc42381b3def44997b14ba57b745cf, type: 3}
   citizenData: {fileID: 11400000, guid: feb62588e799dab4b9e27b12c2e6e3a2, type: 2}
   ClothSpriteRenderer: {fileID: 1206106357788588712}
   downClip:

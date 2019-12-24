@@ -86,6 +86,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   hp: 0
+  targetCar: {fileID: 0}
   animator: {fileID: 1020086614340368900}
   animator_cloth: {fileID: 3183330439516303165}
   gunList: []
@@ -102,9 +103,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10763bc098cf33642a78d0f0611c3f92, type: 3}
   - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
   - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
+  squashClip: {fileID: 8300000, guid: c5cc42381b3def44997b14ba57b745cf, type: 3}
   doctorData: {fileID: 11400000, guid: b9c6f1afbfdf6784b85adbe6bb4beccf, type: 2}
   targetNPC: {fileID: 0}
-  ambulanceCar: {fileID: 0}
   idx: 0
   doctorState: 0
 --- !u!1 &6193245880112247456

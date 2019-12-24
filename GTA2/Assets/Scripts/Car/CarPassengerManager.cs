@@ -193,13 +193,13 @@ public class CarPassengerManager : MonoBehaviour
 				GameManager.Instance.playerCar = null;
 				break;
 			case People.PeopleType.Citizen:
-				driver = PoolManager.SpawnObject(NPCSpawnManager.Instance.citizen.gameObject);
+				driver = PoolManager.SpawnObject(NPCSpawnManager.Instance.citizenPrefab.gameObject);
 				break;
 			case People.PeopleType.Police:
-				driver = PoolManager.SpawnObject(NPCSpawnManager.Instance.police.gameObject);
+				driver = PoolManager.SpawnObject(NPCSpawnManager.Instance.policePrefab.gameObject);
 				break;
 			case People.PeopleType.Doctor:
-				driver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctor.gameObject);
+				driver = PoolManager.SpawnObject(NPCSpawnManager.Instance.doctorPrefab.gameObject);
 				driver.GetComponent<Doctor>().targetCar = carManager;
 				driver.GetComponent<Doctor>().idx = idx;
 				break;

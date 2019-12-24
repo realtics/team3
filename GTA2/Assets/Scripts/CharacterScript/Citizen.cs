@@ -38,11 +38,6 @@ public class Citizen : NPC
 		
 		if (DetectedPlayerAttack())
 		{
-			//if(ShoutTimerCheck() && Random.Range(0, 3) < 1)
-			//{
-			//	SoundManager.Instance.PlayClipToPosition(runAwayClip[Random.Range(0, runAwayClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
-			//	shoutTimer = 0.0f;
-			//}
 			base.SetRunaway();
 		}
 		else
@@ -60,10 +55,8 @@ public class Citizen : NPC
         }
         else if (isWalk)
         {
-
 			base.Move();
 		}
-
 	}
 	
 	void OnCollisionStay(Collision collision)
@@ -74,17 +67,7 @@ public class Citizen : NPC
 		}
 	}
 	#region lowlevelCode
-	//bool ShoutTimerCheck()
-	//{
-	//	shoutTimer += Time.deltaTime;
-
-	//	if (shoutTimer > shoutTime)
-	//	{
-	//		return true;
-	//	}
-	//	else
-	//		return false;
-	//}
+	
 	void ClothesColorRandomSetting()
 	{
 		ClothSpriteRenderer.color = new Color(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));

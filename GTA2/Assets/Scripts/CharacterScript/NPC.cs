@@ -41,6 +41,7 @@ public abstract class NPC : People
 
 	public AudioClip[] runAwayClip;
 	public AudioClip[] dieClip;
+	public AudioClip squashClip;
 
 	bool isRayCastCoroutineRunning = false;
 
@@ -113,6 +114,8 @@ public abstract class NPC : People
 			GameManager.Instance.killCount++;
 			WorldUIManager.Instance.SetScoreText(transform.position, money);
 			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
+
+			SoundManager.Instance.PlayClipToPosition(squashClip, SoundPlayMode.ObjectSFX, transform.position);
 		}
 	}
 	protected virtual void RunAway()
@@ -317,9 +320,9 @@ public abstract class NPC : People
         while (true)
         {
             yield return new WaitForSeconds(1.0f);
-
+			
             Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-            float offset = 2f;
+            float offset = 1f;
             if (pos.x < 0 - offset ||
                 pos.x > 1 + offset ||
                 pos.y < 0 - offset ||
@@ -328,7 +331,10 @@ public abstract class NPC : People
 				NPCSpawnManager.Instance.NPCNum--;
 				if (isDie)
 					NPCSpawnManager.Instance.DiedNPC.Remove(this);
-				gameObject.SetActive(false);
+
+				//gameObject.SetActive(false);
+				PoolManager.ReleaseObject(gameObject);
+				NPCSpawnManager.Instance.allNPC.Remove(gameObject);
 			}
                 
         }

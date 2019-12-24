@@ -116,8 +116,8 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 
     public CarManager SpawnPoliceCar(Vector3 position)
     {
-		//GameObject policeCar = PoolManager.SpawnObject(policeCarPrefab, 
-		//	position, 
+		//GameObject policeCar = PoolManager.SpawnObject(policeCarPrefab,
+		//	position,
 		//	Quaternion.identity);
 
 		foreach (var car in allPoliceCar)
@@ -141,7 +141,7 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 		//}
 
 		//return cm;
-    }
+	}
 	public CarManager SpawnAmbulanceCar(Vector3 position)
 	{
 		foreach (var car in allAmbulanceCar)
