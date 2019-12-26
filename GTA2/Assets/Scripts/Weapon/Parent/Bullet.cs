@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
         if (explosionPref != null)
         {
             explosionEffect = Instantiate(explosionPref).GetComponent<ExplosionEffect>();
-            explosionEffect.gameObject.transform.parent = PoolManager.Instance.transform;
+            explosionEffect.gameObject.transform.SetParent(PoolManager.Instance.transform);
         }
     }
 
@@ -92,6 +92,22 @@ public class Bullet : MonoBehaviour
             Explosion();
         }
     }
+    protected void UpdateActive()
+    {
+        if (isLife)
+        {
+            return;
+        }
+
+        bulletActiveDelta += Time.deltaTime;
+        if (bulletActiveDelta > bulletDeActiveTime)
+        {
+            PoolManager.ReleaseObject(gameObject);
+        }          
+    }
+
+
+
 
     public virtual void Explosion()
     {
@@ -107,22 +123,9 @@ public class Bullet : MonoBehaviour
             explosionEffect.SetExplosion(transform.position);
         }
 
-         SoundManager.Instance.PlayClipToPosition(explosionSound, SoundPlayMode.ExplosionSFX, transform.position);
+        SoundManager.Instance.PlayClipToPosition(explosionSound, SoundPlayMode.ExplosionSFX, transform.position);
     }
 
-    protected void UpdateActive()
-    {
-        if (isLife)
-        {
-            return;
-        }
-
-        bulletActiveDelta += Time.deltaTime;
-        if (bulletActiveDelta > bulletDeActiveTime)
-        {
-            PoolManager.ReleaseObject(gameObject);
-        }          
-    }
 
     protected virtual void OnTriggerEnter(Collider other)
     {

@@ -19,13 +19,13 @@ public class GunElectric : PlayerGun
     public override void Init()
     {
 		base.Init();
+        InitGun();
 
         objectList = new List<GameObject>();
         noneTargetObjectList = new List<GameObject>();
         activeElectricList = new List<BulletElectric>();
 
 
-        InitGun();
         List<BulletElectric> bulletList = PoolManager.GetAllObject<BulletElectric>(bulletPref);
         foreach (var item in bulletList)
         {
@@ -153,7 +153,7 @@ public class GunElectric : PlayerGun
             Vector3 electricVector = userObject.transform.position;
             electricVector.y = userObject.transform.position.y * 1.5f;
 
-            item.UpdateBullet(gunType, electricVector, gunDir, .0f);
+            item.SetBullet();
         }
     }
 
@@ -249,7 +249,8 @@ public class GunElectric : PlayerGun
         }
 
         #region 방향체크
-        // 물체 감지 필터링 - 레이케스트를 소니 제일 마지막에 쓰는 것으로...
+        // 물체 감지 필터링 - 레이케스트를 쏘니 제일 마지막에 쓰는 것으로...
+        // 퍼포먼스 상 차이가 없어서 일단 주석 처리... 퍼포먼스는 문제가 없으나 점유율이 높아진다...
         //Ray originRay = new Ray();
         //RaycastHit originRayHit = new RaycastHit();
 

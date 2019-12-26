@@ -17,6 +17,7 @@ public abstract class NPC : People
     protected float chaseRange;
     protected float outofRange;
 
+
 	public bool isRunaway { get; set; }
 	protected Vector3 RunawayVector;
 	public bool isChasePlayer { get; set; }
@@ -47,7 +48,7 @@ public abstract class NPC : People
 
 	void AnimationInit()
 	{
-		isWalk = false;
+		//isWalk = false;
 		isShot = false;
 		isPunch = false;
 		isJump = false;
@@ -57,6 +58,8 @@ public abstract class NPC : People
 		isRunover = false;
 		isDown = false;
 		isGetOnTheCar = false;
+		//애니메이션 아니지만 초기화
+		isRunaway = false;
 	}
 	void SetDefaultHp()
 	{

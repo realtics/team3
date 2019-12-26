@@ -33,6 +33,4 @@ public class ExplosionEffect : MonoBehaviour
         releaseDelta = .0f;
         gameObject.SetActive(true);
     }
-
-
 }

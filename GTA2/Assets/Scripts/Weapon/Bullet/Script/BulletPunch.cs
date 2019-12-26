@@ -13,16 +13,16 @@ public class BulletPunch : Bullet
         base.Awake();
     }
 
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        UpdatePunchPos();
-    }
-
     public void SetGun(GameObject userObject, GunPunch launchGun)
     {
         this.userObject = userObject;
         this.launchGun = launchGun;
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        UpdatePunchPos();
     }
 
     void UpdatePunchPos()

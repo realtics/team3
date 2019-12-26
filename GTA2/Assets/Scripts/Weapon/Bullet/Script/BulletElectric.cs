@@ -43,39 +43,7 @@ public class BulletElectric : Bullet
     
     // Null이 들어올 경우 타겟의 최신화가 이루어지지 않는다.
     // 이미 타겟이 잡힌 경우란 것이다.
-    public void SetTarget(GameObject origin, GameObject obj)
-    {
-        if (origin != null)
-        {
-            startObject = origin;
-        }
-        if (obj != null)
-        {
-            targetObject = obj;
-        }
-
-        if (!CheckStartTarget())
-        {
-            isLife = false;
-            PoolManager.ReleaseObject(gameObject);
-            return;
-        }
-        
-        targetToVector =
-            targetObject.transform.position -
-            startObject.transform.position;
-
-        SetScale(targetToVector);
-        SetRotate();
-        SetPosition(targetToVector);
-
-
-        // 이렇게 두번 해야 라인랜더러가 안 겹친다... - 이전 상태에서 최신화가 된다.
-        lightning.Updated();
-        lightning.Updated();
-    }
-
-
+  
 
     bool CheckStartTarget()
     {
@@ -116,11 +84,42 @@ public class BulletElectric : Bullet
     }
 
 
-    public void UpdateBullet(GunState type, Vector3 triggerPos, Vector3 dir, float bullettoSize)
+    public void SetBullet()
     {
-        // base.SetBullet(type, triggerPos, dir, bullettoSize);
         SetTarget(null, null);
     }
+    public void SetTarget(GameObject origin, GameObject obj)
+    {
+        if (origin != null)
+        {
+            startObject = origin;
+        }
+        if (obj != null)
+        {
+            targetObject = obj;
+        }
+
+        if (!CheckStartTarget())
+        {
+            isLife = false;
+            PoolManager.ReleaseObject(gameObject);
+            return;
+        }
+
+        targetToVector =
+            targetObject.transform.position -
+            startObject.transform.position;
+
+        SetScale(targetToVector);
+        SetRotate();
+        SetPosition(targetToVector);
+
+
+        // 이렇게 두번 해야 라인랜더러가 안 겹친다... - 이전 상태에서 최신화가 된다.
+        lightning.Updated();
+        lightning.Updated();
+    }
+
 
 
     void SetScale(Vector3 targetToVector)

@@ -89,7 +89,7 @@ public class CarAi : MonoBehaviour
         while (true)
         {
             Raycast();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -99,7 +99,8 @@ public class CarAi : MonoBehaviour
 
 		Vector3 rayDirection = Quaternion.Euler(0, h * 20, 0) * transform.forward;
 
-		if (Physics.Raycast(transform.position, rayDirection, out hit, 1.5f, collisionLayer))
+		if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 2, collisionLayer))
+		//if (Physics.Raycast(transform.position, rayDirection, out hit, 1.5f, collisionLayer))
         {
             if (hit.transform.tag == "TrafficLight")
             {

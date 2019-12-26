@@ -60,9 +60,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 					continue;
 				NPCNum++;
 
-				GameObject insNPC = PoolManager.SpawnObject(citizenPrefab.gameObject);
-
-				insNPC.transform.position = new Vector3(closeWayPoint.transform.position.x + Random.Range(-commitRadius, commitRadius), closeWayPoint.transform.position.y, closeWayPoint.transform.position.z + Random.Range(-commitRadius, commitRadius));
+				GameObject insNPC = PoolManager.SpawnObject(citizenPrefab.gameObject, closeWayPoint.transform.position, Quaternion.identity);
 
 				if (!allNPC.Contains(insNPC))
 				{

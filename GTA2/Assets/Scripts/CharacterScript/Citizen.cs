@@ -7,8 +7,6 @@ public class Citizen : NPC
 	public CitizenData citizenData;
 	public SpriteRenderer ClothSpriteRenderer;
 	public AudioClip[] downClip;
-	//static float shoutTime = 10.0f;
-	//static float shoutTimer = 0.0f;
 
 	void Awake()
     {
@@ -61,7 +59,7 @@ public class Citizen : NPC
 	
 	void OnCollisionStay(Collision collision)
 	{
-		if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car") && isRunaway)
+		if ((collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car")) && isRunaway)
 		{
 			transform.Rotate(0, Random.Range(90, 270), 0);
 		}

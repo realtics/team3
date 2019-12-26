@@ -32,7 +32,7 @@ public class GunPunch : PlayerGun
         UpdateDelta();
         UpdateCount();
         UpdateKeyInput();
-        this.UpdateShot();
+        UpdateShot();
     }
 
     protected override void UpdateShot()
@@ -52,7 +52,6 @@ public class GunPunch : PlayerGun
                 shootDelta = .0f;
             }
         }
-
     }
 
     public Vector3 GetGunToTarget()

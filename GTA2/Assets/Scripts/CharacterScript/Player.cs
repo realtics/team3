@@ -220,7 +220,11 @@ public class Player : People
 	public void SwapNext()
 	{
         GunState tempGunIndex = curGunIndex;
-		for (int i = 0; i < gunList.Count; i++)
+        for (int i = 0; i < gunList.Count; i++)
+        {
+            gunList[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < gunList.Count; i++)
 		{
             tempGunIndex++;
             if (tempGunIndex >= GunState.GunEnd)
@@ -234,7 +238,6 @@ public class Player : People
             }
             else if (gunList[(int)tempGunIndex].bulletCount > 0)
             {
-                gunList[(int)curGunIndex].gameObject.SetActive(false);
                 gunList[(int)tempGunIndex].gameObject.SetActive(true);
 
                 curGunIndex = tempGunIndex;
@@ -245,6 +248,11 @@ public class Player : People
 	public void SwapPrev()
     {
         GunState tempGunIndex = curGunIndex;
+
+        for (int i = 0; i < gunList.Count; i++)
+        {
+            gunList[i].gameObject.SetActive(false);
+        }
         for (int i = 0; i < gunList.Count; i++)
 		{
             tempGunIndex--;
@@ -259,7 +267,6 @@ public class Player : People
             }
             else if (gunList[(int)tempGunIndex].bulletCount > 0)
             {
-                gunList[(int)curGunIndex].gameObject.SetActive(false);
                 gunList[(int)tempGunIndex].gameObject.SetActive(true);
 
                 curGunIndex = tempGunIndex;

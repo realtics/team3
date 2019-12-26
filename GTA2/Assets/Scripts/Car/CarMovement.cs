@@ -115,8 +115,8 @@ public class CarMovement : MonoBehaviour
 			float rotAmount = Vector3.SignedAngle(inDirection, reboundForce, Vector3.up);
 			transform.Rotate(0, rotAmount / 5, 0);
 
-			DebugX.DrawRay(transform.position, transform.position - inDirection, Color.blue, 1f);
-			DebugX.DrawRay(transform.position, transform.position + reboundForce, Color.red, 1f);
+			//DebugX.DrawRay(transform.position, transform.position - inDirection, Color.blue, 1f);
+			//DebugX.DrawRay(transform.position, transform.position + reboundForce, Color.red, 1f);
         }
         else if (col.transform.CompareTag("Car"))
         {
