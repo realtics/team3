@@ -224,6 +224,8 @@ public class Player : People
         {
             gunList[i].gameObject.SetActive(false);
         }
+
+
         for (int i = 0; i < gunList.Count; i++)
 		{
             tempGunIndex++;

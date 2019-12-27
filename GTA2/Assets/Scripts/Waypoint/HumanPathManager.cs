@@ -17,6 +17,10 @@ public class HumanPathManager : MonoBehaviour
     {
         humanCtr = GetComponent<NPC>();
     }
+    void Start()
+    {
+        Init();
+    }
 
     void OnEnable()
     {

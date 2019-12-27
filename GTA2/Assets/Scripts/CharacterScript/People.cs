@@ -59,7 +59,7 @@ public abstract class People : MonoBehaviour
 	protected int defaultHp;
 	protected float hDir = 0;
 	protected float vDir = 0;
-
+	
     //State
     public bool isWalk { get; set; }
 	public bool isShot { get; set; }
@@ -69,8 +69,11 @@ public abstract class People : MonoBehaviour
 	public bool isDie { get; set; }
 	public bool isRunover { get; set; }
 	public bool isGetOnTheCar { get; set; } //문여는 모션
+	
+	protected bool isburned;
+	GameObject bloodEffect;
+	GameObject burnedEffect;
 
-	BulletEffect bloodEffect;
 
 	//abstract
 	protected virtual void Die()
@@ -111,7 +114,7 @@ public abstract class People : MonoBehaviour
 	public void Hurt(int damage)
     {
         hp -= damage;
-		GameObject bloodGameObject = PoolManager.SpawnObject(NPCSpawnManager.Instance.BloodAnim);
+		GameObject bloodGameObject = PoolManager.SpawnObject(NPCEffectManager.Instance.BloodAnim);
 		bloodGameObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
 		bloodGameObject.transform.Rotate(90, 0, 0);
 
@@ -121,6 +124,26 @@ public abstract class People : MonoBehaviour
             isDie = true;
         }
     }
+	protected IEnumerator Burning()
+	{
+		if (isburned)
+			yield break;
+
+		isburned = true;
+		burnedEffect = NPCEffectManager.Instance.SpawnBurnedEffect(gameObject);
+
+		while (true)
+		{
+			Hurt(10);
+
+			if(isDie)
+			{
+				NPCEffectManager.Instance.ReleaseBurnedEffect(burnedEffect);
+				break;
+			}
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
     public void PeopleUpdate()
     {
 		if (isDie)

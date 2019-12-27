@@ -22,6 +22,7 @@ TagManager:
   - NPCPunch
   - PlayerCar
   - Ground
+  - TrafficLightForPed
   layers:
   - Default
   - TransparentFX
@@ -37,9 +38,9 @@ TagManager:
   - Player
   - Car
   - Ground
-  - 
-  - 
-  - 
+  - TrafficLightForPed
+  - Tank
+  - DestroyedCar
   - 
   - 
   - 
@@ -70,6 +71,9 @@ TagManager:
     locked: 0
   - name: CarDelta
     uniqueID: 4235255553
+    locked: 0
+  - name: Tank
+    uniqueID: 724615705
     locked: 0
   - name: Human
     uniqueID: 1024696773

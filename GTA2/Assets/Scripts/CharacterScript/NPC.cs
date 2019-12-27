@@ -17,7 +17,6 @@ public abstract class NPC : People
     protected float chaseRange;
     protected float outofRange;
 
-
 	public bool isRunaway { get; set; }
 	protected Vector3 RunawayVector;
 	public bool isChasePlayer { get; set; }
@@ -44,8 +43,7 @@ public abstract class NPC : People
 	public AudioClip[] dieClip;
 	public AudioClip squashClip;
 
-	bool isRayCastCoroutineRunning = false;
-
+	public bool isQuestNPC;
 	void AnimationInit()
 	{
 		//isWalk = false;
@@ -75,13 +73,15 @@ public abstract class NPC : People
 		//patternChangeTimer = patternChangeTime;
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		spriteRenderer.enabled = true;
-		StartCoroutine(DisableIfOutOfCamera());
+		if(!isQuestNPC)
+			StartCoroutine(DisableIfOutOfCamera());
 		AnimationInit();
 		SetDefaultHp();
 	}
 	protected void NPCOnDisable()
 	{
-		StopCoroutine(DisableIfOutOfCamera());
+		if (!isQuestNPC)
+			StopCoroutine(DisableIfOutOfCamera());
 	}
 	
 	protected void NPCUpdate()
@@ -143,7 +143,7 @@ public abstract class NPC : People
     
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerBullet") || other.CompareTag("PlayerFireBullet"))
+        if (other.CompareTag("PlayerBullet"))
         {
             Bullet HitBullet = other.GetComponentInParent<Bullet>();
 
@@ -158,6 +158,10 @@ public abstract class NPC : People
 				GameManager.Instance.killCount++;
             }
         }
+		else if(other.CompareTag("PlayerFireBullet"))
+		{
+			StartCoroutine(Burning());
+		}
         else if(other.CompareTag("PlayerPunch"))
         {
             SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.ObjectSFX, transform.position);
@@ -187,45 +191,29 @@ public abstract class NPC : People
     }
     protected IEnumerator Raycast()
     {
-		if (isRayCastCoroutineRunning)
-			yield break;
-		isRayCastCoroutineRunning = true;
 		while (true)
 		{
+			yield return new WaitForSeconds(0.3f);
 			if (isChasePlayer)
 				continue;
-			if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f))
+			if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f, collisionLayer))
 			{
-				if (hit.transform.tag == "TrafficLight" || hit.transform.tag == "Car")
-				{
-					if (Vector3.Dot(transform.forward, hit.transform.forward) < -0.8f)
-					{
-						distToObstacle = hit.distance;
-						isWalk = false;
-					}
-					else
-					{
-						distToObstacle = Mathf.Infinity;
-						isWalk = true;
-					}
-				}
-				else
-				{
-					distToObstacle = hit.distance;
-				}
+				distToObstacle = hit.distance;
+				isWalk = false;
 
-				if (distToObstacle < 1f && hit.transform.tag != "Ground" && hit.transform.tag != "Wall")
-				{
-					transform.position += transform.right * Time.deltaTime;
-				}
+				//if (distToObstacle < 1f && hit.transform.tag != "Ground" && hit.transform.tag != "Wall")
+				//{
+				//	transform.position += transform.right * Time.deltaTime;
+				//}
 			}
 			else
 			{
 				distToObstacle = Mathf.Infinity;
+				isWalk = true;
 			}
 
 			DrawRaycastDebugLine();
-			yield return new WaitForSeconds(0.3f);
+			
 		}
 	}
        
@@ -233,11 +221,11 @@ public abstract class NPC : People
     {
         if (distToObstacle < Mathf.Infinity)
         {
-            DebugX.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
+            DebugX.DrawRay(transform.position, transform.forward * hit.distance, Color.red, 0.3f);
         }
         else
         {
-			DebugX.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
+			DebugX.DrawRay(transform.position, transform.forward * 0.5f, Color.blue, 0.3f);
         }
     }
     void OnDrawGizmosSelected()

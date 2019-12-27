@@ -7386,8 +7386,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1871026104}
   lightObjRed: {fileID: 639045311}
   boxColliderForCar: {fileID: 233268216}
-  boxColliderForPed1: {fileID: 672309674}
-  boxColliderForPed2: {fileID: 820753371}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &233268216
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11163,8 +11162,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1673696801}
   lightObjRed: {fileID: 1271828719}
   boxColliderForCar: {fileID: 387602231}
-  boxColliderForPed1: {fileID: 59675417}
-  boxColliderForPed2: {fileID: 1393266967}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &387602231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14523,7 +14521,7 @@ PrefabInstance:
     - target: {fileID: 3261330545290021446, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -107.3
       objectReference: {fileID: 0}
     - target: {fileID: 3261330545290021446, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
@@ -14533,7 +14531,7 @@ PrefabInstance:
     - target: {fileID: 3261330545290021446, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -187.4
       objectReference: {fileID: 0}
     - target: {fileID: 3261330545290021446, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
@@ -14600,20 +14598,15 @@ PrefabInstance:
       propertyPath: startPhone
       value: 
       objectReference: {fileID: 513803437}
-    - target: {fileID: 3261330545290021447, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
-        type: 3}
-      propertyPath: killTarget
-      value: 
-      objectReference: {fileID: 513803436}
     - target: {fileID: 1660102585066946754, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -137.8
+      value: -30.01
       objectReference: {fileID: 0}
     - target: {fileID: 1660102585066946754, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -204.5
+      value: -17.26
       objectReference: {fileID: 0}
     - target: {fileID: 4681353363844947442, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
@@ -14650,6 +14643,21 @@ PrefabInstance:
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].time
       value: 0.070625305
       objectReference: {fileID: 0}
+    - target: {fileID: 1744136929517926667, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 1744136929517926667, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1744136929517926667, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.043
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ea8d5c815175b64e80274c10d0ae9b2, type: 3}
 --- !u!4 &513803435 stripped
@@ -14658,18 +14666,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 513803434}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &513803436 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2820099778162042842, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 513803434}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4464266fdff28469a53a78902b983a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &513803437 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1660102585066947389, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
@@ -21699,8 +21695,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 441475408}
   lightObjRed: {fileID: 2085079691}
   boxColliderForCar: {fileID: 738669147}
-  boxColliderForPed1: {fileID: 45326668}
-  boxColliderForPed2: {fileID: 114093347}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &738669147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21919,8 +21914,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1589393505}
   lightObjRed: {fileID: 691956553}
   boxColliderForCar: {fileID: 744780586}
-  boxColliderForPed1: {fileID: 1893654163}
-  boxColliderForPed2: {fileID: 1305433033}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &744780586
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24385,6 +24379,7 @@ MonoBehaviour:
     type: 3}
   TruckPrefab: {fileID: 2650051141572261152, guid: 53be38329e1a7244dbcd0abd79847abb,
     type: 3}
+  TankPrefab: {fileID: 0}
   allCars: []
   allPoliceCar: []
   allAmbulanceCar: []
@@ -30605,8 +30600,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 711109715}
   lightObjRed: {fileID: 1333452068}
   boxColliderForCar: {fileID: 1025358328}
-  boxColliderForPed1: {fileID: 323693110}
-  boxColliderForPed2: {fileID: 1440813039}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1025358328
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36739,8 +36733,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 2108245064}
   lightObjRed: {fileID: 173252279}
   boxColliderForCar: {fileID: 1251968278}
-  boxColliderForPed1: {fileID: 354152143}
-  boxColliderForPed2: {fileID: 1909106337}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1251968278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38286,8 +38279,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 549318400}
   lightObjRed: {fileID: 1668254606}
   boxColliderForCar: {fileID: 1301398645}
-  boxColliderForPed1: {fileID: 984368360}
-  boxColliderForPed2: {fileID: 608371228}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1301398645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38706,8 +38698,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 444153184}
   lightObjRed: {fileID: 417729530}
   boxColliderForCar: {fileID: 1320818540}
-  boxColliderForPed1: {fileID: 923833926}
-  boxColliderForPed2: {fileID: 1774061270}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1320818540
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43730,8 +43721,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1983994260}
   lightObjRed: {fileID: 1423214988}
   boxColliderForCar: {fileID: 1479566715}
-  boxColliderForPed1: {fileID: 1398557294}
-  boxColliderForPed2: {fileID: 617679170}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1479566715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44516,8 +44506,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 2147145712}
   lightObjRed: {fileID: 851568648}
   boxColliderForCar: {fileID: 1527005597}
-  boxColliderForPed1: {fileID: 1037082311}
-  boxColliderForPed2: {fileID: 1962636038}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1527005597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49337,8 +49326,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1220688333}
   lightObjRed: {fileID: 2020461262}
   boxColliderForCar: {fileID: 1683989214}
-  boxColliderForPed1: {fileID: 1430117253}
-  boxColliderForPed2: {fileID: 643227283}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1683989214
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51799,8 +51787,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1246052054}
   lightObjRed: {fileID: 924233476}
   boxColliderForCar: {fileID: 1782189349}
-  boxColliderForPed1: {fileID: 1265810047}
-  boxColliderForPed2: {fileID: 696151960}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1782189349
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56779,8 +56766,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1469013137}
   lightObjRed: {fileID: 1321632538}
   boxColliderForCar: {fileID: 1959579647}
-  boxColliderForPed1: {fileID: 1064964278}
-  boxColliderForPed2: {fileID: 82322563}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1959579647
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57596,8 +57582,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 782861889}
   lightObjRed: {fileID: 331086927}
   boxColliderForCar: {fileID: 1986035011}
-  boxColliderForPed1: {fileID: 1854261046}
-  boxColliderForPed2: {fileID: 1885144979}
+  boxColliderForPed: {fileID: 0}
 --- !u!65 &1986035011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -63247,8 +63232,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1636166138}
   lightObjRed: {fileID: 7821815523592875081}
   boxColliderForCar: {fileID: 558571063469579626}
-  boxColliderForPed1: {fileID: 1032868059045497931}
-  boxColliderForPed2: {fileID: 3922460142776215851}
+  boxColliderForPed: {fileID: 0}
 --- !u!4 &1474870984035952275
 Transform:
   m_ObjectHideFlags: 0
@@ -64171,8 +64155,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 774213113}
   lightObjRed: {fileID: 7487261964221808467}
   boxColliderForCar: {fileID: 4667162333091566467}
-  boxColliderForPed1: {fileID: 3482877038667858971}
-  boxColliderForPed2: {fileID: 2025727064147741744}
+  boxColliderForPed: {fileID: 0}
 --- !u!4 &2838734582888763868
 Transform:
   m_ObjectHideFlags: 0
@@ -64299,8 +64282,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1920156753}
   lightObjRed: {fileID: 1666517144993264647}
   boxColliderForCar: {fileID: 8205148468153221574}
-  boxColliderForPed1: {fileID: 406234048727208809}
-  boxColliderForPed2: {fileID: 3614494417276825482}
+  boxColliderForPed: {fileID: 0}
 --- !u!1 &2960087675951756062
 GameObject:
   m_ObjectHideFlags: 0
@@ -64636,8 +64618,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1642189187}
   lightObjRed: {fileID: 2999871525276414350}
   boxColliderForCar: {fileID: 5268965877621625100}
-  boxColliderForPed1: {fileID: 547914239693507929}
-  boxColliderForPed2: {fileID: 6902329630681751913}
+  boxColliderForPed: {fileID: 0}
 --- !u!4 &3437605957419563418
 Transform:
   m_ObjectHideFlags: 0
@@ -65682,8 +65663,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1352089421}
   lightObjRed: {fileID: 8958009908336223335}
   boxColliderForCar: {fileID: 1922787452992983462}
-  boxColliderForPed1: {fileID: 7985636096638272265}
-  boxColliderForPed2: {fileID: 6438130460300050410}
+  boxColliderForPed: {fileID: 0}
 --- !u!4 &4882585401160909612
 Transform:
   m_ObjectHideFlags: 0
@@ -65761,8 +65741,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 618762217}
   lightObjRed: {fileID: 4814411005814399470}
   boxColliderForCar: {fileID: 2481121122694594924}
-  boxColliderForPed1: {fileID: 7848370169988242745}
-  boxColliderForPed2: {fileID: 3799795868363976969}
+  boxColliderForPed: {fileID: 0}
 --- !u!4 &4991130883193445692
 Transform:
   m_ObjectHideFlags: 0
@@ -66119,8 +66098,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 341892709}
   lightObjRed: {fileID: 907914137464434483}
   boxColliderForCar: {fileID: 3149284311751263203}
-  boxColliderForPed1: {fileID: 6567440376310600827}
-  boxColliderForPed2: {fileID: 8605607062448069712}
+  boxColliderForPed: {fileID: 0}
 --- !u!1 &5574023147350350845
 GameObject:
   m_ObjectHideFlags: 0

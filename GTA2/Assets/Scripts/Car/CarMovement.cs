@@ -125,8 +125,12 @@ public class CarMovement : MonoBehaviour
 
 		if (col.transform.CompareTag("NPC") || col.transform.CompareTag("Player"))
 		{
+			float hitForce = curSpeed;
+			if (carManager.carType == CarManager.CarType.tank)
+				hitForce *= 10;
+
 			col.gameObject.GetComponent<People>().Runover(
-					curSpeed, transform.position, carManager.carState == CarManager.CarState.controlledByPlayer);
+					hitForce, transform.position, carManager.carState == CarManager.CarState.controlledByPlayer);
 		}
 		
     }
@@ -134,8 +138,12 @@ public class CarMovement : MonoBehaviour
 	{
 		if (other.transform.CompareTag("NPC") || other.transform.CompareTag("Player"))
 		{
+			float hitForce = curSpeed;
+			if (carManager.carType == CarManager.CarType.tank)
+				hitForce *= 10;
+
 			other.gameObject.GetComponent<People>().Runover(
-					curSpeed, transform.position, carManager.carState == CarManager.CarState.controlledByPlayer);
+					hitForce, transform.position, carManager.carState == CarManager.CarState.controlledByPlayer);
 		}
 	}
 	void OnCollisionStay(Collision col)

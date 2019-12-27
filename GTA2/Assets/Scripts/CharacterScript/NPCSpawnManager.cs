@@ -20,8 +20,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 	public int NPCNum;
 
 	public List<NPC> DiedNPC;
-	public GameObject BloodAnim;
-	public List<GameObject> BloodAnimList;
+	
 
 	void Awake()
 	{
@@ -33,8 +32,7 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
         allNPC.AddRange(PoolManager.GetAllObject(policePrefab.gameObject));
 		allNPC.AddRange(PoolManager.GetAllObject(doctorPrefab.gameObject));
 
-		PoolManager.WarmPool(BloodAnim.gameObject, 10);
-		BloodAnimList.AddRange(PoolManager.GetAllObject(BloodAnim.gameObject));
+		
 	}
 	void Start()
 	{

@@ -15,17 +15,17 @@ MonoBehaviour:
   maxHp: 100
   moveSpeed: 1
   runawaySpeed: 1.3
+  jumpTime: 0.5
   downTime: 3
   findRange: 10
   punchRange: 0.08
   shotRange: 10
   chaseRange: 7
   outofRange: 400
-  minIdleTime: 0.3
-  maxIdleTime: 1
+  minIdleTime: 0
+  maxIdleTime: 0
   minWalkTime: 10
   maxWalkTime: 15
-  carOpenTimer: 0
   carOpenTime: 0.5
   runawayTime: 5
   money: 100

@@ -82,6 +82,8 @@ public class CarAi : MonoBehaviour
                 maxSpdMultiplier = 1.0f;
                 break;
         }
+		//
+		maxSpdMultiplier = Mathf.Clamp(maxSpdMultiplier, 0, 1.0f + (WantedLevel.instance.level * 0.2f));
     }
 
     IEnumerator RaycastCor()
@@ -99,7 +101,7 @@ public class CarAi : MonoBehaviour
 
 		Vector3 rayDirection = Quaternion.Euler(0, h * 20, 0) * transform.forward;
 
-		if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 2, collisionLayer))
+		if(Physics.SphereCast(transform.position + (transform.forward * 0.2f), 0.2f, transform.forward, out hit, 1.5f, collisionLayer))
 		//if (Physics.Raycast(transform.position, rayDirection, out hit, 1.5f, collisionLayer))
         {
             if (hit.transform.tag == "TrafficLight")

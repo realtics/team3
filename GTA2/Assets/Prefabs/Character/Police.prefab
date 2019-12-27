@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1024696773
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -2214034502796586735, guid: ee9a8d1ea3798074db7766346be04b01,
     type: 3}
@@ -171,7 +171,7 @@ MonoBehaviour:
   boxCollider: {fileID: 1358635159880621219}
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 118784
   groundLayer:
     serializedVersion: 2
     m_Bits: 8192
@@ -196,6 +196,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 930dc856ca4e2d04b97ca83e073cda11, type: 3}
   - {fileID: 8300000, guid: a6be85a90ac6f684d99dce81a96a3ff7, type: 3}
   squashClip: {fileID: 8300000, guid: c5cc42381b3def44997b14ba57b745cf, type: 3}
+  isQuestNPC: 0
   policeData: {fileID: 11400000, guid: 43c2ce960593bb841ba9c2b0ebf38d96, type: 2}
 --- !u!65 &1358635159880621219
 BoxCollider:

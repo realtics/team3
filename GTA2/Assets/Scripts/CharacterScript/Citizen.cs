@@ -7,7 +7,6 @@ public class Citizen : NPC
 	public CitizenData citizenData;
 	public SpriteRenderer ClothSpriteRenderer;
 	public AudioClip[] downClip;
-
 	void Awake()
     {
 		base.TimerInit();
@@ -59,7 +58,7 @@ public class Citizen : NPC
 	
 	void OnCollisionStay(Collision collision)
 	{
-		if ((collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car")) && isRunaway)
+		if (isRunaway && (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car")))
 		{
 			transform.Rotate(0, Random.Range(90, 270), 0);
 		}
@@ -116,8 +115,38 @@ public class Citizen : NPC
     }
 	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isRunoverByPlayer = false)
 	{
-		base.Runover(runoverSpeed, carPosition, isRunoverByPlayer);
-		SetRunaway();
+		if (runoverSpeed < runoverMinSpeed)
+			return;
+		else if (isDown)
+		{
+			Hurt((int)(runoverSpeed * 5));
+		}
+
+		Vector3 runoverVector = transform.position - carPosition;
+
+		//속도에 비례한 피해 데미지 보정수치
+		this.runoverSpeed = Mathf.Clamp((runoverSpeed / 3000.0f), 0, 0.3f);
+		this.runoverVector = (runoverVector.normalized * this.runoverSpeed * Mathf.Abs(Vector3.Dot(runoverVector, Vector3.right)));
+		isRunover = true;
+		hDir = 0; vDir = 0;
+
+		transform.LookAt(carPosition);
+
+		if (runoverSpeed > runoverHurtMinSpeed)
+		{
+			Hurt((int)(runoverSpeed / 3));
+			SetRunaway();
+		}
+		if (isRunoverByPlayer && isDie)
+		{
+			GameManager.Instance.IncreaseMoney(money);
+			GameManager.Instance.killCount++;
+			WorldUIManager.Instance.SetScoreText(transform.position, money);
+			WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.killPeople, transform.position);
+
+			SoundManager.Instance.PlayClipToPosition(squashClip, SoundPlayMode.ObjectSFX, transform.position);
+		}
+		
 	}
 	#endregion
 }

@@ -27,7 +27,9 @@ public class WorldUIManager : MonoSingleton<WorldUIManager>
     Vector3 goalPos;
     Player userPlayer;
 
-    UnityEngine.Rendering.CompareFunction comparison = UnityEngine.Rendering.CompareFunction.Always;
+    UnityEngine.Rendering.BlendMode blendOpt = UnityEngine.Rendering.BlendMode.One;
+    UnityEngine.Rendering.CompareFunction comparison = 
+        UnityEngine.Rendering.CompareFunction.Always;
 
 
 

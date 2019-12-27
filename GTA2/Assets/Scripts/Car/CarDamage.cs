@@ -54,17 +54,26 @@ public class CarDamage : MonoBehaviour
             return;
 
         int force = (int)col.relativeVelocity.sqrMagnitude / 2;
+		if (col.gameObject.layer == 15)
+			force *= 1000;
 
-        if(force > 3)
+		if (force > 3)
         {
-            DeductHp(force, false);
+			bool dmgByPlayer = false;
+			if(GameManager.Instance.playerCar != null && 
+				col.gameObject == GameManager.Instance.playerCar.gameObject)
+			{
+				dmgByPlayer = true;
+			}
+
+            DeductHp(force, dmgByPlayer);
 
 			float angle = Vector3.SignedAngle(transform.forward, col.contacts[0].normal * -1, Vector3.up);
 			EnableDeltaImage(angle);
 		}       
     }
 
-    void EnableDeltaImage(float angle)
+	void EnableDeltaImage(float angle)
     {
         if (angle < -90)
         {
@@ -136,6 +145,7 @@ public class CarDamage : MonoBehaviour
         CameraController.Instance.StartShake(0.3f, transform.position);
         StartCoroutine(Explode(isDamagedByPlayer));
     }
+
     IEnumerator Explode(bool isDamagedByPlayer)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 2f);
@@ -146,6 +156,9 @@ public class CarDamage : MonoBehaviour
 
             if (col.tag != "NPC" && col.tag != "Car" && col.tag != "Player")
                 continue;
+
+			if (col.gameObject.layer == 15)
+				continue;
 
             float dist = (col.transform.position - transform.position).magnitude;
             dist /= 2f;

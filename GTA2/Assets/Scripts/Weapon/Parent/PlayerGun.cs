@@ -98,7 +98,6 @@ public class PlayerGun : Gun
                 shootDelta = .0f;
             }
         }
-
     }
 
 

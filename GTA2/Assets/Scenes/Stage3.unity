@@ -1425,9 +1425,9 @@ GameObject:
   m_Component:
   - component: {fileID: 45326667}
   - component: {fileID: 45326668}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1439,13 +1439,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45326666}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: -2.02, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 738669145}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &45326668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1717,9 +1717,9 @@ GameObject:
   m_Component:
   - component: {fileID: 59675416}
   - component: {fileID: 59675417}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1732,8 +1732,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 59675415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.85, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 387602229}
   m_RootOrder: 1
@@ -2350,50 +2350,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &82322561
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 82322562}
-  - component: {fileID: 82322563}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &82322562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82322561}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: -1.87, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1959579645}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &82322563
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82322561}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &83799218
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,50 +3049,6 @@ Transform:
   m_Father: {fileID: 1733520}
   m_RootOrder: 88
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &114093345
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 114093346}
-  - component: {fileID: 114093347}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &114093346
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114093345}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: 1.93, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 738669145}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &114093347
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114093345}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &115971886
 GameObject:
   m_ObjectHideFlags: 0
@@ -4193,7 +4105,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1683989212}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &142563159
 SpriteRenderer:
@@ -4695,7 +4607,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 387602229}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &155133535
 SpriteRenderer:
@@ -5421,7 +5333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1251968276}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &173252281
 SpriteRenderer:
@@ -5554,7 +5466,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1301398643}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &184024243
 SpriteRenderer:
@@ -7191,7 +7103,6 @@ Transform:
   m_Children:
   - {fileID: 2004201766}
   - {fileID: 672309673}
-  - {fileID: 820753370}
   - {fileID: 639045312}
   - {fileID: 1123612383}
   - {fileID: 1871026105}
@@ -7216,8 +7127,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1871026104}
   lightObjRed: {fileID: 639045311}
   boxColliderForCar: {fileID: 233268216}
-  boxColliderForPed1: {fileID: 672309674}
-  boxColliderForPed2: {fileID: 820753371}
+  boxColliderForPed: {fileID: 672309674}
 --- !u!65 &233268216
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9232,9 +9142,9 @@ GameObject:
   m_Component:
   - component: {fileID: 323693109}
   - component: {fileID: 323693110}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9246,9 +9156,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 323693108}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: 1.87, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1025358326}
   m_RootOrder: 1
@@ -9456,7 +9366,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1986035009}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &331086929
 SpriteRenderer:
@@ -9742,7 +9652,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1181366261476735283}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &341892711
 SpriteRenderer:
@@ -10076,9 +9986,9 @@ GameObject:
   m_Component:
   - component: {fileID: 354152142}
   - component: {fileID: 354152143}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10090,13 +10000,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354152141}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: -2.05, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1251968276}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &354152143
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10962,7 +10872,6 @@ Transform:
   m_Children:
   - {fileID: 491973872}
   - {fileID: 59675416}
-  - {fileID: 1393266966}
   - {fileID: 1271828720}
   - {fileID: 155133534}
   - {fileID: 1673696802}
@@ -10987,8 +10896,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1673696801}
   lightObjRed: {fileID: 1271828719}
   boxColliderForCar: {fileID: 387602231}
-  boxColliderForPed1: {fileID: 59675417}
-  boxColliderForPed2: {fileID: 1393266967}
+  boxColliderForPed: {fileID: 59675417}
 --- !u!65 &387602231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11498,7 +11406,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1320818538}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &417729532
 SpriteRenderer:
@@ -12618,7 +12526,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 738669145}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &441475410
 SpriteRenderer:
@@ -12698,7 +12606,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1320818538}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &444153186
 SpriteRenderer:
@@ -14406,11 +14314,6 @@ PrefabInstance:
       propertyPath: startPhone
       value: 
       objectReference: {fileID: 513803437}
-    - target: {fileID: 3261330545290021447, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
-        type: 3}
-      propertyPath: killTarget
-      value: 
-      objectReference: {fileID: 513803436}
     - target: {fileID: 1660102585066946754, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14451,6 +14354,16 @@ PrefabInstance:
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].inWeight
       value: 0.5589225
       objectReference: {fileID: 0}
+    - target: {fileID: 1744136929517926667, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -130.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1744136929517926667, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -225.43
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ea8d5c815175b64e80274c10d0ae9b2, type: 3}
 --- !u!4 &513803435 stripped
@@ -14459,18 +14372,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 513803434}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &513803436 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2820099778162042842, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 513803434}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4464266fdff28469a53a78902b983a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &513803437 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1660102585066947389, guid: 8ea8d5c815175b64e80274c10d0ae9b2,
@@ -15483,7 +15384,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1301398643}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &549318402
 SpriteRenderer:
@@ -17548,50 +17449,6 @@ MonoBehaviour:
   - {x: -114.8, y: 0, z: -212.08}
   parentWaypoint: {fileID: 1405935654}
   endWaypoint: {fileID: 2002463285}
---- !u!1 &608371226
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 608371227}
-  - component: {fileID: 608371228}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &608371227
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608371226}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: -1.97, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1301398643}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &608371228
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608371226}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &609011187
 GameObject:
   m_ObjectHideFlags: 0
@@ -17747,50 +17604,6 @@ Transform:
   m_Father: {fileID: 2000904896}
   m_RootOrder: 138
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &617679168
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 617679169}
-  - component: {fileID: 617679170}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &617679169
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617679168}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: -1.99, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1479566713}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &617679170
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617679168}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &618762217
 GameObject:
   m_ObjectHideFlags: 0
@@ -17820,7 +17633,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 753071283628509149}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &618762219
 SpriteRenderer:
@@ -18293,7 +18106,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 233268214}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &639045313
 SpriteRenderer:
@@ -18445,50 +18258,6 @@ Transform:
   m_Father: {fileID: 1733520}
   m_RootOrder: 74
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &643227281
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 643227282}
-  - component: {fileID: 643227283}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &643227282
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643227281}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: -2.02, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1683989212}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &643227283
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643227281}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &643749155
 GameObject:
   m_ObjectHideFlags: 0
@@ -19469,9 +19238,9 @@ GameObject:
   m_Component:
   - component: {fileID: 672309673}
   - component: {fileID: 672309674}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19483,13 +19252,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672309672}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: 2.03, y: 0, z: 0.02}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 233268214}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &672309674
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19922,7 +19691,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 744780584}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &691956555
 SpriteRenderer:
@@ -20108,50 +19877,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 694149948}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &696151958
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 696151959}
-  - component: {fileID: 696151960}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &696151959
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696151958}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: 1.93, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1782189347}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &696151960
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696151958}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &698398073
 GameObject:
   m_ObjectHideFlags: 0
@@ -20478,7 +20203,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1025358326}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &711109717
 SpriteRenderer:
@@ -21279,7 +21004,6 @@ Transform:
   m_Children:
   - {fileID: 1657831619}
   - {fileID: 45326667}
-  - {fileID: 114093346}
   - {fileID: 2085079692}
   - {fileID: 1042811062}
   - {fileID: 441475409}
@@ -21304,8 +21028,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 441475408}
   lightObjRed: {fileID: 2085079691}
   boxColliderForCar: {fileID: 738669147}
-  boxColliderForPed1: {fileID: 45326668}
-  boxColliderForPed2: {fileID: 114093347}
+  boxColliderForPed: {fileID: 45326668}
 --- !u!65 &738669147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21499,7 +21222,6 @@ Transform:
   m_Children:
   - {fileID: 82029351}
   - {fileID: 1893654162}
-  - {fileID: 1305433032}
   - {fileID: 691956554}
   - {fileID: 1707889833}
   - {fileID: 1589393506}
@@ -21524,8 +21246,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1589393505}
   lightObjRed: {fileID: 691956553}
   boxColliderForCar: {fileID: 744780586}
-  boxColliderForPed1: {fileID: 1893654163}
-  boxColliderForPed2: {fileID: 1305433033}
+  boxColliderForPed: {fileID: 1893654163}
 --- !u!65 &744780586
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22157,7 +21878,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8868881054276462931}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &774213115
 SpriteRenderer:
@@ -22425,7 +22146,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1986035009}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &782861891
 SpriteRenderer:
@@ -23497,50 +23218,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 819738376}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &820753369
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 820753370}
-  - component: {fileID: 820753371}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &820753370
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820753369}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: -1.99, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 233268214}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &820753371
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820753369}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &829062246
 GameObject:
   m_ObjectHideFlags: 0
@@ -23661,7 +23338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1527005595}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &831934542
 SpriteRenderer:
@@ -23911,16 +23588,17 @@ MonoBehaviour:
     type: 3}
   policeVanPrefab: {fileID: 1535439413788955731, guid: f394d0896528226488bf5af726e786f6,
     type: 3}
-  AmbulancePrefab: {fileID: 7028039128798893205, guid: de2f96abc28dd3f479305aaff8d9a31a,
+  ambulancePrefab: {fileID: 7028039128798893205, guid: de2f96abc28dd3f479305aaff8d9a31a,
     type: 3}
-  Car51Prefab: {fileID: 7528266441474364949, guid: fd3d0df7a960caa44b2342a997d05938,
+  romeroPrefab: {fileID: 7528266441474364949, guid: fd3d0df7a960caa44b2342a997d05938,
     type: 3}
-  IceCarPrefab: {fileID: 3440692971543766697, guid: 30047a58e3d7ebe42b8b1b4a296c4351,
+  iceCarPrefab: {fileID: 3440692971543766697, guid: 30047a58e3d7ebe42b8b1b4a296c4351,
     type: 3}
-  TaxiPrefab: {fileID: 8462026011795740667, guid: 724f464643b7bf2429853d1fa22675dc,
+  taxiPrefab: {fileID: 8462026011795740667, guid: 724f464643b7bf2429853d1fa22675dc,
     type: 3}
-  TruckPrefab: {fileID: 2650051141572261152, guid: 53be38329e1a7244dbcd0abd79847abb,
+  truckPrefab: {fileID: 2650051141572261152, guid: 53be38329e1a7244dbcd0abd79847abb,
     type: 3}
+  tank: {fileID: 1690392906}
   allCars: []
   allPoliceCar: []
   allAmbulanceCar: []
@@ -24295,7 +23973,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1527005595}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &851568650
 SpriteRenderer:
@@ -26280,9 +25958,9 @@ GameObject:
   m_Component:
   - component: {fileID: 923833925}
   - component: {fileID: 923833926}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26294,13 +25972,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923833924}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: -3.34, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1320818538}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &923833926
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26343,7 +26021,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1782189347}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &924233478
 SpriteRenderer:
@@ -28615,9 +28293,9 @@ GameObject:
   m_Component:
   - component: {fileID: 984368359}
   - component: {fileID: 984368360}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28629,9 +28307,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984368358}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: 1.94, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1301398643}
   m_RootOrder: 1
@@ -28776,7 +28454,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959579645}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1003416878
 SpriteRenderer:
@@ -29855,7 +29533,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1320818538}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1022293236
 SpriteRenderer:
@@ -30029,7 +29707,6 @@ Transform:
   m_Children:
   - {fileID: 2007050255}
   - {fileID: 323693109}
-  - {fileID: 1440813038}
   - {fileID: 1333452069}
   - {fileID: 1340557339}
   - {fileID: 711109716}
@@ -30054,8 +29731,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 711109715}
   lightObjRed: {fileID: 1333452068}
   boxColliderForCar: {fileID: 1025358328}
-  boxColliderForPed1: {fileID: 323693110}
-  boxColliderForPed2: {fileID: 1440813039}
+  boxColliderForPed: {fileID: 323693110}
 --- !u!65 &1025358328
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30562,9 +30238,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1037082310}
   - component: {fileID: 1037082311}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30577,8 +30253,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037082309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.85, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1527005595}
   m_RootOrder: 1
@@ -30815,7 +30491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 738669145}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1042811063
 SpriteRenderer:
@@ -31362,9 +31038,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1064964277}
   - component: {fileID: 1064964278}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31376,13 +31052,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064964276}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: 1.85, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959579645}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1064964278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32446,7 +32122,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 233268214}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1123612384
 SpriteRenderer:
@@ -35022,7 +34698,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1683989212}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &1220688335
 SpriteRenderer:
@@ -35798,7 +35474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1782189347}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1246052056
 SpriteRenderer:
@@ -36082,7 +35758,6 @@ Transform:
   m_Children:
   - {fileID: 1488624072}
   - {fileID: 354152142}
-  - {fileID: 1909106336}
   - {fileID: 173252280}
   - {fileID: 1637385222}
   - {fileID: 2108245065}
@@ -36107,8 +35782,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 2108245064}
   lightObjRed: {fileID: 173252279}
   boxColliderForCar: {fileID: 1251968278}
-  boxColliderForPed1: {fileID: 354152143}
-  boxColliderForPed2: {fileID: 1909106337}
+  boxColliderForPed: {fileID: 354152143}
 --- !u!65 &1251968278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36462,9 +36136,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1265810046}
   - component: {fileID: 1265810047}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36476,13 +36150,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265810045}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: -2.02, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1782189347}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1265810047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36718,7 +36392,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 387602229}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &1271828721
 SpriteRenderer:
@@ -37629,7 +37303,6 @@ Transform:
   m_Children:
   - {fileID: 874704512}
   - {fileID: 984368359}
-  - {fileID: 608371227}
   - {fileID: 1668254607}
   - {fileID: 184024242}
   - {fileID: 549318401}
@@ -37654,8 +37327,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 549318400}
   lightObjRed: {fileID: 1668254606}
   boxColliderForCar: {fileID: 1301398645}
-  boxColliderForPed1: {fileID: 984368360}
-  boxColliderForPed2: {fileID: 608371228}
+  boxColliderForPed: {fileID: 984368360}
 --- !u!65 &1301398645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37721,50 +37393,6 @@ Transform:
   m_Father: {fileID: 668770463}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1305433031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1305433032}
-  - component: {fileID: 1305433033}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1305433032
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305433031}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: -3.29, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 744780584}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &1305433033
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305433031}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1307136994
 GameObject:
   m_ObjectHideFlags: 0
@@ -38049,7 +37677,6 @@ Transform:
   m_Children:
   - {fileID: 1837523797}
   - {fileID: 923833925}
-  - {fileID: 1774061269}
   - {fileID: 417729531}
   - {fileID: 1022293235}
   - {fileID: 444153185}
@@ -38074,8 +37701,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 444153184}
   lightObjRed: {fileID: 417729530}
   boxColliderForCar: {fileID: 1320818540}
-  boxColliderForPed1: {fileID: 923833926}
-  boxColliderForPed2: {fileID: 1774061270}
+  boxColliderForPed: {fileID: 923833926}
 --- !u!65 &1320818540
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38171,7 +37797,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959579645}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1321632540
 SpriteRenderer:
@@ -38566,7 +38192,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1025358326}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &1333452070
 SpriteRenderer:
@@ -39023,7 +38649,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1025358326}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &1340557340
 SpriteRenderer:
@@ -39349,7 +38975,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2432196360245289597}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1352089423
 SpriteRenderer:
@@ -40094,50 +39720,6 @@ MonoBehaviour:
   - {x: -54.46722, y: 0, z: -186.87625}
   parentWaypoint: {fileID: 34219871}
   endWaypoint: {fileID: 583216156}
---- !u!1 &1393266965
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1393266966}
-  - component: {fileID: 1393266967}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1393266966
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393266965}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.87, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 387602229}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1393266967
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393266965}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1393878491
 GameObject:
   m_ObjectHideFlags: 0
@@ -40290,9 +39872,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1398557293}
   - component: {fileID: 1398557294}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40304,13 +39886,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398557292}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: 2.03, y: 0, z: 0.02}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1479566713}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1398557294
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40783,7 +40365,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1479566713}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1423214990
 SpriteRenderer:
@@ -41039,9 +40621,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1430117252}
   - component: {fileID: 1430117253}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41053,9 +40635,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430117251}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: 1.87, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1683989212}
   m_RootOrder: 1
@@ -41317,50 +40899,6 @@ MonoBehaviour:
   - {x: -143.05998, y: 0, z: -199.0265}
   parentWaypoint: {fileID: 1326211061}
   endWaypoint: {fileID: 568482473}
---- !u!1 &1440813037
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1440813038}
-  - component: {fileID: 1440813039}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1440813038
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440813037}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: -1.85, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1025358326}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1440813039
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440813037}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1444246270
 GameObject:
   m_ObjectHideFlags: 0
@@ -41853,7 +41391,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1479566713}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1462945183
 SpriteRenderer:
@@ -42126,7 +41664,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959579645}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1469013139
 SpriteRenderer:
@@ -42929,7 +42467,6 @@ Transform:
   m_Children:
   - {fileID: 1799608544}
   - {fileID: 1398557293}
-  - {fileID: 617679169}
   - {fileID: 1423214989}
   - {fileID: 1462945182}
   - {fileID: 1983994261}
@@ -42954,8 +42491,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1983994260}
   lightObjRed: {fileID: 1423214988}
   boxColliderForCar: {fileID: 1479566715}
-  boxColliderForPed1: {fileID: 1398557294}
-  boxColliderForPed2: {fileID: 617679170}
+  boxColliderForPed: {fileID: 1398557294}
 --- !u!65 &1479566715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43715,7 +43251,6 @@ Transform:
   m_Children:
   - {fileID: 128548177}
   - {fileID: 1037082310}
-  - {fileID: 1962636037}
   - {fileID: 851568649}
   - {fileID: 831934541}
   - {fileID: 2147145713}
@@ -43740,8 +43275,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 2147145712}
   lightObjRed: {fileID: 851568648}
   boxColliderForCar: {fileID: 1527005597}
-  boxColliderForPed1: {fileID: 1037082311}
-  boxColliderForPed2: {fileID: 1962636038}
+  boxColliderForPed: {fileID: 1037082311}
 --- !u!65 &1527005597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45223,7 +44757,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 744780584}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1589393507
 SpriteRenderer:
@@ -46368,7 +45902,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2478177870482334767}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1636166140
 SpriteRenderer:
@@ -46448,7 +45982,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1251968276}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1637385223
 SpriteRenderer:
@@ -46801,7 +46335,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6990400642411730877}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &1642189189
 SpriteRenderer:
@@ -47936,7 +47470,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1301398643}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &1668254608
 SpriteRenderer:
@@ -48301,7 +47835,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 387602229}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &1673696803
 SpriteRenderer:
@@ -48536,7 +48070,6 @@ Transform:
   m_Children:
   - {fileID: 507569757}
   - {fileID: 1430117252}
-  - {fileID: 643227282}
   - {fileID: 2020461263}
   - {fileID: 142563158}
   - {fileID: 1220688334}
@@ -48561,8 +48094,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1220688333}
   lightObjRed: {fileID: 2020461262}
   boxColliderForCar: {fileID: 1683989214}
-  boxColliderForPed1: {fileID: 1430117253}
-  boxColliderForPed2: {fileID: 643227283}
+  boxColliderForPed: {fileID: 1430117253}
 --- !u!65 &1683989214
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48576,6 +48108,87 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.75, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &1690392905
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2650051141572261152, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_Name
+      value: Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -108.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -231.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650051141572261158, guid: 844816ec5be4f054a9aced288bdd97ee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 844816ec5be4f054a9aced288bdd97ee, type: 3}
+--- !u!114 &1690392906 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 183170674201592952, guid: 844816ec5be4f054a9aced288bdd97ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 1690392905}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e124bd882824fa340bc164a7472ca89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1694476204
 GameObject:
   m_ObjectHideFlags: 0
@@ -48895,7 +48508,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 744780584}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1707889834
 SpriteRenderer:
@@ -50384,50 +49997,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1774061268
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1774061269}
-  - component: {fileID: 1774061270}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1774061269
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774061268}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: 3.32, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1320818538}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &1774061270
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774061268}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1775347149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50992,7 +50561,6 @@ Transform:
   m_Children:
   - {fileID: 259431237}
   - {fileID: 1265810046}
-  - {fileID: 696151959}
   - {fileID: 924233477}
   - {fileID: 2064848010}
   - {fileID: 1246052055}
@@ -51017,8 +50585,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1246052054}
   lightObjRed: {fileID: 924233476}
   boxColliderForCar: {fileID: 1782189349}
-  boxColliderForPed1: {fileID: 1265810047}
-  boxColliderForPed2: {fileID: 696151960}
+  boxColliderForPed: {fileID: 1265810047}
 --- !u!65 &1782189349
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52898,9 +52465,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1854261045}
   - component: {fileID: 1854261046}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52912,9 +52479,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1854261044}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: 1.87, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1986035009}
   m_RootOrder: 1
@@ -53399,7 +52966,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 233268214}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1871026106
 SpriteRenderer:
@@ -53609,50 +53176,6 @@ Transform:
   m_Father: {fileID: 2000904896}
   m_RootOrder: 160
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1885144977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1885144978}
-  - component: {fileID: 1885144979}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1885144978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885144977}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: -1.85, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1986035009}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1885144979
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885144977}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1891738918
 GameObject:
   m_ObjectHideFlags: 0
@@ -53714,9 +53237,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1893654162}
   - component: {fileID: 1893654163}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53728,13 +53251,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893654161}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: 3.34, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 744780584}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1893654163
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54380,50 +53903,6 @@ Transform:
   m_Father: {fileID: 2000904896}
   m_RootOrder: 130
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1909106335
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1909106336}
-  - component: {fileID: 1909106337}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1909106336
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1909106335}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: 1.95, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1251968276}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &1909106337
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1909106335}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1909454026
 GameObject:
   m_ObjectHideFlags: 0
@@ -54901,7 +54380,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5382210278220870173}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1920156755
 SpriteRenderer:
@@ -55903,7 +55382,6 @@ Transform:
   m_Children:
   - {fileID: 714721204}
   - {fileID: 1064964277}
-  - {fileID: 82322562}
   - {fileID: 1321632539}
   - {fileID: 1003416877}
   - {fileID: 1469013138}
@@ -55928,8 +55406,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1469013137}
   lightObjRed: {fileID: 1321632538}
   boxColliderForCar: {fileID: 1959579647}
-  boxColliderForPed1: {fileID: 1064964278}
-  boxColliderForPed2: {fileID: 82322563}
+  boxColliderForPed: {fileID: 1064964278}
 --- !u!65 &1959579647
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56089,50 +55566,6 @@ MonoBehaviour:
   - {x: -169.87193, y: 0, z: -186.2302}
   parentWaypoint: {fileID: 55124593468550159}
   endWaypoint: {fileID: 792235456735156575}
---- !u!1 &1962636036
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1962636037}
-  - component: {fileID: 1962636038}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1962636037
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962636036}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.87, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1527005595}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1962636038
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962636036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1968402820
 GameObject:
   m_ObjectHideFlags: 0
@@ -56638,7 +56071,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1479566713}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &1983994262
 SpriteRenderer:
@@ -56720,7 +56153,6 @@ Transform:
   m_Children:
   - {fileID: 349905281}
   - {fileID: 1854261045}
-  - {fileID: 1885144978}
   - {fileID: 331086928}
   - {fileID: 2116396148}
   - {fileID: 782861890}
@@ -56745,8 +56177,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 782861889}
   lightObjRed: {fileID: 331086927}
   boxColliderForCar: {fileID: 1986035011}
-  boxColliderForPed1: {fileID: 1854261046}
-  boxColliderForPed2: {fileID: 1885144979}
+  boxColliderForPed: {fileID: 1854261046}
 --- !u!65 &1986035011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57950,7 +57381,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1683989212}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &2020461264
 SpriteRenderer:
@@ -59009,7 +58440,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1782189347}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &2064848011
 SpriteRenderer:
@@ -59687,7 +59118,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 738669145}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &2085079693
 SpriteRenderer:
@@ -60370,7 +59801,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1251968276}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!212 &2108245066
 SpriteRenderer:
@@ -60680,7 +60111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1986035009}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!212 &2116396149
 SpriteRenderer:
@@ -61340,7 +60771,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1527005595}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &2147145714
 SpriteRenderer:
@@ -61454,9 +60885,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8955667799597846607}
   - component: {fileID: 1032868059045497931}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61542,7 +60973,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2478177870482334767}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!1 &331008000409218112
 GameObject:
@@ -61554,9 +60985,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3329735824909438300}
   - component: {fileID: 6567440376310600827}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61648,7 +61079,6 @@ Transform:
   m_Children:
   - {fileID: 9098945544060551566}
   - {fileID: 6116939637188038214}
-  - {fileID: 6647096465614733029}
   - {fileID: 858060170009234602}
   - {fileID: 3567652586741464111}
   - {fileID: 618762218}
@@ -61787,7 +61217,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5382210278220870173}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!4 &858060170009234602
 Transform:
@@ -61801,7 +61231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 753071283628509149}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &907914137464434483
 GameObject:
@@ -61986,7 +61416,6 @@ Transform:
   m_Children:
   - {fileID: 817974486955044642}
   - {fileID: 3329735824909438300}
-  - {fileID: 8292860369957653774}
   - {fileID: 3510913581025323933}
   - {fileID: 6738627334268012260}
   - {fileID: 341892710}
@@ -62315,8 +61744,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1636166138}
   lightObjRed: {fileID: 7821815523592875081}
   boxColliderForCar: {fileID: 558571063469579626}
-  boxColliderForPed1: {fileID: 1032868059045497931}
-  boxColliderForPed2: {fileID: 3922460142776215851}
+  boxColliderForPed: {fileID: 1032868059045497931}
 --- !u!4 &1474870984035952275
 Transform:
   m_ObjectHideFlags: 0
@@ -62324,13 +61752,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6080485858151878430}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: -3.42, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2432196360245289597}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1484950535813795139
 GameObject:
   m_ObjectHideFlags: 0
@@ -62616,7 +62044,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2478177870482334767}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!114 &1748281560714825242
 MonoBehaviour:
@@ -62682,20 +62110,6 @@ MonoBehaviour:
   - {fileID: 1444246271}
   mainNext: {fileID: 0}
   canChangeLane: 0
---- !u!4 &1758583769563471214
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4559169161687441568}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: -3.48, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8868881054276462931}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1852087600677419791
 GameObject:
   m_ObjectHideFlags: 0
@@ -62809,19 +62223,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &2025727064147741744
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4559169161687441568}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2114080841748354060
 GameObject:
   m_ObjectHideFlags: 0
@@ -62832,9 +62233,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6116939637188038214}
   - component: {fileID: 7848370169988242745}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63011,7 +62412,6 @@ Transform:
   m_Children:
   - {fileID: 1239388591129116627}
   - {fileID: 1474870984035952275}
-  - {fileID: 3621957158170604504}
   - {fileID: 6981179964713040291}
   - {fileID: 5328678856292218509}
   - {fileID: 1352089422}
@@ -63080,7 +62480,6 @@ Transform:
   m_Children:
   - {fileID: 4726478113034001995}
   - {fileID: 8955667799597846607}
-  - {fileID: 8206037179330302783}
   - {fileID: 324874537248379883}
   - {fileID: 1739146849295278802}
   - {fileID: 1636166139}
@@ -63144,7 +62543,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5382210278220870173}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!1 &2519548241260749026
 GameObject:
@@ -63239,8 +62638,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 774213113}
   lightObjRed: {fileID: 7487261964221808467}
   boxColliderForCar: {fileID: 4667162333091566467}
-  boxColliderForPed1: {fileID: 3482877038667858971}
-  boxColliderForPed2: {fileID: 2025727064147741744}
+  boxColliderForPed: {fileID: 3482877038667858971}
 --- !u!4 &2838734582888763868
 Transform:
   m_ObjectHideFlags: 0
@@ -63367,8 +62765,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1920156753}
   lightObjRed: {fileID: 1666517144993264647}
   boxColliderForCar: {fileID: 8205148468153221574}
-  boxColliderForPed1: {fileID: 406234048727208809}
-  boxColliderForPed2: {fileID: 3614494417276825482}
+  boxColliderForPed: {fileID: 406234048727208809}
 --- !u!1 &2960087675951756062
 GameObject:
   m_ObjectHideFlags: 0
@@ -63382,23 +62779,6 @@ GameObject:
   m_Layer: 0
   m_Name: CarRoad
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &2983291197755117079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6647096465614733029}
-  - component: {fileID: 3799795868363976969}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63679,9 +63059,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331008000409218112}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: 1.99, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1181366261476735283}
   m_RootOrder: 1
@@ -63704,8 +63084,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1642189187}
   lightObjRed: {fileID: 2999871525276414350}
   boxColliderForCar: {fileID: 5268965877621625100}
-  boxColliderForPed1: {fileID: 547914239693507929}
-  boxColliderForPed2: {fileID: 6902329630681751913}
+  boxColliderForPed: {fileID: 547914239693507929}
 --- !u!4 &3437605957419563418
 Transform:
   m_ObjectHideFlags: 0
@@ -63745,7 +63124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1181366261476735283}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!114 &3519132046036422692
 MonoBehaviour:
@@ -63778,35 +63157,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 753071283628509149}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!65 &3614494417276825482
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3718237855666251252}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &3621957158170604504
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406444886261839252}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: 3.47, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2432196360245289597}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
 --- !u!1 &3634071726253854597
 GameObject:
   m_ObjectHideFlags: 0
@@ -63820,23 +63172,6 @@ GameObject:
   m_Layer: 0
   m_Name: '[QuestManager]'
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &3718237855666251252
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6427288503563166648}
-  - component: {fileID: 3614494417276825482}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63872,19 +63207,6 @@ Transform:
   m_Father: {fileID: 2484405547522737291}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3799795868363976969
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2983291197755117079}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3820625513875597499
 GameObject:
   m_ObjectHideFlags: 0
@@ -63953,19 +63275,6 @@ Transform:
   m_Father: {fileID: 7545162978925831897}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3922460142776215851
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7752851326420609067}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &3960352736619058820
 Transform:
   m_ObjectHideFlags: 0
@@ -63978,7 +63287,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8868881054276462931}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!1 &3965052607186791317
 GameObject:
@@ -64061,20 +63370,6 @@ MonoBehaviour:
   - {x: -88.990005, y: 0, z: -199.03001}
   parentWaypoint: {fileID: 6659651436606068370}
   endWaypoint: {fileID: 7029841924325345599}
---- !u!4 &3985312986567601797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4762364769352736375}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.52, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6990400642411730877}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4009347811160462325
 GameObject:
   m_ObjectHideFlags: 0
@@ -64447,26 +63742,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9153105924466603763}
   - component: {fileID: 406234048727208809}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &4559169161687441568
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1758583769563471214}
-  - component: {fileID: 2025727064147741744}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64479,8 +63757,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8513825693983442028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.46, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6990400642411730877}
   m_RootOrder: 1
@@ -64612,23 +63890,6 @@ Transform:
   m_Father: {fileID: 2478177870482334767}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
---- !u!1 &4762364769352736375
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3985312986567601797}
-  - component: {fileID: 6902329630681751913}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &4784456685168698238
 GameObject:
   m_ObjectHideFlags: 0
@@ -64750,8 +64011,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 1352089421}
   lightObjRed: {fileID: 8958009908336223335}
   boxColliderForCar: {fileID: 1922787452992983462}
-  boxColliderForPed1: {fileID: 7985636096638272265}
-  boxColliderForPed2: {fileID: 6438130460300050410}
+  boxColliderForPed: {fileID: 7985636096638272265}
 --- !u!4 &4882585401160909612
 Transform:
   m_ObjectHideFlags: 0
@@ -64829,8 +64089,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 618762217}
   lightObjRed: {fileID: 4814411005814399470}
   boxColliderForCar: {fileID: 2481121122694594924}
-  boxColliderForPed1: {fileID: 7848370169988242745}
-  boxColliderForPed2: {fileID: 3799795868363976969}
+  boxColliderForPed: {fileID: 7848370169988242745}
 --- !u!4 &4991130883193445692
 Transform:
   m_ObjectHideFlags: 0
@@ -64838,9 +64097,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8063250975702432800}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: 3.43, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8868881054276462931}
   m_RootOrder: 1
@@ -64967,7 +64226,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2432196360245289597}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!4 &5358669533167301508
 Transform:
@@ -65046,7 +64305,6 @@ Transform:
   m_Children:
   - {fileID: 8809787801370931123}
   - {fileID: 9153105924466603763}
-  - {fileID: 6427288503563166648}
   - {fileID: 834208542737033667}
   - {fileID: 2486782081754605293}
   - {fileID: 1920156754}
@@ -65187,8 +64445,7 @@ MonoBehaviour:
   lightObjYellow: {fileID: 341892709}
   lightObjRed: {fileID: 907914137464434483}
   boxColliderForCar: {fileID: 3149284311751263203}
-  boxColliderForPed1: {fileID: 6567440376310600827}
-  boxColliderForPed2: {fileID: 8605607062448069712}
+  boxColliderForPed: {fileID: 6567440376310600827}
 --- !u!1 &5574023147350350845
 GameObject:
   m_ObjectHideFlags: 0
@@ -65473,23 +64730,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &6067749738528059584
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8292860369957653774}
-  - component: {fileID: 8605607062448069712}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &6080485858151878430
 GameObject:
   m_ObjectHideFlags: 0
@@ -65500,9 +64740,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1474870984035952275}
   - component: {fileID: 7985636096638272265}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65515,8 +64755,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114080841748354060}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.97, y: 0, z: 0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 753071283628509149}
   m_RootOrder: 1
@@ -65682,50 +64922,6 @@ MonoBehaviour:
   - {fileID: 5570078056442474378}
   - {fileID: 1460784295900777570}
   - {fileID: 4878556531673394906}
---- !u!1 &6406444886261839252
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3621957158170604504}
-  - component: {fileID: 6438130460300050410}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6427288503563166648
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3718237855666251252}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: 1.99, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5382210278220870173}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
---- !u!65 &6438130460300050410
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406444886261839252}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6541418825353152395
 GameObject:
   m_ObjectHideFlags: 0
@@ -65755,7 +64951,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6990400642411730877}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!65 &6567440376310600827
 BoxCollider:
@@ -65802,22 +64998,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8868881054276462931}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
---- !u!4 &6647096465614733029
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2983291197755117079}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.96, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 753071283628509149}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!114 &6649902550732476106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65944,7 +65126,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1181366261476735283}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!1 &6791261421366872081
 GameObject:
@@ -65980,19 +65162,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &6902329630681751913
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4762364769352736375}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6923366118649841511
 GameObject:
   m_ObjectHideFlags: 0
@@ -66037,7 +65206,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6990400642411730877}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &6971180555433410102
 GameObject:
@@ -66068,7 +65237,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2432196360245289597}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0.001}
 --- !u!4 &6990400642411730877
 Transform:
@@ -66083,7 +65252,6 @@ Transform:
   m_Children:
   - {fileID: 1527957004411130350}
   - {fileID: 4580770224227032614}
-  - {fileID: 3985312986567601797}
   - {fileID: 6960848836502445258}
   - {fileID: 6553668947330133071}
   - {fileID: 1642189188}
@@ -66478,23 +65646,6 @@ Transform:
   m_Father: {fileID: 7545162978925831897}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7752851326420609067
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8206037179330302783}
-  - component: {fileID: 3922460142776215851}
-  m_Layer: 8
-  m_Name: Ped2
-  m_TagString: TrafficLight
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &7760337167232297505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66667,9 +65818,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4991130883193445692}
   - component: {fileID: 3482877038667858971}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66721,20 +65872,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.6, y: 1, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &8206037179330302783
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7752851326420609067}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: -3.49, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2478177870482334767}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
 --- !u!4 &8211917125901297515
 Transform:
   m_ObjectHideFlags: 0
@@ -66892,20 +66029,6 @@ MonoBehaviour:
   - {fileID: 980553691}
   mainNext: {fileID: 0}
   canChangeLane: 0
---- !u!4 &8292860369957653774
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6067749738528059584}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000006258487}
-  m_LocalPosition: {x: -2, y: 0, z: -0}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1181366261476735283}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8481185001258623475
 GameObject:
   m_ObjectHideFlags: 0
@@ -66933,9 +66056,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4580770224227032614}
   - component: {fileID: 547914239693507929}
-  m_Layer: 8
-  m_Name: Ped1
-  m_TagString: TrafficLight
+  m_Layer: 14
+  m_Name: Ped
+  m_TagString: TrafficLightForPed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66984,19 +66107,6 @@ MonoBehaviour:
   - {x: -143.90001, y: 0, z: -188.38899}
   parentWaypoint: {fileID: 5726512003097097628}
   endWaypoint: {fileID: 1266162478892678187}
---- !u!65 &8605607062448069712
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6067749738528059584}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &8673232588834230741
 Transform:
   m_ObjectHideFlags: 0
@@ -67120,7 +66230,6 @@ Transform:
   m_Children:
   - {fileID: 6929792401018797890}
   - {fileID: 4991130883193445692}
-  - {fileID: 1758583769563471214}
   - {fileID: 6613768340559068157}
   - {fileID: 3960352736619058820}
   - {fileID: 774213114}
@@ -67156,13 +66265,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157724517458409565}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000013709068}
-  m_LocalPosition: {x: 3.46, y: 0, z: -0.04}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2478177870482334767}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8958009908336223335
 GameObject:
   m_ObjectHideFlags: 0
@@ -67437,13 +66546,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4545169564690374526}
-  m_LocalRotation: {x: -0, y: -0.0000006556511, z: -0, w: 1}
-  m_LocalPosition: {x: -1.98, y: 0, z: 0.05}
-  m_LocalScale: {x: 0.2625, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5382210278220870173}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9177697813231721747
 SpriteRenderer:
   m_ObjectHideFlags: 0

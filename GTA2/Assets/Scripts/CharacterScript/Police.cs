@@ -169,12 +169,12 @@ public class Police : NPC
 				SetDefault();
 			else if (!PlayerOutofRange() && WantedLevel.instance.level >= 1)
 			{
-				StopCoroutine(Raycast());
+				//StopCoroutine(Raycast());
 				isChasePlayer = true;
 			}
 			else
 			{
-				StartCoroutine(Raycast());
+				//StartCoroutine(Raycast());
 				isChasePlayer = false;
 			}
 

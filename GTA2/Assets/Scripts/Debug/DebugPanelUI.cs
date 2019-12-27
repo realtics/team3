@@ -22,7 +22,7 @@ public class DebugPanelUI : MonoBehaviour
 
 	public void AddMoney()
 	{
-		GameManager.Instance.IncreaseMoney(1000);
+		GameManager.Instance.IncreaseMoney(100000);
 	}
 
 	public void IncreaseWantedLevel()

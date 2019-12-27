@@ -66,6 +66,8 @@ public class CarPassengerManager : MonoBehaviour
 				doors[0].passenger = People.PeopleType.Doctor;
 				doors[1].passenger = People.PeopleType.Doctor;
 				break;
+			case CarManager.CarType.tank:
+				break;
 			default:
 				doors[0].passenger = People.PeopleType.Citizen;
 				break;

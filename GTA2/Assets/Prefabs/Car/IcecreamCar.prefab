@@ -436,7 +436,7 @@ MonoBehaviour:
   maxSpdMultiplier: 1
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 7424
+    m_Bits: 72960
 --- !u!114 &4043613851703649319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5489,7 +5489,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1291112879
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 0
@@ -10107,7 +10107,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1291112879
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0

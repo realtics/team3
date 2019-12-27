@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Math, Physics\GameMath.cs" />
     <Compile Include="Assets\Math, Physics\MathUtil.cs" />
+    <Compile Include="Assets\NPCEffectManager.cs" />
     <Compile Include="Assets\Scripts\Car\CarAi.cs" />
     <Compile Include="Assets\Scripts\Car\CarDamage.cs" />
     <Compile Include="Assets\Scripts\Car\CarEffects.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Scripts\Car\CarMovement.cs" />
     <Compile Include="Assets\Scripts\Car\CarPassengerManager.cs" />
     <Compile Include="Assets\Scripts\Car\CarSpawnManager.cs" />
+    <Compile Include="Assets\Scripts\Car\Tank.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Citizen.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Doctor.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\NPC.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="Assets\Scripts\CharacterScript\Player.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\PlayerPhysics.cs" />
     <Compile Include="Assets\Scripts\CharacterScript\Police.cs" />
-    <Compile Include="Assets\Scripts\CharacterScript\QuestNPC.cs" />
     <Compile Include="Assets\Scripts\Debug\DebugPanelUI.cs" />
     <Compile Include="Assets\Scripts\Debug\DebugX.cs" />
     <Compile Include="Assets\Scripts\Debug\DrawArrow.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet\Script\NBulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\FireBottleSmoke.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\RocketSmoke.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Gun\Script\Artillery.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunDoublePistol.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunElectric.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunFire.cs" />

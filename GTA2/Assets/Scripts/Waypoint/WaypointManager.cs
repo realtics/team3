@@ -106,7 +106,7 @@ public class WaypointManager : MonoBehaviour
 
     public GameObject FindRandomCarSpawnPosition()
     {
-        float offset = 0.2f;
+        float offset = 0.3f;
         GameObject wp = FindClosestWaypoint(
             WaypointType.car,
             Camera.main.transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)),

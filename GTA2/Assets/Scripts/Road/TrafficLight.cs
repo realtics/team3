@@ -15,8 +15,7 @@ public class TrafficLight : MonoBehaviour
 	public GameObject lightObjYellow;
 	public GameObject lightObjRed;
     public BoxCollider boxColliderForCar;
-    public BoxCollider boxColliderForPed1;
-    public BoxCollider boxColliderForPed2;
+    public BoxCollider boxColliderForPed;
 
     public void ToggleSignal()
     {
@@ -44,8 +43,7 @@ public class TrafficLight : MonoBehaviour
 			lightObjYellow.SetActive(false);
 			lightObjRed.SetActive(true);
 			
-			boxColliderForPed1.enabled = false;
-			boxColliderForPed2.enabled = false;
+			boxColliderForPed.enabled = false;
 		}
 		else
 		{
@@ -57,10 +55,8 @@ public class TrafficLight : MonoBehaviour
 			lightObjYellow.SetActive(false);
 			lightObjRed.SetActive(false);
 
-			boxColliderForPed1.enabled = true;
-			boxColliderForPed2.enabled = true;
+			boxColliderForPed.enabled = true;
 			boxColliderForCar.enabled = false;
-
 		}
 	}
 

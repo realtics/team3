@@ -38,7 +38,8 @@ public class CarManager : MonoBehaviour
     {
         citizen,
         police,
-		ambulance
+		ambulance,
+		tank
     }
 
     public enum CarState
@@ -49,7 +50,16 @@ public class CarManager : MonoBehaviour
     
     void OnEnable()
     {
-        carState = CarState.controlledByAi;
+		if(carType == CarType.tank)
+		{
+			carState = CarState.idle;
+			gameObject.layer = 15;
+		}
+		else
+		{
+			carState = CarState.controlledByAi;
+			gameObject.layer = 12;
+		}		
 
         StopAllCoroutines();
         StartCoroutine(DisableIfOutOfCamera());
@@ -76,7 +86,9 @@ public class CarManager : MonoBehaviour
             return;
 
         OnDestroy?.Invoke(isDamagedByPlayer);
-        carState = CarState.destroied;
+
+		gameObject.layer = 16;
+		carState = CarState.destroied;
     }
 
     public void OnDamageEvent(bool sourceIsPlayer)

@@ -6,11 +6,12 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 {
 	public GameObject policeCarPrefab;
 	public GameObject policeVanPrefab;
-	public GameObject AmbulancePrefab;
-	public GameObject Car51Prefab;
-	public GameObject IceCarPrefab;
-	public GameObject TaxiPrefab;
-	public GameObject TruckPrefab;
+	public GameObject ambulancePrefab;
+	public GameObject romeroPrefab;
+	public GameObject iceCarPrefab;
+	public GameObject taxiPrefab;
+	public GameObject truckPrefab;
+	public CarManager tank;
 
 	public List<CarManager> allCars = new List<CarManager>();
 	public List<CarManager> allPoliceCar = new List<CarManager>();
@@ -20,19 +21,20 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 	{
 		PoolManager.WarmPool(policeCarPrefab, 12);
 		PoolManager.WarmPool(policeVanPrefab, 6);
-		PoolManager.WarmPool(AmbulancePrefab, 5);
-		PoolManager.WarmPool(Car51Prefab, 12);
-		PoolManager.WarmPool(IceCarPrefab, 5);
-		PoolManager.WarmPool(TaxiPrefab, 12);
-		PoolManager.WarmPool(TruckPrefab, 5);
+		PoolManager.WarmPool(ambulancePrefab, 5);
+		PoolManager.WarmPool(romeroPrefab, 12);
+		PoolManager.WarmPool(iceCarPrefab, 5);
+		PoolManager.WarmPool(taxiPrefab, 12);
+		PoolManager.WarmPool(truckPrefab, 5);
 
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(policeCarPrefab));
 		allCars.AddRange(PoolManager.GetAllObject<CarManager>(policeVanPrefab));
-		allCars.AddRange(PoolManager.GetAllObject<CarManager>(AmbulancePrefab));
-		allCars.AddRange(PoolManager.GetAllObject<CarManager>(Car51Prefab));
-		allCars.AddRange(PoolManager.GetAllObject<CarManager>(IceCarPrefab));
-		allCars.AddRange(PoolManager.GetAllObject<CarManager>(TaxiPrefab));
-		allCars.AddRange(PoolManager.GetAllObject<CarManager>(TruckPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(ambulancePrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(romeroPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(iceCarPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(taxiPrefab));
+		allCars.AddRange(PoolManager.GetAllObject<CarManager>(truckPrefab));
+		allCars.Add(tank);
 
 		foreach (var obj in allCars)
 		{
@@ -45,7 +47,9 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 					allAmbulanceCar.Add(obj);
 					break;
 			}
-			obj.gameObject.SetActive(false);
+
+			if(obj.carType != CarManager.CarType.tank)
+				obj.gameObject.SetActive(false);
 		}
 
 		for (int i = 0; i < allCars.Count; i++)
@@ -88,6 +92,9 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
 			if (car.carType == CarManager.CarType.ambulance)
 				continue;
 
+			if (car.carType == CarManager.CarType.tank)
+				continue;
+
 			if (policeCarCount >= WantedLevel.instance.level &&
 				car.ai.isPolice)
 				continue;
@@ -109,8 +116,8 @@ public class CarSpawnManager : MonoSingleton<CarSpawnManager>
                 //Debug.DrawLine(GameManager.Instance.player.transform.position, car.transform.position, Color.green, 0.5f);
             }
 
-            break;
-        }
+			break;
+		}
     }
 
 

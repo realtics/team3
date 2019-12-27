@@ -53,11 +53,11 @@ public class HumanController : MonoBehaviour
     {
         if (distToObstacle < Mathf.Infinity)
         {
-            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
+            DebugX.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
+            DebugX.DrawRay(transform.position, transform.forward * 0.5f, Color.blue);
         }
     }
 
