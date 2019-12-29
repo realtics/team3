@@ -5,7 +5,7 @@ using UnityEngine;
 public class Police : NPC
 {
 	public PoliceData policeData;
-
+    public bool isOnlyShoot;
 	void Awake()
 	{
 		base.TimerInit();
@@ -41,14 +41,14 @@ public class Police : NPC
         {
             WantedLevel.instance.CommitCrime(WantedLevel.CrimeType.gunFire, GameManager.Instance.player.transform.position);
         }
-
-
     }
 	void FixedUpdate()
 	{
 		if (isDie || isDown)
 			return;
-		if (isChasePlayer)
+        if (isRunaway)
+            base.RunAway();
+        else if (isChasePlayer)
 		{
 			if (GameManager.Instance.player.isDriver)
 			{
@@ -68,7 +68,15 @@ public class Police : NPC
 	}
 	void ChasePlayerCharacterInCar()
 	{
-		if (PlayerOutofRange())
+        if (isOnlyShoot)
+        {
+            base.LookAtPlayer();
+            base.StartShot();
+
+            return;
+        }
+
+        if (PlayerOutofRange())
 		{
 			isChasePlayer = false;
 			return;
@@ -107,7 +115,15 @@ public class Police : NPC
 			base.StartShot();
 		}
 	}
-	private void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isAirborne)
+        {
+            Die();
+            isAirborne = false;
+        }
+    }
+    void OnCollisionStay(Collision collision)
 	{
 		if(collision.gameObject.CompareTag("Car") && isChasePlayer && !isJump)
 		{
@@ -146,6 +162,13 @@ public class Police : NPC
 	}
 	void ChasePlayerCharacter()
     {
+        if (isOnlyShoot)
+        {
+            base.LookAtPlayer();
+            base.StartShot();
+
+            return;
+        }
         if (PlayerOutofRange())
         {
             isChasePlayer = false;
@@ -165,23 +188,19 @@ public class Police : NPC
 	{
 		while (true)
 		{
-			if (GameManager.Instance.player.isDie)
+            yield return new WaitForSeconds(0.5f);
+
+            if (GameManager.Instance.player.isDie)
 				SetDefault();
 			else if (!PlayerOutofRange() && WantedLevel.instance.level >= 1)
 			{
-				//StopCoroutine(Raycast());
 				isChasePlayer = true;
 			}
 			else
 			{
-				//StartCoroutine(Raycast());
 				isChasePlayer = false;
 			}
-
-			yield return new WaitForSeconds(0.5f);
 		}
-		
-			
 	}
 	void SetDefault()
 	{

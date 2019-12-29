@@ -38,7 +38,7 @@ public class WantedLevel : MonoBehaviour
 			if (!car.enabled)
 				continue;
 
-			if((car.transform.position - GameManager.Instance.player.transform.position).magnitude < 7)
+			if((car.transform.position - position).magnitude < 7)
 			{
 				isPoliceExist = true;
 				break;

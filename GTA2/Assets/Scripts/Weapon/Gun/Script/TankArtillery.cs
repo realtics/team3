@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Artillery : PlayerGun
+public class TankArtillery : PlayerGun
 {
     // Start is called before the first frame update
     [Header("Smoke Prefab")]
@@ -11,11 +11,11 @@ public class Artillery : PlayerGun
 
     CarManager carManager;
     bool changeArtDirKey;
-    bool changeArtDirBtn;
+    bool changeArtRightBtn;
 
 
     bool changeArtDirKeyRev;
-    bool changeArtDirBtnRev;
+    bool changeArtLeftBtn;
 
 
 
@@ -101,35 +101,46 @@ public class Artillery : PlayerGun
     }
     void UpdateArtilleryDirection()
     {
-        if (changeArtDirBtn || changeArtDirKey)
+        if (changeArtRightBtn || changeArtDirKey)
         {
             transform.eulerAngles += new Vector3(.0f, Time.deltaTime * 60.0f); 
         }
 
-        if (changeArtDirBtnRev || changeArtDirKeyRev)
+        if (changeArtLeftBtn || changeArtDirKeyRev)
         {
             transform.eulerAngles -= new Vector3(.0f, Time.deltaTime * 60.0f);
         }
     }
 
 
-    public void UpdateArtDirRevButtonDown()
+    public void LeftArtButtonDown()
     {
-        changeArtDirBtnRev = true;
+        changeArtLeftBtn = true;
     }
 
-    public void UpdateArtDirRevButtonUp()
+    public void LeftArtButtonUp()
     {
-        changeArtDirBtnRev = false;
+        changeArtLeftBtn = false;
     }
 
-    public void UpdateArtDirButtonDown()
+    public void RightArtButtonDown()
     {
-        changeArtDirBtn = true;
+        changeArtRightBtn = true;
     }
 
-    public void UpdateArtDirButtonUp()
+    public void RightArtButtonUp()
     {
-        changeArtDirBtn = false;
+        changeArtRightBtn = false;
     }
+
+    public void ShotArtButtonDown()
+    {
+        isButtonShot = true;
+    }
+
+    public void ShotArtButtonUp()
+    {
+        isButtonShot = false;
+    }
+
 }

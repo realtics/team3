@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 {
-	public Citizen citizenPrefab;
+    public NPCSpawnData npcSpawnData;
+
+    public Citizen citizenPrefab;
     public Police policePrefab;
 	public Doctor doctorPrefab;
 	public List<GameObject> allNPC;
-	public NPCSpawnData npcSpawnData;
 
 	float citizenSpawnInterval;
 	float policeSpawnInterval;
@@ -24,15 +25,13 @@ public class NPCSpawnManager : MonoSingleton<NPCSpawnManager>
 
 	void Awake()
 	{
-		PoolManager.WarmPool(citizenPrefab.gameObject, 100);
+        PoolManager.WarmPool(citizenPrefab.gameObject, 100);
         PoolManager.WarmPool(policePrefab.gameObject, 100);
-		PoolManager.WarmPool(doctorPrefab.gameObject, 10);
+        PoolManager.WarmPool(doctorPrefab.gameObject, 10);
 
 		allNPC.AddRange(PoolManager.GetAllObject(citizenPrefab.gameObject));
         allNPC.AddRange(PoolManager.GetAllObject(policePrefab.gameObject));
 		allNPC.AddRange(PoolManager.GetAllObject(doctorPrefab.gameObject));
-
-		
 	}
 	void Start()
 	{

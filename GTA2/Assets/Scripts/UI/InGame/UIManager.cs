@@ -47,6 +47,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     GameObject carJoystick;
     [SerializeField]
+    GameObject tankJoystick;
+    [SerializeField]
     CarManager targetCar;
 
     // Start is called before the first frame update
@@ -58,7 +60,13 @@ public class UIManager : MonoSingleton<UIManager>
     bool isExcelDown;
     bool isBreakDown;
 
+    bool isArtLeftDown;
+    bool isArtRightDown;
+    bool isArtShotDown;
+
     Text carNumberText;
+
+    TankArtillery tankArtillery; 
 
     void Awake()
     {
@@ -74,6 +82,7 @@ public class UIManager : MonoSingleton<UIManager>
         carNumberText = carNumberUI.GetComponentInChildren<Text>();
 
         pauseUI.SetActive(false);
+        tankJoystick.SetActive(false);
     }
 
     // Update is called once per frame
@@ -86,6 +95,7 @@ public class UIManager : MonoSingleton<UIManager>
         UpdateDieUI();
         UpdateGetOffCar();
         UpdateButton();
+        UpdateTankButton();
         UpdatePause();
 
 
@@ -114,6 +124,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             HumanUIMode();
             targetCar = null;
+            tankArtillery = null;
         }
     }
 
@@ -143,12 +154,48 @@ public class UIManager : MonoSingleton<UIManager>
         if (!isExcelDown && !isBreakDown && targetCar != null)
         {
             targetCar.input.InputVertical(.0f);
+        }      
+    }
+
+    void UpdateTankButton()
+    {
+        if (tankArtillery == null)
+        {
+            return;
+        }
+
+        if (isArtRightDown)
+        {
+            tankArtillery.RightArtButtonDown();
+        }
+        else
+        {
+            tankArtillery.RightArtButtonUp();
+        }
+
+        if (isArtLeftDown)
+        {
+            tankArtillery.LeftArtButtonDown();
+        }
+        else
+        {
+            tankArtillery.LeftArtButtonUp();
+        }
+
+        if (isArtShotDown)
+        {
+            tankArtillery.ShotArtButtonDown();
+        }
+        else
+        {
+            tankArtillery.ShotArtButtonUp();
         }
     }
     void UpdateDieUI()
     {
         if (player.isDie)
         {
+            tankJoystick.SetActive(false);
             humanJoystick.SetActive(false);
             carJoystick.SetActive(false);
         }
@@ -211,6 +258,12 @@ public class UIManager : MonoSingleton<UIManager>
         carJoystick.SetActive(true);
         carNumberUI.gameObject.SetActive(true);
         carNumberText.text = targetCar.gameObject.name.ToUpper();
+
+        if (targetCar.gameObject.name.Equals("Tank"))
+        {
+            tankArtillery = targetCar.gameObject.GetComponentInChildren<TankArtillery>();
+            tankJoystick.SetActive(true);
+        }
     }
     public void HumanUIMode()
     {
@@ -220,6 +273,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         AllCarButtonUp();
         carNumberUI.gameObject.SetActive(false);
+        tankJoystick.SetActive(false);
         humanJoystick.SetActive(true);
         carJoystick.SetActive(false);
     }
@@ -258,8 +312,6 @@ public class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Car UI
-
-
     public void ExcelButtonDown()
     {
         isExcelDown = true;
@@ -306,6 +358,36 @@ public class UIManager : MonoSingleton<UIManager>
     public void ReturnButtonDown()
     {
         targetCar.input.InputReturn();
+    }
+    #endregion
+
+
+    #region Tank UI
+    public void ArtLeftButtonDown()
+    {
+        isArtLeftDown = true;
+    }
+    public void ArtRightButtonDown()
+    {
+        isArtRightDown = true;
+    }
+    public void ArtShotButtonDown()
+    {
+        isArtShotDown = true;
+    }
+
+
+    public void ArtLeftButtonUp()
+    {
+        isArtLeftDown = false;
+    }
+    public void ArtRightButtonUp()
+    {
+        isArtRightDown = false;
+    }
+    public void ArtShotButtonUp()
+    {
+        isArtShotDown = false;
     }
     #endregion
 

@@ -77,7 +77,10 @@ public class CarPassengerManager : MonoBehaviour
 	void OnCarDestroyInPlayer(bool sourceIsPlayer)
 	{
 		if (carManager.carState == CarManager.CarState.controlledByPlayer)
-			GameManager.Instance.player.Hurt(9999);
+        {
+            GameManager.Instance.player.isBusted = false;
+            GameManager.Instance.player.Hurt(9999);
+        }
 	}
 
 	void OnReturnKeyDown()
@@ -173,13 +176,13 @@ public class CarPassengerManager : MonoBehaviour
 		carManager.OnDriverGetOnEvent(passengerType, idx);
 	}
 
-	public void GetOffTheCar(int idx = 0, bool isRunaway = false, bool forced = false)
+	public GameObject GetOffTheCar(int idx = 0, bool isRunaway = false, bool forced = false)
 	{
 		if (doors[idx].passenger == People.PeopleType.None)
-			return;
+			return null;
 
 		if (carManager.carState == CarManager.CarState.destroied)
-			return;
+			return null;
 
 		carManager.OnDriverGetOffEvent(doors[idx].passenger, idx);
 		StartCoroutine(OpenTheDoor(idx));
@@ -226,5 +229,6 @@ public class CarPassengerManager : MonoBehaviour
 		}
 
 		doors[idx].passenger = People.PeopleType.None;
+        return driver;
 	}		
 }

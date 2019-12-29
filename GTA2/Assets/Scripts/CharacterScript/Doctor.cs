@@ -24,7 +24,8 @@ public class Doctor : NPC
 	}
 	void OnEnable()
 	{
-		GetDiedNPC();
+        NPCOnEnable();
+        GetDiedNPC();
 	}
 	void OnDisable()
 	{
@@ -55,6 +56,12 @@ public class Doctor : NPC
 	
 	void ActivityByState()
 	{
+        if(isRunaway)
+        {
+            RunAway();
+            Move();
+            return;
+        }
 		switch (doctorState)
 		{
 			case DoctorState.GoToheal:
@@ -123,8 +130,16 @@ public class Doctor : NPC
 			Jump();
 		}
 	}
-	#region lowlevelCode
-	void MasterDataInit()
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isAirborne)
+        {
+            Die();
+            isAirborne = false;
+        }
+    }
+    #region lowlevelCode
+    void MasterDataInit()
 	{
 		defaultHp = doctorData.maxHp;
 		moveSpeed = doctorData.moveSpeed;
@@ -164,5 +179,14 @@ public class Doctor : NPC
 				doctorState = DoctorState.GoBackToCar;
 		}
 	}
-	#endregion
+    protected override void Die()
+    {
+        base.Die();
+        if(targetNPC != null)
+        {
+            NPCSpawnManager.Instance.DiedNPC.Add(targetNPC);
+            targetNPC = null;
+        }
+    }
+    #endregion
 }

@@ -34,7 +34,9 @@ public class CarDamage : MonoBehaviour
     {
         if (other.CompareTag("PlayerBullet") || 
             other.CompareTag("PlayerFireBullet") ||
-            other.CompareTag("NPCBullet"))
+            other.CompareTag("PlayerElectricBullet") ||
+            other.CompareTag("PlayerElectricBullet") ||
+            other.CompareTag("PlayerRocketBullet"))
         {
             Bullet HitBullet = other.GetComponentInParent<Bullet>();
             HitBullet.Explosion();

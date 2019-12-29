@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba955d649c0a25e4086b551ee9b499dd, type: 3}
   m_Name: CarData_Tank
   m_EditorClassIdentifier: 
-  maxHp: 1000
+  maxHp: 2000
   maxSpeed: 200
   rotSpeed: 250
   acceleration: 120

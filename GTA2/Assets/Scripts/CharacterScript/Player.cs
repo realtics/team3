@@ -54,10 +54,11 @@ public class Player : People
         {
             if (TimerCheck(TimerType.Respawn))
                 Respawn();
+            return;
         }
         UpdateTargetRotation();
         UpdateSlerpedRotation();
-
+        //위는 문제없음
         if (isGetOnTheCar)
             CarStealing();
         Move();
@@ -146,11 +147,11 @@ public class Player : People
 			if (GameManager.Instance.playerCar != null)
 			{
 				PlayerDriverSetting(false);
-
 				isDriver = false;
 			}
 			else
 			{
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
 				rigidbody.isKinematic = false;
 				boxCollider.enabled = true;
 				spriteRenderer.enabled = true;
@@ -374,7 +375,8 @@ public class Player : People
         base.checkingTimes[(int)TimerType.Runover] = playerData.runoverTime;
 		base.checkingTimes[(int)TimerType.Respawn] = playerData.respawnTime;
 		base.checkingTimes[(int)TimerType.AutoLand] = playerData.autoLandTime;
-		base.checkingTimes[(int)TimerType.JumpMin] = 0.1f;
+        base.checkingTimes[(int)TimerType.Land] = playerData.autoLandTime;
+        base.checkingTimes[(int)TimerType.JumpMin] = 0.1f;
 
 		defaultHp = playerData.maxHp;
 		hp = playerData.maxHp;
@@ -385,8 +387,8 @@ public class Player : People
 	
 	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isPlayerCar = true)
 	{
-		base.Runover(runoverSpeed, carPosition, isPlayerCar);
-		isBusted = false;
+        isBusted = false;
+        base.Runover(runoverSpeed, carPosition, isPlayerCar);
 	}
 	protected override void Move()
 	{
@@ -463,7 +465,6 @@ public class Player : People
     }
 	public void MoveControlJoystick()
 	{
-		//키보드랑 독립적으로 작동하게 변경
 		if (Mathf.Abs(UIManager.Instance.playerMoveJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerMoveJoystick.Vertical) < 0.01f)
 		{
 			if (!isChasingCar)

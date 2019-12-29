@@ -23,6 +23,8 @@ TagManager:
   - PlayerCar
   - Ground
   - TrafficLightForPed
+  - PlayerElectricBullet
+  - PlayerRocketBullet
   layers:
   - Default
   - TransparentFX

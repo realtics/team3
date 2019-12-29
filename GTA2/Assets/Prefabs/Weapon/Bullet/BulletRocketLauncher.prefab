@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 1616305463650183533}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: PlayerBullet
+  m_TagString: PlayerRocketBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 5244925414748715700}
   m_Layer: 0
   m_Name: BulletRocketLauncher
-  m_TagString: PlayerBullet
+  m_TagString: PlayerLocketBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

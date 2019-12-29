@@ -59,13 +59,14 @@ public abstract class NPC : People
 		//애니메이션 아니지만 초기화
 		isRunaway = false;
 	}
-	void SetDefaultHp()
+    void SetDefaultHp()
 	{
 		hp = defaultHp;
 	}
 	protected void NPCOnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody>();
+        burnedSprite.gameObject.SetActive(false);
 		boxCollider = GetComponent<BoxCollider>();
 		boxCollider.enabled = true;
 		boxCollider.isTrigger = false;
@@ -140,7 +141,30 @@ public abstract class NPC : People
         Pos.z += transform.forward.z * Time.deltaTime * runSpeed;
         transform.position = Pos;
     }
-    
+    protected override IEnumerator Burning()
+    {
+        if (isburned)
+            yield break;
+
+        isburned = true;
+        burnedEffect = NPCEffectManager.Instance.SpawnBurnedEffect(gameObject);
+
+        while (true)
+        {
+            Hurt(10, DiePattern.Burn);
+
+            if (isDie)
+            {
+                NPCEffectManager.Instance.ReleaseBurnedEffect(burnedEffect);
+
+                WorldUIManager.Instance.SetScoreText(transform.position, money);
+                GameManager.Instance.IncreaseMoney(money);
+                GameManager.Instance.killCount++;
+                break;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerBullet"))
@@ -150,22 +174,50 @@ public abstract class NPC : People
             //HitBullet.누가쐈는지
             Hurt(HitBullet.bulletDamage);
             HitBullet.Explosion();
-
-            if (isDie)
-            {
-                WorldUIManager.Instance.SetScoreText(transform.position, money);
-				GameManager.Instance.IncreaseMoney(money);
-				GameManager.Instance.killCount++;
-            }
         }
 		else if(other.CompareTag("PlayerFireBullet"))
 		{
-			StartCoroutine(Burning());
+            Bullet HitBullet = other.GetComponentInParent<Bullet>();
+
+            //Hurt(HitBullet.bulletDamage, true);
+            HitBullet.Explosion();
+
+            StartCoroutine(Burning());
+            SetRunaway();
 		}
+        else if(other.CompareTag("PlayerElectricBullet"))
+        {
+            Bullet HitBullet = other.GetComponentInParent<Bullet>();
+
+            //HitBullet.누가쐈는지
+            Hurt(10, DiePattern.Burn);
+            HitBullet.Explosion();
+
+            if(isDie)
+            {
+                StartCoroutine(ElectricDie());
+                //감전사 패턴
+            }
+        }
+        else if(other.CompareTag("PlayerRocketBullet"))
+        {
+            Bullet HitBullet = other.GetComponentInParent<Bullet>();
+
+            //HitBullet.누가쐈는지
+            Hurt(HitBullet.bulletDamage, DiePattern.airBorne);
+            HitBullet.Explosion();
+        }
         else if(other.CompareTag("PlayerPunch"))
         {
             SoundManager.Instance.PlayClipToPosition(punchClip, SoundPlayMode.ObjectSFX, transform.position);
             Down();
+        }
+
+        if (isDie)
+        {
+            WorldUIManager.Instance.SetScoreText(transform.position, money);
+            GameManager.Instance.IncreaseMoney(money);
+            GameManager.Instance.killCount++;
         }
     }
 
@@ -176,6 +228,8 @@ public abstract class NPC : People
 		NPCSpawnManager.Instance.DiedNPC.Add(this);
 		SoundManager.Instance.PlayClipToPosition(dieClip[Random.Range(0, dieClip.Length)], SoundPlayMode.HumanSFX, gameObject.transform.position);
 	}
+     
+    
 	#region RefHumanCtr
 	protected override void Move()
     {
@@ -378,7 +432,7 @@ public abstract class NPC : People
 		isPunch = false;
 		gunList[1].GetComponent<NPCGun>().StopShot();
 	}
-    public void Respawn()
+    public virtual void Respawn()
 	{
 		rigidbody.isKinematic = false;
 		boxCollider.enabled = true;
@@ -387,6 +441,7 @@ public abstract class NPC : People
         if (spriteRenderer != null)
         {
 		    spriteRenderer.enabled = true;
+            burnedSprite.gameObject.SetActive(false);
         }
 		NPCSpawnManager.Instance.DiedNPC.Remove(this);
 		AnimationInit();

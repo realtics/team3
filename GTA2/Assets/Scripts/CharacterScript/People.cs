@@ -12,20 +12,26 @@ public abstract class People : MonoBehaviour
         Police,
         Doctor
     };
-
+    public enum DiePattern
+    {
+        Normal,
+        Burn,
+        airBorne
+    }
     //Sound
     [SerializeField]
     protected AudioClip punchClip;
-    protected SpriteRenderer spriteRenderer;
-	
-	//Timer
-	public float[] checkingTimes { get; set; }
+    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer burnedSprite;
+    //Timer
+    public float[] checkingTimes { get; set; }
 	public float[] Timers { get;set; } = { 0.0f };
     public enum TimerType
     {
         Jump,
         JumpMin,
         Down,
+        Land,
         Runover,
         CarOpen,
 		AutoLand,
@@ -59,7 +65,7 @@ public abstract class People : MonoBehaviour
 	protected int defaultHp;
 	protected float hDir = 0;
 	protected float vDir = 0;
-	
+	protected bool isAirborne = false;
     //State
     public bool isWalk { get; set; }
 	public bool isShot { get; set; }
@@ -71,12 +77,13 @@ public abstract class People : MonoBehaviour
 	public bool isGetOnTheCar { get; set; } //문여는 모션
 	
 	protected bool isburned;
-	GameObject bloodEffect;
-	GameObject burnedEffect;
+    protected bool isElectric;
+    protected GameObject bloodEffect;
+    protected GameObject burnedEffect;
+    protected GameObject electricEffect;
 
-
-	//abstract
-	protected virtual void Die()
+    //abstract
+    protected virtual void Die()
 	{
 		if (isDie)
 			return;
@@ -111,7 +118,7 @@ public abstract class People : MonoBehaviour
 		rigidbody.isKinematic = false;
 		isDown = false;
 	}
-	public void Hurt(int damage)
+	public void Hurt(int damage, DiePattern diePattern = DiePattern.Normal)
     {
         hp -= damage;
 		GameObject bloodGameObject = PoolManager.SpawnObject(NPCEffectManager.Instance.BloodAnim);
@@ -120,11 +127,21 @@ public abstract class People : MonoBehaviour
 
 		if (hp <= 0)
         {
+            if(diePattern == DiePattern.Burn)
+            {
+                burnedDieSetting();
+            }
+            else if(diePattern == DiePattern.airBorne)
+            {
+                isAirborne = true;
+                rigidbody.AddForce(new Vector3(0, 10, 0), ForceMode.VelocityChange);
+                return;
+            }
             Die();
             isDie = true;
         }
     }
-	protected IEnumerator Burning()
+	protected virtual IEnumerator Burning()
 	{
 		if (isburned)
 			yield break;
@@ -134,16 +151,30 @@ public abstract class People : MonoBehaviour
 
 		while (true)
 		{
-			Hurt(10);
+			Hurt(10, DiePattern.Burn);
 
 			if(isDie)
 			{
 				NPCEffectManager.Instance.ReleaseBurnedEffect(burnedEffect);
-				break;
+                isburned = false;
+                
+                break;
 			}
 			yield return new WaitForSeconds(0.5f);
 		}
 	}
+    protected virtual IEnumerator ElectricDie()
+    {
+        if (isElectric)
+            yield break;
+
+        isElectric = true;
+        electricEffect = NPCEffectManager.Instance.SpawnElectricEffect(gameObject);
+
+        yield return new WaitForSeconds(3.0f);
+        isElectric = false;
+        NPCEffectManager.Instance.ReleaseBurnedEffect(electricEffect);
+    }
     public void PeopleUpdate()
     {
 		if (isDie)
@@ -180,6 +211,11 @@ public abstract class People : MonoBehaviour
 			return false;
 	}
 	#region lowlevelCode
+    protected virtual void burnedDieSetting()
+    {
+        spriteRenderer.enabled = false;
+        burnedSprite.gameObject.SetActive(true);
+    }
 	public virtual void Runover(float runoverSpeed, Vector3 carPosition, bool Player = false)
     {
 		if (runoverSpeed < runoverMinSpeed)

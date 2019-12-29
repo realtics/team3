@@ -35,12 +35,25 @@ public class RoadBlock : MonoBehaviour
 			}
 
 			cm.carState = CarManager.CarState.idle;
-			for (int j = 0; j < cm.passengerManager.doors.Length; j++)
-			{
-				cm.passengerManager.doors[j].passenger = People.PeopleType.None;
-			}
 			cm.transform.position = policeCarPositions[i].position;
 			cm.transform.forward = policeCarPositions[i].transform.forward;
+
+            if (cm.gameObject.activeSelf)
+            {
+                for (int j = 0; j < cm.passengerManager.doors.Length; j++)
+                {
+                    GameObject go = cm.passengerManager.GetOffTheCar(j);
+
+                    //if (go == null)
+                    //    continue;
+
+                    //Police p = go.GetComponent<Police>();
+                    //if (p != null)
+                    //{
+                    //    p.isOnlyShoot = true;
+                    //}                        
+                }
+            }            
         }
 
 		StopAllCoroutines();

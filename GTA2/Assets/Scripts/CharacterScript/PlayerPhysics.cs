@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerPhysics : MonoBehaviour
 {
-    Rigidbody myRigidBody;
+    Rigidbody rigidbody;
 	public CarPassengerManager targetCar { get; set; }
 	Transform carDoorTransform;
 
 	void Start()
     {
-        myRigidBody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -32,12 +32,12 @@ public class PlayerPhysics : MonoBehaviour
 		{
 			return;
 		}
-        myRigidBody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
+        rigidbody.MovePosition(transform.position + (transform.forward * Time.deltaTime * moveSpeed));
     }
     public void MovePositionByInput(float hDir, float vDir, float moveSpeed)
     {
-		//transform.position += (new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed);
-		myRigidBody.MovePosition(transform.position + new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed);
+        if (hDir != 0 || vDir != 0)
+            rigidbody.MovePosition(transform.position + new Vector3(hDir, 0, vDir).normalized * Time.deltaTime * moveSpeed);
 	}
     public bool InChasingDistance()
     {

@@ -161,7 +161,6 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet\Script\NBulletPunch.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\FireBottleSmoke.cs" />
     <Compile Include="Assets\Scripts\Weapon\Effect\RocketSmoke.cs" />
-    <Compile Include="Assets\Scripts\Weapon\Gun\Script\Artillery.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunDoublePistol.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunElectric.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunFire.cs" />
@@ -175,6 +174,7 @@
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\GunSleepMachine.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\NpcGunPistol.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun\Script\NpcGunPunch.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Gun\Script\TankArtillery.cs" />
     <Compile Include="Assets\Scripts\Weapon\Parent\Bullet.cs" />
     <Compile Include="Assets\Scripts\Weapon\Parent\BulletEffect.cs" />
     <Compile Include="Assets\Scripts\Weapon\Parent\ExplosionEffect.cs" />

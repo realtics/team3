@@ -55,8 +55,26 @@ public class Citizen : NPC
 			base.Move();
 		}
 	}
-	
-	void OnCollisionStay(Collision collision)
+    public override void Respawn()
+    {
+        base.Respawn();
+        ClothSpriteRenderer.enabled = true;
+    }
+    protected override void burnedDieSetting()
+    {
+        spriteRenderer.enabled = false;
+        ClothSpriteRenderer.enabled = false;
+        burnedSprite.gameObject.SetActive(true);
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isAirborne)
+        {
+            Die();
+            isAirborne = false;
+        }
+    }
+    void OnCollisionStay(Collision collision)
 	{
 		if (isRunaway && (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Car")))
 		{

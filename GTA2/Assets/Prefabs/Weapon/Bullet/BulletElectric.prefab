@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: -8364699842060992214}
   m_Layer: 0
   m_Name: BulletElectric
-  m_TagString: PlayerBullet
+  m_TagString: PlayerElectricBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 441724031311649504}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: PlayerBullet
+  m_TagString: PlayerElectricBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
