@@ -14,55 +14,55 @@ public class Player : People
 	public float runoverMinSpeedInChasing { get; set; } = 130;
 
 	public GunState curGunIndex { get; set; }
-    public List<PlayerGun> gunList;
-	
+	public List<PlayerGun> gunList;
+
 	[HideInInspector]
 	public PlayerPhysics playerPhysics;
-	
+
 	Animator animator;
 	float rotHDir;
-    float rotVDir;
+	float rotVDir;
 
-    void Awake()
-    {
+	void Awake()
+	{
 		ComponentInit();
 		base.TimerInit();
 		MasterDataInit();
 	}
-    void Start()
-    {
+	void Start()
+	{
 		GunListInit();
-        UIManager.Instance.HumanUIMode();
-    }
-    void Update()
-    {
-        DebugX.DrawRay(transform.position, transform.forward);
-        base.PeopleUpdate();
-        AnimateUpdate();
+		UIManager.Instance.HumanUIMode();
+	}
+	void Update()
+	{
+		DebugX.DrawRay(transform.position, transform.forward);
+		base.PeopleUpdate();
+		AnimateUpdate();
 
 		if (IsStuckedAnimation() || isDriver)
 		{
 			StopShot();
 			return;
 		}
-            
-        UpdateInput();
-    }
-    void FixedUpdate()
-    {
-        if (isDie)
-        {
-            if (TimerCheck(TimerType.Respawn))
-                Respawn();
-            return;
-        }
-        UpdateTargetRotation();
-        UpdateSlerpedRotation();
-        //위는 문제없음
-        if (isGetOnTheCar)
-            CarStealing();
-        Move();
-    }
+
+		UpdateInput();
+	}
+	void FixedUpdate()
+	{
+		if (isDie)
+		{
+			if (TimerCheck(TimerType.Respawn))
+				Respawn();
+			return;
+		}
+		UpdateTargetRotation();
+		UpdateSlerpedRotation();
+		//위는 문제없음
+		if (isGetOnTheCar)
+			CarStealing();
+		Move();
+	}
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.CompareTag("NPCPunch"))
@@ -73,32 +73,32 @@ public class Player : People
 			HurtByNPC(false, other.gameObject.GetComponentInParent<Bullet>().bulletDamage);
 		}
 	}
-	
-	void UpdateInput()
-    {
-        if (isDie)
-            return;
-        if (!MoveControlKeyboard())
-            MoveControlJoystick();
 
-        ActiveControl();
-        WeaponSwap();
-    }
-    void CarStealing()
-    {
-        if (isDie)
-            return;
+	void UpdateInput()
+	{
+		if (isDie)
+			return;
+		if (!MoveControlKeyboard())
+			MoveControlJoystick();
+
+		ActiveControl();
+		WeaponSwap();
+	}
+	void CarStealing()
+	{
+		if (isDie)
+			return;
 		playerPhysics.LookAtCar();
 
 		if (playerPhysics.targetCar.doors[0].doorState == CarPassengerManager.DoorState.open) //문이열려있는 경우 탑승
-        {
+		{
 			GetOntheCar();
-        }
-        else//문열기 시도
-        {
+		}
+		else//문열기 시도
+		{
 			OpenTheDoor();
-        }
-    }
+		}
+	}
 	public void SetChaseTargetCar()
 	{
 		CarManager car = CarSpawnManager.Instance.FindClosestCar(transform.position);
@@ -132,12 +132,12 @@ public class Player : People
 			playerPhysics.ChaseTheCar(moveSpeed);
 		}
 	}
-   
-    #region lowlevelCode
-    public int GetHp()
-    {
-        return hp;
-    }
+
+	#region lowlevelCode
+	public int GetHp()
+	{
+		return hp;
+	}
 	public void Respawn()
 	{
 		if (!isBusted)
@@ -151,8 +151,9 @@ public class Player : People
 			}
 			else
 			{
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+				transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
 				rigidbody.isKinematic = false;
+				boxCollider.isTrigger = false;
 				boxCollider.enabled = true;
 				spriteRenderer.enabled = true;
 			}
@@ -173,7 +174,7 @@ public class Player : People
 		isAttack = false;
 		isPunch = false;
 	}
-	
+
 	void GunListInit()
 	{
 		List<PlayerGun> gunTempList = new List<PlayerGun>();
@@ -194,17 +195,17 @@ public class Player : People
 		gunList[(int)GunState.None].gameObject.SetActive(true);
 	}
 
-    public void RespawnGunList()
-    {
-        foreach (var item in gunList)
-        {
-            item.gameObject.SetActive(false);
-        }
+	public void RespawnGunList()
+	{
+		foreach (var item in gunList)
+		{
+			item.gameObject.SetActive(false);
+		}
 
 
-        gunList[(int)GunState.None].bulletCount = 1;
-        gunList[(int)GunState.None].gameObject.SetActive(true);
-    }
+		gunList[(int)GunState.None].bulletCount = 1;
+		gunList[(int)GunState.None].gameObject.SetActive(true);
+	}
 
 	//Update
 	void AnimateUpdate()
@@ -220,62 +221,62 @@ public class Player : People
 	}
 	public void SwapNext()
 	{
-        GunState tempGunIndex = curGunIndex;
-        for (int i = 0; i < gunList.Count; i++)
-        {
-            gunList[i].gameObject.SetActive(false);
-        }
-
-
-        for (int i = 0; i < gunList.Count; i++)
+		GunState tempGunIndex = curGunIndex;
+		for (int i = 0; i < gunList.Count; i++)
 		{
-            tempGunIndex++;
-            if (tempGunIndex >= GunState.GunEnd)
-            {
-                tempGunIndex = GunState.None;
-            }
+			gunList[i].gameObject.SetActive(false);
+		}
 
-            if (gunList[(int)tempGunIndex].bulletCount <= 0)
-            {
-                continue;
-            }
-            else if (gunList[(int)tempGunIndex].bulletCount > 0)
-            {
-                gunList[(int)tempGunIndex].gameObject.SetActive(true);
 
-                curGunIndex = tempGunIndex;
-                break;
-            }
-        }
+		for (int i = 0; i < gunList.Count; i++)
+		{
+			tempGunIndex++;
+			if (tempGunIndex >= GunState.GunEnd)
+			{
+				tempGunIndex = GunState.None;
+			}
+
+			if (gunList[(int)tempGunIndex].bulletCount <= 0)
+			{
+				continue;
+			}
+			else if (gunList[(int)tempGunIndex].bulletCount > 0)
+			{
+				gunList[(int)tempGunIndex].gameObject.SetActive(true);
+
+				curGunIndex = tempGunIndex;
+				break;
+			}
+		}
 	}
 	public void SwapPrev()
-    {
-        GunState tempGunIndex = curGunIndex;
+	{
+		GunState tempGunIndex = curGunIndex;
 
-        for (int i = 0; i < gunList.Count; i++)
-        {
-            gunList[i].gameObject.SetActive(false);
-        }
-        for (int i = 0; i < gunList.Count; i++)
+		for (int i = 0; i < gunList.Count; i++)
 		{
-            tempGunIndex--;
-            if (tempGunIndex < GunState.None)
-            {
-                tempGunIndex = GunState.GunEnd - 1;
-            }
+			gunList[i].gameObject.SetActive(false);
+		}
+		for (int i = 0; i < gunList.Count; i++)
+		{
+			tempGunIndex--;
+			if (tempGunIndex < GunState.None)
+			{
+				tempGunIndex = GunState.GunEnd - 1;
+			}
 
-            if (gunList[(int)tempGunIndex].bulletCount <= 0)
-            {
-                continue;
-            }
-            else if (gunList[(int)tempGunIndex].bulletCount > 0)
-            {
-                gunList[(int)tempGunIndex].gameObject.SetActive(true);
+			if (gunList[(int)tempGunIndex].bulletCount <= 0)
+			{
+				continue;
+			}
+			else if (gunList[(int)tempGunIndex].bulletCount > 0)
+			{
+				gunList[(int)tempGunIndex].gameObject.SetActive(true);
 
-                curGunIndex = tempGunIndex;
-                break;
-            }
-        }
+				curGunIndex = tempGunIndex;
+				break;
+			}
+		}
 	}
 	void StartCloseTheDoor()
 	{
@@ -286,7 +287,7 @@ public class Player : People
 	{
 		hp = defaultHp;
 	}
-	
+
 	public void ResetAllGunBullet()
 	{
 		foreach (var item in gunList)
@@ -332,7 +333,7 @@ public class Player : People
 		GameManager.Instance.player.playerPhysics.targetCar.GetOffTheCar(0, false, true);
 		playerPhysics.targetCar.GetOnTheCar(People.PeopleType.Player);
 
-        UIManager.Instance.CarUIMode(playerPhysics.targetCar.carManager);
+		UIManager.Instance.CarUIMode(playerPhysics.targetCar.carManager);
 	}
 	void HurtByNPC(bool isPunch, int damage)
 	{
@@ -349,34 +350,34 @@ public class Player : People
 		}
 	}
 	public void PlayerDriverSetting(bool GetOn, int idx = 0)
-    {
-        //플레이어 드라이버 셋팅
-        if (GetOn)
-        {
-            rigidbody.isKinematic = true;
-            boxCollider.enabled = false;
-            spriteRenderer.enabled = false;
-            isDriver = true;
-            transform.SetParent(GameManager.Instance.playerCar.transform);
-        }
-        else
-        {
-            rigidbody.isKinematic = false;
-            boxCollider.enabled = true;
-            spriteRenderer.enabled = true;
-            isDriver = false;
+	{
+		//플레이어 드라이버 셋팅
+		if (GetOn)
+		{
+			rigidbody.isKinematic = true;
+			boxCollider.enabled = false;
+			spriteRenderer.enabled = false;
+			isDriver = true;
+			transform.SetParent(GameManager.Instance.playerCar.transform);
+		}
+		else
+		{
+			rigidbody.isKinematic = false;
+			boxCollider.enabled = true;
+			spriteRenderer.enabled = true;
+			isDriver = false;
 			transform.SetParent(null);
 		}
-    }
+	}
 	void MasterDataInit()
 	{
 		base.checkingTimes[(int)TimerType.Down] = playerData.downTime;
-        base.checkingTimes[(int)TimerType.Jump] = playerData.jumpTime;
-        base.checkingTimes[(int)TimerType.Runover] = playerData.runoverTime;
+		base.checkingTimes[(int)TimerType.Jump] = playerData.jumpTime;
+		base.checkingTimes[(int)TimerType.Runover] = playerData.runoverTime;
 		base.checkingTimes[(int)TimerType.Respawn] = playerData.respawnTime;
 		base.checkingTimes[(int)TimerType.AutoLand] = playerData.autoLandTime;
-        base.checkingTimes[(int)TimerType.Land] = playerData.autoLandTime;
-        base.checkingTimes[(int)TimerType.JumpMin] = 0.1f;
+		base.checkingTimes[(int)TimerType.Land] = playerData.autoLandTime;
+		base.checkingTimes[(int)TimerType.JumpMin] = 0.1f;
 
 		defaultHp = playerData.maxHp;
 		hp = playerData.maxHp;
@@ -384,11 +385,11 @@ public class Player : People
 	}
 	#endregion
 	#region overrideMethod
-	
+
 	public override void Runover(float runoverSpeed, Vector3 carPosition, bool isPlayerCar = true)
 	{
-        isBusted = false;
-        base.Runover(runoverSpeed, carPosition, isPlayerCar);
+		isBusted = false;
+		base.Runover(runoverSpeed, carPosition, isPlayerCar);
 	}
 	protected override void Move()
 	{
@@ -405,8 +406,8 @@ public class Player : People
 	protected override void LandCheck()
 	{
 		base.LandCheck();
-		
-		if (isChasingCar && MathUtil.isArrivedIn2D(transform.position, playerPhysics.targetCar.transform.position) && 
+
+		if (isChasingCar && MathUtil.isArrivedIn2D(transform.position, playerPhysics.targetCar.transform.position) &&
 			!IsCarExistBelow() &&
 			TimerCheck(TimerType.JumpMin))
 			Land();
@@ -419,50 +420,50 @@ public class Player : People
 		GameOverUISetting();
 		WantedLevel.instance.ResetWantedLevel();
 		CameraController.Instance.ZoomIn();
-        QuestManager.Instance.ResetQuest();
+		QuestManager.Instance.ResetQuest();
 	}
 
-    protected override void UpdateTargetRotation()
-    {
-        targetDirectionVector = new Vector3(rotHDir, 0, rotVDir).normalized;
-    }
-    protected override void UpdateSlerpedRotation()
-    {
-        if (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
-        {
-            targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;
+	protected override void UpdateTargetRotation()
+	{
+		targetDirectionVector = new Vector3(rotHDir, 0, rotVDir).normalized;
+	}
+	protected override void UpdateSlerpedRotation()
+	{
+		if (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
+		{
+			targetDirectionVector = new Vector3(hDir, 0, vDir).normalized;
 
-			if(targetDirectionVector != Vector3.zero)
+			if (targetDirectionVector != Vector3.zero)
 				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
-        }
-        else if (0 != hDir || 0 != vDir || 0 != rotHDir || 0 != rotVDir)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
-            return;
-        }
-    }
+		}
+		else if (0 != hDir || 0 != vDir || 0 != rotHDir || 0 != rotVDir)
+		{
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirectionVector), 0.4f);
+			return;
+		}
+	}
 
 	#endregion
 	#region InputLogic
 	bool MoveControlKeyboard()
-    {
-        if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
-        {
-            if (!isChasingCar)
-                isWalk = false;
-            vDir = 0;
-            hDir = 0;
-            return false;
-        }
-        else
-        {
-            vDir = Input.GetAxisRaw("Vertical"); //GetAxis
-            hDir = Input.GetAxisRaw("Horizontal");
-            isWalk = true;
-            isChasingCar = false;
-            return true;
-        }
-    }
+	{
+		if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
+		{
+			if (!isChasingCar)
+				isWalk = false;
+			vDir = 0;
+			hDir = 0;
+			return false;
+		}
+		else
+		{
+			vDir = Input.GetAxisRaw("Vertical"); //GetAxis
+			hDir = Input.GetAxisRaw("Horizontal");
+			isWalk = true;
+			isChasingCar = false;
+			return true;
+		}
+	}
 	public void MoveControlJoystick()
 	{
 		if (Mathf.Abs(UIManager.Instance.playerMoveJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerMoveJoystick.Vertical) < 0.01f)
@@ -470,103 +471,103 @@ public class Player : People
 			if (!isChasingCar)
 				isWalk = false;
 
-            if (Mathf.Abs(UIManager.Instance.playerWeaponJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerWeaponJoystick.Vertical) < 0.01f)
-                return;
+			if (Mathf.Abs(UIManager.Instance.playerWeaponJoystick.Horizontal) < 0.01f && Mathf.Abs(UIManager.Instance.playerWeaponJoystick.Vertical) < 0.01f)
+				return;
 		}
 		isWalk = true;
 		isChasingCar = false;
-        
-        UpdateJoystickDirection();
-    }
 
-    void UpdateJoystickDirection()
-    {
-        float moveHDir = UIManager.Instance.playerMoveJoystick.Horizontal / 5.0f;
-        float moveVDir = UIManager.Instance.playerMoveJoystick.Vertical / 5.0f;
+		UpdateJoystickDirection();
+	}
 
-        float weaponHDir = UIManager.Instance.playerWeaponJoystick.Horizontal / 5.0f;
-        float weaponVDir = UIManager.Instance.playerWeaponJoystick.Vertical / 5.0f;
+	void UpdateJoystickDirection()
+	{
+		float moveHDir = UIManager.Instance.playerMoveJoystick.Horizontal / 5.0f;
+		float moveVDir = UIManager.Instance.playerMoveJoystick.Vertical / 5.0f;
+
+		float weaponHDir = UIManager.Instance.playerWeaponJoystick.Horizontal / 5.0f;
+		float weaponVDir = UIManager.Instance.playerWeaponJoystick.Vertical / 5.0f;
 
 
-        if (Mathf.Abs(weaponHDir) <= .01f && Mathf.Abs(weaponVDir) <= .01f)
-        {
-            hDir = moveHDir;
-            vDir = moveVDir;
+		if (Mathf.Abs(weaponHDir) <= .01f && Mathf.Abs(weaponVDir) <= .01f)
+		{
+			hDir = moveHDir;
+			vDir = moveVDir;
 
-            rotHDir = hDir;
-            rotVDir = vDir;
-        }
+			rotHDir = hDir;
+			rotVDir = vDir;
+		}
 
-        else
-        {
-            hDir = moveHDir;
-            vDir = moveVDir;
+		else
+		{
+			hDir = moveHDir;
+			vDir = moveVDir;
 
-            rotHDir = weaponHDir;
-            rotVDir = weaponVDir;
-        }
-    }
-    bool IsMoveInput()
-    {
-        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) &&
-            !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) &&
-            !isJump)
-            return true;
-        else
-            return false;
-    }
-    
-    void ActiveControl()
-    {
-        if (Input.GetKeyDown(KeyCode.A) && !isJump)
-        {
-            ShotAnimation();
+			rotHDir = weaponHDir;
+			rotVDir = weaponVDir;
+		}
+	}
+	bool IsMoveInput()
+	{
+		if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) &&
+			!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) &&
+			!isJump)
+			return true;
+		else
+			return false;
+	}
+
+	void ActiveControl()
+	{
+		if (Input.GetKeyDown(KeyCode.A) && !isJump)
+		{
+			ShotAnimation();
 			StartShot();
 			isChasingCar = false;
-        }
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            StopShot();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            isChasingCar = false;
-            Jump();
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            SetChaseTargetCar();
-        }
-    }
-
-    void WeaponSwap()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            SwapNext();
 		}
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            SwapPrev();
-        }
-    }
+		if (Input.GetKeyUp(KeyCode.A))
+		{
+			StopShot();
+		}
+		if (Input.GetKeyDown(KeyCode.S))
+		{
+			isChasingCar = false;
+			Jump();
+		}
+		if (Input.GetKeyDown(KeyCode.Return))
+		{
+			SetChaseTargetCar();
+		}
+	}
+
+	void WeaponSwap()
+	{
+		if (Input.GetKeyDown(KeyCode.X))
+		{
+			SwapNext();
+		}
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			SwapPrev();
+		}
+	}
 	#endregion
 	#region UIButtonLogic
 	public void ShotButtonDown()
-    {
-        ShotButtonDownGunSet();
-        ShotAnimation();
-    }
+	{
+		ShotButtonDownGunSet();
+		ShotAnimation();
+	}
 
-    void ShotButtonDownGunSet()
-    {
-        if (IsStuckedAnimation())
-        {
-            return;
-        }
+	void ShotButtonDownGunSet()
+	{
+		if (IsStuckedAnimation())
+		{
+			return;
+		}
 
-        gunList[(int)curGunIndex].UpdateButtonDown();
-    }
+		gunList[(int)curGunIndex].UpdateButtonDown();
+	}
 	void GameOverUISetting()
 	{
 		if (--GameManager.Instance.remains == 0)
@@ -584,32 +585,32 @@ public class Player : People
 		}
 	}
 	void ShotAnimation()
-    {
-        switch (curGunIndex)
-        {
-            case GunState.None:
-                isPunch = true;
-                break;
-            case GunState.FireBottle:
-            case GunState.Granade:
-                isPunch = true;
-                isAttack = true;
-                break;
-            case GunState.Pistol:
-            case GunState.DoublePistol:
-            case GunState.Machinegun:
-            case GunState.SleepMachinegun:
-            case GunState.RocketLauncher:
-            case GunState.Electric:
-            case GunState.ShotGun:
-            case GunState.FireGun:
-                isShot = true;
-                isAttack = true;
-                break;
-            default:
-                break;
-        }
-    }
+	{
+		switch (curGunIndex)
+		{
+			case GunState.None:
+				isPunch = true;
+				break;
+			case GunState.FireBottle:
+			case GunState.Granade:
+				isPunch = true;
+				isAttack = true;
+				break;
+			case GunState.Pistol:
+			case GunState.DoublePistol:
+			case GunState.Machinegun:
+			case GunState.SleepMachinegun:
+			case GunState.RocketLauncher:
+			case GunState.Electric:
+			case GunState.ShotGun:
+			case GunState.FireGun:
+				isShot = true;
+				isAttack = true;
+				break;
+			default:
+				break;
+		}
+	}
 	protected override void InitAnimation()
 	{
 		base.InitAnimation();

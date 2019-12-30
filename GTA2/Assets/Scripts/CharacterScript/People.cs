@@ -134,7 +134,7 @@ public abstract class People : MonoBehaviour
             else if(diePattern == DiePattern.airBorne)
             {
                 isAirborne = true;
-                rigidbody.AddForce(new Vector3(0, 10, 0), ForceMode.VelocityChange);
+                rigidbody.AddForce(new Vector3(0, 8, 0), ForceMode.VelocityChange);
                 return;
             }
             Die();
